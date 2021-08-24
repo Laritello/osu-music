@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>Osu.Music</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Prism.DryIoc" Version="8.0.0.1909" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Osu.Music.Common\Osu.Music.Common.csproj" />
+    <ProjectReference Include="..\Osu.Music.Services\Osu.Music.Services.csproj" />
+    <ProjectReference Include="..\Osu.Music.UI\Osu.Music.UI.csproj" />
+  </ItemGroup>
+</Project>
