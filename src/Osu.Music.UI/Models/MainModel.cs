@@ -1,22 +1,28 @@
-﻿using Prism.Mvvm;
-using System;
+﻿using Osu.Music.Common.Models;
+using Osu.Music.Services.IO;
+using Prism.Mvvm;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Osu.Music.UI.Models
 {
     public class MainModel : BindableBase
     {
-        private string _message;
-        public string Message
+        private IEnumerable<Beatmap> _beatmaps;
+        public IEnumerable<Beatmap> Beatmaps
         {
-            get => _message;
-            set => SetProperty(ref _message, value);
+            get => _beatmaps;
+            set => SetProperty(ref _beatmaps, value);
         }
 
         public MainModel()
         {
-            Message = "Model is set!";
+            LoadBeatmaps();
+        }
+
+        private async void LoadBeatmaps()
+        {
+            var beatmaps = await LibraryLoader.LoadAsync(@"D:\Games\osu!");
+            Beatmaps = beatmaps;
         }
     }
 }

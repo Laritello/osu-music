@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace Osu.Music.Common.Models
@@ -7,44 +8,54 @@ namespace Osu.Music.Common.Models
     public class Beatmap
     {
         /// <summary>
-        /// Beatmap ID
+        /// Beatmap ID.
         /// </summary>
         public int BeatmapSetID { get; set; }
 
         /// <summary>
-        /// Romanised song title
+        /// Romanised song title.
         /// </summary>
         public string Title { get; set; }
 
         /// <summary>
-        /// Song title
+        /// Song title.
         /// </summary>
         public string TitleUnicode { get; set; }
 
         /// <summary>
-        /// Romanised song artist
+        /// Romanised song artist.
         /// </summary>
         public string Artist { get; set; }
 
         /// <summary>
-        /// Song artist
+        /// Song artist.
         /// </summary>
         public string ArtistUnicode { get; set; }
 
         /// <summary>
-        /// Beatmap creator
+        /// Beatmap creator.
         /// </summary>
         public string Creator { get; set; }
 
         /// <summary>
-        /// Location of the audio file
+        /// Location of the audio file.
         /// </summary>
         public string AudioFilename { get; set; }
 
         /// <summary>
-        /// Space-separated list of search terms
+        /// Space-separated list of search terms.
         /// </summary>
         public string Tags { get; set; }
+
+        /// <summary>
+        /// Location of the beatmap.
+        /// </summary>
+        public string Folder { get; set; }
+
+        /// <summary>
+        /// Full path to audio file.
+        /// </summary>
+        public string AudioFilePath { get => Path.Combine(Folder, AudioFilename); }
 
         public override bool Equals(object obj)
         {

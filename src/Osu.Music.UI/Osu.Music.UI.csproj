@@ -5,9 +5,13 @@
     <AssemblyName>Osu.Music.UI</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Prism.Wpf" Version="8.0.0.1909" />
+    <PackageReference Include="Prism.Wpf" Version="8.1.97" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Osu.Music.Common\Osu.Music.Common.csproj" />
+    <ProjectReference Include="..\Osu.Music.Services\Osu.Music.Services.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\Dictionaries\" />
   </ItemGroup>
 </Project>
