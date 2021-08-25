@@ -9,7 +9,7 @@
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True" >
     <Grid>
-        <TextBlock Text="{Binding Message}"
+        <TextBlock Text="{Binding Model.Message}"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center" />
     </Grid>

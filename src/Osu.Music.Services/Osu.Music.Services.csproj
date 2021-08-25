@@ -8,4 +8,8 @@
     <PackageReference Include="Prism.Wpf" Version="8.1.97" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Osu.Music.Common\Osu.Music.Common.csproj" />
+  </ItemGroup>
+
 </Project>

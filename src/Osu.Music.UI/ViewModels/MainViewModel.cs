@@ -1,4 +1,5 @@
-﻿using Prism.Commands;
+﻿using Osu.Music.UI.Models;
+using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -10,16 +11,16 @@ namespace Osu.Music.UI.ViewModels
 {
     public class MainViewModel : BindableBase
     {
-        private string _message;
-        public string Message
+        private MainModel _model;
+        public MainModel Model
         {
-            get { return _message; }
-            set { SetProperty(ref _message, value); }
+            get => _model;
+            set => SetProperty(ref _model, value);
         }
 
         public MainViewModel()
         {
-            Message = "The solution is set!";
+            Model = new MainModel();
         }
     }
 }

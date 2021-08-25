@@ -9,7 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Osu.Music.Common", "src\Osu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Osu.Music.UI", "src\Osu.Music.UI\Osu.Music.UI.csproj", "{9F39D97C-5DF1-4AE0-A730-DAB1B602677F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Osu.Music.Services", "src\Osu.Music.Services\Osu.Music.Services.csproj", "{E91C5BCE-1659-4FF4-B18B-6ECCC30CD57D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Osu.Music.Services", "src\Osu.Music.Services\Osu.Music.Services.csproj", "{E91C5BCE-1659-4FF4-B18B-6ECCC30CD57D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C039893D-5F18-4F00-AA86-6192AA41B9CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Osu.Music.Services.Tests", "tests\Osu.Music.Services.Tests\Osu.Music.Services.Tests.csproj", "{D99D2444-EB71-4E35-BC63-7D77104A3CF6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,9 +37,16 @@ Global
 		{E91C5BCE-1659-4FF4-B18B-6ECCC30CD57D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E91C5BCE-1659-4FF4-B18B-6ECCC30CD57D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E91C5BCE-1659-4FF4-B18B-6ECCC30CD57D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D99D2444-EB71-4E35-BC63-7D77104A3CF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D99D2444-EB71-4E35-BC63-7D77104A3CF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D99D2444-EB71-4E35-BC63-7D77104A3CF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D99D2444-EB71-4E35-BC63-7D77104A3CF6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D99D2444-EB71-4E35-BC63-7D77104A3CF6} = {C039893D-5F18-4F00-AA86-6192AA41B9CE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5E3A32B6-0F94-427E-98FF-6D8997E937E2}
