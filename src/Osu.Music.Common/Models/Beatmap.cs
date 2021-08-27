@@ -50,12 +50,12 @@ namespace Osu.Music.Common.Models
         /// <summary>
         /// Location of the beatmap.
         /// </summary>
-        public string Folder { get; set; }
+        public string Directory { get; set; }
 
         /// <summary>
         /// Full path to audio file.
         /// </summary>
-        public string AudioFilePath { get => Path.Combine(Folder, AudioFilename); }
+        public string AudioFilePath { get => Path.Combine(Directory, AudioFilename); }
 
         public override bool Equals(object obj)
         {

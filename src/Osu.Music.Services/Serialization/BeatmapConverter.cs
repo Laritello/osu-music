@@ -39,6 +39,14 @@ namespace Osu.Music.Services.Serialization
 
         private static void SetProperty(Beatmap beatmap, string propertyName, string propertyValue)
         {
+            if (propertyValue == null)
+                return;
+
+            // In some cases after separator ':' property contains one space before it's value
+            // which brakes logic for audio path etc.
+            if (propertyValue.Length > 0)
+                propertyValue = propertyValue[0].Equals(' ') ? propertyValue.Substring(1) : propertyValue;
+
             var property = beatmap.GetType().GetProperty(propertyName);
             
             if (property != null)

@@ -10,7 +10,7 @@ namespace Osu.Music.Services.IO
 {
     public static class LibraryLoader
     {
-        public static async Task<IEnumerable<Beatmap>> LoadAsync(string path)
+        public static async Task<IList<Beatmap>> LoadAsync(string path)
         {
             return await Task.Run(() =>
             {
@@ -38,12 +38,15 @@ namespace Osu.Music.Services.IO
 
         private static Beatmap LoadBeatmap(string directory)
         {
-            string[] files = Directory.GetFiles(directory,"*.osu");
+            string[] files = Directory.GetFiles(directory, "*.osu");
 
             if (files == null || files.Length == 0)
                 throw new Exception("Folder missing beatmap file");
 
-            return BeatmapConverter.Deserialize(files[0]);
+            Beatmap result = BeatmapConverter.Deserialize(files[0]);
+            result.Directory = directory;
+
+            return result;
         }
     }
 }
