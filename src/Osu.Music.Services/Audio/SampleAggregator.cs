@@ -1,9 +1,7 @@
 ﻿using NAudio.Dsp;
 using NAudio.Wave;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 
 namespace Osu.Music.Services.Audio
 {
@@ -84,22 +82,21 @@ namespace Osu.Music.Services.Audio
 
         public int Read(float[] buffer, int offset, int count)
         {
-            int samplesRead = 0;
             try
             {
-                samplesRead = source.Read(buffer, offset, count);
+                int samplesRead = source.Read(buffer, offset, count);
+
+                for (int n = 0; n < samplesRead; n += channels)
+                {
+                    Add(buffer[n + offset]);
+                }
+
+                return samplesRead;
             }
             catch
             {
                 return 0;
             }
-
-            for (int n = 0; n < samplesRead; n += channels)
-            {
-                Add(buffer[n + offset]);
-            }
-
-            return samplesRead;
         }
     }
 

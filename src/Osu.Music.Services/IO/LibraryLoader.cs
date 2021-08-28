@@ -14,7 +14,6 @@ namespace Osu.Music.Services.IO
         {
             return await Task.Run(() =>
             {
-                Console.WriteLine($"Started: {DateTime.Now}");
                 List<Beatmap> beatmaps = new List<Beatmap>();
 
                 string[] directories = Directory.GetDirectories($@"{path}\Songs");
@@ -31,7 +30,6 @@ namespace Osu.Music.Services.IO
                     }
                 }
 
-                Console.WriteLine($"Ended: {DateTime.Now}");
                 return beatmaps;
             });
         }

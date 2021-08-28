@@ -72,7 +72,10 @@ namespace Osu.Music.UI.ViewModels
             _audioProgressTimer.Start();
         }
 
-        private async void LoadBeatmaps() => Model.Beatmaps = await LibraryLoader.LoadAsync(@"D:\Games\osu!");
+        private async void LoadBeatmaps()
+        {
+            Model.Beatmaps = await LibraryLoader.LoadAsync(@"D:\Games\osu!");
+        }
 
         private void Playback_BeatmapEnded(object sender, BeatmapEventArgs e)
         {
@@ -86,11 +89,13 @@ namespace Osu.Music.UI.ViewModels
         {
             if (Playback.Beatmap != beatmap)
             {
-                Model.PreviousBeatmaps.Push(Playback.Beatmap);
+                if (Playback.Beatmap != null)
+                    Model.PreviousBeatmaps.Push(Playback.Beatmap);
+
                 Playback.Beatmap = beatmap;
-                Playback.Load();
             }
 
+            Playback.Load();
             Playback.Play();
         }
 
