@@ -10,6 +10,13 @@ namespace Osu.Music.Services.Audio
         #region Properties
         public Beatmap Beatmap { get; set; }
 
+        private bool _mute = false;
+        public bool Mute
+        {
+            get => _mute;
+            set => SetMute(value);
+        }
+
         private float _volume = 0.3f;
         public float Volume
         {
@@ -98,12 +105,20 @@ namespace Osu.Music.Services.Audio
 
         private void CreateDevice()
         {
-            playbackDevice = new WaveOut { DesiredLatency = 200, Volume = _volume };
+            playbackDevice = new WaveOut { DesiredLatency = 200, Volume = _mute ? 0 :_volume };
 
             playbackDevice.PlaybackStopped += (s,a) => {
                 if (a.Exception == null)
                     BeatmapEnded?.Invoke(this, new BeatmapEventArgs(Beatmap));
             };
+        }
+
+        private void SetMute(bool value)
+        {
+            _mute = value;
+
+            if (playbackDevice != null)
+                playbackDevice.Volume = _mute ? 0 : _volume;
         }
 
         private void SetVolume(float value)

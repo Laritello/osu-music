@@ -1,0 +1,6 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <FontFamily x:Key="MaterialIcons">pack://application:,,,/Osu.Music.UI;component/Resources/Fonts/#Material Icons</FontFamily>
+    <FontFamily x:Key="MaterialIconsOutlined">pack://application:,,,/Osu.Music.UI;component/Resources/Fonts/#Material Icons Outlined</FontFamily>
+    <FontFamily x:Key="MaterialIconsRound">pack://application:,,,/Osu.Music.UI;component/Resources/Fonts/#Material Icons Round</FontFamily>
+</ResourceDictionary>

@@ -5,6 +5,12 @@
     <AssemblyName>Osu.Music.UI</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Resources\Fonts\MaterialIcons-Regular.ttf" />
+    <None Remove="Resources\Fonts\MaterialIconsOutlined-Regular.otf" />
+    <None Remove="Resources\Fonts\MaterialIconsRound-Regular.otf" />
+    <None Remove="Resources\Fonts\MaterialIconsSharp-Regular.otf" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Prism.Wpf" Version="8.1.97" />
   </ItemGroup>
   <ItemGroup>
@@ -12,6 +18,9 @@
     <ProjectReference Include="..\Osu.Music.Services\Osu.Music.Services.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\Dictionaries\" />
+    <Resource Include="Resources\Fonts\MaterialIcons-Regular.ttf"/>
+    <Resource Include="Resources\Fonts\MaterialIconsOutlined-Regular.otf"/>
+    <Resource Include="Resources\Fonts\MaterialIconsRound-Regular.otf"/>
+    <Resource Include="Resources\Fonts\MaterialIconsSharp-Regular.otf"/>
   </ItemGroup>
 </Project>

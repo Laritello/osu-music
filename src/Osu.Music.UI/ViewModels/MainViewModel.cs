@@ -29,6 +29,7 @@ namespace Osu.Music.UI.ViewModels
             set => SetProperty(ref _playback, value);
         }
 
+        public DelegateCommand<bool?> MuteCommand { get; private set; }
         public DelegateCommand<Beatmap> PlayBeatmapCommand { get; private set; }
         public DelegateCommand<Beatmap> PauseBeatmapCommand { get; private set; }
         public DelegateCommand<Beatmap> StopBeatmapCommand { get; private set; }
@@ -49,6 +50,7 @@ namespace Osu.Music.UI.ViewModels
 
         private void InitializeCommands()
         {
+            MuteCommand = new DelegateCommand<bool?>(MuteVolume);
             PlayBeatmapCommand = new DelegateCommand<Beatmap>(PlayBeatmap);
             PauseBeatmapCommand = new DelegateCommand<Beatmap>(PauseBeatmap);
             StopBeatmapCommand = new DelegateCommand<Beatmap>(StopBeatmap);
@@ -85,6 +87,11 @@ namespace Osu.Music.UI.ViewModels
                 NextBeatmap(Model.CurrentBeatmap);
         }
 
+        private void MuteVolume(bool? mute)
+        {
+            Playback.Mute = mute?? false;
+        }
+
         private void PlayBeatmap(Beatmap beatmap)
         {
             if (Playback.Beatmap != beatmap)
@@ -93,9 +100,9 @@ namespace Osu.Music.UI.ViewModels
                     Model.PreviousBeatmaps.Push(Playback.Beatmap);
 
                 Playback.Beatmap = beatmap;
+                Playback.Load();
             }
 
-            Playback.Load();
             Playback.Play();
         }
 
