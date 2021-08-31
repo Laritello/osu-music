@@ -41,7 +41,8 @@
             <Rectangle Fill="Purple" Opacity="0.2" Grid.RowSpan="2"/>
 
             <StackPanel Orientation="Vertical" Margin="0 15 0 0">
-                <Button Style="{DynamicResource SidebarButtonCollection}"/>
+                <ToggleButton Style="{DynamicResource SidebarButtonCollection}"/>
+                <ToggleButton Style="{DynamicResource SidebarButtonPlaylists}"/>
             </StackPanel>
 
             <Image Grid.Row="1" Source="pack://application:,,,/Osu.Music.UI;component/Resources/Images/osu-logo.png" Width="150" Height="150"/>

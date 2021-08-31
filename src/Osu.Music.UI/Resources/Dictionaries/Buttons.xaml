@@ -205,7 +205,7 @@
     </Style>
 
 
-    <Style x:Key="SidebarButtonBase" TargetType="{x:Type Button}">
+    <Style x:Key="SidebarToggleButtonBase" TargetType="{x:Type ToggleButton}">
         <Setter Property="Height" Value="40"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="Purple"/>
@@ -216,10 +216,17 @@
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border CornerRadius="0" Background="{TemplateBinding Background}" BorderBrush="Purple" BorderThickness="5 0 0 0" >
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border x:Name="Bd" CornerRadius="0" Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="0 0 0 0" Padding="5 0 0 0">
                         <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Bd" Property="BorderBrush" Value="Purple"/>
+                            <Setter TargetName="Bd" Property="BorderThickness" Value="5 0 0 0"/>
+                            <Setter TargetName="Bd" Property="Padding" Value="0 0 0 0"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -255,12 +262,23 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="SidebarButtonCollection" TargetType="{x:Type Button}" BasedOn="{StaticResource SidebarButtonBase}">
+    <Style x:Key="SidebarButtonCollection" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource SidebarToggleButtonBase}">
         <Setter Property="Content">
             <Setter.Value>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
                     <TextBlock FontFamily="{DynamicResource MaterialIcons}" FontSize="24" Text="&#xe030;" Margin="5 0 10 0" VerticalAlignment="Center"/>
                     <TextBlock Text="Collection" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SidebarButtonPlaylists" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource SidebarToggleButtonBase}">
+        <Setter Property="Content">
+            <Setter.Value>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                    <TextBlock FontFamily="{DynamicResource MaterialIcons}" FontSize="24" Text="&#xe03d;" Margin="5 0 10 0" VerticalAlignment="Center"/>
+                    <TextBlock Text="Playlists" VerticalAlignment="Center"/>
                 </StackPanel>
             </Setter.Value>
         </Setter>
