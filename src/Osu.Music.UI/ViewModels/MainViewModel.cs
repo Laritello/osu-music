@@ -143,6 +143,7 @@ namespace Osu.Music.UI.ViewModels
 
             if (Playback.Beatmap != Model.SelectedBeatmap)
             {
+                Model.PlayingBeatmap = Model.SelectedBeatmap;
                 Playback.Beatmap = Model.SelectedBeatmap;
                 Playback.Load();
             }

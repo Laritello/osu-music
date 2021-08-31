@@ -5,6 +5,9 @@
         <Style.Resources>
             <convert:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter"/>
         </Style.Resources>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="Background" Value="White"/>
         <Setter Property="Foreground" Value="Purple"/>
         <Setter Property="ItemTemplate">
