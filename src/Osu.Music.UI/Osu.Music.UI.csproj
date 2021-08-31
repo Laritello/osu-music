@@ -25,7 +25,8 @@
     <None Remove="Resources\Fonts\Roboto\Roboto-Regular.ttf" />
     <None Remove="Resources\Fonts\Roboto\Roboto-Thin.ttf" />
     <None Remove="Resources\Fonts\Roboto\Roboto-ThinItalic.ttf" />
-    <None Remove="Resources\Images\SidebarBackground.jpg" />
+    <None Remove="Resources\Images\osu-logo.png" />
+    <None Remove="Resources\Images\sidebar-background.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Prism.Wpf" Version="8.1.97" />
@@ -51,6 +52,7 @@
     <Resource Include="Resources\Fonts\Roboto\Roboto-Regular.ttf" />
     <Resource Include="Resources\Fonts\Roboto\Roboto-Thin.ttf" />
     <Resource Include="Resources\Fonts\Roboto\Roboto-ThinItalic.ttf" />
-    <Resource Include="Resources\Images\SidebarBackground.jpg" />
+    <Resource Include="Resources\Images\osu-logo.png" />
+    <Resource Include="Resources\Images\sidebar-background.png" />
   </ItemGroup>
 </Project>
