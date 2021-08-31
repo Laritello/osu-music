@@ -124,7 +124,8 @@ namespace Osu.Music.UI.ViewModels
 
         private void StopBeatmap(Beatmap beatmap)
         {
-            Playback.Stop();
+            Playback.Pause();
+            Playback.Position = 0;
         }
 
         private void PreviousBeatmap(Beatmap beatmap)

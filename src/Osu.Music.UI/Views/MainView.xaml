@@ -64,11 +64,11 @@
             </StackPanel>
             <StackPanel Grid.Column="1" VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Center">
                 <!--<Slider Minimum="0" Maximum="{Binding Model.Length, Mode=OneWay}" Width="300" Value="{Binding Model.Position, Mode=TwoWay}"/>-->
-                <Button Style="{DynamicResource PlayerButtonPrevious}" Command="{Binding PreviousBeatmapCommand}" CommandParameter="{Binding Model.SelectedBeatmap}"/>
-                <Button Style="{DynamicResource PlayerButtonStop}" Command="{Binding StopBeatmapCommand}" CommandParameter="{Binding Model.SelectedBeatmap}"/>
+                <Button Style="{DynamicResource PlayerButtonPrevious}" Command="{Binding PreviousBeatmapCommand}" CommandParameter="{Binding Model.PlayingBeatmap}"/>
+                <Button Style="{DynamicResource PlayerButtonStop}" Command="{Binding StopBeatmapCommand}" CommandParameter="{Binding Model.PlayingBeatmap}"/>
                 <Button Style="{DynamicResource PlayerButtonPlay}" Command="{Binding PlayBeatmapCommand}" CommandParameter="{Binding Model.SelectedBeatmap}"/>
-                <Button Style="{DynamicResource PlayerButtonPause}" Command="{Binding PauseBeatmapCommand}" CommandParameter="{Binding Model.SelectedBeatmap}"/>
-                <Button Style="{DynamicResource PlayerButtonNext}" Command="{Binding NextBeatmapCommand}" CommandParameter="{Binding Model.SelectedBeatmap}"/>
+                <Button Style="{DynamicResource PlayerButtonPause}" Command="{Binding PauseBeatmapCommand}" CommandParameter="{Binding Model.PlayingBeatmap}"/>
+                <Button Style="{DynamicResource PlayerButtonNext}" Command="{Binding NextBeatmapCommand}" CommandParameter="{Binding Model.PlayingBeatmap}"/>
             </StackPanel>
             <StackPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0 0 5 0">
                 <ToggleButton Style="{DynamicResource PlayerToggleButtonVolume}" Command="{Binding MuteCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}"/>
