@@ -1,5 +1,6 @@
 ﻿using Osu.Music.Common.Models;
 using Prism.Mvvm;
+using System;
 using System.Collections.Generic;
 
 namespace Osu.Music.UI.Models
@@ -42,18 +43,25 @@ namespace Osu.Music.UI.Models
             set => SetProperty(ref _random, value);
         }
 
-        private long _position;
-        public long Position
+        private TimeSpan currentTime;
+        public TimeSpan CurrentTime
         {
-            get => _position;
-            set => SetProperty(ref _position, value);
+            get => currentTime;
+            set => SetProperty(ref currentTime, value);
         }
 
-        private long _length;
-        public long Length
+        private TimeSpan _totalTime;
+        public TimeSpan TotalTime
         {
-            get => _length;
-            set => SetProperty(ref _length, value);
+            get => _totalTime;
+            set => SetProperty(ref _totalTime, value);
+        }
+
+        private double _progress;
+        public double Progress
+        {
+            get => _progress;
+            set => SetProperty(ref _progress, value);
         }
         #endregion
 

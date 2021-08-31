@@ -18,9 +18,9 @@
     <ProjectReference Include="..\Osu.Music.Services\Osu.Music.Services.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Fonts\MaterialIcons-Regular.ttf"/>
-    <Resource Include="Resources\Fonts\MaterialIconsOutlined-Regular.otf"/>
-    <Resource Include="Resources\Fonts\MaterialIconsRound-Regular.otf"/>
-    <Resource Include="Resources\Fonts\MaterialIconsSharp-Regular.otf"/>
+    <Resource Include="Resources\Fonts\MaterialIcons-Regular.ttf" />
+    <Resource Include="Resources\Fonts\MaterialIconsOutlined-Regular.otf" />
+    <Resource Include="Resources\Fonts\MaterialIconsRound-Regular.otf" />
+    <Resource Include="Resources\Fonts\MaterialIconsSharp-Regular.otf" />
   </ItemGroup>
 </Project>

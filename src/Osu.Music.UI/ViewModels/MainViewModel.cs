@@ -5,10 +5,6 @@ using Osu.Music.UI.Models;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Threading;
 
 namespace Osu.Music.UI.ViewModels
@@ -65,7 +61,7 @@ namespace Osu.Music.UI.ViewModels
 
         private void InitializeAudioProgressTimer()
         {
-            _audioProgressTimer = new DispatcherTimer()
+            _audioProgressTimer = new DispatcherTimer(DispatcherPriority.Render)
             {
                 Interval = TimeSpan.FromMilliseconds(100)
             };
@@ -165,8 +161,9 @@ namespace Osu.Music.UI.ViewModels
 
         private void UpdateBeatmapProgress(object sender, EventArgs e)
         {
-            Model.Position = Playback.Position;
-            Model.Length = Playback.Length;
+            Model.CurrentTime = Playback.CurrentTime;
+            Model.TotalTime = Playback.TotalTime;
+            Model.Progress = Playback.CurrentTime.TotalSeconds / Playback.TotalTime.TotalSeconds;
         }
     }
 }

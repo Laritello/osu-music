@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="Osu.Music.UI.UserControls.BeatmapProgressBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Osu.Music.UI.UserControls"
+              xmlns:convert="clr-namespace:Osu.Music.UI.Resources.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="20" d:DesignWidth="900" Name="SliderPart">
+    <UserControl.Resources>
+        <convert:ProgressToWidthConverter x:Key="ProgressToWidthConverter"/>
+        <convert:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter"/>
+    </UserControl.Resources>
+    <Grid x:Name="SliderArea">
+        <Rectangle x:Name="RectangleTotal" Opacity="1" Width="{Binding ElementName=SliderPart, Path=ActualWidth}" MinHeight="20" MaxHeight="20" Fill="#b200b3" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"/>
+        <Rectangle x:Name="RectangleProgress" Opacity="1" MinHeight="20" MaxHeight="20" VerticalAlignment="Bottom" HorizontalAlignment="Left">
+            <Rectangle.Width>
+                <MultiBinding Converter="{StaticResource ProgressToWidthConverter}">
+                    <Binding Path="ActualWidth" ElementName="SliderPart"/>
+                    <Binding Path="Progress" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:BeatmapProgressBar}}"/>
+                </MultiBinding>
+            </Rectangle.Width>
+            <Rectangle.Fill>
+                <SolidColorBrush Color="#4c004d"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <TextBlock Text="{Binding Current, RelativeSource={RelativeSource FindAncestor, AncestorType=local:BeatmapProgressBar}, Converter={StaticResource TimeSpanToStringConverter}}" 
+                   VerticalAlignment="Center" Margin="11 0 0 0" Foreground="White"/>
+            <TextBlock Text="/" VerticalAlignment="Center" Margin="2 0 2 0" Foreground="White"/>
+            <TextBlock Text="{Binding Total, RelativeSource={RelativeSource FindAncestor, AncestorType=local:BeatmapProgressBar}, Converter={StaticResource TimeSpanToStringConverter}}" 
+                   VerticalAlignment="Center" Margin="0 0 12 0" Foreground="White"/>
+        </StackPanel>
+        <TextBlock/>
+    </Grid>
+</UserControl>
