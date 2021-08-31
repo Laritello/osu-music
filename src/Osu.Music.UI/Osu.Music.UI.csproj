@@ -5,10 +5,26 @@
     <AssemblyName>Osu.Music.UI</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Resources\Fonts\Material Icons\MaterialIcons-Regular.ttf" />
+    <None Remove="Resources\Fonts\Material Icons\MaterialIconsOutlined-Regular.otf" />
+    <None Remove="Resources\Fonts\Material Icons\MaterialIconsRound-Regular.otf" />
+    <None Remove="Resources\Fonts\Material Icons\MaterialIconsSharp-Regular.otf" />
     <None Remove="Resources\Fonts\MaterialIcons-Regular.ttf" />
     <None Remove="Resources\Fonts\MaterialIconsOutlined-Regular.otf" />
     <None Remove="Resources\Fonts\MaterialIconsRound-Regular.otf" />
     <None Remove="Resources\Fonts\MaterialIconsSharp-Regular.otf" />
+    <None Remove="Resources\Fonts\Roboto\Roboto-Black.ttf" />
+    <None Remove="Resources\Fonts\Roboto\Roboto-BlackItalic.ttf" />
+    <None Remove="Resources\Fonts\Roboto\Roboto-Bold.ttf" />
+    <None Remove="Resources\Fonts\Roboto\Roboto-BoldItalic.ttf" />
+    <None Remove="Resources\Fonts\Roboto\Roboto-Italic.ttf" />
+    <None Remove="Resources\Fonts\Roboto\Roboto-Light.ttf" />
+    <None Remove="Resources\Fonts\Roboto\Roboto-LightItalic.ttf" />
+    <None Remove="Resources\Fonts\Roboto\Roboto-Medium.ttf" />
+    <None Remove="Resources\Fonts\Roboto\Roboto-MediumItalic.ttf" />
+    <None Remove="Resources\Fonts\Roboto\Roboto-Regular.ttf" />
+    <None Remove="Resources\Fonts\Roboto\Roboto-Thin.ttf" />
+    <None Remove="Resources\Fonts\Roboto\Roboto-ThinItalic.ttf" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Prism.Wpf" Version="8.1.97" />
@@ -18,9 +34,21 @@
     <ProjectReference Include="..\Osu.Music.Services\Osu.Music.Services.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Fonts\MaterialIcons-Regular.ttf" />
-    <Resource Include="Resources\Fonts\MaterialIconsOutlined-Regular.otf" />
-    <Resource Include="Resources\Fonts\MaterialIconsRound-Regular.otf" />
-    <Resource Include="Resources\Fonts\MaterialIconsSharp-Regular.otf" />
+    <Resource Include="Resources\Fonts\Material Icons\MaterialIcons-Regular.ttf" />
+    <Resource Include="Resources\Fonts\Material Icons\MaterialIconsOutlined-Regular.otf" />
+    <Resource Include="Resources\Fonts\Material Icons\MaterialIconsRound-Regular.otf" />
+    <Resource Include="Resources\Fonts\Material Icons\MaterialIconsSharp-Regular.otf" />
+    <Resource Include="Resources\Fonts\Roboto\Roboto-Black.ttf" />
+    <Resource Include="Resources\Fonts\Roboto\Roboto-BlackItalic.ttf" />
+    <Resource Include="Resources\Fonts\Roboto\Roboto-Bold.ttf" />
+    <Resource Include="Resources\Fonts\Roboto\Roboto-BoldItalic.ttf" />
+    <Resource Include="Resources\Fonts\Roboto\Roboto-Italic.ttf" />
+    <Resource Include="Resources\Fonts\Roboto\Roboto-Light.ttf" />
+    <Resource Include="Resources\Fonts\Roboto\Roboto-LightItalic.ttf" />
+    <Resource Include="Resources\Fonts\Roboto\Roboto-Medium.ttf" />
+    <Resource Include="Resources\Fonts\Roboto\Roboto-MediumItalic.ttf" />
+    <Resource Include="Resources\Fonts\Roboto\Roboto-Regular.ttf" />
+    <Resource Include="Resources\Fonts\Roboto\Roboto-Thin.ttf" />
+    <Resource Include="Resources\Fonts\Roboto\Roboto-ThinItalic.ttf" />
   </ItemGroup>
 </Project>

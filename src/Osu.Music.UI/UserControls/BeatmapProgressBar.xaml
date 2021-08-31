@@ -26,10 +26,10 @@
         </Rectangle>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <TextBlock Text="{Binding Current, RelativeSource={RelativeSource FindAncestor, AncestorType=local:BeatmapProgressBar}, Converter={StaticResource TimeSpanToStringConverter}}" 
-                   VerticalAlignment="Center" Margin="11 0 0 0" Foreground="White"/>
-            <TextBlock Text="/" VerticalAlignment="Center" Margin="2 0 2 0" Foreground="White"/>
+                   VerticalAlignment="Center" Margin="11 0 0 0" Foreground="White"  FontSize="12"/>
+            <TextBlock Text="/" VerticalAlignment="Center" Margin="2 0 2 0" Foreground="White"  FontSize="12"/>
             <TextBlock Text="{Binding Total, RelativeSource={RelativeSource FindAncestor, AncestorType=local:BeatmapProgressBar}, Converter={StaticResource TimeSpanToStringConverter}}" 
-                   VerticalAlignment="Center" Margin="0 0 12 0" Foreground="White"/>
+                   VerticalAlignment="Center" Margin="0 0 12 0" Foreground="White"  FontSize="12"/>
         </StackPanel>
         <TextBlock/>
     </Grid>

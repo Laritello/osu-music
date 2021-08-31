@@ -9,38 +9,43 @@ namespace Osu.Music.UI.Models
     {
         #region Properties
         private IList<Beatmap> _beatmaps;
+        /// <summary>
+        /// Full list of beatmaps from osu library.
+        /// </summary>
         public IList<Beatmap> Beatmaps
         {
             get => _beatmaps;
             set => SetProperty(ref _beatmaps, value);
         }
 
-        private Beatmap _currentBeatmap;
-        public Beatmap CurrentBeatmap
+        private Beatmap _playingBeatmap;
+        /// <summary>
+        /// Beatmap that is currently playing.
+        /// </summary>
+        public Beatmap PlayingBeatmap
         {
-            get => _currentBeatmap;
-            set => SetProperty(ref _currentBeatmap, value);
+            get => _playingBeatmap;
+            set => SetProperty(ref _playingBeatmap, value);
+        }
+
+        private Beatmap _selectedBeatmap;
+        /// <summary>
+        /// Beatmap that is currently selected in ListBox.
+        /// </summary>
+        public Beatmap SelectedBeatmap
+        {
+            get => _selectedBeatmap;
+            set => SetProperty(ref _selectedBeatmap, value);
         }
 
         private Stack<Beatmap> _previousBeatmaps;
+        /// <summary>
+        /// Stack of previously played beatmaps.
+        /// </summary>
         public Stack<Beatmap> PreviousBeatmaps
         {
             get => _previousBeatmaps;
             set => SetProperty(ref _previousBeatmaps, value);
-        }
-
-        private bool _repeat;
-        public bool Repeat
-        {
-            get => _repeat;
-            set => SetProperty(ref _repeat, value);
-        }
-
-        private bool _random;
-        public bool Random
-        {
-            get => _random;
-            set => SetProperty(ref _random, value);
         }
 
         private TimeSpan currentTime;

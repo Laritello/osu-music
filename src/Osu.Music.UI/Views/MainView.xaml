@@ -6,13 +6,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="700"
+             d:DesignHeight="550" d:DesignWidth="900"
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True" >
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/FontIcons.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Fonts.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Defaults.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Texts.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Buttons.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/VolumeSlider.xaml"/>
             </ResourceDictionary.MergedDictionaries>
@@ -26,10 +28,10 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="20"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
         <ListView Grid.Column="1" 
-                  ItemsSource="{Binding Model.Beatmaps}" SelectedItem="{Binding Model.CurrentBeatmap}">
+                  ItemsSource="{Binding Model.Beatmaps}" SelectedItem="{Binding Model.SelectedBeatmap}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel>
@@ -46,25 +48,29 @@
         <controls:BeatmapProgressBar Grid.Row="1" Grid.ColumnSpan="2" Total="{Binding Model.TotalTime}" Current="{Binding Model.CurrentTime}" Progress="{Binding Model.Progress}" />
         <Grid Grid.Row="2" Grid.ColumnSpan="2" Background="Purple">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="350"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="350"/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" VerticalAlignment="Center" Orientation="Horizontal" Margin="5 0 0 0">
-                <ToggleButton Style="{DynamicResource PlayerToggleButtonVolume}" Command="{Binding MuteCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}"/>
-                <Slider Style="{DynamicResource VolumeSlider}" Minimum="0" Maximum="1" Value="{Binding Playback.Volume}"/>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Style="{DynamicResource PlayerBeatmapTitle}" Text="{Binding Model.PlayingBeatmap.Title}"/>
+                    <TextBlock Style="{DynamicResource PlayerBeatmapArtist}" Text="{Binding Model.PlayingBeatmap.Artist}"/>
+                </StackPanel>
             </StackPanel>
             <StackPanel Grid.Column="1" VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Center">
                 <!--<Slider Minimum="0" Maximum="{Binding Model.Length, Mode=OneWay}" Width="300" Value="{Binding Model.Position, Mode=TwoWay}"/>-->
-                <Button Style="{DynamicResource PlayerButtonPrevious}" Command="{Binding PreviousBeatmapCommand}" CommandParameter="{Binding Model.CurrentBeatmap}"/>
-                <Button Style="{DynamicResource PlayerButtonStop}" Command="{Binding StopBeatmapCommand}" CommandParameter="{Binding Model.CurrentBeatmap}"/>
-                <Button Style="{DynamicResource PlayerButtonPlay}" Command="{Binding PlayBeatmapCommand}" CommandParameter="{Binding Model.CurrentBeatmap}"/>
-                <Button Style="{DynamicResource PlayerButtonPause}" Command="{Binding PauseBeatmapCommand}" CommandParameter="{Binding Model.CurrentBeatmap}"/>
-                <Button Style="{DynamicResource PlayerButtonNext}" Command="{Binding NextBeatmapCommand}" CommandParameter="{Binding Model.CurrentBeatmap}"/>
+                <Button Style="{DynamicResource PlayerButtonPrevious}" Command="{Binding PreviousBeatmapCommand}" CommandParameter="{Binding Model.SelectedBeatmap}"/>
+                <Button Style="{DynamicResource PlayerButtonStop}" Command="{Binding StopBeatmapCommand}" CommandParameter="{Binding Model.SelectedBeatmap}"/>
+                <Button Style="{DynamicResource PlayerButtonPlay}" Command="{Binding PlayBeatmapCommand}" CommandParameter="{Binding Model.SelectedBeatmap}"/>
+                <Button Style="{DynamicResource PlayerButtonPause}" Command="{Binding PauseBeatmapCommand}" CommandParameter="{Binding Model.SelectedBeatmap}"/>
+                <Button Style="{DynamicResource PlayerButtonNext}" Command="{Binding NextBeatmapCommand}" CommandParameter="{Binding Model.SelectedBeatmap}"/>
             </StackPanel>
             <StackPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0 0 5 0">
-                <ToggleButton Style="{DynamicResource PlayerToggleButtonShuffle}" IsChecked="{Binding Model.Random}"/>
-                <ToggleButton Style="{DynamicResource PlayerToggleButtonRandom}" IsChecked="{Binding Model.Repeat}"/>
+                <ToggleButton Style="{DynamicResource PlayerToggleButtonVolume}" Command="{Binding MuteCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}"/>
+                <Slider Style="{DynamicResource VolumeSlider}" Minimum="0" Maximum="1" Value="{Binding Playback.Volume}" Margin="0 0 5 0"/>
+                <ToggleButton Style="{DynamicResource PlayerToggleButtonShuffle}" IsChecked="{Binding Random}"/>
+                <ToggleButton Style="{DynamicResource PlayerToggleButtonRandom}" IsChecked="{Binding Repeat}"/>
             </StackPanel>
         </Grid>
         

@@ -25,6 +25,20 @@ namespace Osu.Music.UI.ViewModels
             set => SetProperty(ref _playback, value);
         }
 
+        private bool _repeat;
+        public bool Repeat
+        {
+            get => _repeat;
+            set => SetProperty(ref _repeat, value);
+        }
+
+        private bool _random;
+        public bool Random
+        {
+            get => _random;
+            set => SetProperty(ref _random, value);
+        }
+
         public DelegateCommand<bool?> MuteCommand { get; private set; }
         public DelegateCommand<Beatmap> PlayBeatmapCommand { get; private set; }
         public DelegateCommand<Beatmap> PauseBeatmapCommand { get; private set; }
@@ -77,10 +91,10 @@ namespace Osu.Music.UI.ViewModels
 
         private void Playback_BeatmapEnded(object sender, BeatmapEventArgs e)
         {
-            if (Model.Repeat)
-                PlayBeatmap(Model.CurrentBeatmap);
+            if (Repeat)
+                PlayBeatmap(Model.SelectedBeatmap);
             else
-                NextBeatmap(Model.CurrentBeatmap);
+                NextBeatmap(Model.SelectedBeatmap);
         }
 
         private void MuteVolume(bool? mute)
@@ -95,6 +109,7 @@ namespace Osu.Music.UI.ViewModels
                 if (Playback.Beatmap != null)
                     Model.PreviousBeatmaps.Push(Playback.Beatmap);
 
+                Model.PlayingBeatmap = beatmap;
                 Playback.Beatmap = beatmap;
                 Playback.Load();
             }
@@ -119,16 +134,16 @@ namespace Osu.Music.UI.ViewModels
                 int index = Model.Beatmaps.IndexOf(beatmap) - 1;
                 index = index < 0 ? Model.Beatmaps.Count - 1 : index;
 
-                Model.CurrentBeatmap = Model.Beatmaps[index];
+                Model.SelectedBeatmap = Model.Beatmaps[index];
             }
             else
             {
-                Model.CurrentBeatmap = Model.PreviousBeatmaps.Pop();
+                Model.SelectedBeatmap = Model.PreviousBeatmaps.Pop();
             }
 
-            if (Playback.Beatmap != Model.CurrentBeatmap)
+            if (Playback.Beatmap != Model.SelectedBeatmap)
             {
-                Playback.Beatmap = Model.CurrentBeatmap;
+                Playback.Beatmap = Model.SelectedBeatmap;
                 Playback.Load();
             }
 
@@ -139,14 +154,14 @@ namespace Osu.Music.UI.ViewModels
         {
             int index = GetNextMapIndex(beatmap);
 
-            Model.CurrentBeatmap = Model.Beatmaps[index];
-            PlayBeatmap(Model.CurrentBeatmap);
+            Model.SelectedBeatmap = Model.Beatmaps[index];
+            PlayBeatmap(Model.SelectedBeatmap);
         }
 
         private int GetNextMapIndex(Beatmap beatmap)
         {
             int index;
-            if (Model.Random)
+            if (Random)
             {
                 Random rnd = new Random();
                 index = rnd.Next(0, Model.Beatmaps.Count);
