@@ -46,9 +46,9 @@
         <controls:BeatmapProgressBar Grid.Row="1" Grid.ColumnSpan="2" Total="{Binding Model.TotalTime}" Current="{Binding Model.CurrentTime}" Progress="{Binding Model.Progress}" />
         <Grid Grid.Row="2" Grid.ColumnSpan="2" Background="Purple">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="150"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="150"/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" VerticalAlignment="Center" Orientation="Horizontal" Margin="5 0 0 0">
                 <ToggleButton Style="{DynamicResource PlayerToggleButtonVolume}" Command="{Binding MuteCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}"/>
@@ -62,7 +62,7 @@
                 <Button Style="{DynamicResource PlayerButtonPause}" Command="{Binding PauseBeatmapCommand}" CommandParameter="{Binding Model.CurrentBeatmap}"/>
                 <Button Style="{DynamicResource PlayerButtonNext}" Command="{Binding NextBeatmapCommand}" CommandParameter="{Binding Model.CurrentBeatmap}"/>
             </StackPanel>
-            <StackPanel Grid.Column="2" VerticalAlignment="Center" Orientation="Horizontal" Margin="0 0 5 0">
+            <StackPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0 0 5 0">
                 <ToggleButton Style="{DynamicResource PlayerToggleButtonShuffle}" IsChecked="{Binding Model.Random}"/>
                 <ToggleButton Style="{DynamicResource PlayerToggleButtonRandom}" IsChecked="{Binding Model.Repeat}"/>
             </StackPanel>
