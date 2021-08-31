@@ -39,8 +39,9 @@ namespace Osu.Music.Services.IO
                 TitleUnicode = entry.TitleUnicode,
                 Artist = entry.Artist,
                 ArtistUnicode = entry.ArtistUnicode,
-                AudioFileName = entry.AudioFileName,
                 Creator = entry.Creator,
+                AudioFileName = entry.AudioFileName,
+                TotalTime = TimeSpan.FromMilliseconds(entry.TotalTime),
                 Tags = entry.SongTags,
                 Directory = $@"D:\Games\osu!\Songs\{entry.FolderName}"
             };

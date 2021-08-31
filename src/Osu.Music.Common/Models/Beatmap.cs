@@ -43,6 +43,11 @@ namespace Osu.Music.Common.Models
         public string AudioFileName { get; set; }
 
         /// <summary>
+        /// Total duration of the audio file.
+        /// </summary>
+        public TimeSpan TotalTime { get; set; }
+
+        /// <summary>
         /// Location of the background image file.
         /// </summary>
         public string BackgroundFileName { get; set; }
@@ -65,7 +70,7 @@ namespace Osu.Music.Common.Models
         /// <summary>
         /// Full path to background image file.
         /// </summary>
-        public string BackgroundFilePath { get => Path.Combine(Directory, BackgroundFileName); }
+        public string BackgroundFilePath { get =>  (Directory == null || BackgroundFileName == null) ? "" : Path.Combine(Directory, BackgroundFileName); }
 
         public override bool Equals(object obj)
         {

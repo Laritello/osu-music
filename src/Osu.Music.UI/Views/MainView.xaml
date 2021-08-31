@@ -16,7 +16,8 @@
                 <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Defaults.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Texts.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Buttons.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/VolumeSlider.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Sliders.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/ListViews.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -30,20 +31,10 @@
             <RowDefinition Height="20"/>
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
-        <ListView Grid.Column="1" 
-                  ItemsSource="{Binding Model.Beatmaps}" SelectedItem="{Binding Model.SelectedBeatmap}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <WrapPanel>
-                        <TextBlock Text="{Binding Title}"/>
-                        <TextBlock Text=" - " />
-                        <TextBlock Text="{Binding Artist}"/>
-                        <TextBlock Text=" [" />
-                        <TextBlock Text="{Binding Creator}"/>
-                        <TextBlock Text="]" />
-                    </WrapPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
+        <StackPanel Background="#EEEEEE">
+            
+        </StackPanel>
+        <ListView Style="{DynamicResource ListViewBeatmaps}" Grid.Column="1" ItemsSource="{Binding Model.Beatmaps}" SelectedItem="{Binding Model.SelectedBeatmap}">
         </ListView>
         <controls:BeatmapProgressBar Grid.Row="1" Grid.ColumnSpan="2" Total="{Binding Model.TotalTime}" Current="{Binding Model.CurrentTime}" Progress="{Binding Model.Progress}" />
         <Grid Grid.Row="2" Grid.ColumnSpan="2" Background="Purple">
