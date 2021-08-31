@@ -40,7 +40,12 @@ namespace Osu.Music.Common.Models
         /// <summary>
         /// Location of the audio file.
         /// </summary>
-        public string AudioFilename { get; set; }
+        public string AudioFileName { get; set; }
+
+        /// <summary>
+        /// Location of the background image file.
+        /// </summary>
+        public string BackgroundFileName { get; set; }
 
         /// <summary>
         /// Space-separated list of search terms.
@@ -55,7 +60,12 @@ namespace Osu.Music.Common.Models
         /// <summary>
         /// Full path to audio file.
         /// </summary>
-        public string AudioFilePath { get => Path.Combine(Directory, AudioFilename); }
+        public string AudioFilePath { get => Path.Combine(Directory, AudioFileName); }
+
+        /// <summary>
+        /// Full path to background image file.
+        /// </summary>
+        public string BackgroundFilePath { get => Path.Combine(Directory, BackgroundFileName); }
 
         public override bool Equals(object obj)
         {
@@ -66,7 +76,7 @@ namespace Osu.Music.Common.Models
             else
             {
                 Beatmap b = (Beatmap)obj;
-                return BeatmapSetID == b.BeatmapSetID && Title == b.Title && Artist == b.Artist && Creator == b.Creator;
+                return BeatmapSetID == b.BeatmapSetID && Title == b.Title && Artist == b.Artist && Creator == b.Creator; // Leave only ID check?
             }
         }
     }

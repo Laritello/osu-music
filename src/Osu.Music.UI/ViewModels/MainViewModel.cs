@@ -86,7 +86,7 @@ namespace Osu.Music.UI.ViewModels
 
         private async void LoadBeatmaps()
         {
-            Model.Beatmaps = await LibraryLoader.LoadAsync(@"D:\Games\osu!");
+            Model.Beatmaps = await LibraryLoader.LoadAsync();
         }
 
         private void Playback_BeatmapEnded(object sender, BeatmapEventArgs e)
