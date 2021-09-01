@@ -84,5 +84,10 @@ namespace Osu.Music.Common.Models
                 return BeatmapSetID == b.BeatmapSetID && Title == b.Title && Artist == b.Artist && Creator == b.Creator; // Leave only ID check?
             }
         }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }
