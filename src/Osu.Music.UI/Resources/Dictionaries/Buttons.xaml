@@ -211,7 +211,7 @@
         <Setter Property="Foreground" Value="Purple"/>
         <Setter Property="FontFamily" Value="{DynamicResource Roboto}"/>
         <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontSize" Value="14"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Template">
@@ -262,12 +262,23 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="SidebarButtonAllSongs" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource SidebarToggleButtonBase}">
+        <Setter Property="Content">
+            <Setter.Value>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                    <TextBlock FontFamily="{DynamicResource MaterialIconsOutlined}" FontSize="24" Text="&#xe3a1;" Margin="5 0 10 0" VerticalAlignment="Center"/>
+                    <TextBlock Text="ALL SONGS" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <Style x:Key="SidebarButtonCollection" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource SidebarToggleButtonBase}">
         <Setter Property="Content">
             <Setter.Value>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
-                    <TextBlock FontFamily="{DynamicResource MaterialIcons}" FontSize="24" Text="&#xe030;" Margin="5 0 10 0" VerticalAlignment="Center"/>
-                    <TextBlock Text="Collection" VerticalAlignment="Center"/>
+                    <TextBlock FontFamily="{DynamicResource MaterialIconsOutlined}" FontSize="24" Text="&#xe030;" Margin="5 0 10 0" VerticalAlignment="Center"/>
+                    <TextBlock Text="COLLECTIONS" VerticalAlignment="Center"/>
                 </StackPanel>
             </Setter.Value>
         </Setter>
@@ -277,8 +288,8 @@
         <Setter Property="Content">
             <Setter.Value>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
-                    <TextBlock FontFamily="{DynamicResource MaterialIcons}" FontSize="24" Text="&#xe03d;" Margin="5 0 10 0" VerticalAlignment="Center"/>
-                    <TextBlock Text="Playlists" VerticalAlignment="Center"/>
+                    <TextBlock FontFamily="{DynamicResource MaterialIconsOutlined}" FontSize="24" Text="&#xe03d;" Margin="5 0 10 0" VerticalAlignment="Center"/>
+                    <TextBlock Text="PLAYLISTS" VerticalAlignment="Center"/>
                 </StackPanel>
             </Setter.Value>
         </Setter>
