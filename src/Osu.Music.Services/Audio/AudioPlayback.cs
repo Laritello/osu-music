@@ -107,8 +107,9 @@ namespace Osu.Music.Services.Audio
         {
             playbackDevice = new WaveOut { DesiredLatency = 200, Volume = _mute ? 0 :_volume };
 
-            playbackDevice.PlaybackStopped += (s,a) => {
-                if (a.Exception == null)
+            playbackDevice.PlaybackStopped += (s, a) =>
+            {
+                if (a.Exception == null && fileStream != null && fileStream.Position == fileStream.Length)
                     BeatmapEnded?.Invoke(this, new BeatmapEventArgs(Beatmap));
             };
         }
