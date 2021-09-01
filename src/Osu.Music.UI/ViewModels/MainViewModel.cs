@@ -1,7 +1,9 @@
 ﻿using Osu.Music.Common.Models;
 using Osu.Music.Services.Audio;
 using Osu.Music.Services.IO;
+using Osu.Music.UI.Interfaces;
 using Osu.Music.UI.Models;
+using Osu.Music.UI.Visualization;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
@@ -39,6 +41,13 @@ namespace Osu.Music.UI.ViewModels
             set => SetProperty(ref _random, value);
         }
 
+        private IVisualizationPlugin _visualization;
+        public IVisualizationPlugin Visualization
+        {
+            get => _visualization;
+            set => SetProperty(ref _visualization, value);
+        }
+
         public DelegateCommand<bool?> MuteCommand { get; private set; }
         public DelegateCommand<Beatmap> PlayBeatmapCommand { get; private set; }
         public DelegateCommand<Beatmap> PauseBeatmapCommand { get; private set; }
@@ -52,6 +61,7 @@ namespace Osu.Music.UI.ViewModels
         public MainViewModel()
         {
             Model = new MainModel();
+            Visualization = new CircleVisualization();
             InitializeCommands();
             InitializePlayback();
             InitializeAudioProgressTimer();
@@ -71,6 +81,12 @@ namespace Osu.Music.UI.ViewModels
         {
             Playback = new AudioPlayback();
             Playback.BeatmapEnded += Playback_BeatmapEnded;
+            Playback.FftCalculated += Playback_FftCalculated;
+        }
+
+        private void Playback_FftCalculated(object sender, FftEventArgs e)
+        {
+            Visualization.OnFftCalculated(e.Result);
         }
 
         private void InitializeAudioProgressTimer()

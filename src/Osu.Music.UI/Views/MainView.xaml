@@ -41,10 +41,12 @@
             <Rectangle Fill="Purple" Opacity="0.2" Grid.RowSpan="2"/>
 
             <StackPanel Orientation="Vertical" Margin="0 15 0 0">
+                <ToggleButton Style="{DynamicResource SidebarButtonAllSongs}"/>
                 <ToggleButton Style="{DynamicResource SidebarButtonCollection}"/>
                 <ToggleButton Style="{DynamicResource SidebarButtonPlaylists}"/>
             </StackPanel>
 
+            <ContentPresenter x:Name="contentPresenter" Grid.Row="1" Content="{Binding Visualization.Content}" />
             <Image Grid.Row="1" Source="pack://application:,,,/Osu.Music.UI;component/Resources/Images/osu-logo.png" Width="150" Height="150"/>
         </Grid>
         <ListView Style="{DynamicResource ListViewBeatmaps}" Grid.Column="1" ItemsSource="{Binding Model.Beatmaps}" SelectedItem="{Binding Model.SelectedBeatmap}">
