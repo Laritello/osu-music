@@ -3,6 +3,7 @@
     <FontFamily x:Key="Roboto">pack://application:,,,/Osu.Music.UI;component/Resources/Fonts/Roboto/#Roboto</FontFamily>
     
     <FontFamily x:Key="MaterialIcons">pack://application:,,,/Osu.Music.UI;component/Resources/Fonts/Material Icons/#Material Icons</FontFamily>
+    <FontFamily x:Key="MaterialIconsSharp">pack://application:,,,/Osu.Music.UI;component/Resources/Fonts/Material Icons/#Material Icons Sharp</FontFamily>
     <FontFamily x:Key="MaterialIconsOutlined">pack://application:,,,/Osu.Music.UI;component/Resources/Fonts/Material Icons/#Material Icons Outlined</FontFamily>
     <FontFamily x:Key="MaterialIconsRound">pack://application:,,,/Osu.Music.UI;component/Resources/Fonts/Material Icons/#Material Icons Round</FontFamily>
 </ResourceDictionary>

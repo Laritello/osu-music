@@ -13,6 +13,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Fonts.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Converters.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Defaults.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Texts.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Buttons.xaml"/>
@@ -21,17 +22,36 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
+    <Grid Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="20"/>
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
-        <Grid>
+        <!--TitleBar-->
+        <Grid Grid.ColumnSpan="2" Panel.ZIndex="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Style="{DynamicResource SidebarButtonOsu}"/>
+            <StackPanel Grid.Column="1"  HorizontalAlignment="Right" Orientation="Horizontal">
+                <Button Style="{StaticResource TitleBarGitHub}"/>
+                <Button Style="{StaticResource TitleBarMinimize}" Command="{Binding MinimizeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
+                <Button x:Name="MaximizeButton" Style="{StaticResource TitleBarMaximize}" Command="{Binding MaximizeOrRestoreCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" CommandParameter="{Binding ElementName=MaximizeButton}"/>
+                <Button x:Name="RestoreButton" Style="{StaticResource TitleBarRestore}" Command="{Binding MaximizeOrRestoreCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" CommandParameter="{Binding ElementName=MaximizeButton}"
+                        Visibility="{Binding Path=Visibility, ElementName=MaximizeButton, Converter={StaticResource ReverseVisibilityConverter}}"/>
+                <Button Style="{StaticResource TitleBarClose}" Command="{Binding CloseCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
+            </StackPanel>
+        </Grid>
+        
+        <Grid Grid.RowSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="250"/>
@@ -40,8 +60,8 @@
                    Grid.RowSpan="2"  Stretch="UniformToFill" HorizontalAlignment="Center"/>
             <Rectangle Fill="Purple" Opacity="0.2" Grid.RowSpan="2"/>
 
-            <StackPanel Orientation="Vertical" Margin="0 15 0 0">
-                <ToggleButton Style="{DynamicResource SidebarButtonAllSongs}"/>
+            <StackPanel Orientation="Vertical" Margin="0 50 0 0">
+                <ToggleButton Style="{DynamicResource SidebarButtonAllSongs}" IsChecked="True"/>
                 <ToggleButton Style="{DynamicResource SidebarButtonCollection}"/>
                 <ToggleButton Style="{DynamicResource SidebarButtonPlaylists}"/>
             </StackPanel>
@@ -49,10 +69,10 @@
             <ContentPresenter x:Name="contentPresenter" Grid.Row="1" Content="{Binding Visualization.Content}" />
             <Image Grid.Row="1" Source="pack://application:,,,/Osu.Music.UI;component/Resources/Images/osu-logo.png" Width="150" Height="150"/>
         </Grid>
-        <ListView Style="{DynamicResource ListViewBeatmaps}" Grid.Column="1" ItemsSource="{Binding Model.Beatmaps}" SelectedItem="{Binding Model.SelectedBeatmap}">
-        </ListView>
-        <controls:BeatmapProgressBar Grid.Row="1" Grid.ColumnSpan="2" Total="{Binding Model.TotalTime}" Current="{Binding Model.CurrentTime}" Progress="{Binding Model.Progress}" />
-        <Grid Grid.Row="2" Grid.ColumnSpan="2" Background="Purple">
+
+        <ListView Style="{DynamicResource ListViewBeatmaps}" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Model.Beatmaps}" SelectedItem="{Binding Model.SelectedBeatmap}"/>
+        <controls:BeatmapProgressBar Grid.Row="2" Grid.ColumnSpan="2" Total="{Binding Model.TotalTime}" Current="{Binding Model.CurrentTime}" Progress="{Binding Model.Progress}" />
+        <Grid Grid.Row="3" Grid.ColumnSpan="2" Background="Purple">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="350"/>
                 <ColumnDefinition Width="*"/>
@@ -65,7 +85,6 @@
                 </StackPanel>
             </StackPanel>
             <StackPanel Grid.Column="1" VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Center">
-                <!--<Slider Minimum="0" Maximum="{Binding Model.Length, Mode=OneWay}" Width="300" Value="{Binding Model.Position, Mode=TwoWay}"/>-->
                 <Button Style="{DynamicResource PlayerButtonPrevious}" Command="{Binding PreviousBeatmapCommand}" CommandParameter="{Binding Model.PlayingBeatmap}"/>
                 <Button Style="{DynamicResource PlayerButtonStop}" Command="{Binding StopBeatmapCommand}" CommandParameter="{Binding Model.PlayingBeatmap}"/>
                 <Button Style="{DynamicResource PlayerButtonPlay}" Command="{Binding PlayBeatmapCommand}" CommandParameter="{Binding Model.SelectedBeatmap}"/>
@@ -79,6 +98,5 @@
                 <ToggleButton Style="{DynamicResource PlayerToggleButtonRandom}" IsChecked="{Binding Repeat}"/>
             </StackPanel>
         </Grid>
-        
     </Grid>
 </UserControl>
