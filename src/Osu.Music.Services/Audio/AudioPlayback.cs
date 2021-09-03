@@ -53,7 +53,6 @@ namespace Osu.Music.Services.Audio
         #region Events
         public event EventHandler<BeatmapEventArgs> BeatmapEnded;
         public event EventHandler<FftEventArgs> FftCalculated;
-        public event EventHandler<MaxSampleEventArgs> MaximumCalculated;
         #endregion
 
         #region Private variables
@@ -84,11 +83,9 @@ namespace Osu.Music.Services.Audio
 
                 SampleAggregator aggregator = new SampleAggregator(inputStream)
                 {
-                    NotificationCount = inputStream.WaveFormat.SampleRate / 100,
                     PerformFFT = true
                 };
                 aggregator.FftCalculated += (s, a) => FftCalculated?.Invoke(this, a);
-                aggregator.MaximumCalculated += (s, a) => MaximumCalculated?.Invoke(this, a);
                 playbackDevice.Init(aggregator);
             }
             catch

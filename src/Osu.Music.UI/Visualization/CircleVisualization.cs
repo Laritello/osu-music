@@ -1,4 +1,5 @@
-﻿using Osu.Music.UI.Interfaces;
+﻿using Osu.Music.Services.Audio;
+using Osu.Music.UI.Interfaces;
 using Osu.Music.UI.UserControls.SpectrumAnalyzers;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace Osu.Music.UI.Visualization
             // nothing to do
         }
 
-        public void OnFftCalculated(NAudio.Dsp.Complex[] result)
+        public void OnFftCalculated(FrequencySpectrum result)
         {
             spectrumAnalyser.Update(result);
         }

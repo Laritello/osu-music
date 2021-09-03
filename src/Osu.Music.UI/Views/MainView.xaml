@@ -46,7 +46,7 @@
                 <Button Style="{StaticResource TitleBarMinimize}" Command="{Binding MinimizeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
                 <Button x:Name="MaximizeButton" Style="{StaticResource TitleBarMaximize}" Command="{Binding MaximizeOrRestoreCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" CommandParameter="{Binding ElementName=MaximizeButton}"/>
                 <Button x:Name="RestoreButton" Style="{StaticResource TitleBarRestore}" Command="{Binding MaximizeOrRestoreCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" CommandParameter="{Binding ElementName=MaximizeButton}"
-                        Visibility="{Binding Path=Visibility, ElementName=MaximizeButton, Converter={StaticResource ReverseVisibilityConverter}}"/>
+                        Visibility="{Binding Path=Visibility, ElementName=MaximizeButton, Converter={StaticResource ReverseVisibilityConverter}, FallbackValue=Collapsed}"/>
                 <Button Style="{StaticResource TitleBarClose}" Command="{Binding CloseCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
             </StackPanel>
         </Grid>

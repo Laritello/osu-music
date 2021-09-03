@@ -1,4 +1,5 @@
 ﻿using NAudio.Dsp;
+using Osu.Music.Services.Audio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,86 +21,72 @@ namespace Osu.Music.UI.UserControls.SpectrumAnalyzers
     /// </summary>
     public partial class DemoSpectrumAnalyzer : UserControl
     {
-        private double xScale = 200;
-        private int bins = 128; // guess a 1024 size FFT, bins is half FFT size
+        public int ColumnsCount { get; set; } = 32;
 
         public DemoSpectrumAnalyzer()
         {
             InitializeComponent();
         }
 
-        private const int binsPerPoint = 1; // reduce the number of points we plot for a less jagged line?
-        private int updateCount;
-
-        public void Update(Complex[] fftResults)
+        public void Update(FrequencySpectrum spectrum)
         {
-            // no need to repaint too many frames per second
-            if (updateCount++ % 2 == 0)
+            float[] data = new float[ColumnsCount];
+            float maximum = 0;
+            double step = (double)spectrum.SamplingFrequency / 2 / ColumnsCount;
+
+            for (double freq = 0; freq < spectrum.SamplingFrequency / 2; freq += step)
             {
-                return;
+                if (freq > spectrum.SamplingFrequency)
+                    freq = spectrum.SamplingFrequency;
+
+                int index = (int)(freq / step);
+                data[index] = spectrum[freq, freq + step];
+
+                if (data[index] > maximum)
+                    maximum = data[index];
             }
 
-            if (fftResults.Length != bins)
+            if (maximum != 0)
             {
-                bins = fftResults.Length;
+                for (int i = 0; i < ColumnsCount; i++)
+                    data[i] = data[i] / maximum;
             }
 
-            List<double> dBs = new List<double>();
-
-            for (int n = 0; n < fftResults.Length; n += binsPerPoint)
-            {
-                // averaging out bins
-                double yPos = 0;
-                for (int b = 0; b < binsPerPoint; b++)
-                    yPos += GetYPosLog(fftResults[n + b]);
-
-                dBs.Add(yPos / binsPerPoint);
-            }
-
-            double max = dBs.Select(x => Math.Abs(x)).Max();
-
-            for (int i = 0; i < dBs.Count; i++)
-                dBs[i] = Math.Abs(dBs[i] / max) * ActualHeight;
-
-            for (int i = 0; i < dBs.Count; i++)
-                AddResult(i, dBs[i]);
+            UpdateCanvas(data);
         }
 
-        private double GetYPosLog(Complex c)
+        private void UpdateCanvas(float[] data)
         {
-            // not entirely sure whether the multiplier should be 10 or 20 in this case.
-            // going with 10 from here http://stackoverflow.com/a/10636698/7532
-            double intensityDB = 10 * Math.Log10(Math.Sqrt(c.X * c.X + c.Y * c.Y));
-            double minDB = -90;
-            if (intensityDB < minDB) intensityDB = minDB;
-            double percent = intensityDB / minDB;
-            // we want 0dB to be at the top (i.e. yPos = 0)
-            double yPos = percent * ActualHeight;
-            //return yPos;
-            return intensityDB;
+            double columnWidth = ActualWidth / ColumnsCount;
+
+            for (int col = 0; col < ColumnsCount; col++)
+                AddResult(col, columnWidth, data[col]);
         }
 
-        private void AddResult(int index, double power)
+        private void AddResult(int index, double columnWidth, float value)
         {
+            double height = value * ActualHeight;
             if (index >= canvas.Children.Count)
             {
-                Line l = new Line()
+                Rectangle rect = new Rectangle()
                 {
-                    X1 = index,
-                    Y1 = ActualHeight,
-                    X2 = index,
-                    Y2 = power,
-                    Stroke = new SolidColorBrush(Color.FromRgb(128, 0, 128))
+                    Width = columnWidth,
+                    Height = height,
+                    Fill = Brushes.Purple
                 };
-                canvas.Children.Add(l);
+                Canvas.SetLeft(rect, index * columnWidth);
+                Canvas.SetBottom(rect, 0);
+
+                canvas.Children.Add(rect);
             }
             else
             {
-                Line l = (Line)canvas.Children[index];
-                l.X1 = index;
-                l.Y1 = ActualHeight;
-                l.X2 = index;
-                l.Y2 = Lerp(l.Y2, power, 0.8f);
+                Rectangle rect = (Rectangle)canvas.Children[index];
+                rect.Width = columnWidth;
+                rect.Height = Lerp(rect.Height, height, 0.8f);
+
+                Canvas.SetLeft(rect, index * columnWidth);
+                Canvas.SetBottom(rect, 0);
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using NAudio.Dsp;
+using Osu.Music.Services.Audio;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,6 +12,6 @@ namespace Osu.Music.UI.Interfaces
 
         // n.b. not great design, need to refactor so visualizations can attach to the playback graph and measure just what they need
         void OnMaxCalculated(float min, float max);
-        void OnFftCalculated(Complex[] result);
+        void OnFftCalculated(FrequencySpectrum result);
     }
 }
