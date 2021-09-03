@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace Osu.Music.Services.Audio
 {
+    /// <summary>
+    /// Helps to analize Complex array from NAudio. Modified version of : https://stackoverflow.com/questions/55599743/naudio-fft-returns-small-and-equal-magnitude-values-for-all-frequencies
+    /// </summary>
     public struct FrequencySpectrum
     {
 
@@ -28,34 +31,44 @@ namespace Osu.Music.Services.Audio
         }
 
 
-        //returns magnitude for freq
-        public float this[int freq]
+        /// <summary>
+        /// Calculates magnitude for selected frequency.
+        /// </summary>
+        /// <param name="frequency">Selected frequency, Hz.</param>
+        /// <returns>Magnitude for selected frequency.</returns>
+        public float this[int frequency]
         {
             get
             {
-                if (freq < 0 || freq >= SamplingFrequency)
+                if (frequency < 0 || frequency >= SamplingFrequency)
                     throw new IndexOutOfRangeException();
 
                 // Find corresponding bin
-                float index = freq / ((float)SamplingFrequency / FftWindowSize);
+                float index = frequency / ((float)SamplingFrequency / FftWindowSize);
                 Complex c = frequencyDomain[checked((uint)index)];
                 return (float)Math.Sqrt((c.X * c.X) + (c.Y * c.Y));
             }
         }
 
-        public float this[double startFreq, double endFreq]
+        /// <summary>
+        /// Calculates average magnitude for selected range of frequencies.
+        /// </summary>
+        /// <param name="startFrequency">Start of the frequency range, Hz.</param>
+        /// <param name="endFrequency">End of the frequency range, Hz.</param>
+        /// <returns>Average magnitude for selected range of frequencies.</returns>
+        public float this[double startFrequency, double endFrequency]
         {
             get
             {
                 
-                if (startFreq < 0 || startFreq > SamplingFrequency)
-                    throw new IndexOutOfRangeException(nameof(startFreq));
-                if (endFreq < 0 || endFreq > SamplingFrequency)
-                    throw new IndexOutOfRangeException(nameof(endFreq));
+                if (startFrequency < 0 || startFrequency > SamplingFrequency)
+                    throw new IndexOutOfRangeException(nameof(startFrequency));
+                if (endFrequency < 0 || endFrequency > SamplingFrequency)
+                    throw new IndexOutOfRangeException(nameof(endFrequency));
 
-                // Find corresponding bin
-                int startIndex = (int)Math.Round(startFreq / ((float)SamplingFrequency / FftWindowSize));
-                int endIndex = (int)Math.Round(endFreq / ((float)SamplingFrequency / FftWindowSize));
+                // Find corresponding bins
+                int startIndex = (int)Math.Round(startFrequency / ((float)SamplingFrequency / FftWindowSize));
+                int endIndex = (int)Math.Round(endFrequency / ((float)SamplingFrequency / FftWindowSize));
 
                 Complex[] range = frequencyDomain[startIndex..endIndex];
                 return range.Select(c => (float)Math.Sqrt((c.X * c.X) + (c.Y * c.Y))).Average();
