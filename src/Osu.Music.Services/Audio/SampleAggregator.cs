@@ -29,7 +29,7 @@ namespace Osu.Music.Services.Audio
 
         private readonly int channels;
 
-        public SampleAggregator(ISampleProvider source, int fftLength = 1024)
+        public SampleAggregator(ISampleProvider source, int fftLength = 256)
         {
             channels = source.WaveFormat.Channels;
             if (!IsPowerOfTwo(fftLength))
@@ -57,6 +57,8 @@ namespace Osu.Music.Services.Audio
             if (PerformFFT && FftCalculated != null)
             {
                 fftBuffer[fftPos].X = (float)(value * FastFourierTransform.HammingWindow(fftPos, fftLength));
+                //fftBuffer[fftPos].X = (float)(value * FastFourierTransform.BlackmannHarrisWindow(fftPos, fftLength));
+                //fftBuffer[fftPos].X = (float)(value * FastFourierTransform.HannWindow(fftPos, fftLength));
                 fftBuffer[fftPos].Y = 0;
                 fftPos++;
                 if (fftPos >= fftBuffer.Length)

@@ -1,6 +1,7 @@
 ﻿using NAudio.Dsp;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,26 +21,14 @@ namespace Osu.Music.UI.UserControls.SpectrumAnalyzers
     public partial class DemoSpectrumAnalyzer : UserControl
     {
         private double xScale = 200;
-        private int bins = 512; // guess a 1024 size FFT, bins is half FFT size
+        private int bins = 128; // guess a 1024 size FFT, bins is half FFT size
 
         public DemoSpectrumAnalyzer()
         {
             InitializeComponent();
-            CalculateXScale();
-            SizeChanged += SpectrumAnalyser_SizeChanged;
         }
 
-        void SpectrumAnalyser_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            CalculateXScale();
-        }
-
-        private void CalculateXScale()
-        {
-            xScale = ActualWidth / (bins / binsPerPoint);
-        }
-
-        private const int binsPerPoint = 2; // reduce the number of points we plot for a less jagged line?
+        private const int binsPerPoint = 1; // reduce the number of points we plot for a less jagged line?
         private int updateCount;
 
         public void Update(Complex[] fftResults)
@@ -50,22 +39,30 @@ namespace Osu.Music.UI.UserControls.SpectrumAnalyzers
                 return;
             }
 
-            if (fftResults.Length / 2 != bins)
+            if (fftResults.Length != bins)
             {
-                bins = fftResults.Length / 2;
-                CalculateXScale();
+                bins = fftResults.Length;
             }
 
-            for (int n = 0; n < fftResults.Length / 2; n += binsPerPoint)
+            List<double> dBs = new List<double>();
+
+            for (int n = 0; n < fftResults.Length; n += binsPerPoint)
             {
                 // averaging out bins
                 double yPos = 0;
                 for (int b = 0; b < binsPerPoint; b++)
-                {
                     yPos += GetYPosLog(fftResults[n + b]);
-                }
-                AddResult(n / binsPerPoint, yPos / binsPerPoint);
+
+                dBs.Add(yPos / binsPerPoint);
             }
+
+            double max = dBs.Select(x => Math.Abs(x)).Max();
+
+            for (int i = 0; i < dBs.Count; i++)
+                dBs[i] = Math.Abs(dBs[i] / max) * ActualHeight;
+
+            for (int i = 0; i < dBs.Count; i++)
+                AddResult(i, dBs[i]);
         }
 
         private double GetYPosLog(Complex c)
@@ -78,26 +75,34 @@ namespace Osu.Music.UI.UserControls.SpectrumAnalyzers
             double percent = intensityDB / minDB;
             // we want 0dB to be at the top (i.e. yPos = 0)
             double yPos = percent * ActualHeight;
-            return yPos;
+            //return yPos;
+            return intensityDB;
         }
 
         private void AddResult(int index, double power)
         {
-            Point p = new Point(CalculateXPos(index), power);
-            if (index >= polyline1.Points.Count)
+            if (index >= canvas.Children.Count)
             {
-                polyline1.Points.Add(p);
+                Line l = new Line()
+                {
+                    X1 = index,
+                    Y1 = ActualHeight,
+                    X2 = index,
+                    Y2 = power,
+                    Stroke = new SolidColorBrush(Color.FromRgb(128, 0, 128))
+                };
+                canvas.Children.Add(l);
             }
             else
             {
-                polyline1.Points[index] = p;
+                Line l = (Line)canvas.Children[index];
+                l.X1 = index;
+                l.Y1 = ActualHeight;
+                l.X2 = index;
+                l.Y2 = Lerp(l.Y2, power, 0.8f);
             }
         }
 
-        private double CalculateXPos(int bin)
-        {
-            if (bin == 0) return 0;
-            return bin * xScale; // Math.Log10(bin) * xScale;
-        }
+        private double Lerp(double firstFloat, double secondFloat, float by) => firstFloat * (1 - by) + secondFloat* by;
     }
 }
