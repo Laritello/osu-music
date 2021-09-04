@@ -70,7 +70,11 @@
             <!--<Image Grid.Row="1" Source="pack://application:,,,/Osu.Music.UI;component/Resources/Images/osu-logo.png" Width="150" Height="150"/>-->
         </Grid>
 
-        <ListView Style="{DynamicResource ListViewBeatmaps}" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Model.Beatmaps}" SelectedItem="{Binding Model.SelectedBeatmap}"/>
+        <ListView Style="{DynamicResource ListViewBeatmaps}" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Model.Beatmaps}" SelectedItem="{Binding Model.SelectedBeatmap}">
+            <ListView.InputBindings>
+                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding PlayBeatmapCommand}" CommandParameter="{Binding Model.SelectedBeatmap}"/>
+            </ListView.InputBindings>
+        </ListView>
         <controls:BeatmapProgressBar Grid.Row="2" Grid.ColumnSpan="2" Total="{Binding Model.TotalTime}" Current="{Binding Model.CurrentTime}" Progress="{Binding Model.Progress}" />
         <Grid Grid.Row="3" Grid.ColumnSpan="2" Background="Purple">
             <Grid.ColumnDefinitions>

@@ -3,7 +3,17 @@
                     xmlns:convert="clr-namespace:Osu.Music.UI.Resources.Converters">
     <Style x:Key="ListViewBeatmaps" TargetType="{x:Type ListView}">
         <Style.Resources>
-            <convert:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter"/>
+            <Style x:Key="TitleStyle" TargetType="{x:Type TextBlock}">
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Style>
+
+            <Style x:Key="ArtistStyle" TargetType="{x:Type TextBlock}">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontWeight" Value="Light"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Style>
         </Style.Resources>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="0"/>
@@ -13,19 +23,22 @@
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <DataTemplate>
+                    <DataTemplate.Resources>
+                        <convert:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter"/>
+                    </DataTemplate.Resources>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Orientation="Vertical">
-                            <TextBlock Style="{DynamicResource PlayerBeatmapTitle}" Text="{Binding Path=Title}" 
+                            <TextBlock Style="{DynamicResource TitleStyle}" Text="{Binding Path=Title}" 
                                    Foreground="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}"/>
-                            <TextBlock Style="{DynamicResource PlayerBeatmapArtist}" Text="{Binding Path=Artist}"
+                            <TextBlock Style="{DynamicResource ArtistStyle}" Text="{Binding Path=Artist}"
                                    Foreground="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}"/>
                         </StackPanel>
 
-                        <TextBlock Style="{DynamicResource PlayerBeatmapTitle}" Grid.Column="1" Text="{Binding Path=TotalTime, Converter={StaticResource TimeSpanToStringConverter}}" 
+                        <TextBlock Style="{DynamicResource TitleStyle}" Grid.Column="1" Text="{Binding Path=TotalTime, Converter={StaticResource TimeSpanToStringConverter}, FallbackValue=''}" 
                                    Foreground="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}"/>
                     </Grid>
                 </DataTemplate>
