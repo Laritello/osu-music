@@ -1,0 +1,5 @@
+﻿<UserControl x:Class="Osu.Music.UI.UserControls.SpectrumAnalyzers.CircleSpectrumVisualizer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Canvas Background="Transparent"/>
+</UserControl>

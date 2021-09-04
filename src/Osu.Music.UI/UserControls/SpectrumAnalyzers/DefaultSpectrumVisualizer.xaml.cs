@@ -1,29 +1,23 @@
-﻿using NAudio.Dsp;
-using Osu.Music.Services.Audio;
+﻿using Osu.Music.Services.Audio;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Osu.Music.UI.UserControls.SpectrumAnalyzers
 {
     /// <summary>
-    /// Логика взаимодействия для DemoSpectrumAnalyzer.xaml
+    /// Логика взаимодействия для DefaultSpectrumVisualizer.xaml
     /// </summary>
-    public partial class DemoSpectrumAnalyzer : UserControl
+    public partial class DefaultSpectrumVisualizer : UserControl
     {
-        public int ColumnsCount { get; set; } = 32;
+        public int ColumnsCount { get; set; } = 18;
 
-        public DemoSpectrumAnalyzer()
+        public double MinimumFrequency { get; set; } = 20;
+        public double MaximumFrequency { get; set; } = 20000;
+
+        public DefaultSpectrumVisualizer()
         {
             InitializeComponent();
         }
@@ -31,25 +25,28 @@ namespace Osu.Music.UI.UserControls.SpectrumAnalyzers
         public void Update(FrequencySpectrum spectrum)
         {
             float[] data = new float[ColumnsCount];
-            float maximum = 0;
-            double step = (double)spectrum.SamplingFrequency / 2 / ColumnsCount;
 
-            for (double freq = 0; freq < spectrum.SamplingFrequency / 2; freq += step)
+            double minFreq = Math.Max(0, MinimumFrequency);
+            double maxFreq = Math.Min(spectrum.SamplingFrequency, MaximumFrequency);
+            double step = (double)maxFreq / ColumnsCount;
+
+
+
+            for (double freq = minFreq; freq < maxFreq; freq += step)
             {
                 if (freq > spectrum.SamplingFrequency)
                     freq = spectrum.SamplingFrequency;
 
                 int index = (int)(freq / step);
-                data[index] = spectrum[freq, freq + step];
-
-                if (data[index] > maximum)
-                    maximum = data[index];
+                data[index] = (float)(10 * Math.Log10(spectrum[freq, freq + step])); // Probably correct visualization
             }
 
-            if (maximum != 0)
+            float minimum = data.Min();
+
+            if (minimum != 0)
             {
                 for (int i = 0; i < ColumnsCount; i++)
-                    data[i] = data[i] / maximum;
+                    data[i] = 1 - data[i] / minimum;
             }
 
             UpdateCanvas(data);
@@ -65,16 +62,16 @@ namespace Osu.Music.UI.UserControls.SpectrumAnalyzers
 
         private void AddResult(int index, double columnWidth, float value)
         {
-            double height = value * ActualHeight;
+            double height = double.IsNaN(value * ActualHeight) ? 0 : value * ActualHeight;
             if (index >= canvas.Children.Count)
             {
                 Rectangle rect = new Rectangle()
                 {
-                    Width = columnWidth,
+                    Width = Math.Ceiling(columnWidth),
                     Height = height,
                     Fill = Brushes.Purple
                 };
-                Canvas.SetLeft(rect, index * columnWidth);
+                Canvas.SetLeft(rect, Math.Floor(index * columnWidth));
                 Canvas.SetBottom(rect, 0);
 
                 canvas.Children.Add(rect);
@@ -82,10 +79,10 @@ namespace Osu.Music.UI.UserControls.SpectrumAnalyzers
             else
             {
                 Rectangle rect = (Rectangle)canvas.Children[index];
-                rect.Width = columnWidth;
+                rect.Width = Math.Ceiling(columnWidth);
                 rect.Height = Lerp(rect.Height, height, 0.8f);
 
-                Canvas.SetLeft(rect, index * columnWidth);
+                Canvas.SetLeft(rect, Math.Floor(index * columnWidth));
                 Canvas.SetBottom(rect, 0);
             }
         }

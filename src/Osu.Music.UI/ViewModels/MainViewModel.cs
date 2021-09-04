@@ -62,7 +62,7 @@ namespace Osu.Music.UI.ViewModels
         {
             Model = new MainModel();
             //Visualization = new CircleVisualization();
-            Visualization = new DemoVisualization();
+            Visualization = new DefaultVisualization();
             InitializeCommands();
             InitializePlayback();
             InitializeAudioProgressTimer();

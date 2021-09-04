@@ -4,9 +4,9 @@ using Osu.Music.UI.UserControls.SpectrumAnalyzers;
 
 namespace Osu.Music.UI.Visualization
 {
-    class CircleVisualization : IVisualizationPlugin
+    class DefaultVisualization : IVisualizationPlugin
     {
-        private readonly CircleSpectrumVisualizer visualizer = new CircleSpectrumVisualizer();
+        private readonly DefaultSpectrumVisualizer visualizer = new DefaultSpectrumVisualizer();
 
         public object Content => visualizer;
 
