@@ -1,22 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Osu.Music.UI.UserControls
 {
-    /// <summary>
-    /// Логика взаимодействия для BeatmapProgressBar.xaml
-    /// </summary>
     public partial class BeatmapProgressBar : UserControl
     {
         public static readonly DependencyProperty TotalProperty = DependencyProperty.Register("Total", typeof(TimeSpan), typeof(BeatmapProgressBar), new PropertyMetadata(TimeSpan.Zero));
@@ -40,9 +28,41 @@ namespace Osu.Music.UI.UserControls
             set => SetValue(ProgressProperty, value);
         }
 
+        public static readonly RoutedEvent ProgressChangedEvent = EventManager.RegisterRoutedEvent("ProgressChanged", RoutingStrategy.Bubble, 
+            typeof(RoutedEventHandler), typeof(BeatmapProgressBar));
+
+        public event RoutedEventHandler ProgressChanged
+        {
+            add { AddHandler(ProgressChangedEvent, value); }
+            remove { RemoveHandler(ProgressChangedEvent, value); }
+        }
+
         public BeatmapProgressBar()
         {
             InitializeComponent();
+        }
+
+        private void SliderArea_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            double max = ActualWidth;
+            double current = e.GetPosition(this).X;
+
+            double progress = Math.Max(Math.Min(current / max, 1), 0);
+
+            TimeSpan result = new TimeSpan(0, 0, Convert.ToInt32(Total.TotalSeconds * progress));
+
+            BeatmapProgressBarProgressChangedEventArgs eventArgs = new BeatmapProgressBarProgressChangedEventArgs(ProgressChangedEvent, result);
+            RaiseEvent(eventArgs);
+        }
+    }
+
+    public class BeatmapProgressBarProgressChangedEventArgs : RoutedEventArgs
+    {
+        public TimeSpan Progress { get; }
+
+        internal BeatmapProgressBarProgressChangedEventArgs(RoutedEvent routedEvent, TimeSpan progress) : base(routedEvent)
+        {
+            Progress = progress;
         }
     }
 }

@@ -11,7 +11,7 @@
         <convert:ProgressToWidthConverter x:Key="ProgressToWidthConverter"/>
         <convert:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter"/>
     </UserControl.Resources>
-    <Grid x:Name="SliderArea">
+    <Grid x:Name="SliderArea" MouseUp="SliderArea_MouseUp">
         <Rectangle x:Name="RectangleTotal" Opacity="1" Width="{Binding ElementName=SliderPart, Path=ActualWidth}" MinHeight="20" MaxHeight="20" Fill="#b200b3" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"/>
         <Rectangle x:Name="RectangleProgress" Opacity="1" MinHeight="20" MaxHeight="20" VerticalAlignment="Bottom" HorizontalAlignment="Left">
             <Rectangle.Width>

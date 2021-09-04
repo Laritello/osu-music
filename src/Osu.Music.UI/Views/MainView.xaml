@@ -5,10 +5,11 @@
              xmlns:controls="clr-namespace:Osu.Music.UI.UserControls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             mc:Ignorable="d" 
-             d:DesignHeight="550" d:DesignWidth="900"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:prism="http://prismlibrary.com/"
-             prism:ViewModelLocator.AutoWireViewModel="True" >
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="550" d:DesignWidth="900">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -42,7 +43,7 @@
 
             <Button Style="{DynamicResource SidebarButtonOsu}"/>
             <StackPanel Grid.Column="1"  HorizontalAlignment="Right" Orientation="Horizontal">
-                <Button Style="{StaticResource TitleBarGitHub}"/>
+                <Button Style="{StaticResource TitleBarGitHub}" Command="{Binding OpenGitHubCommand}"/>
                 <Button Style="{StaticResource TitleBarMinimize}" Command="{Binding MinimizeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
                 <Button x:Name="MaximizeButton" Style="{StaticResource TitleBarMaximize}" Command="{Binding MaximizeOrRestoreCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" CommandParameter="{Binding ElementName=MaximizeButton}"/>
                 <Button x:Name="RestoreButton" Style="{StaticResource TitleBarRestore}" Command="{Binding MaximizeOrRestoreCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" CommandParameter="{Binding ElementName=MaximizeButton}"
@@ -62,8 +63,8 @@
 
             <StackPanel Orientation="Vertical" Margin="0 50 0 0">
                 <ToggleButton Style="{DynamicResource SidebarButtonAllSongs}" IsChecked="True"/>
-                <ToggleButton Style="{DynamicResource SidebarButtonCollection}"/>
-                <ToggleButton Style="{DynamicResource SidebarButtonPlaylists}"/>
+                <ToggleButton Style="{DynamicResource SidebarButtonCollection}" IsEnabled="False"/>
+                <ToggleButton Style="{DynamicResource SidebarButtonPlaylists}" IsEnabled="False"/>
             </StackPanel>
 
             <ContentPresenter x:Name="contentPresenter" Grid.Row="1" Content="{Binding Visualization.Content}"/>
@@ -72,10 +73,17 @@
 
         <ListView Style="{DynamicResource ListViewBeatmaps}" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Model.Beatmaps}" SelectedItem="{Binding Model.SelectedBeatmap}">
             <ListView.InputBindings>
-                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding PlayBeatmapCommand}" CommandParameter="{Binding Model.SelectedBeatmap}"/>
+                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding PlayBeatmapCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=SelectedItem}"/>
             </ListView.InputBindings>
         </ListView>
-        <controls:BeatmapProgressBar Grid.Row="2" Grid.ColumnSpan="2" Total="{Binding Model.TotalTime}" Current="{Binding Model.CurrentTime}" Progress="{Binding Model.Progress}" />
+        <controls:BeatmapProgressBar Grid.Row="2" Grid.ColumnSpan="2" Total="{Binding Model.TotalTime}" Current="{Binding Model.CurrentTime}" Progress="{Binding Model.Progress}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="ProgressChanged">
+                    <prism:InvokeCommandAction Command="{Binding ScrollBeatmapCommand}"
+                                               TriggerParameterPath="Progress" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </controls:BeatmapProgressBar>
         <Grid Grid.Row="3" Grid.ColumnSpan="2" Background="Purple">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="350"/>

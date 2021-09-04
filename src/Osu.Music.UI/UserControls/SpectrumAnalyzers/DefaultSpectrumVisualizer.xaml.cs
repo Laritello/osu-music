@@ -12,10 +12,12 @@ namespace Osu.Music.UI.UserControls.SpectrumAnalyzers
     /// </summary>
     public partial class DefaultSpectrumVisualizer : UserControl
     {
-        public int ColumnsCount { get; set; } = 18;
+        public int ColumnsCount { get; set; } = 24;
 
         public double MinimumFrequency { get; set; } = 20;
         public double MaximumFrequency { get; set; } = 20000;
+
+        private readonly float minimum = -60;
 
         public DefaultSpectrumVisualizer()
         {
@@ -41,7 +43,10 @@ namespace Osu.Music.UI.UserControls.SpectrumAnalyzers
                 data[index] = (float)(10 * Math.Log10(spectrum[freq, freq + step])); // Probably correct visualization
             }
 
-            float minimum = data.Min();
+            float localMinimum = data.Min();
+
+            if (float.IsInfinity(localMinimum))
+                return;
 
             if (minimum != 0)
             {
@@ -62,7 +67,7 @@ namespace Osu.Music.UI.UserControls.SpectrumAnalyzers
 
         private void AddResult(int index, double columnWidth, float value)
         {
-            double height = double.IsNaN(value * ActualHeight) ? 0 : value * ActualHeight;
+            double height = value < 0 ? 0 : value * ActualHeight;
             if (index >= canvas.Children.Count)
             {
                 Rectangle rect = new Rectangle()

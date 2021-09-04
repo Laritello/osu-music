@@ -7,6 +7,7 @@ using Osu.Music.UI.Visualization;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
+using System.Diagnostics;
 using System.Windows.Threading;
 
 namespace Osu.Music.UI.ViewModels
@@ -54,7 +55,8 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand<Beatmap> StopBeatmapCommand { get; private set; }
         public DelegateCommand<Beatmap> PreviousBeatmapCommand { get; private set; }
         public DelegateCommand<Beatmap> NextBeatmapCommand { get; private set; }
-        public DelegateCommand<long> ScrollAudioCommand { get; private set; }
+        public DelegateCommand OpenGitHubCommand { get; private set; }
+        public DelegateCommand<TimeSpan?> ScrollBeatmapCommand { get; private set; }
 
         private DispatcherTimer _audioProgressTimer;
 
@@ -77,6 +79,8 @@ namespace Osu.Music.UI.ViewModels
             StopBeatmapCommand = new DelegateCommand<Beatmap>(StopBeatmap);
             PreviousBeatmapCommand = new DelegateCommand<Beatmap>(PreviousBeatmap);
             NextBeatmapCommand = new DelegateCommand<Beatmap>(NextBeatmap);
+            OpenGitHubCommand = new DelegateCommand(OpenGitHub);
+            ScrollBeatmapCommand = new DelegateCommand<TimeSpan?>(ScrollBeatmap);
         }
         private void InitializePlayback()
         {
@@ -190,6 +194,17 @@ namespace Osu.Music.UI.ViewModels
             }
 
             return index >= Model.Beatmaps.Count ? 0 : index;
+        }
+
+        private void ScrollBeatmap(TimeSpan? progress)
+        {
+            if (progress.HasValue)
+                _playback.CurrentTime = progress.Value;
+        }
+
+        private void OpenGitHub()
+        {
+            Process.Start(new ProcessStartInfo("cmd", $"/c start https://github.com/Laritello/osu-music") { CreateNoWindow = true });
         }
 
         private void UpdateBeatmapProgress(object sender, EventArgs e)

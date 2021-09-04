@@ -27,6 +27,10 @@
                         <convert:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter"/>
                     </DataTemplate.Resources>
                     <Grid>
+                        <Grid.InputBindings>
+                            <MouseBinding Gesture="LeftDoubleClick" Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=InputBindings[0].Command}"
+                                          CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=SelectedItem}"/>
+                        </Grid.InputBindings>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="auto"/>

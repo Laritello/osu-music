@@ -106,7 +106,12 @@ namespace Osu.Music.Services.Audio
 
             playbackDevice.PlaybackStopped += (s, a) =>
             {
-                if (a.Exception == null && fileStream != null && fileStream.Position == fileStream.Length)
+                // I use difference between TimeSpans because some song are ending before EOF. On average it is less than 50 ms
+                // so window in 100 ms should do the work.
+                // Downside for this is that if someone will stop the song within 100 ms before it's end program will think that it should play
+                // next song. But it should occur extremly rarely. If someone will suggest better way to detect when song ended by itself
+                // I'll fix this semi hack.
+                if (a.Exception == null && fileStream != null && (fileStream.TotalTime - fileStream.CurrentTime).TotalMilliseconds < 100)
                     BeatmapEnded?.Invoke(this, new BeatmapEventArgs(Beatmap));
             };
         }
@@ -121,7 +126,7 @@ namespace Osu.Music.Services.Audio
 
         private void SetVolume(float value)
         {
-            _volume = Math.Min(Math.Max(value, 0), 1); // Volume shoild be in range [0;1]
+            _volume = Math.Min(Math.Max(value, 0), 1); // Volume should be in range [0;1]
 
             if (playbackDevice != null)
                 playbackDevice.Volume = _volume;
