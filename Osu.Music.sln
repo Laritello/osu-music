@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Osu.Music.Services", "src\O
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C039893D-5F18-4F00-AA86-6192AA41B9CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Osu.Music.Services.Tests", "tests\Osu.Music.Services.Tests\Osu.Music.Services.Tests.csproj", "{D99D2444-EB71-4E35-BC63-7D77104A3CF6}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
