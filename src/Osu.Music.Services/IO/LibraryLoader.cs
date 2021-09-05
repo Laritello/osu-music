@@ -12,25 +12,28 @@ namespace Osu.Music.Services.IO
     public static class LibraryLoader
     {
 
-        public static async Task<IList<Beatmap>> LoadAsync()
+        public static async Task<IList<Beatmap>> LoadAsync(string osuFolder)
         {
             return await Task.Run(() =>
             {
+                if (!Directory.Exists(osuFolder))
+                    throw new ArgumentException("The specified folder does not exist.");
+
                 List<Beatmap> beatmaps = new List<Beatmap>();
 
                 OsuDb db;
 
-                using (var stream = File.OpenRead(@"D:\Games\osu!\osu!.db"))
+                using (var stream = File.OpenRead($@"{osuFolder}\osu!.db"))
                     db = OsuDb.Read(stream);
 
                 foreach (var beatmap in db.Beatmaps.DistinctBy(x => x.BeatmapSetId).OrderBy(x => x.Title))
-                    beatmaps.Add(Convert(beatmap));
+                    beatmaps.Add(Convert(osuFolder, beatmap));
 
                 return beatmaps;
             });
         }
 
-        private static Beatmap Convert(BeatmapEntry entry)
+        private static Beatmap Convert(String osuFolder, BeatmapEntry entry)
         {
             return new Beatmap()
             {
@@ -43,7 +46,7 @@ namespace Osu.Music.Services.IO
                 AudioFileName = entry.AudioFileName,
                 TotalTime = TimeSpan.FromMilliseconds(entry.TotalTime),
                 Tags = entry.SongTags,
-                Directory = $@"D:\Games\osu!\Songs\{entry.FolderName}"
+                Directory = $@"{osuFolder}\Songs\{entry.FolderName}"
             };
         }
 

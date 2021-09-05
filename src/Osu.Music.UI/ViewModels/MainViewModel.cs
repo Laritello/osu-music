@@ -1,6 +1,7 @@
 ﻿using Osu.Music.Common.Models;
 using Osu.Music.Services.Audio;
 using Osu.Music.Services.IO;
+using Osu.Music.Services.UItility;
 using Osu.Music.UI.Interfaces;
 using Osu.Music.UI.Models;
 using Osu.Music.UI.Visualization;
@@ -8,6 +9,7 @@ using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Diagnostics;
+using System.Windows;
 using System.Windows.Threading;
 
 namespace Osu.Music.UI.ViewModels
@@ -19,6 +21,13 @@ namespace Osu.Music.UI.ViewModels
         {
             get => _model;
             set => SetProperty(ref _model, value);
+        }
+
+        private Settings _settings;
+        public Settings Settings
+        {
+            get => _settings;
+            set => SetProperty(ref _settings, value);
         }
 
         private AudioPlayback _playback;
@@ -63,8 +72,8 @@ namespace Osu.Music.UI.ViewModels
         public MainViewModel()
         {
             Model = new MainModel();
-            //Visualization = new CircleVisualization();
             Visualization = new DefaultVisualization();
+            Settings = SettingsManager.Load();
             InitializeCommands();
             InitializePlayback();
             InitializeAudioProgressTimer();
@@ -107,7 +116,21 @@ namespace Osu.Music.UI.ViewModels
 
         private async void LoadBeatmaps()
         {
-            Model.Beatmaps = await LibraryLoader.LoadAsync();
+            try
+            {
+                if (string.IsNullOrEmpty(Settings.OsuFolder))
+                {
+                    Settings.OsuFolder = PathHelper.GetOsuInstallationFolder();
+                    SettingsManager.Save(Settings);
+                }
+
+                Model.Beatmaps = await LibraryLoader.LoadAsync(Settings.OsuFolder);
+
+            }
+            catch(Exception E)
+            {
+                MessageBox.Show(E.Message);
+            }
         }
 
         private void Playback_BeatmapEnded(object sender, BeatmapEventArgs e)

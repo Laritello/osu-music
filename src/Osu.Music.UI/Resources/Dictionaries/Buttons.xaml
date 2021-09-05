@@ -328,7 +328,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border CornerRadius="0 0 10 10" Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="0" >
+                    <Border CornerRadius="0 0 0 0" Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="0" >
                         <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Border>
                 </ControlTemplate>
