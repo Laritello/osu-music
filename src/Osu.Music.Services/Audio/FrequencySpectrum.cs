@@ -9,9 +9,7 @@ namespace Osu.Music.Services.Audio
     /// </summary>
     public struct FrequencySpectrum
     {
-
         private readonly Complex[] frequencyDomain;
-
         public readonly int SamplingFrequency { get; }
         public readonly int FftWindowSize { get; }
 
@@ -29,7 +27,6 @@ namespace Osu.Music.Services.Audio
             SamplingFrequency = samplingFrequency;
             FftWindowSize = fftWindowSize;
         }
-
 
         /// <summary>
         /// Calculates magnitude for selected frequency.
@@ -60,7 +57,6 @@ namespace Osu.Music.Services.Audio
         {
             get
             {
-                
                 if (startFrequency < 0 || startFrequency > SamplingFrequency)
                     throw new IndexOutOfRangeException(nameof(startFrequency));
                 if (endFrequency < 0 || endFrequency > SamplingFrequency)

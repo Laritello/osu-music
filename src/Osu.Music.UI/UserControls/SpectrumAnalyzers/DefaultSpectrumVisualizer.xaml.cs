@@ -32,8 +32,6 @@ namespace Osu.Music.UI.UserControls.SpectrumAnalyzers
             double maxFreq = Math.Min(spectrum.SamplingFrequency, MaximumFrequency);
             double step = (double)maxFreq / ColumnsCount;
 
-
-
             for (double freq = minFreq; freq < maxFreq; freq += step)
             {
                 if (freq > spectrum.SamplingFrequency)
@@ -51,7 +49,7 @@ namespace Osu.Music.UI.UserControls.SpectrumAnalyzers
             if (minimum != 0)
             {
                 for (int i = 0; i < ColumnsCount; i++)
-                    data[i] = 1 - data[i] / minimum;
+                    data[i] = 1 - (data[i] / minimum);
             }
 
             UpdateCanvas(data);
@@ -92,6 +90,6 @@ namespace Osu.Music.UI.UserControls.SpectrumAnalyzers
             }
         }
 
-        private double Lerp(double firstFloat, double secondFloat, float by) => firstFloat * (1 - by) + secondFloat* by;
+        private double Lerp(double firstFloat, double secondFloat, float by) => firstFloat * (1 - by) + (secondFloat * by);
     }
 }

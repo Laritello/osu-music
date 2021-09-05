@@ -1,5 +1,6 @@
 ﻿using NAudio.Wave;
 using Osu.Music.Common.Models;
+using Osu.Music.Services.Events;
 using System;
 
 namespace Osu.Music.Services.Audio
@@ -155,14 +156,5 @@ namespace Osu.Music.Services.Audio
             playbackDevice?.Dispose();
             playbackDevice = null;
         }
-    }
-
-    public class BeatmapEventArgs : EventArgs
-    {
-        public BeatmapEventArgs(Beatmap beatmap)
-        {
-            Beatmap = beatmap;
-        }
-        public Beatmap Beatmap { get; private set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Osu.Music.Common.Models;
 using Osu.Music.Services.Audio;
+using Osu.Music.Services.Events;
 using Osu.Music.Services.IO;
 using Osu.Music.Services.UItility;
 using Osu.Music.UI.Interfaces;
@@ -125,7 +126,6 @@ namespace Osu.Music.UI.ViewModels
                 }
 
                 Model.Beatmaps = await LibraryLoader.LoadAsync(Settings.OsuFolder);
-
             }
             catch(Exception E)
             {

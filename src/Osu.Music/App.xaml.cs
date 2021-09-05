@@ -19,7 +19,7 @@ namespace Osu.Music
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
+            // Do nothing
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
