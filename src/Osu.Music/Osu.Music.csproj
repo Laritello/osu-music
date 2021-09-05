@@ -5,14 +5,11 @@
     <UseWPF>true</UseWPF>
     <AssemblyName>Osu.Music</AssemblyName>
     <ApplicationIcon>Logo.ico</ApplicationIcon>
-    <Version>0.0.1</Version>
+    <Version>0.1.5</Version>
     <Authors>Laritello</Authors>
-    <Description>Simple access to the music from your osu! library.</Description>
+    <Description>Simple player for your osu! library.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageIcon>Logo.png</PackageIcon>
-    <PackageIconUrl />
-    <PackageProjectUrl>https://github.com/Laritello/osu-music</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/Laritello/osu-music</RepositoryUrl>
+    <AssemblyVersion>0.0.1.1</AssemblyVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Prism.DryIoc" Version="8.0.0.1909" />
@@ -26,19 +23,6 @@
     <None Include="..\Osu.Music.UI\Resources\Images\Logo\Logo.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Properties\Settings.Designer.cs">
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
 </Project>

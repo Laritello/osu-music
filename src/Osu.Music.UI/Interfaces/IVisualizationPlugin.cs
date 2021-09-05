@@ -1,8 +1,4 @@
-﻿using NAudio.Dsp;
-using Osu.Music.Services.Audio;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Osu.Music.Services.Audio;
 
 namespace Osu.Music.UI.Interfaces
 {
