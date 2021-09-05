@@ -11,7 +11,6 @@ namespace Osu.Music.Services.IO
 {
     public static class LibraryLoader
     {
-
         public static async Task<IList<Beatmap>> LoadAsync(string osuFolder)
         {
             return await Task.Run(() =>
@@ -23,7 +22,7 @@ namespace Osu.Music.Services.IO
 
                 OsuDb db;
 
-                using (var stream = File.OpenRead($@"{osuFolder}\osu!.db"))
+                using (FileStream stream = File.OpenRead($@"{osuFolder}\osu!.db"))
                     db = OsuDb.Read(stream);
 
                 foreach (var beatmap in db.Beatmaps.DistinctBy(x => x.BeatmapSetId).OrderBy(x => x.Title))
@@ -33,7 +32,7 @@ namespace Osu.Music.Services.IO
             });
         }
 
-        private static Beatmap Convert(String osuFolder, BeatmapEntry entry)
+        private static Beatmap Convert(string osuFolder, BeatmapEntry entry)
         {
             return new Beatmap()
             {

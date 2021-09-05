@@ -90,6 +90,6 @@ namespace Osu.Music.UI.UserControls.SpectrumAnalyzers
             }
         }
 
-        private double Lerp(double firstFloat, double secondFloat, float by) => firstFloat * (1 - by) + (secondFloat * by);
+        private double Lerp(double firstFloat, double secondFloat, float by) => (firstFloat * (1 - by)) + (secondFloat * by);
     }
 }
