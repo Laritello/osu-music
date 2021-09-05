@@ -53,7 +53,6 @@
     <Resource Include="Resources\Fonts\Roboto\Roboto-Regular.ttf" />
     <Resource Include="Resources\Fonts\Roboto\Roboto-Thin.ttf" />
     <Resource Include="Resources\Fonts\Roboto\Roboto-ThinItalic.ttf" />
-    <Resource Include="Resources\Images\osu-logo.png" />
     <Resource Include="Resources\Images\sidebar-background.png" />
   </ItemGroup>
 </Project>
