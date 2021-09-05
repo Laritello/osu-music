@@ -26,14 +26,14 @@
 
 ## Feedback
 
-Since this is an alpha you ~~will~~ may encounter some bugs. I would appreciate if you <a href="https://github.com/laritello/osu-library/issues">report this bug</a>. Or if you have an idea how to improve osu.Music you can <a href="https://github.com/laritello/osu-library/issues">request a feature</a>.
+Since this is an alpha you ~~will~~ may encounter some bugs. I would appreciate you <a href="https://github.com/laritello/osu-library/issues">reporting these bugs</a>. Also, if you have an idea how to improve osu.Music you can <a href="https://github.com/laritello/osu-library/issues">suggest a feature</a>.
 
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Special thanks
-<a href="https://github.com/HoLLy-HaCKeR">HoLLy-HaCKeR</a> for his <a href="https://github.com/HoLLy-HaCKeR/osu-database-reader">osu-database-reader</a> and Norberth Csorba for his <a href="https://stackoverflow.com/questions/55599743/naudio-fft-returns-small-and-equal-magnitude-values-for-all-frequencies">frequency spectrum </a>.
+<a href="https://github.com/HoLLy-HaCKeR">HoLLy-HaCKeR</a> for his <a href="https://github.com/HoLLy-HaCKeR/osu-database-reader">osu-database-reader</a> and Norberth Csorba for his <a href="https://stackoverflow.com/questions/55599743/naudio-fft-returns-small-and-equal-magnitude-values-for-all-frequencies">FrequencySpectrum class</a>.
 
 ## Credits
-Full list of used libraries and resources will be available in the near releases.
+Full list of used libraries and resources soon will be available in "About" section within the program.
