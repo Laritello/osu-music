@@ -1,4 +1,4 @@
-![osu.Music](https://github.com/Laritello/osu-music/blob/documentation/.github/README/header.jpg?raw=true)
+![osu.Music](https://github.com/Laritello/osu-music/blob/main/.github/README/header.jpg?raw=true)
 
 [![GitHub license](https://img.shields.io/github/license/Laritello/osu-music)](https://github.com/Laritello/osu-music/blob/main/LICENSE)
 [![.NET](https://github.com/Laritello/osu-music/actions/workflows/dotnet.yml/badge.svg)](https://github.com/Laritello/osu-music/actions/workflows/dotnet.yml)
