@@ -5,7 +5,7 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/laritello/osu-music/badge)](https://www.codefactor.io/repository/github/laritello/osu-music)
 [![GitHub issues](https://img.shields.io/github/issues/Laritello/osu-music)](https://github.com/Laritello/osu-music/issues)
 
-**osu.Music** is a simple music player for osu! players that want to access their osu! library without launching the game. It is easy to use because player will automatically find osu! installation folder and import current list of beatmaps. Currently osu.Music is in aplha version, which means that it's only barebone player that offers only basic player functions. More features such as collections import, custom playlists and more are planned in the future releases.
+**osu.Music** is a simple music player for osu! players that want to access their beatmap library without launching the game. It is easy to use because player will automatically find osu! installation folder and import current list of beatmaps. Currently osu.Music is in aplha version, which means that it's only barebone player that offers only basic player functions. More features such as collections import, custom playlists and more are planned in the future releases.
 
 <p align="center">
   <img width=800 src="https://i.imgur.com/6T7YKZM.png">
@@ -13,8 +13,8 @@
 
 ## Features
 
-* Basic player features
-* Auto-import of osu! library
+* Basic music player features
+* Auto-import from osu! library
 * Audio visualization
 
 ## Planned features
@@ -30,7 +30,7 @@
 
 ## Feedback
 
-Since this is an alpha you ~~will~~ may encounter some bugs. I would appreciate you <a href="https://github.com/laritello/osu-library/issues">reporting these bugs</a>. Also, if you have an idea how to improve osu.Music you can <a href="https://github.com/laritello/osu-library/issues">suggest a feature</a>.
+Since this is an alpha you ~~will~~ may encounter some bugs. I would appreciate you <a href="https://github.com/laritello/osu-music/issues">reporting these bugs</a>. Also, if you have an idea how to improve osu.Music you can <a href="https://github.com/laritello/osu-music/issues">suggest a feature</a>.
 
 ## License
 
