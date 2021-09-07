@@ -71,7 +71,7 @@
                         </Trigger>
 
                         <Trigger SourceName="ScrollBarThumb" Property="IsMouseOver" Value="True">
-                            <Setter TargetName="ScrollBarThumb" Property="Background" Value="Purple"/>
+                            <Setter TargetName="ScrollBarThumb" Property="Background" Value="{DynamicResource SolidColorBrushMain}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

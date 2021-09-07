@@ -2,4 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:convert="clr-namespace:Osu.Music.UI.Resources.Converters">
     <convert:ReverseVisibilityConverter x:Key="ReverseVisibilityConverter"/>
+    <convert:ProgressToWidthConverter x:Key="ProgressToWidthConverter"/>
+    <convert:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter"/>
+    <convert:ColorToDarkerShadeConverter x:Key="ColorToDarkerShadeConverter"/>
+    <convert:ColorToLighterShadeConverter x:Key="ColorToLighterShadeConverter"/>
 </ResourceDictionary>

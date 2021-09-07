@@ -19,7 +19,7 @@
         <Setter Property="Padding" Value="0"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="Background" Value="White"/>
-        <Setter Property="Foreground" Value="Purple"/>
+        <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushMain}"/>
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <DataTemplate>
@@ -79,8 +79,8 @@
                                             <Condition Property="Selector.IsSelectionActive" Value="True"/>
                                             <Condition Property="IsSelected" Value="True"/>
                                         </MultiTrigger.Conditions>
-                                        <Setter Property="Background" TargetName="Bd" Value="Purple"/>
-                                        <Setter Property="BorderBrush" TargetName="Bd" Value="Purple"/>
+                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource SolidColorBrushMain}"/>
+                                        <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource SolidColorBrushMain}"/>
                                         <Setter Property="Foreground" Value="White"/>
                                     </MultiTrigger>
                                 </ControlTemplate.Triggers>
