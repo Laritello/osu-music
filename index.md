@@ -2,8 +2,8 @@
 
 ## Features
 
-* Basic player features
-* Auto-import of osu! library
+* Basic music player features
+* Auto-import from osu! library
 * Audio visualization
 
 ## Planned features
