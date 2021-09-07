@@ -9,3 +9,10 @@
     background-color: #800080;
     background-image: linear-gradient(90deg, #b200b3, #800080, #b200b3);
 }
+
+.main-content h1, .main-content h2, .main-content h3, .main-content h4, .main-content h5, .main-content h6 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: normal;
+    color: #800080;
+}
