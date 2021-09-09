@@ -72,8 +72,10 @@ namespace Osu.Music.UI.UserControls.SpectrumAnalyzers
                 {
                     Width = Math.Ceiling(columnWidth),
                     Height = height,
-                    Fill = Brushes.Purple
                 };
+
+                rect.SetResourceReference(Shape.FillProperty, "SolidColorBrushMain");
+
                 Canvas.SetLeft(rect, Math.Floor(index * columnWidth));
                 Canvas.SetBottom(rect, 0);
 

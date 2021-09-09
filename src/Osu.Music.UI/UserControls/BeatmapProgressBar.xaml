@@ -8,21 +8,22 @@
              mc:Ignorable="d" 
              d:DesignHeight="20" d:DesignWidth="900" Name="SliderPart">
     <UserControl.Resources>
-        <convert:ProgressToWidthConverter x:Key="ProgressToWidthConverter"/>
-        <convert:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Colors.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Converters.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
     <Grid x:Name="SliderArea" MouseUp="SliderArea_MouseUp">
-        <Rectangle x:Name="RectangleTotal" Opacity="1" Width="{Binding ElementName=SliderPart, Path=ActualWidth}" MinHeight="20" MaxHeight="20" Fill="#b200b3" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"/>
-        <Rectangle x:Name="RectangleProgress" Opacity="1" MinHeight="20" MaxHeight="20" VerticalAlignment="Bottom" HorizontalAlignment="Left">
+        <Rectangle x:Name="RectangleTotal" Opacity="1" Width="{Binding ElementName=SliderPart, Path=ActualWidth}" MinHeight="20" MaxHeight="20" Fill="{DynamicResource SolidColorBrushMainLight}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"/>
+        <Rectangle x:Name="RectangleProgress" Opacity="1" MinHeight="20" MaxHeight="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Fill="{DynamicResource SolidColorBrushMainDark}">
             <Rectangle.Width>
                 <MultiBinding Converter="{StaticResource ProgressToWidthConverter}">
                     <Binding Path="ActualWidth" ElementName="SliderPart"/>
                     <Binding Path="Progress" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:BeatmapProgressBar}}"/>
                 </MultiBinding>
             </Rectangle.Width>
-            <Rectangle.Fill>
-                <SolidColorBrush Color="#4c004d"/>
-            </Rectangle.Fill>
         </Rectangle>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <TextBlock Text="{Binding Current, RelativeSource={RelativeSource FindAncestor, AncestorType=local:BeatmapProgressBar}, Converter={StaticResource TimeSpanToStringConverter}}" 

@@ -13,6 +13,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Colors.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Fonts.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Converters.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Defaults.xaml"/>
@@ -59,7 +60,7 @@
             </Grid.RowDefinitions>
             <Image Source="pack://application:,,,/Osu.Music.UI;component/Resources/Images/sidebar-background.png" 
                    Grid.RowSpan="2"  Stretch="UniformToFill" HorizontalAlignment="Center"/>
-            <Rectangle Fill="Purple" Opacity="0.2" Grid.RowSpan="2"/>
+            <Rectangle Fill="{DynamicResource SolidColorBrushMain}" Opacity="0.2" Grid.RowSpan="2"/>
 
             <StackPanel Orientation="Vertical" Margin="0 50 0 0">
                 <ToggleButton Style="{DynamicResource SidebarButtonAllSongs}" IsChecked="True"/>
@@ -83,7 +84,7 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </controls:BeatmapProgressBar>
-        <Grid Grid.Row="3" Grid.ColumnSpan="2" Background="Purple">
+        <Grid Grid.Row="3" Grid.ColumnSpan="2" Background="{DynamicResource SolidColorBrushMain}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="350"/>
                 <ColumnDefinition Width="*"/>
