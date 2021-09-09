@@ -74,11 +74,20 @@ namespace Osu.Music.UI.ViewModels
         {
             Model = new MainModel();
             Visualization = new DefaultVisualization();
-            Settings = SettingsManager.Load();
+
+            InitializeSettings();
             InitializeCommands();
             InitializePlayback();
             InitializeAudioProgressTimer();
             LoadBeatmaps();
+        }
+
+        private void InitializeSettings()
+        {
+            Settings = SettingsManager.Load();
+
+            ResourceDictionary resource = Application.Current.Resources;
+            resource.MergedDictionaries.SetMainColor(Settings.MainColor);
         }
 
         private void InitializeCommands()

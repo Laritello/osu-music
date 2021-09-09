@@ -7,14 +7,6 @@
              xmlns:convert="clr-namespace:Osu.Music.UI.Resources.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="20" d:DesignWidth="900" Name="SliderPart">
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Colors.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Converters.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </UserControl.Resources>
     <Grid x:Name="SliderArea" MouseUp="SliderArea_MouseUp">
         <Rectangle x:Name="RectangleTotal" Opacity="1" Width="{Binding ElementName=SliderPart, Path=ActualWidth}" MinHeight="20" MaxHeight="20" Fill="{DynamicResource SolidColorBrushMainLight}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"/>
         <Rectangle x:Name="RectangleProgress" Opacity="1" MinHeight="20" MaxHeight="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Fill="{DynamicResource SolidColorBrushMainDark}">

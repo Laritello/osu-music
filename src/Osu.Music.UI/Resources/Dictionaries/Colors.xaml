@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Color x:Key="ColorMain">#800080</Color>
-    <Color x:Key="ColorMainLight">#b200b3</Color>
-    <Color x:Key="ColorMainDark">#4c004d</Color>
+    <Color x:Key="ColorMain">#FF800080</Color>
+    <Color x:Key="ColorMainLight">#FFb200b3</Color>
+    <Color x:Key="ColorMainDark">#FF4c004d</Color>
     
     <SolidColorBrush x:Key="SolidColorBrushMain" Color="{DynamicResource ColorMain}"/>
     <SolidColorBrush x:Key="SolidColorBrushMainLight" Color="{DynamicResource ColorMainLight}"/>
