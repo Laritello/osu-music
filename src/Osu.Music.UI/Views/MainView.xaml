@@ -10,6 +10,32 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="550" d:DesignWidth="900">
+    <UserControl.Resources>
+        <ControlTemplate x:Key="PopupTemplate">
+            <Border Background="{DynamicResource SolidColorBrushMain}" BorderBrush="Transparent" Padding="0" BorderThickness="0" HorizontalAlignment="Left">
+                <StackPanel Orientation="Vertical">
+                    <Button Style="{DynamicResource PopupButton}" Content="About"/>
+                    <Button Style="{DynamicResource PopupButton}" Content="Open folder"/>
+                    <Button Style="{DynamicResource PopupButton}" Content="Settings"/>
+                    <Button Style="{DynamicResource PopupButton}" Content="Hotkeys"/>
+                    <Button Style="{DynamicResource PopupButton}" Content="Exit"/>
+                </StackPanel>
+            </Border>
+        </ControlTemplate>
+        <ControlTemplate x:Key="MyControlTemplate" TargetType="ContentControl">
+            <Grid Name="MyControl">
+                <ContentPresenter Content="{TemplateBinding Content}"/>
+                <Popup Name="MyPopup" StaysOpen="True" Placement="Left" HorizontalOffset="-100" VerticalOffset="30">
+                    <ContentControl Template="{StaticResource PopupTemplate}"/>
+                </Popup>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger SourceName="MyControl" Property="UIElement.IsMouseOver" Value="True">
+                    <Setter TargetName="MyPopup" Property="Popup.IsOpen" Value="True"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </UserControl.Resources>
     <Grid Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250"/>
@@ -28,7 +54,9 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Style="{DynamicResource SidebarButtonOsu}"/>
+            <ContentControl Template="{StaticResource MyControlTemplate}" Margin="13 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Button Style="{DynamicResource SidebarButtonOsu}"/>
+            </ContentControl>
             <StackPanel Grid.Column="1"  HorizontalAlignment="Right" Orientation="Horizontal">
                 <Button Style="{StaticResource TitleBarGitHub}" Command="{Binding OpenGitHubCommand}"/>
                 <Button Style="{StaticResource TitleBarMinimize}" Command="{Binding MinimizeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>

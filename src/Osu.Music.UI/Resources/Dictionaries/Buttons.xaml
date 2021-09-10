@@ -329,7 +329,6 @@
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="FontFamily" Value="Roboto"/>
         <Setter Property="FontWeight" Value="Normal"/>
-        <Setter Property="Margin" Value="13 0 0 0"/>
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -350,7 +349,59 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
+    <Style x:Key="PopupButton" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="150"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Background" Value="{DynamicResource SolidColorBrushMain}"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontFamily" Value="Roboto"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="0 0 0 0" Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="0" Padding="13 0 0 0">
+                        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True"/>
+                    <Condition Property="IsPressed" Value="False"/>
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Color="Black" Opacity="0.1"/>
+                        </Setter.Value>
+                    </Setter>
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True"/>
+                    <Condition Property="IsPressed" Value="True"/>
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Color="Black" Opacity="0.2"/>
+                        </Setter.Value>
+                    </Setter>
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+
     <Style x:Key="SidebarButtonAllSongs" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource SidebarToggleButtonBase}">
         <Setter Property="Content">
             <Setter.Value>
