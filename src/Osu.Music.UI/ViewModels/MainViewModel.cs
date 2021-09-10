@@ -1,4 +1,5 @@
-﻿using Osu.Music.Common.Models;
+﻿using Osu.Music.Common;
+using Osu.Music.Common.Models;
 using Osu.Music.Services.Audio;
 using Osu.Music.Services.Events;
 using Osu.Music.Services.IO;
@@ -8,6 +9,7 @@ using Osu.Music.UI.Models;
 using Osu.Music.UI.Visualization;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using System;
 using System.Diagnostics;
 using System.Windows;
@@ -15,7 +17,7 @@ using System.Windows.Threading;
 
 namespace Osu.Music.UI.ViewModels
 {
-    public class MainViewModel : BindableBase
+    public class MainViewModel : ViewModelBase
     {
         private MainModel _model;
         public MainModel Model
@@ -67,10 +69,12 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand<Beatmap> NextBeatmapCommand { get; private set; }
         public DelegateCommand OpenGitHubCommand { get; private set; }
         public DelegateCommand<TimeSpan?> ScrollBeatmapCommand { get; private set; }
+        public DelegateCommand ExitCommand { get; private set; }
+        public DelegateCommand OpenPreferencesCommand { get; private set; }
 
         private DispatcherTimer _audioProgressTimer;
 
-        public MainViewModel()
+        public MainViewModel(IRegionManager regionManager) : base(regionManager)
         {
             Model = new MainModel();
             Visualization = new DefaultVisualization();
@@ -100,6 +104,8 @@ namespace Osu.Music.UI.ViewModels
             NextBeatmapCommand = new DelegateCommand<Beatmap>(NextBeatmap);
             OpenGitHubCommand = new DelegateCommand(OpenGitHub);
             ScrollBeatmapCommand = new DelegateCommand<TimeSpan?>(ScrollBeatmap);
+            OpenPreferencesCommand = new DelegateCommand(OpenPreferences);
+            ExitCommand = new DelegateCommand(Exit);
         }
         private void InitializePlayback()
         {
@@ -232,6 +238,16 @@ namespace Osu.Music.UI.ViewModels
         {
             if (progress.HasValue)
                 _playback.CurrentTime = progress.Value;
+        }
+
+        private void OpenPreferences()
+        {
+            RegionManager.RequestNavigate(RegionNames.ContentRegion, "PreferencesView");
+        }
+
+        private void Exit()
+        {
+            Application.Current.Shutdown();
         }
 
         private void OpenGitHub()
