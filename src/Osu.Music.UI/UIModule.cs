@@ -17,7 +17,6 @@ namespace Osu.Music.UI
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<MainView>();
-            containerRegistry.RegisterForNavigation<PreferencesView>();
         }
     }
 }

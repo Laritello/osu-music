@@ -16,9 +16,9 @@
                 <StackPanel Orientation="Vertical">
                     <Button Style="{DynamicResource PopupButton}" Content="About"/>
                     <Button Style="{DynamicResource PopupButton}" Content="Open folder"/>
-                    <Button Style="{DynamicResource PopupButton}" Content="Preferences" Command="{Binding OpenPreferencesCommand}"/>
+                    <Button Style="{DynamicResource PopupButton}" Content="Settings"/>
                     <Button Style="{DynamicResource PopupButton}" Content="Hotkeys"/>
-                    <Button Style="{DynamicResource PopupButton}" Content="Exit" Command="{Binding ExitCommand}"/>
+                    <Button Style="{DynamicResource PopupButton}" Content="Exit"/>
                 </StackPanel>
             </Border>
         </ControlTemplate>
