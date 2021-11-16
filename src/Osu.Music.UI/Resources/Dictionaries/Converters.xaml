@@ -6,4 +6,5 @@
     <convert:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter"/>
     <convert:ColorToDarkerShadeConverter x:Key="ColorToDarkerShadeConverter"/>
     <convert:ColorToLighterShadeConverter x:Key="ColorToLighterShadeConverter"/>
+    <convert:ColorStringConverter x:Key="ColorStringConverter"/>
 </ResourceDictionary>

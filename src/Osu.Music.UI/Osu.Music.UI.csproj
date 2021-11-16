@@ -29,7 +29,8 @@
     <None Remove="Resources\Images\sidebar-background.png" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.31" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.37" />
+    <PackageReference Include="PixiEditor.ColorPicker" Version="3.1.0" />
     <PackageReference Include="Prism.Wpf" Version="8.1.97" />
   </ItemGroup>
   <ItemGroup>

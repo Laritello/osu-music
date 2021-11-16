@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vm="clr-namespace:Osu.Music.UI.ViewModels"
+                    xmlns:v="clr-namespace:Osu.Music.UI.Views">
+    <DataTemplate DataType="{x:Type vm:AboutViewModel}">
+        <v:AboutView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:SongsViewModel}">
+        <v:SongsView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
+        <v:SettingsView/>
+    </DataTemplate>
+</ResourceDictionary>

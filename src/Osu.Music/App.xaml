@@ -4,6 +4,18 @@
              xmlns:local="clr-namespace:Osu.Music"
              xmlns:prism="http://prismlibrary.com/">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Colors.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Fonts.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Converters.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Defaults.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Texts.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Buttons.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Sliders.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/ListViews.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/DataTemplates.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </prism:PrismApplication>

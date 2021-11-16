@@ -11,18 +11,15 @@
              mc:Ignorable="d" 
              d:DesignHeight="550" d:DesignWidth="900">
     <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Colors.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Fonts.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Converters.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Defaults.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Texts.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Buttons.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Sliders.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/ListViews.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+        <ControlTemplate x:Key="PopupTemplate">
+            <Border Background="{DynamicResource SolidColorBrushMain}" BorderBrush="Transparent" Padding="0" BorderThickness="0" HorizontalAlignment="Left">
+                <StackPanel Orientation="Vertical">
+                    <Button Style="{DynamicResource PopupButton}" Content="About" Command="{Binding OpenPageCommand}" CommandParameter="{Binding Model.AboutPage}"/>
+                    <Button Style="{DynamicResource PopupButton}" Content="Settings" Command="{Binding OpenPageCommand}" CommandParameter="{Binding Model.SettingsPage}"/>
+                    <Button Style="{DynamicResource PopupButton}" Content="Exit" Command="{Binding ExitCommand}"/>
+                </StackPanel>
+            </Border>
+        </ControlTemplate>
     </UserControl.Resources>
     <Grid Background="White">
         <Grid.ColumnDefinitions>
@@ -42,7 +39,14 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Style="{DynamicResource SidebarButtonOsu}"/>
+            <ContentControl Margin="13 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Grid>
+                    <Button Style="{DynamicResource SidebarButtonOsu}" Command="{Binding ChangePopupStateCommand}" CommandParameter="{Binding ElementName=MenuPopup}"/>
+                    <Popup x:Name="MenuPopup" StaysOpen="False" Placement="Left" HorizontalOffset="-100" VerticalOffset="30">
+                        <ContentControl Template="{StaticResource PopupTemplate}"/>
+                    </Popup>
+                </Grid>
+            </ContentControl>
             <StackPanel Grid.Column="1"  HorizontalAlignment="Right" Orientation="Horizontal">
                 <Button Style="{StaticResource TitleBarGitHub}" Command="{Binding OpenGitHubCommand}"/>
                 <Button Style="{StaticResource TitleBarMinimize}" Command="{Binding MinimizeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
@@ -63,7 +67,7 @@
             <Rectangle Fill="{DynamicResource SolidColorBrushMain}" Opacity="0.2" Grid.RowSpan="2"/>
 
             <StackPanel Orientation="Vertical" Margin="0 50 0 0">
-                <ToggleButton Style="{DynamicResource SidebarButtonAllSongs}" IsChecked="True"/>
+                <ToggleButton Style="{DynamicResource SidebarButtonAllSongs}" IsChecked="True" Command="{Binding OpenPageCommand}" CommandParameter="{Binding Model.SongsPage}"/>
                 <ToggleButton Style="{DynamicResource SidebarButtonCollection}" IsEnabled="False"/>
                 <ToggleButton Style="{DynamicResource SidebarButtonPlaylists}" IsEnabled="False"/>
             </StackPanel>
@@ -71,11 +75,7 @@
             <ContentPresenter x:Name="contentPresenter" Grid.Row="1" Content="{Binding Visualization.Content}"/>
         </Grid>
 
-        <ListView Style="{DynamicResource ListViewBeatmaps}" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Model.Beatmaps}" SelectedItem="{Binding Model.SelectedBeatmap}">
-            <ListView.InputBindings>
-                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding PlayBeatmapCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=SelectedItem}"/>
-            </ListView.InputBindings>
-        </ListView>
+        <ContentControl Content="{Binding SelectedPage}" Grid.Column="1" Grid.Row="1"/>
         <controls:BeatmapProgressBar Grid.Row="2" Grid.ColumnSpan="2" Total="{Binding Model.TotalTime}" Current="{Binding Model.CurrentTime}" Progress="{Binding Model.Progress}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="ProgressChanged">
