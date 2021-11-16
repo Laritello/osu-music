@@ -38,6 +38,13 @@ namespace Osu.Music.UI.ViewModels
             set => SetProperty(ref _playback, value);
         }
 
+        private BindableBase _selectedPage;
+        public BindableBase SelectedPage
+        {
+            get => _selectedPage;
+            set => SetProperty(ref _selectedPage, value);
+        }
+
         private bool _repeat;
         public bool Repeat
         {
@@ -67,12 +74,14 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand<Beatmap> NextBeatmapCommand { get; private set; }
         public DelegateCommand OpenGitHubCommand { get; private set; }
         public DelegateCommand<TimeSpan?> ScrollBeatmapCommand { get; private set; }
+        public DelegateCommand<BindableBase> OpenPageCommand { get; private set; }
 
         private DispatcherTimer _audioProgressTimer;
 
         public MainViewModel()
         {
             Model = new MainModel();
+            SelectedPage = Model.SongsPage;
             Visualization = new DefaultVisualization();
 
             InitializeSettings();
@@ -100,6 +109,7 @@ namespace Osu.Music.UI.ViewModels
             NextBeatmapCommand = new DelegateCommand<Beatmap>(NextBeatmap);
             OpenGitHubCommand = new DelegateCommand(OpenGitHub);
             ScrollBeatmapCommand = new DelegateCommand<TimeSpan?>(ScrollBeatmap);
+            OpenPageCommand = new DelegateCommand<BindableBase>(OpenPage);
         }
         private void InitializePlayback()
         {
@@ -232,6 +242,11 @@ namespace Osu.Music.UI.ViewModels
         {
             if (progress.HasValue)
                 _playback.CurrentTime = progress.Value;
+        }
+
+        private void OpenPage(BindableBase page)
+        {
+            SelectedPage = page;
         }
 
         private void OpenGitHub()

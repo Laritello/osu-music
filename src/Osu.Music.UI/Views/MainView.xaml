@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:Osu.Music.UI.Views"
              xmlns:controls="clr-namespace:Osu.Music.UI.UserControls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:vm="clr-namespace:Osu.Music.UI.ViewModels"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:prism="http://prismlibrary.com/"
@@ -16,8 +17,7 @@
                 <StackPanel Orientation="Vertical">
                     <Button Style="{DynamicResource PopupButton}" Content="About"/>
                     <Button Style="{DynamicResource PopupButton}" Content="Open folder"/>
-                    <Button Style="{DynamicResource PopupButton}" Content="Settings"/>
-                    <Button Style="{DynamicResource PopupButton}" Content="Hotkeys"/>
+                    <Button Style="{DynamicResource PopupButton}" Content="Settings" Command="{Binding OpenPageCommand}" CommandParameter="{Binding Model.SettingsPage}"/>
                     <Button Style="{DynamicResource PopupButton}" Content="Exit"/>
                 </StackPanel>
             </Border>
@@ -85,11 +85,7 @@
             <ContentPresenter x:Name="contentPresenter" Grid.Row="1" Content="{Binding Visualization.Content}"/>
         </Grid>
 
-        <ListView Style="{DynamicResource ListViewBeatmaps}" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Model.Beatmaps}" SelectedItem="{Binding Model.SelectedBeatmap}">
-            <ListView.InputBindings>
-                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding PlayBeatmapCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=SelectedItem}"/>
-            </ListView.InputBindings>
-        </ListView>
+        <ContentControl Content="{Binding SelectedPage}" Grid.Column="1" Grid.Row="1"/>
         <controls:BeatmapProgressBar Grid.Row="2" Grid.ColumnSpan="2" Total="{Binding Model.TotalTime}" Current="{Binding Model.CurrentTime}" Progress="{Binding Model.Progress}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="ProgressChanged">

@@ -1,4 +1,5 @@
 ﻿using Osu.Music.Common.Models;
+using Osu.Music.UI.ViewModels;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -68,11 +69,27 @@ namespace Osu.Music.UI.Models
             get => _progress;
             set => SetProperty(ref _progress, value);
         }
+
+        private BindableBase _songsPage;
+        public BindableBase SongsPage
+        {
+            get => _songsPage;
+            set => SetProperty(ref _songsPage, value);
+        }
+
+        private BindableBase _settingsPage;
+        public BindableBase SettingsPage
+        {
+            get => _settingsPage;
+            set => SetProperty(ref _settingsPage, value);
+        }
         #endregion
 
         public MainModel()
         {
             PreviousBeatmaps = new Stack<Beatmap>(20);
+            _songsPage = new SongsViewModel();
+            _settingsPage = new SettingsViewModel();
         }
     }
 }

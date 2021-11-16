@@ -14,6 +14,7 @@
                 <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Buttons.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Sliders.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/ListViews.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/DataTemplates.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
