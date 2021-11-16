@@ -4,7 +4,6 @@
              xmlns:local="clr-namespace:Osu.Music.UI.Views"
              xmlns:controls="clr-namespace:Osu.Music.UI.UserControls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:vm="clr-namespace:Osu.Music.UI.ViewModels"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:prism="http://prismlibrary.com/"

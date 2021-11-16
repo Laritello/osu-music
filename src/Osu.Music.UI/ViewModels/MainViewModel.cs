@@ -12,6 +12,7 @@ using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls.Primitives;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace Osu.Music.UI.ViewModels
@@ -77,6 +78,7 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand<TimeSpan?> ScrollBeatmapCommand { get; private set; }
         public DelegateCommand<BindableBase> OpenPageCommand { get; private set; }
         public DelegateCommand<Popup> ChangePopupStateCommand { get; private set; }
+        public DelegateCommand<Color?> UpdateColorCommand { get; private set; }
         public DelegateCommand ExitCommand { get; private set; }
 
         private DispatcherTimer _audioProgressTimer;
@@ -114,6 +116,7 @@ namespace Osu.Music.UI.ViewModels
             ScrollBeatmapCommand = new DelegateCommand<TimeSpan?>(ScrollBeatmap);
             OpenPageCommand = new DelegateCommand<BindableBase>(OpenPage);
             ChangePopupStateCommand = new DelegateCommand<Popup>(ChangePopupState);
+            UpdateColorCommand = new DelegateCommand<Color?>(UpdateColor);
             ExitCommand = new DelegateCommand(Exit);
         }
         private void InitializePlayback()
@@ -258,6 +261,19 @@ namespace Osu.Music.UI.ViewModels
         {
             popup.IsOpen = !popup.IsOpen;
         }
+
+        private void UpdateColor(Color? color)
+        {
+            if (!color.HasValue)
+                return;
+
+            Settings.MainColor = color.Value.ToHex();
+            ResourceDictionary resource = Application.Current.Resources;
+            resource.MergedDictionaries.SetMainColor(Settings.MainColor);
+
+            SettingsManager.Save(Settings);
+        }
+
         private void Exit()
         {
             Application.Current.Shutdown();

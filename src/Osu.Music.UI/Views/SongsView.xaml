@@ -13,7 +13,7 @@
             AncestorType={x:Type local:MainView}}}">
             <ListView.InputBindings>
                 <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.PlayBeatmapCommand, RelativeSource={RelativeSource FindAncestor, 
-            AncestorType={x:Type local:MainView}}}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=SelectedItem}"/>
+                    AncestorType={x:Type local:MainView}}}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=SelectedItem}"/>
             </ListView.InputBindings>
         </ListView>
     </Grid>

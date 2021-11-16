@@ -13,7 +13,7 @@ namespace Osu.Music.Services.UItility
 
         public static void SetMainColor(this Collection<ResourceDictionary> collection, string hex)
         {
-            var dictionary = collection[0];
+            ResourceDictionary dictionary = collection[0];
 
             Color mainColor = hex.FromHex();
             Color lightColor = new Color()
