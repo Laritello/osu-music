@@ -83,13 +83,22 @@ namespace Osu.Music.UI.Models
             get => _settingsPage;
             set => SetProperty(ref _settingsPage, value);
         }
+
+        private BindableBase _aboutPage;
+        public BindableBase AboutPage
+        {
+            get => _aboutPage;
+            set => SetProperty(ref _aboutPage, value);
+        }
         #endregion
 
         public MainModel()
         {
-            PreviousBeatmaps = new Stack<Beatmap>(20);
-            _songsPage = new SongsViewModel();
-            _settingsPage = new SettingsViewModel();
+            PreviousBeatmaps = new Stack<Beatmap>(100);
+            AboutPage = new AboutViewModel();
+            SettingsPage = new SettingsViewModel();
+
+            SongsPage = new SongsViewModel();
         }
     }
 }

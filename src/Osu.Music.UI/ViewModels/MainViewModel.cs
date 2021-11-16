@@ -11,6 +11,7 @@ using Prism.Mvvm;
 using System;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 using System.Windows.Threading;
 
 namespace Osu.Music.UI.ViewModels
@@ -75,6 +76,8 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand OpenGitHubCommand { get; private set; }
         public DelegateCommand<TimeSpan?> ScrollBeatmapCommand { get; private set; }
         public DelegateCommand<BindableBase> OpenPageCommand { get; private set; }
+        public DelegateCommand<Popup> ChangePopupStateCommand { get; private set; }
+        public DelegateCommand ExitCommand { get; private set; }
 
         private DispatcherTimer _audioProgressTimer;
 
@@ -110,6 +113,8 @@ namespace Osu.Music.UI.ViewModels
             OpenGitHubCommand = new DelegateCommand(OpenGitHub);
             ScrollBeatmapCommand = new DelegateCommand<TimeSpan?>(ScrollBeatmap);
             OpenPageCommand = new DelegateCommand<BindableBase>(OpenPage);
+            ChangePopupStateCommand = new DelegateCommand<Popup>(ChangePopupState);
+            ExitCommand = new DelegateCommand(Exit);
         }
         private void InitializePlayback()
         {
@@ -247,6 +252,15 @@ namespace Osu.Music.UI.ViewModels
         private void OpenPage(BindableBase page)
         {
             SelectedPage = page;
+        }
+
+        private void ChangePopupState(Popup popup)
+        {
+            popup.IsOpen = !popup.IsOpen;
+        }
+        private void Exit()
+        {
+            Application.Current.Shutdown();
         }
 
         private void OpenGitHub()
