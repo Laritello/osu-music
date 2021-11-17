@@ -28,6 +28,21 @@
 * Global hotkeys
 * Mini-player when minimized
 
+## Requirements
+
+* Windows 7 or higher
+* .NET Core 3.1
+
+## Build
+
+* Get the code:
+    ```
+    git clone https://github.com/Laritello/osu-music.git
+    ```
+* Run build script: 
+    ```
+    osu-music\build\build.bat
+    ```
 ## Feedback
 
 Since this is an alpha you ~~will~~ may encounter some bugs. I would appreciate you <a href="https://github.com/laritello/osu-music/issues">reporting these bugs</a>. Also, if you have an idea how to improve osu.Music you can <a href="https://github.com/laritello/osu-music/issues">suggest a feature</a>.
