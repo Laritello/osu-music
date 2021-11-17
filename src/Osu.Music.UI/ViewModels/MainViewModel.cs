@@ -182,9 +182,9 @@ namespace Osu.Music.UI.ViewModels
 
                 Model.PlayingBeatmap = beatmap;
                 Playback.Beatmap = beatmap;
-                Playback.Load();
             }
 
+            Playback.Load();
             Playback.Play();
         }
 
