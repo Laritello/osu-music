@@ -39,9 +39,13 @@
     ```
     git clone https://github.com/Laritello/osu-music.git
     ```
+* Switch directory:
+    ```
+    cd osu-music
+    ```
 * Run build script: 
     ```
-    osu-music\build\build.bat
+    build\build.bat
     ```
 ## Feedback
 
