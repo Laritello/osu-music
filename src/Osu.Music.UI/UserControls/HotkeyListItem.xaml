@@ -4,10 +4,22 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Osu.Music.UI.UserControls"
-             mc:Ignorable="d">
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-        <Label Name="LabelName" Width="430" Content="{Binding Type, Converter={StaticResource HotkeyTypeToStringConverter}}"/>
-        <Label Name="LabelHotkey" Width="140" Height="30" Content="{Binding Combination}"/>
-        <Button Name="ButtonEdit" Width="30" Height="30"/>
+             xmlns:views="clr-namespace:Osu.Music.UI.Views"
+             mc:Ignorable="d" Name="HotkeyItem">
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Height="30">
+        <TextBlock Name="LabelName" Width="430" Text="{Binding Type, Converter={StaticResource HotkeyTypeToStringConverter}}" Padding="0 6 0 0"/>
+        <TextBlock Name="LabelHotkey" FontWeight="Bold" Width="140" Height="30" Text="{Binding Combination}" Padding="0 6 0 0"/>
+        <ToggleButton Name="ButtonEdit" Width="30" Height="30" Style="{DynamicResource HotkeyEditButton}" 
+                      Command="{Binding DataContext.SelectHotkeyCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type views:SettingsView}}}"
+                      CommandParameter="{Binding ElementName=HotkeyItem}">
+            <ToggleButton.IsChecked>
+                <MultiBinding Converter="{StaticResource SelectedHotkeyToBooleanConverter}" Mode="OneWay">
+                    <MultiBinding.Bindings>
+                        <Binding ElementName="HotkeyItem" Path="."/>
+                        <Binding ElementName="HotkeyItem" Path="SelectedHotkey"/>
+                    </MultiBinding.Bindings>
+                </MultiBinding>
+            </ToggleButton.IsChecked>
+        </ToggleButton>
     </StackPanel>
 </UserControl>

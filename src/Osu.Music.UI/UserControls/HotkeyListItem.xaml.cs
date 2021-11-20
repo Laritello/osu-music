@@ -19,9 +19,28 @@ namespace Osu.Music.UI.UserControls
     /// </summary>
     public partial class HotkeyListItem : UserControl
     {
+        public static readonly DependencyProperty InEditProperty = DependencyProperty.Register("InEdit", typeof(bool), typeof(HotkeyListItem), new PropertyMetadata(false));
+        public bool InEdit
+        {
+            get => (bool)GetValue(InEditProperty);
+            set => SetValue(InEditProperty, value);
+        }
+
+        public static readonly DependencyProperty SelectedHotkeyProperty = DependencyProperty.Register("SelectedHotkey", typeof(HotkeyListItem), typeof(HotkeyListItem), new PropertyMetadata(null));
+        public HotkeyListItem SelectedHotkey
+        {
+            get => (HotkeyListItem)GetValue(SelectedHotkeyProperty);
+            set => SetValue(SelectedHotkeyProperty, value);
+        }
+
         public HotkeyListItem()
         {
             InitializeComponent();
+        }
+
+        public override string ToString()
+        {
+            return LabelName.Text;
         }
     }
 }

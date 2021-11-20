@@ -36,7 +36,8 @@ namespace Osu.Music.Services.Hotkeys
                     Type = HotkeyType.PreviousTrack,
                     Combination = new KeyCombination()
                     {
-                        AltPressed = true,
+                        ControlPressed = true,
+                        ShiftPressed = true,
                         Key = Keys.Left
                     }
                 },
@@ -46,7 +47,8 @@ namespace Osu.Music.Services.Hotkeys
                     Type = HotkeyType.NextTrack,
                     Combination = new KeyCombination()
                     {
-                        AltPressed = true,
+                        ControlPressed = true,
+                        ShiftPressed = true,
                         Key = Keys.Right
                     }
                 },

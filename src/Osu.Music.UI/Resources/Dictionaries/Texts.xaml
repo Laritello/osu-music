@@ -11,4 +11,11 @@
         <Setter Property="FontWeight" Value="Light"/>
         <Setter Property="Foreground" Value="White"/>
     </Style>
+
+    <Style x:Key="MenuHeader" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="#424242"/>
+        <Setter Property="Margin" Value="0 0 0 20"/>
+    </Style>
 </ResourceDictionary>
