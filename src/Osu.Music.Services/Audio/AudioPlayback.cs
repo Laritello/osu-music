@@ -1,12 +1,13 @@
 ﻿using NAudio.Wave;
 using Osu.Music.Common.Models;
 using Osu.Music.Services.Events;
+using Prism.Mvvm;
 using System;
 
 namespace Osu.Music.Services.Audio
 {
     // Modified https://github.com/naudio/NAudio/blob/master/NAudioWpfDemo/AudioPlaybackDemo/AudioPlayback.cs file
-    public class AudioPlayback : IDisposable
+    public class AudioPlayback : BindableBase, IDisposable
     {
         #region Properties
         public Beatmap Beatmap { get; set; }
@@ -15,14 +16,22 @@ namespace Osu.Music.Services.Audio
         public bool Mute
         {
             get => _mute;
-            set => SetMute(value);
+            set
+            {
+                SetProperty(ref _mute, value);
+                SetMute();
+            }
         }
 
         private float _volume = 0.3f;
         public float Volume
         {
             get => _volume;
-            set => SetVolume(value);
+            set
+            {
+                SetProperty(ref _volume, Math.Min(Math.Max(value, 0), 1)); // Volume should be in range [0;1]
+                SetVolume();
+            }
         }
 
         public TimeSpan CurrentTime
@@ -117,18 +126,14 @@ namespace Osu.Music.Services.Audio
             };
         }
 
-        private void SetMute(bool value)
+        private void SetMute()
         {
-            _mute = value;
-
             if (playbackDevice != null)
                 playbackDevice.Volume = _mute ? 0 : _volume;
         }
 
-        private void SetVolume(float value)
+        private void SetVolume()
         {
-            _volume = Math.Min(Math.Max(value, 0), 1); // Volume should be in range [0;1]
-
             if (playbackDevice != null)
                 playbackDevice.Volume = _volume;
         }

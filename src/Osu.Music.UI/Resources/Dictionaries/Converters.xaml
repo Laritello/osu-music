@@ -7,4 +7,7 @@
     <convert:ColorToDarkerShadeConverter x:Key="ColorToDarkerShadeConverter"/>
     <convert:ColorToLighterShadeConverter x:Key="ColorToLighterShadeConverter"/>
     <convert:ColorStringConverter x:Key="ColorStringConverter"/>
+    <convert:HotkeyTypeToStringConverter x:Key="HotkeyTypeToStringConverter"/>
+    <convert:SelectedHotkeyToBooleanConverter x:Key="SelectedHotkeyToBooleanConverter"/>
+    <convert:KeyCombinationToStringConverter x:Key="KeyCombinationToStringConverter"/>
 </ResourceDictionary>

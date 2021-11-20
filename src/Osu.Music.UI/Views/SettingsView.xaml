@@ -7,20 +7,46 @@
              xmlns:prism="http://prismlibrary.com/"
              xmlns:local="clr-namespace:Osu.Music.UI.Views"
              xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
+             xmlns:models="clr-namespace:Osu.Music.Common.Models;assembly=Osu.Music.Common"
+             xmlns:uc="clr-namespace:Osu.Music.UI.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <DataTemplate x:Key="HotkeyTemplate" DataType="{x:Type models:Hotkey}">
+            <uc:HotkeyListItem Margin="0 5 0 5" Combination="{Binding Path=Combination}" Type="{Binding Path=Type}"
+                               SelectedHotkey="{Binding DataContext.HotkeyManager.EditedHotkey, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}"/>
+        </DataTemplate>
+    </UserControl.Resources>
     <Grid>
-        <StackPanel Orientation="Vertical" Margin="5">
-            <Label Content="General"/>
-            <colorpicker:SquarePicker Name="ColorPicker" HorizontalAlignment="Left" Height="150" Width="150" SelectedColor="{Binding DataContext.Settings.MainColor, RelativeSource={RelativeSource FindAncestor, 
-            AncestorType={x:Type local:MainView}}, Converter={StaticResource ColorStringConverter}}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="ColorChanged">
-                        <prism:InvokeCommandAction Command="{Binding DataContext.UpdateColorCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}"
+        <ScrollViewer>
+            <StackPanel Orientation="Vertical" Margin="5" Width="600">
+                <TextBlock Text="Player Color" Style="{DynamicResource MenuHeader}"/>
+                <colorpicker:SquarePicker Name="ColorPicker" HorizontalAlignment="Center" Height="150" Width="150" SelectedColor="{Binding DataContext.Settings.MainColor, RelativeSource={RelativeSource FindAncestor, 
+                    AncestorType={x:Type local:MainView}}, Converter={StaticResource ColorStringConverter}}" Margin="0 0 0 50">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="ColorChanged">
+                            <prism:InvokeCommandAction Command="{Binding DataContext.UpdateColorCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}"
                                                CommandParameter="{Binding ElementName=ColorPicker, Path=SelectedColor}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </colorpicker:SquarePicker>
-        </StackPanel>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </colorpicker:SquarePicker>
+
+                <TextBlock Text="Hotkeys" Style="{DynamicResource MenuHeader}"/>
+                <ItemsControl ItemsSource="{Binding DataContext.HotkeyManager.Hotkeys, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}" ItemTemplate="{StaticResource HotkeyTemplate}"
+                              ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.Template>
+                        <ControlTemplate TargetType="ItemsControl">
+                            <ItemsPresenter/>
+                        </ControlTemplate>
+                    </ItemsControl.Template>
+                </ItemsControl>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </UserControl>

@@ -1,6 +1,8 @@
-﻿using Osu.Music.Common.Models;
+﻿using Osu.Music.Common.Enums;
+using Osu.Music.Common.Models;
 using Osu.Music.Services.Audio;
 using Osu.Music.Services.Events;
+using Osu.Music.Services.Hotkeys;
 using Osu.Music.Services.IO;
 using Osu.Music.Services.UItility;
 using Osu.Music.UI.Interfaces;
@@ -31,6 +33,13 @@ namespace Osu.Music.UI.ViewModels
         {
             get => _settings;
             set => SetProperty(ref _settings, value);
+        }
+
+        private HotkeyManager _hotkeyManager;
+        public HotkeyManager HotkeyManager
+        {
+            get => _hotkeyManager;
+            set => SetProperty(ref _hotkeyManager, value);
         }
 
         private AudioPlayback _playback;
@@ -93,6 +102,7 @@ namespace Osu.Music.UI.ViewModels
             InitializeCommands();
             InitializePlayback();
             InitializeAudioProgressTimer();
+            InitializeHotkeys();
             LoadBeatmaps();
         }
 
@@ -142,6 +152,17 @@ namespace Osu.Music.UI.ViewModels
             _audioProgressTimer.Start();
         }
 
+        private void InitializeHotkeys()
+        {
+            HotkeyManager = new HotkeyManager
+            {
+                Hotkeys = Settings.Hotkeys
+            };
+
+            HotkeyManager.HotkeyUsed += HotkeyManager_HotkeyUsed;
+            HotkeyManager.HotkeyChanged += HotkeyManager_HotkeyChanged;
+        }
+
         private async void LoadBeatmaps()
         {
             try
@@ -170,7 +191,7 @@ namespace Osu.Music.UI.ViewModels
 
         private void MuteVolume(bool? mute)
         {
-            Playback.Mute = mute?? false;
+            Playback.Mute = mute ?? false;
         }
 
         private void PlayBeatmap(Beatmap beatmap)
@@ -184,7 +205,9 @@ namespace Osu.Music.UI.ViewModels
                 Playback.Beatmap = beatmap;
             }
 
-            Playback.Load();
+            if (Playback.PlaybackState != NAudio.Wave.PlaybackState.Paused)
+                Playback.Load();
+
             Playback.Play();
         }
 
@@ -289,6 +312,86 @@ namespace Osu.Music.UI.ViewModels
             Model.CurrentTime = Playback.CurrentTime;
             Model.TotalTime = Playback.TotalTime;
             Model.Progress = Playback.CurrentTime.TotalSeconds / Playback.TotalTime.TotalSeconds;
+        }
+
+        private void HotkeyManager_HotkeyUsed(object sender, HotkeyEventArgs e)
+        {
+            switch (e.Type)
+            {
+                case HotkeyType.PlayPause:
+                    PlayPauseHotkeyHandler();
+                    break;
+                case HotkeyType.PreviousTrack:
+                    PreviousBeatmapHotkeyHandler();
+                    break;
+                case HotkeyType.NextTrack:
+                    NextBeatmapHotkeyHandler();
+                    break;
+                case HotkeyType.Repeat:
+                    RepeatHotkeyHandler();
+                    break;
+                case HotkeyType.Mute:
+                    MuteHotkeyHandler();
+                    break;
+                case HotkeyType.Shuffle:
+                    RandomHotkeyHandler();
+                    break;
+                case HotkeyType.VolumeDown:
+                    VolumeDownHotkeyHandler();
+                    break;
+                case HotkeyType.VolumeUp:
+                    VolumeUpHotkeyHandler();
+                    break;
+            }
+        }
+
+        private void HotkeyManager_HotkeyChanged()
+        {
+            Settings.Hotkeys = HotkeyManager.Hotkeys;
+            SettingsManager.Save(Settings);
+        }
+
+        private void PlayPauseHotkeyHandler()
+        {
+            if (Playback.PlaybackState == NAudio.Wave.PlaybackState.Playing)
+                PauseBeatmap(Model.SelectedBeatmap);
+            else
+                PlayBeatmap(Model.SelectedBeatmap);
+        }
+
+        private void PreviousBeatmapHotkeyHandler()
+        {
+            PreviousBeatmap(Model.SelectedBeatmap);
+        }
+
+        private void NextBeatmapHotkeyHandler()
+        {
+            NextBeatmap(Model.SelectedBeatmap);
+        }
+
+        private void RepeatHotkeyHandler()
+        {
+            Repeat = !Repeat;
+        }
+
+        private void MuteHotkeyHandler()
+        {
+            MuteVolume(!Playback.Mute);
+        }
+
+        private void RandomHotkeyHandler()
+        {
+            Random = !Random;
+        }
+
+        private void VolumeUpHotkeyHandler()
+        {
+            Playback.Volume += 0.05f;
+        }
+
+        private void VolumeDownHotkeyHandler()
+        {
+            Playback.Volume -= 0.05f;
         }
     }
 }
