@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using Osu.Music.Common.Models;
+using System.Windows.Forms;
 
 namespace Osu.Music.Services.Hotkeys
 {

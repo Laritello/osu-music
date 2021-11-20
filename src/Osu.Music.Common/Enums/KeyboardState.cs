@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Osu.Music.Services.Hotkeys
+﻿namespace Osu.Music.Common.Enums
 {
     public enum KeyboardState
     {

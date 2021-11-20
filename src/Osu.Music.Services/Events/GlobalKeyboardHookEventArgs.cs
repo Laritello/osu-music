@@ -1,4 +1,5 @@
-﻿using Osu.Music.Services.Hotkeys;
+﻿using Osu.Music.Common.Enums;
+using Osu.Music.Services.Hotkeys;
 using System.ComponentModel;
 
 namespace Osu.Music.Services.Events

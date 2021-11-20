@@ -1,4 +1,5 @@
-﻿using Osu.Music.Common.Models;
+﻿using Osu.Music.Common.Enums;
+using Osu.Music.Common.Models;
 using Osu.Music.Services.Audio;
 using Osu.Music.Services.Events;
 using Osu.Music.Services.Hotkeys;
@@ -154,6 +155,7 @@ namespace Osu.Music.UI.ViewModels
         private void InitializeHotkeys()
         {
             HotkeyManager = new HotkeyManager();
+            HotkeyManager.Hotkeys = Settings.Hotkeys;
             HotkeyManager.HotkeyUsed += HotkeyManager_HotkeyUsed;
         }
 

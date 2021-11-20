@@ -1,4 +1,6 @@
-﻿using Osu.Music.Services.Events;
+﻿using Osu.Music.Common.Enums;
+using Osu.Music.Common.Models;
+using Osu.Music.Services.Events;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -18,91 +20,7 @@ namespace Osu.Music.Services.Hotkeys
         public HotkeyManager()
         {
             Keyboard = new KeyboardStateManager();
-            Hotkeys = new List<Hotkey>
-            {
-                new Hotkey()
-                {
-                    Type = HotkeyType.PlayPause,
-                    Combination = new KeyCombination()
-                    {
-                        ControlPressed = true,
-                        ShiftPressed = true,
-                        Key = Keys.D
-                    }
-                },
-
-                new Hotkey()
-                {
-                    Type = HotkeyType.PreviousTrack,
-                    Combination = new KeyCombination()
-                    {
-                        ControlPressed = true,
-                        ShiftPressed = true,
-                        Key = Keys.Left
-                    }
-                },
-
-                new Hotkey()
-                {
-                    Type = HotkeyType.NextTrack,
-                    Combination = new KeyCombination()
-                    {
-                        ControlPressed = true,
-                        ShiftPressed = true,
-                        Key = Keys.Right
-                    }
-                },
-
-                new Hotkey()
-                {
-                    Type = HotkeyType.Mute,
-                    Combination = new KeyCombination()
-                    {
-                        ControlPressed = true,
-                        Key = Keys.M
-                    }
-                },
-
-                new Hotkey()
-                {
-                    Type = HotkeyType.Shuffle,
-                    Combination = new KeyCombination()
-                    {
-                        ControlPressed = true,
-                        Key = Keys.S
-                    }
-                },
-
-                new Hotkey()
-                {
-                    Type = HotkeyType.Repeat,
-                    Combination = new KeyCombination()
-                    {
-                        ControlPressed = true,
-                        Key = Keys.R
-                    }
-                },
-
-                new Hotkey()
-                {
-                    Type = HotkeyType.VolumeUp,
-                    Combination = new KeyCombination()
-                    {
-                        ControlPressed = true,
-                        Key = Keys.Up
-                    }
-                },
-
-                new Hotkey()
-                {
-                    Type = HotkeyType.VolumeDown,
-                    Combination = new KeyCombination()
-                    {
-                        ControlPressed = true,
-                        Key = Keys.Down
-                    }
-                }
-            };
+            Hotkeys = new List<Hotkey>();
 
             Hook = new GlobalKeyboardHook();
             Hook.KeyboardPressed += Hook_KeyboardPressed;

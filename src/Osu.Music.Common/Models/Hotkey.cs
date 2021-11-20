@@ -1,4 +1,6 @@
-﻿namespace Osu.Music.Services.Hotkeys
+﻿using Osu.Music.Common.Enums;
+
+namespace Osu.Music.Common.Models
 {
     public class Hotkey
     {

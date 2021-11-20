@@ -1,4 +1,4 @@
-﻿using Osu.Music.Services.Hotkeys;
+﻿using Osu.Music.Common.Enums;
 using System;
 using System.Globalization;
 using System.Windows.Data;

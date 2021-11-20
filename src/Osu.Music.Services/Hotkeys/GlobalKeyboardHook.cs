@@ -1,4 +1,5 @@
-﻿using Osu.Music.Services.Events;
+﻿using Osu.Music.Common.Enums;
+using Osu.Music.Services.Events;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;

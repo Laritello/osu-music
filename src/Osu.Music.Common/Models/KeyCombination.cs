@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace Osu.Music.Services.Hotkeys
+namespace Osu.Music.Common.Models
 {
     public class KeyCombination
     {

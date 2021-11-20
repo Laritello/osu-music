@@ -1,4 +1,4 @@
-﻿namespace Osu.Music.Services.Hotkeys
+﻿namespace Osu.Music.Common.Enums
 {
     public enum HotkeyType
     {
