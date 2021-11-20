@@ -1,13 +1,37 @@
-﻿using System.Windows.Forms;
+﻿using Prism.Mvvm;
+using System.Windows.Forms;
 
 namespace Osu.Music.Common.Models
 {
-    public class KeyCombination
+    public class KeyCombination : BindableBase
     {
-        public bool ShiftPressed { get; set; }
-        public bool AltPressed { get; set; }
-        public bool ControlPressed { get; set; }
-        public Keys Key { get; set; }
+        private bool _shiftPressed;
+        public bool ShiftPressed
+        {
+            get => _shiftPressed;
+            set => SetProperty(ref _shiftPressed, value);
+        }
+
+        private bool _altPressed;
+        public bool AltPressed
+        {
+            get => _altPressed;
+            set => SetProperty(ref _altPressed, value);
+        }
+
+        private bool _controlPressed;
+        public bool ControlPressed
+        {
+            get => _controlPressed;
+            set => SetProperty(ref _controlPressed, value);
+        }
+
+        private Keys _key;
+        public Keys Key
+        {
+            get => _key;
+            set => SetProperty(ref _key, value);
+        }
 
         public override string ToString()
         {

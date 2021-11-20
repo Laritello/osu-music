@@ -154,9 +154,13 @@ namespace Osu.Music.UI.ViewModels
 
         private void InitializeHotkeys()
         {
-            HotkeyManager = new HotkeyManager();
-            HotkeyManager.Hotkeys = Settings.Hotkeys;
+            HotkeyManager = new HotkeyManager
+            {
+                Hotkeys = Settings.Hotkeys
+            };
+
             HotkeyManager.HotkeyUsed += HotkeyManager_HotkeyUsed;
+            HotkeyManager.HotkeyChanged += HotkeyManager_HotkeyChanged;
         }
 
         private async void LoadBeatmaps()
@@ -339,6 +343,12 @@ namespace Osu.Music.UI.ViewModels
                     VolumeUpHotkeyHandler();
                     break;
             }
+        }
+
+        private void HotkeyManager_HotkeyChanged()
+        {
+            Settings.Hotkeys = HotkeyManager.Hotkeys;
+            SettingsManager.Save(Settings);
         }
 
         private void PlayPauseHotkeyHandler()

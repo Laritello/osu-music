@@ -1,16 +1,7 @@
-﻿using Osu.Music.Services.Hotkeys;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Osu.Music.Common.Enums;
+using Osu.Music.Common.Models;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Osu.Music.UI.UserControls
 {
@@ -19,6 +10,20 @@ namespace Osu.Music.UI.UserControls
     /// </summary>
     public partial class HotkeyListItem : UserControl
     {
+        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register("Type", typeof(HotkeyType), typeof(HotkeyListItem), new PropertyMetadata(null));
+        public HotkeyType Type
+        {
+            get => (HotkeyType)GetValue(TypeProperty);
+            set => SetValue(TypeProperty, value);
+        }
+
+        public static readonly DependencyProperty CombinationProperty = DependencyProperty.Register("Combination", typeof(KeyCombination), typeof(HotkeyListItem), new PropertyMetadata(null));
+        public KeyCombination Combination
+        {
+            get => (KeyCombination)GetValue(CombinationProperty);
+            set => SetValue(CombinationProperty, value);
+        }
+
         public static readonly DependencyProperty InEditProperty = DependencyProperty.Register("InEdit", typeof(bool), typeof(HotkeyListItem), new PropertyMetadata(false));
         public bool InEdit
         {
@@ -26,10 +31,10 @@ namespace Osu.Music.UI.UserControls
             set => SetValue(InEditProperty, value);
         }
 
-        public static readonly DependencyProperty SelectedHotkeyProperty = DependencyProperty.Register("SelectedHotkey", typeof(HotkeyListItem), typeof(HotkeyListItem), new PropertyMetadata(null));
-        public HotkeyListItem SelectedHotkey
+        public static readonly DependencyProperty SelectedHotkeyProperty = DependencyProperty.Register("SelectedHotkey", typeof(HotkeyType?), typeof(HotkeyListItem), new PropertyMetadata(null));
+        public HotkeyType? SelectedHotkey
         {
-            get => (HotkeyListItem)GetValue(SelectedHotkeyProperty);
+            get => (HotkeyType?)GetValue(SelectedHotkeyProperty);
             set => SetValue(SelectedHotkeyProperty, value);
         }
 

@@ -31,8 +31,16 @@ namespace Osu.Music.Common.Models
 
         public Settings()
         {
-            MainColor = "#800080";
-            InitializeHotkeys();
+
+        }
+
+        public Settings(bool fill)
+        {
+            if (fill)
+            {
+                MainColor = "#800080";
+                InitializeHotkeys();
+            }
         }
 
         private void InitializeHotkeys()
