@@ -16,16 +16,16 @@
 * Basic music player features
 * Auto-import from osu! library
 * Audio visualization
+* Customizable UI color scheme
+* Global hotkeys
 
 ## Planned features
 
 * Search
-* Customizable UI color scheme
 * Collection (import from osu!)
 * Playlists
 * Launching beatmap in osu!
 * More visualizations
-* Global hotkeys
 * Mini-player when minimized
 
 ## Requirements
@@ -56,10 +56,10 @@ Since this is an alpha you ~~will~~ may encounter some bugs. I would appreciate 
 Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Special thanks
-* <a href="https://github.com/ppy">ppy</a> for his <a href="https://osu.ppy.sh/home">awesome game</a>
-* <a href="https://github.com/HoLLy-HaCKeR">HoLLy-HaCKeR</a> for his <a href="https://github.com/HoLLy-HaCKeR/osu-database-reader">osu-database-reader</a> 
-* Norberth Csorba for his <a href="https://stackoverflow.com/questions/55599743/naudio-fft-returns-small-and-equal-magnitude-values-for-all-frequencies">FrequencySpectrum class</a>
-* amdpastrana for his <a href="https://www.aimp.ru/forum/index.php?topic=60001.0">AIMP Skin</a> which I used as a base for osu.Music UI.
+* <a href="https://github.com/ppy">ppy</a> for <a href="https://osu.ppy.sh/home">an awesome game</a>
+* <a href="https://github.com/HoLLy-HaCKeR">HoLLy-HaCKeR</a> for the <a href="https://github.com/HoLLy-HaCKeR/osu-database-reader">osu-database-reader</a> 
+* Norberth Csorba for the <a href="https://stackoverflow.com/questions/55599743/naudio-fft-returns-small-and-equal-magnitude-values-for-all-frequencies">FrequencySpectrum class</a>
+* amdpastrana for the <a href="https://www.aimp.ru/forum/index.php?topic=60001.0">AIMP Skin</a> which I used as a base for osu.Music UI.
 
 ## Credits
 Full list of used libraries and resources soon will be available in "About" section within the program.
