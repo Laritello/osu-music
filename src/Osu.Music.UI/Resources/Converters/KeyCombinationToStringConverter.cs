@@ -10,7 +10,7 @@ namespace Osu.Music.UI.Resources.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (!(value is KeyCombination))
-                return "N/A";
+                return "";
 
             return value.ToString();
         }

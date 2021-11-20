@@ -100,7 +100,7 @@ namespace Osu.Music.Services.Hotkeys
             Keyboard.Key = e.KeyboardData.Key;
             var currentCombination = Keyboard.Combination;
 
-            foreach (Hotkey hotkey in Hotkeys)
+            foreach (Hotkey hotkey in Hotkeys.Where(x=>x.Combination != null))
             {
                 if (hotkey.Combination.Equals(currentCombination))
                     TriggerEvent(hotkey.Type);
@@ -116,6 +116,12 @@ namespace Osu.Music.Services.Hotkeys
 
             if (hotkey != null)
             {
+                foreach (Hotkey hk in Hotkeys.Where(x => x.Combination != null))
+                {
+                    if (hk.Combination.Equals(currentCombination))
+                        hk.Combination = null;
+                }
+
                 hotkey.Combination = new KeyCombination()
                 {
                     AltPressed = currentCombination.AltPressed,
