@@ -6,6 +6,6 @@ namespace Osu.Music.UI.ViewModels
 {
     public class SettingsViewModel : BindableBase
     {
-
+        // Nothing to do here for now
     }
 }

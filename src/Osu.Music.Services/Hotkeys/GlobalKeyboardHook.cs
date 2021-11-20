@@ -9,7 +9,8 @@ using System.Windows.Forms;
 
 namespace Osu.Music.Services.Hotkeys
 {
-    //Based on https://gist.github.com/Stasonix
+    // Based on: https://stackoverflow.com/a/57710850
+    // Which was based on: https://gist.github.com/Stasonix
     public class GlobalKeyboardHook : IDisposable
     {
         public event EventHandler<GlobalKeyboardHookEventArgs> KeyboardPressed;
@@ -164,8 +165,6 @@ namespace Osu.Music.Services.Hotkeys
         }
 
         public const int WH_KEYBOARD_LL = 13;
-        //const int HC_ACTION = 0;
-
 
         // EDT: Replaced VkSnapshot(int) with RegisteredKeys(Keys[])
         public static Keys[] RegisteredKeys;

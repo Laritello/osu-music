@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Osu.Music.Services.Events;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -53,16 +54,6 @@ namespace Osu.Music.UI.UserControls
 
             BeatmapProgressBarProgressChangedEventArgs eventArgs = new BeatmapProgressBarProgressChangedEventArgs(ProgressChangedEvent, result);
             RaiseEvent(eventArgs);
-        }
-    }
-
-    public class BeatmapProgressBarProgressChangedEventArgs : RoutedEventArgs
-    {
-        public TimeSpan Progress { get; }
-
-        internal BeatmapProgressBarProgressChangedEventArgs(RoutedEvent routedEvent, TimeSpan progress) : base(routedEvent)
-        {
-            Progress = progress;
         }
     }
 }

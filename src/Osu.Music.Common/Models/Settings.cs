@@ -31,7 +31,7 @@ namespace Osu.Music.Common.Models
 
         public Settings()
         {
-
+            // Empty constructor for JSON
         }
 
         public Settings(bool fill)
