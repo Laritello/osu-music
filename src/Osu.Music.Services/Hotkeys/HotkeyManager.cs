@@ -1,9 +1,7 @@
 ﻿using Osu.Music.Services.Events;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
-using static Osu.Music.Services.Hotkeys.GlobalKeyboardHook;
 
 namespace Osu.Music.Services.Hotkeys
 {

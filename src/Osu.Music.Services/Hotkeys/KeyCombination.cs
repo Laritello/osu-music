@@ -9,6 +9,10 @@ namespace Osu.Music.Services.Hotkeys
         public bool ControlPressed { get; set; }
         public Keys Key { get; set; }
 
+        public override string ToString()
+        {
+            return $"{(ShiftPressed ? "Shitf+" : "")}{(ControlPressed ? "Ctrl+" : "")}{(AltPressed ? "Alt+" : "")}{Key}";
+        }
         public override bool Equals(object obj)
         {
             if (!(obj is KeyCombination))

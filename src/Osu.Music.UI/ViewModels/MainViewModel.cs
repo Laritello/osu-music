@@ -310,7 +310,6 @@ namespace Osu.Music.UI.ViewModels
 
         private void HotkeyManager_HotkeyUsed(object sender, HotkeyEventArgs e)
         {
-            Console.WriteLine(e.Type);
             switch (e.Type)
             {
                 case HotkeyType.PlayPause:
