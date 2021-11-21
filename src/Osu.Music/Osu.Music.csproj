@@ -5,11 +5,11 @@
     <UseWPF>true</UseWPF>
     <AssemblyName>Osu.Music</AssemblyName>
     <ApplicationIcon>Logo.ico</ApplicationIcon>
-    <Version>0.1.5</Version>
+    <Version>0.2.5</Version>
     <Authors>Laritello</Authors>
     <Description>Simple player for your osu! library.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <AssemblyVersion>0.1.5.22</AssemblyVersion>
+    <AssemblyVersion>0.2.5.0</AssemblyVersion>
     <StartupObject>Osu.Music.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
