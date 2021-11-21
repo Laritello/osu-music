@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>osuMusic</id>
+    <version>0.0.0</version>
+    <title>osu.Music</title>
+    <authors>Aleksandr Larionenko</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/Laritello/osu-music</projectUrl>
+    <description>Simple music player for your osu! library</description>
+    <releaseNotes>Check Release Notes on GitHub.</releaseNotes>
+    <copyright>Copyright (c) 2021 Aleksandr Larionenko</copyright>
+    <tags>osu osugame music-player dotnet-core</tags>
+  </metadata>
+  
+  <files>
+	<file src="bin\Release\netcoreapp3.1\**" target="lib\net45"/>
+  </files>
+</package>

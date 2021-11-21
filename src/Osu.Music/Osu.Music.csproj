@@ -1,29 +1,54 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <UseWPF>true</UseWPF>
-    <AssemblyName>Osu.Music</AssemblyName>
-    <ApplicationIcon>Logo.ico</ApplicationIcon>
-    <Version>0.2.5</Version>
-    <Authors>Laritello</Authors>
-    <Description>Simple player for your osu! library.</Description>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <AssemblyVersion>0.2.5.0</AssemblyVersion>
-    <StartupObject>Osu.Music.App</StartupObject>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Prism.DryIoc" Version="8.0.0.1909" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Osu.Music.Common\Osu.Music.Common.csproj" />
-    <ProjectReference Include="..\Osu.Music.Services\Osu.Music.Services.csproj" />
-    <ProjectReference Include="..\Osu.Music.UI\Osu.Music.UI.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Osu.Music.UI\Resources\Images\Logo\Logo.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
+	<PropertyGroup>
+	<OutputType>WinExe</OutputType>
+	<TargetFramework>netcoreapp3.1</TargetFramework>
+	<UseWPF>true</UseWPF>
+	<AssemblyName>Osu.Music</AssemblyName>
+	<ApplicationIcon>Logo.ico</ApplicationIcon>
+	<Version>0.2.5</Version>
+	<Authors>Laritello</Authors>
+	<Description>Simple player for your osu! library.</Description>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	<AssemblyVersion>0.2.5.0</AssemblyVersion>
+	<StartupObject>Osu.Music.App</StartupObject>
+	</PropertyGroup>
+	<ItemGroup>
+	<PackageReference Include="NuGet.CommandLine" Version="5.11.0">
+		<PrivateAssets>all</PrivateAssets>
+		<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	</PackageReference>
+	<PackageReference Include="Prism.DryIoc" Version="8.0.0.1909" />
+	<PackageReference Include="squirrel.windows" Version="1.9.0" />
+	</ItemGroup>
+	<ItemGroup>
+	<ProjectReference Include="..\Osu.Music.Common\Osu.Music.Common.csproj" />
+	<ProjectReference Include="..\Osu.Music.Services\Osu.Music.Services.csproj" />
+	<ProjectReference Include="..\Osu.Music.UI\Osu.Music.UI.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	<None Include="..\Osu.Music.UI\Resources\Images\Logo\Logo.png">
+		<Pack>True</Pack>
+		<PackagePath></PackagePath>
+	</None>
+	</ItemGroup>
+
+    <PropertyGroup>
+	    <NugetTools>$(PkgNuGet_CommandLine)\tools</NugetTools>
+	    <SquirrelTools>$(Pkgsquirrel_windows)\tools</SquirrelTools>
+
+	    <Version>0.2.6</Version>
+
+	    <NuspecFile>$(SolutionDir)src\Osu.Music\ReleaseSpec.nuspec</NuspecFile>
+    </PropertyGroup>
+
+    <Target Name="GenerateRelease" AfterTargets="AfterBuild" Condition="$(Configuration) == Release">
+	    <XmlPeek XmlInputPath="$(NuspecFile)" Query="/package/metadata/id/text()">
+		    <Output TaskParameter="Result" ItemName="ID" />
+	    </XmlPeek>
+
+	    <Exec Command="$(NugetTools)\NuGet.exe pack $(NuspecFile) -Version $(Version) -Properties Configuration=Release -OutputDirectory $(SolutionDir)deploy\GeneratedNugets" />
+
+	    <Exec Command="$(SquirrelTools)\Squirrel.exe --releasify $(SolutionDir)deploy\GeneratedNugets\@(ID).$(Version).nupkg --releaseDir=$(SolutionDir)deploy\Releases" />
+    </Target>
+
 </Project>
