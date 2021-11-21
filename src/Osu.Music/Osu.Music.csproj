@@ -13,7 +13,12 @@
     <StartupObject>Osu.Music.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="NuGet.CommandLine" Version="5.11.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Prism.DryIoc" Version="8.0.0.1909" />
+    <PackageReference Include="squirrel.windows" Version="1.9.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Osu.Music.Common\Osu.Music.Common.csproj" />
