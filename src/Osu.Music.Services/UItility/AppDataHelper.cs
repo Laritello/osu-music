@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.IO;
 
 namespace Osu.Music.Services.UItility
@@ -16,6 +17,14 @@ namespace Osu.Music.Services.UItility
                 Directory.CreateDirectory(path);
 
             return path;
+        }
+
+        public static dynamic GetLicenses()
+        {
+            string file = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Resources\Static\licenses.json");
+
+            string json = File.Exists(file) ? File.ReadAllText(file) : null;
+            return json != null ? JsonConvert.DeserializeObject(json) : null;
         }
     }
 }
