@@ -196,6 +196,14 @@ namespace Osu.Music.UI.ViewModels
 
         private void PlayBeatmap(Beatmap beatmap)
         {
+            if (beatmap == null)
+            {
+                if (Model.Beatmaps == null || Model.Beatmaps.Count == 0)
+                    return;
+
+                beatmap = Model.Beatmaps[0];
+            }
+
             if (Playback.Beatmap != beatmap)
             {
                 if (Playback.Beatmap != null)
