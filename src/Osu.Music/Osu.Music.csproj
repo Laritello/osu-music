@@ -9,7 +9,7 @@
 	<Authors>Laritello</Authors>
 	<Description>Simple player for your osu! library.</Description>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
-	<AssemblyVersion>0.2.5.0</AssemblyVersion>
+	<AssemblyVersion>0.2.6.0</AssemblyVersion>
 	<StartupObject>Osu.Music.App</StartupObject>
 	</PropertyGroup>
 	<ItemGroup>
@@ -36,7 +36,7 @@
 	    <NugetTools>$(PkgNuGet_CommandLine)\tools</NugetTools>
 	    <SquirrelTools>$(Pkgsquirrel_windows)\tools</SquirrelTools>
 
-	    <Version>0.2.5</Version>
+	    <Version>0.2.6</Version>
 
 	    <NuspecFile>$(SolutionDir)src\Osu.Music\ReleaseSpec.nuspec</NuspecFile>
     </PropertyGroup>
