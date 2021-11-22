@@ -8,6 +8,6 @@ namespace Osu.Music.Common.Enums
     {
         Latest,
         Available,
-        InPrgoress
+        InProgress
     }
 }

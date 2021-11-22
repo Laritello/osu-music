@@ -1,10 +1,9 @@
 ﻿using Osu.Music.Common.Enums;
 using Prism.Mvvm;
 using Squirrel;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using System.Linq;
+using System.Windows;
 
 namespace Osu.Music.Services.Updates
 {
@@ -38,6 +37,27 @@ namespace Osu.Music.Services.Updates
             {
                 var info = await Manager.CheckForUpdate();
                 State = info.ReleasesToApply.Count > 0 ? UpdateState.Available : UpdateState.Latest;
+            }
+        }
+
+        public async void Update()
+        {
+            if (Manager != null)
+            {
+                var updates = await Manager.CheckForUpdate();
+
+                if (updates.ReleasesToApply.Any())
+                {
+                    State = UpdateState.InProgress;
+                    var lastVersion = updates.ReleasesToApply.OrderBy(x => x.Version).Last();
+
+                    await Manager.UpdateApp();
+
+                    var latestExe = Path.Combine(Manager.RootAppDirectory, string.Concat("app-", lastVersion.Version), "Osu.Music.exe");
+
+                    System.Diagnostics.Process.Start(latestExe);
+                    Application.Current.Shutdown();
+                }
             }
         }
     }

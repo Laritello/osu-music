@@ -15,7 +15,7 @@ namespace Osu.Music.UI.Resources.Converters
             return state switch
             {
                 UpdateState.Available => Visibility.Visible,
-                UpdateState.InPrgoress => Visibility.Collapsed,
+                UpdateState.InProgress => Visibility.Collapsed,
                 UpdateState.Latest => Visibility.Collapsed,
                 _ => Visibility.Collapsed
             };

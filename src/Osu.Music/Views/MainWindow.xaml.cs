@@ -3,6 +3,7 @@ using Osu.Music.ViewModels;
 using Prism.Commands;
 using Squirrel;
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
@@ -43,11 +44,11 @@ namespace Osu.Music.Views
 
 		private async void Window_Loaded(object sender, RoutedEventArgs e)
 		{
-#if (DEBUG)
+#if (!DEBUG)
 			var dc = (MainWindowViewModel)DataContext;
 			dc.Updater = new GitHubUpdater();
 
-			if (dc != null)
+            if (dc != null)
 			{
 				var manager = await UpdateManager.GitHubUpdateManager("https://github.com/Laritello/osu-music");
 				dc.Updater.Manager = manager;

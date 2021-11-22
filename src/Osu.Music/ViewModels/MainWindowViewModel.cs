@@ -13,11 +13,24 @@ namespace Osu.Music.ViewModels
             set => SetProperty(ref _updater, value);
         }
 
-        private string _title = "osu.Music";
+        private string _title;
         public string Title
         {
             get => _title;
             set => SetProperty(ref _title, value);
+        }
+
+        public DelegateCommand UpdateAppCommand { get; private set; }
+
+        public MainWindowViewModel()
+        {
+            Title = "osu.Music";
+            UpdateAppCommand = new DelegateCommand(UpdateApp);
+        }
+
+        private void UpdateApp()
+        {
+            Updater.Update();
         }
     }
 }
