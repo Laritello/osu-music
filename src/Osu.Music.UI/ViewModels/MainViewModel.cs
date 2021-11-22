@@ -10,10 +10,8 @@ using Osu.Music.UI.Models;
 using Osu.Music.UI.Visualization;
 using Prism.Commands;
 using Prism.Mvvm;
-using Squirrel;
 using System;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
@@ -42,13 +40,6 @@ namespace Osu.Music.UI.ViewModels
         {
             get => _hotkeyManager;
             set => SetProperty(ref _hotkeyManager, value);
-        }
-
-        private UpdateManager _updateManager;
-        public UpdateManager UpdateManager
-        {
-            get => _updateManager;
-            set => SetProperty(ref _updateManager, value);
         }
 
         private AudioPlayback _playback;
@@ -93,7 +84,6 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand<Beatmap> PreviousBeatmapCommand { get; private set; }
         public DelegateCommand<Beatmap> NextBeatmapCommand { get; private set; }
         public DelegateCommand OpenGitHubCommand { get; private set; }
-        public DelegateCommand CheckForUpdatesCommand { get; private set; }
         public DelegateCommand<TimeSpan?> ScrollBeatmapCommand { get; private set; }
         public DelegateCommand<BindableBase> OpenPageCommand { get; private set; }
         public DelegateCommand<Popup> ChangePopupStateCommand { get; private set; }
@@ -113,7 +103,6 @@ namespace Osu.Music.UI.ViewModels
             InitializePlayback();
             InitializeAudioProgressTimer();
             InitializeHotkeys();
-            InitializeUpdater();
             LoadBeatmaps();
         }
 
@@ -134,7 +123,6 @@ namespace Osu.Music.UI.ViewModels
             PreviousBeatmapCommand = new DelegateCommand<Beatmap>(PreviousBeatmap);
             NextBeatmapCommand = new DelegateCommand<Beatmap>(NextBeatmap);
             OpenGitHubCommand = new DelegateCommand(OpenGitHub);
-            CheckForUpdatesCommand = new DelegateCommand(CheckForUpdates);
             ScrollBeatmapCommand = new DelegateCommand<TimeSpan?>(ScrollBeatmap);
             OpenPageCommand = new DelegateCommand<BindableBase>(OpenPage);
             ChangePopupStateCommand = new DelegateCommand<Popup>(ChangePopupState);
@@ -175,13 +163,7 @@ namespace Osu.Music.UI.ViewModels
             HotkeyManager.HotkeyChanged += HotkeyManager_HotkeyChanged;
         }
 
-        private void InitializeUpdater()
-        {
-            Task.Run(async () => 
-            {
-                UpdateManager = await UpdateManager.GitHubUpdateManager("https://github.com/Laritello/osu-music");
-            });
-        }
+
 
         private async void LoadBeatmaps()
         {
@@ -333,15 +315,6 @@ namespace Osu.Music.UI.ViewModels
         private void OpenGitHub()
         {
             Process.Start(new ProcessStartInfo("cmd", $"/c start https://github.com/Laritello/osu-music") { CreateNoWindow = true });
-        }
-
-        private async void CheckForUpdates()
-        {
-            if (UpdateManager != null)
-            {
-                var info = await UpdateManager.CheckForUpdate();
-                int updates = info.ReleasesToApply.Count;
-            }
         }
 
         private void UpdateBeatmapProgress(object sender, EventArgs e)

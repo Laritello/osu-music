@@ -1,4 +1,5 @@
 ﻿using Prism.Commands;
+using Squirrel;
 using System;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -15,6 +16,7 @@ namespace Osu.Music.Views
         public DelegateCommand MinimizeCommand { get; private set; }
         public DelegateCommand<Button> MaximizeOrRestoreCommand { get; private set; }
         public DelegateCommand CloseCommand { get; private set; }
+		public DelegateCommand CheckForUpdatesCommand { get; private set; }
 
         public MainWindow()
         {
@@ -24,12 +26,23 @@ namespace Osu.Music.Views
 
         private void InitializeCommands()
         {
-            MinimizeCommand = new DelegateCommand(Minimize);
+			CheckForUpdatesCommand = new DelegateCommand(CheckForUpdates);
+			MinimizeCommand = new DelegateCommand(Minimize);
             MaximizeOrRestoreCommand = new DelegateCommand<Button>(MaximizeOrRestore);
             CloseCommand = new DelegateCommand(Close);
         }
 
-        private void Minimize() => WindowState = WindowState.Minimized;
+		private async void CheckForUpdates()
+		{
+			if (manager != null)
+            {
+				var info = await manager.CheckForUpdate();
+
+				MessageBox.Show(info.ReleasesToApply.Count.ToString());
+            }
+		}
+
+		private void Minimize() => WindowState = WindowState.Minimized;
 
         private void MaximizeOrRestore(Button maximize)
         {
@@ -134,5 +147,12 @@ namespace Osu.Music.Views
 			public POINT ptMinTrackSize;
 			public POINT ptMaxTrackSize;
 		}
-	}
+
+		private UpdateManager manager;
+
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+			manager = await UpdateManager.GitHubUpdateManager("https://github.com/Laritello/osu-music");
+		}
+    }
 }

@@ -1,4 +1,6 @@
 ﻿using Prism.Mvvm;
+using Squirrel;
+using System.Threading.Tasks;
 
 namespace Osu.Music.ViewModels
 {
