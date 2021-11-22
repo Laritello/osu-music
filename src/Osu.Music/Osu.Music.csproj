@@ -5,11 +5,9 @@
 	<UseWPF>true</UseWPF>
 	<AssemblyName>Osu.Music</AssemblyName>
 	<ApplicationIcon>Logo.ico</ApplicationIcon>
-	<Version>0.2.5</Version>
 	<Authors>Laritello</Authors>
 	<Description>Simple player for your osu! library.</Description>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
-	<AssemblyVersion>0.2.6.0</AssemblyVersion>
 	<StartupObject>Osu.Music.App</StartupObject>
 	</PropertyGroup>
 	<ItemGroup>
@@ -18,7 +16,6 @@
 		<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	</PackageReference>
 	<PackageReference Include="Prism.DryIoc" Version="8.0.0.1909" />
-	<PackageReference Include="squirrel.windows" Version="1.9.0" />
 	</ItemGroup>
 	<ItemGroup>
 	<ProjectReference Include="..\Osu.Music.Common\Osu.Music.Common.csproj" />

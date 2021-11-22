@@ -1,22 +1,25 @@
-﻿using Prism.Commands;
+﻿using Osu.Music.Services.Updates;
+using Osu.Music.ViewModels;
+using Prism.Commands;
 using Squirrel;
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interop;
 
 namespace Osu.Music.Views
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+	/// <summary>
+	/// Interaction logic for MainWindow.xaml
+	/// </summary>
+	public partial class MainWindow : Window
     {
-        public DelegateCommand MinimizeCommand { get; private set; }
+		public DelegateCommand MinimizeCommand { get; private set; }
         public DelegateCommand<Button> MaximizeOrRestoreCommand { get; private set; }
         public DelegateCommand CloseCommand { get; private set; }
-		public DelegateCommand CheckForUpdatesCommand { get; private set; }
 
         public MainWindow()
         {
@@ -26,21 +29,10 @@ namespace Osu.Music.Views
 
         private void InitializeCommands()
         {
-			CheckForUpdatesCommand = new DelegateCommand(CheckForUpdates);
 			MinimizeCommand = new DelegateCommand(Minimize);
             MaximizeOrRestoreCommand = new DelegateCommand<Button>(MaximizeOrRestore);
             CloseCommand = new DelegateCommand(Close);
         }
-
-		private async void CheckForUpdates()
-		{
-			if (manager != null)
-            {
-				var info = await manager.CheckForUpdate();
-
-				MessageBox.Show(info.ReleasesToApply.Count.ToString());
-            }
-		}
 
 		private void Minimize() => WindowState = WindowState.Minimized;
 
@@ -50,7 +42,22 @@ namespace Osu.Music.Views
 			maximize.Visibility = WindowState == WindowState.Maximized ? Visibility.Collapsed : Visibility.Visible;
 		}
 
-        protected override void OnSourceInitialized(EventArgs e)
+		private async void Window_Loaded(object sender, RoutedEventArgs e)
+		{
+#if (!DEBUG)
+			var dc = (MainWindowViewModel)DataContext;
+			dc.Updater = new GitHubUpdater();
+
+            if (dc != null)
+			{
+				var manager = await UpdateManager.GitHubUpdateManager("https://github.com/Laritello/osu-music");
+				dc.Updater.Manager = manager;
+				dc.Updater.CheckForUpdates();
+			}
+#endif
+		}
+
+		protected override void OnSourceInitialized(EventArgs e)
         {
             base.OnSourceInitialized(e);
             ((HwndSource)PresentationSource.FromVisual(this)).AddHook(HookProc);
@@ -69,8 +76,10 @@ namespace Osu.Music.Views
 
                 if (monitor != IntPtr.Zero)
                 {
-                    MONITORINFO monitorInfo = new MONITORINFO();
-                    monitorInfo.cbSize = Marshal.SizeOf(typeof(MONITORINFO));
+                    MONITORINFO monitorInfo = new MONITORINFO
+                    {
+                        cbSize = Marshal.SizeOf(typeof(MONITORINFO))
+                    };
                     GetMonitorInfo(monitor, ref monitorInfo);
 
                     RECT rcWorkArea = monitorInfo.rcWork;
@@ -132,9 +141,9 @@ namespace Osu.Music.Views
 			public int Y;
 
 			public POINT(int x, int y)
-			{
-				this.X = x;
-				this.Y = y;
+            {
+                this.X = x;
+                this.Y = y;
 			}
 		}
 
@@ -146,13 +155,6 @@ namespace Osu.Music.Views
 			public POINT ptMaxPosition;
 			public POINT ptMinTrackSize;
 			public POINT ptMaxTrackSize;
-		}
-
-		private UpdateManager manager;
-
-        private async void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-			manager = await UpdateManager.GitHubUpdateManager("https://github.com/Laritello/osu-music");
 		}
     }
 }

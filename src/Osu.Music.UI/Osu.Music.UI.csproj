@@ -33,7 +33,6 @@
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.37" />
     <PackageReference Include="PixiEditor.ColorPicker" Version="3.1.0" />
     <PackageReference Include="Prism.Wpf" Version="8.1.97" />
-    <PackageReference Include="squirrel.windows" Version="1.9.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Osu.Music.Common\Osu.Music.Common.csproj" />
