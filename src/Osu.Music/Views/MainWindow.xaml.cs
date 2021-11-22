@@ -152,7 +152,9 @@ namespace Osu.Music.Views
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
+			#if (!DEBUG)
 			manager = await UpdateManager.GitHubUpdateManager("https://github.com/Laritello/osu-music");
+			#endif
 		}
     }
 }
