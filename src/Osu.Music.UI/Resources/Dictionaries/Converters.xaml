@@ -10,4 +10,5 @@
     <convert:HotkeyTypeToStringConverter x:Key="HotkeyTypeToStringConverter"/>
     <convert:SelectedHotkeyToBooleanConverter x:Key="SelectedHotkeyToBooleanConverter"/>
     <convert:KeyCombinationToStringConverter x:Key="KeyCombinationToStringConverter"/>
+    <convert:UpdateStateToVisibilityConverter x:Key="UpdateStateToVisibilityConverter"/>
 </ResourceDictionary>
