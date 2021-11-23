@@ -1,6 +1,5 @@
 ﻿using Osu.Music.Common.Enums;
 using Prism.Mvvm;
-using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -31,16 +30,8 @@ namespace Osu.Music.Common.Models
 
         public Settings()
         {
-            // Empty constructor for JSON
-        }
-
-        public Settings(bool fill)
-        {
-            if (fill)
-            {
-                MainColor = "#800080";
-                InitializeHotkeys();
-            }
+            MainColor = "#800080";
+            InitializeHotkeys();
         }
 
         private void InitializeHotkeys()
