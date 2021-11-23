@@ -42,6 +42,13 @@ namespace Osu.Music.UI.ViewModels
             set => SetProperty(ref _hotkeyManager, value);
         }
 
+        private DiscordManager _discordManager;
+        public DiscordManager DiscordManager
+        {
+            get => _discordManager;
+            set => SetProperty(ref _discordManager, value);
+        }
+
         private AudioPlayback _playback;
         public AudioPlayback Playback
         {
@@ -103,6 +110,8 @@ namespace Osu.Music.UI.ViewModels
             InitializePlayback();
             InitializeAudioProgressTimer();
             InitializeHotkeys();
+            InitializeDiscord();
+
             LoadBeatmaps();
         }
 
@@ -163,7 +172,11 @@ namespace Osu.Music.UI.ViewModels
             HotkeyManager.HotkeyChanged += HotkeyManager_HotkeyChanged;
         }
 
-
+        private void InitializeDiscord()
+        {
+            DiscordManager = new DiscordManager();
+            DiscordManager.Initialize();
+        }
 
         private async void LoadBeatmaps()
         {
@@ -218,6 +231,8 @@ namespace Osu.Music.UI.ViewModels
                 Model.PlayingBeatmap = beatmap;
                 Playback.Beatmap = beatmap;
                 Playback.Load();
+
+                DiscordManager.Update(beatmap);
             }
 
             // TODO: Rework this section

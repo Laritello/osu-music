@@ -39,5 +39,10 @@ namespace Osu.Music.Services.UItility
             dictionary["SolidColorBrushMainLight"] = new SolidColorBrush(lightColor);
             dictionary["SolidColorBrushMainDark"] = new SolidColorBrush(darkColor);
         }
+
+        public static ulong ToUnix(this DateTime dt)
+        {
+            return (ulong)dt.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Local)).TotalSeconds;
+        }
     }
 }
