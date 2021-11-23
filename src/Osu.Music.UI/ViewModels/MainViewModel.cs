@@ -198,6 +198,8 @@ namespace Osu.Music.UI.ViewModels
 
         private void PlayBeatmap(Beatmap beatmap)
         {
+            // If user tried to start playback without selected song
+            // Select first song if possible
             if (beatmap == null)
             {
                 if (Model.Beatmaps == null || Model.Beatmaps.Count == 0)
@@ -206,6 +208,8 @@ namespace Osu.Music.UI.ViewModels
                 beatmap = Model.Beatmaps[0];
             }
 
+            // If new song was selected
+            // Update playback
             if (Playback.Beatmap != beatmap)
             {
                 if (Playback.Beatmap != null)
@@ -213,8 +217,10 @@ namespace Osu.Music.UI.ViewModels
 
                 Model.PlayingBeatmap = beatmap;
                 Playback.Beatmap = beatmap;
+                Playback.Load();
             }
 
+            // TODO: Rework this section
             if (Playback.PlaybackState != NAudio.Wave.PlaybackState.Paused)
                 Playback.Load();
 
