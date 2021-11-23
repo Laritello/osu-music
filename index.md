@@ -5,16 +5,15 @@
 * Basic music player features
 * Auto-import from osu! library
 * Audio visualization
+* Customizable UI color scheme
+* Global hotkeys
 
 ## Planned features
 
 * Search
-* Customizable UI color scheme
 * Collection (import from osu!)
 * Playlists
-* Launching beatmap in osu!
 * More visualizations
-* Global hotkeys
 * Mini-player when minimized
 
 ## Feedback
