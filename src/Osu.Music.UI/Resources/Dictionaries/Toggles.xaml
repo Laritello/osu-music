@@ -1,5 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Modified version of this style: http://blog.lukaszadach.com/AllPosts/Post?id=7fcff520-03ca-47f9-b4b3-a669f5e8a6bd -->
+    <!-- Url to the video: https://www.youtube.com/watch?v=3E5x9qy9GA8 -->
     <Style x:Key="CheckBoxAsToggleStyle" TargetType="CheckBox">
         <Setter Property="Template">
             <Setter.Value>
