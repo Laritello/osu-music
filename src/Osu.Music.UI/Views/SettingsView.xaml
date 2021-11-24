@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:prism="http://prismlibrary.com/"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:Osu.Music.UI.Views"
              xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
              xmlns:models="clr-namespace:Osu.Music.Common.Models;assembly=Osu.Music.Common"
@@ -33,7 +34,8 @@
 
                 <TextBlock Text="Hotkeys" Style="{DynamicResource MenuHeader}"/>
                 <ItemsControl ItemsSource="{Binding DataContext.HotkeyManager.Hotkeys, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}" ItemTemplate="{StaticResource HotkeyTemplate}"
-                              ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                              ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                               Margin="0 0 0 50">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <VirtualizingStackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -46,6 +48,25 @@
                         </ControlTemplate>
                     </ItemsControl.Template>
                 </ItemsControl>
+                <TextBlock Text="Social" Style="{DynamicResource MenuHeader}"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Show current beatmap in Discord activity" Width="555"/>
+                    <CheckBox x:Name="CheckBoxDiscordRpc" Style="{DynamicResource CheckBoxAsToggleStyle}" IsChecked="{Binding DataContext.Settings.DiscordRpcEnabled, RelativeSource={RelativeSource FindAncestor, 
+                    AncestorType={x:Type local:MainView}}}">
+                        <i:Interaction.Triggers>
+                            <!--Not very MVVM of me-->
+                            <i:EventTrigger EventName="Checked">
+                                <prism:InvokeCommandAction Command="{Binding DataContext.UpdateDiscordRpcCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}"
+                                               CommandParameter="{Binding ElementName=CheckBoxDiscordRpc, Path=IsChecked}" />
+                            </i:EventTrigger>
+
+                            <i:EventTrigger EventName="Unchecked">
+                                <prism:InvokeCommandAction Command="{Binding DataContext.UpdateDiscordRpcCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}"
+                                               CommandParameter="{Binding ElementName=CheckBoxDiscordRpc, Path=IsChecked}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </CheckBox>
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
     </Grid>
