@@ -95,6 +95,7 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand<BindableBase> OpenPageCommand { get; private set; }
         public DelegateCommand<Popup> ChangePopupStateCommand { get; private set; }
         public DelegateCommand<Color?> UpdateColorCommand { get; private set; }
+        public DelegateCommand UpdateDiscordRpcCommand { get; private set; }
         public DelegateCommand ExitCommand { get; private set; }
 
         private DispatcherTimer _audioProgressTimer;
@@ -136,6 +137,7 @@ namespace Osu.Music.UI.ViewModels
             OpenPageCommand = new DelegateCommand<BindableBase>(OpenPage);
             ChangePopupStateCommand = new DelegateCommand<Popup>(ChangePopupState);
             UpdateColorCommand = new DelegateCommand<Color?>(UpdateColor);
+            UpdateDiscordRpcCommand = new DelegateCommand(UpdateDiscordRpc);
             ExitCommand = new DelegateCommand(Exit);
         }
         private void InitializePlayback()
@@ -174,7 +176,11 @@ namespace Osu.Music.UI.ViewModels
 
         private void InitializeDiscord()
         {
-            DiscordManager = new DiscordManager();
+            DiscordManager = new DiscordManager()
+            {
+                Enabled = Settings.DiscordRpcEnabled
+            };
+
             DiscordManager.Initialize();
         }
 
@@ -273,6 +279,7 @@ namespace Osu.Music.UI.ViewModels
                 Playback.Load();
             }
 
+            DiscordManager.Update(Model.SelectedBeatmap);
             Playback.Play();
         }
 
@@ -328,6 +335,15 @@ namespace Osu.Music.UI.ViewModels
             SettingsManager.Save(Settings);
         }
 
+        private void UpdateDiscordRpc()
+        {
+            SettingsManager.Save(Settings);
+            DiscordManager.Enabled = Settings.DiscordRpcEnabled;
+
+            if (!DiscordManager.Enabled)
+                DiscordManager.ClearPresence();
+        }
+
         private void Exit()
         {
             Application.Current.Shutdown();
@@ -345,6 +361,7 @@ namespace Osu.Music.UI.ViewModels
             Model.Progress = Playback.CurrentTime.TotalSeconds / Playback.TotalTime.TotalSeconds;
         }
 
+        #region Hotkeys
         private void HotkeyManager_HotkeyUsed(object sender, HotkeyEventArgs e)
         {
             switch (e.Type)
@@ -424,5 +441,6 @@ namespace Osu.Music.UI.ViewModels
         {
             Playback.Volume -= 0.05f;
         }
+        #endregion
     }
 }

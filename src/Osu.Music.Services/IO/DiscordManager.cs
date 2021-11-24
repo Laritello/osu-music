@@ -17,6 +17,13 @@ namespace Osu.Music.Services.IO
             set => SetProperty(ref _client, value);
         }
 
+        private bool _enabled;
+        public bool Enabled
+        {
+            get => _enabled;
+            set => SetProperty(ref _enabled, value);
+        }
+
         public DiscordManager()
         {
             Client = new DiscordRpcClient(APPLICATION_ID);
@@ -36,13 +43,30 @@ namespace Osu.Music.Services.IO
             if (Client == null)
                 return;
 
+            Client.ClearPresence();
+
             if (Client.IsInitialized)
                 Client.Deinitialize();
         }
 
-        public void Update(Beatmap beatmap)
+        public void ClearPresence()
         {
             if (Client == null || !Client.IsInitialized)
+                return;
+
+            try
+            {
+                Client.ClearPresence();
+            }
+            catch
+            {
+                // For some reasons ClearPresence throws NullException
+            }
+        }
+
+        public void Update(Beatmap beatmap)
+        {
+            if (!Enabled || Client == null || !Client.IsInitialized)
                 return;
 
             if (beatmap != null)
