@@ -10,6 +10,9 @@ namespace Osu.Music.UI.Resources.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null)
+                return Visibility.Collapsed;
+
             UpdateState state = (UpdateState)value;
 
             return state switch

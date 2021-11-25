@@ -30,7 +30,7 @@ namespace Osu.Music.ViewModels
 
         private void UpdateApp()
         {
-            Updater.Update();
+            Updater?.Update();
         }
     }
 }

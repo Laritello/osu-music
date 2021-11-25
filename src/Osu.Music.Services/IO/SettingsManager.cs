@@ -10,14 +10,28 @@ namespace Osu.Music.Services.IO
         private static readonly string _settingsFile = Path.Combine(AppDataHelper.Path, "settings.json");
         public static Settings Load()
         {
-            string json = File.Exists(_settingsFile) ? File.ReadAllText(_settingsFile) : null;
-            return json != null ? JsonConvert.DeserializeObject<Settings>(json, new JsonSerializerSettings() { ObjectCreationHandling = ObjectCreationHandling.Replace }) : new Settings();
+            try
+            {
+                string json = File.Exists(_settingsFile) ? File.ReadAllText(_settingsFile) : null;
+                return json != null ? JsonConvert.DeserializeObject<Settings>(json, new JsonSerializerSettings() { ObjectCreationHandling = ObjectCreationHandling.Replace }) : new Settings();
+            }
+            catch
+            {
+                return new Settings();
+            }
         }
 
         public static void Save(Settings settings)
         {
-            string json = JsonConvert.SerializeObject(settings);
-            File.WriteAllText(_settingsFile, json);
+            try
+            {
+                string json = JsonConvert.SerializeObject(settings);
+                File.WriteAllText(_settingsFile, json);
+            }
+            catch
+            {
+                // Silently fail
+            }
         }
     }
 }
