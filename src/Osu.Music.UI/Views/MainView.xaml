@@ -81,8 +81,7 @@
         <controls:BeatmapProgressBar Grid.Row="2" Grid.ColumnSpan="2" Total="{Binding Model.TotalTime}" Current="{Binding Model.CurrentTime}" Progress="{Binding Model.Progress}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="ProgressChanged">
-                    <prism:InvokeCommandAction Command="{Binding ScrollBeatmapCommand}"
-                                               TriggerParameterPath="Progress" />
+                    <prism:InvokeCommandAction Command="{Binding ScrollBeatmapCommand}" TriggerParameterPath="Progress" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </controls:BeatmapProgressBar>

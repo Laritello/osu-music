@@ -21,6 +21,7 @@ namespace Osu.Music.UI.ViewModels
 {
     public class MainViewModel : BindableBase
     {
+        #region Properties
         private MainModel _model;
         public MainModel Model
         {
@@ -83,7 +84,9 @@ namespace Osu.Music.UI.ViewModels
             get => _visualization;
             set => SetProperty(ref _visualization, value);
         }
+        #endregion
 
+        #region Commands
         public DelegateCommand<bool?> MuteCommand { get; private set; }
         public DelegateCommand<Beatmap> PlayBeatmapCommand { get; private set; }
         public DelegateCommand<Beatmap> PauseBeatmapCommand { get; private set; }
@@ -97,6 +100,7 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand<Color?> UpdateColorCommand { get; private set; }
         public DelegateCommand UpdateDiscordRpcCommand { get; private set; }
         public DelegateCommand ExitCommand { get; private set; }
+        #endregion
 
         private DispatcherTimer _audioProgressTimer;
 
@@ -116,6 +120,7 @@ namespace Osu.Music.UI.ViewModels
             LoadBeatmaps();
         }
 
+        #region Initialization
         private void InitializeSettings()
         {
             Settings = SettingsManager.Load();
@@ -140,18 +145,14 @@ namespace Osu.Music.UI.ViewModels
             UpdateDiscordRpcCommand = new DelegateCommand(UpdateDiscordRpc);
             ExitCommand = new DelegateCommand(Exit);
         }
+        
         private void InitializePlayback()
         {
             Playback = new AudioPlayback();
             Playback.BeatmapEnded += Playback_BeatmapEnded;
             Playback.FftCalculated += Playback_FftCalculated;
         }
-
-        private void Playback_FftCalculated(object sender, FftEventArgs e)
-        {
-            Visualization.OnFftCalculated(e.Result);
-        }
-
+        
         private void InitializeAudioProgressTimer()
         {
             _audioProgressTimer = new DispatcherTimer(DispatcherPriority.Render)
@@ -183,6 +184,7 @@ namespace Osu.Music.UI.ViewModels
 
             DiscordManager.Initialize();
         }
+        #endregion
 
         private async void LoadBeatmaps()
         {
@@ -202,14 +204,6 @@ namespace Osu.Music.UI.ViewModels
             }
         }
 
-        private void Playback_BeatmapEnded(object sender, BeatmapEventArgs e)
-        {
-            if (Repeat)
-                PlayBeatmap(Model.SelectedBeatmap);
-            else
-                NextBeatmap(Model.SelectedBeatmap);
-        }
-
         private void MuteVolume(bool? mute)
         {
             Playback.Mute = mute ?? false;
@@ -219,38 +213,42 @@ namespace Osu.Music.UI.ViewModels
         {
             // If user tried to start playback without selected song
             // Select first song if possible
-            if (beatmap == null)
-            {
-                if (Model.Beatmaps == null || Model.Beatmaps.Count == 0)
-                    return;
-
-                beatmap = Model.Beatmaps[0];
-            }
+            CheckBeatmap(ref beatmap);
 
             // If new song was selected
             // Update playback
             if (Playback.Beatmap != beatmap)
             {
-                if (Playback.Beatmap != null)
-                    Model.PreviousBeatmaps.Push(Playback.Beatmap);
-
                 Model.PlayingBeatmap = beatmap;
                 Playback.Beatmap = beatmap;
                 Playback.Load();
 
-                DiscordManager.Update(beatmap);
+                DiscordManager.Update(Model.PlayingBeatmap);
             }
 
             // TODO: Rework this section
             if (Playback.PlaybackState != NAudio.Wave.PlaybackState.Paused)
                 Playback.Load();
 
+            if (Playback.PlaybackState == NAudio.Wave.PlaybackState.Paused)
+                DiscordManager.Resume(Playback.CurrentTime);
+
             Playback.Play();
+        }
+
+        private void CheckBeatmap(ref Beatmap beatmap)
+        {
+            if (Model.Beatmaps == null || Model.Beatmaps.Count == 0)
+                return;
+
+            if (beatmap == null)
+                beatmap = Model.Beatmaps[0];
         }
 
         private void PauseBeatmap(Beatmap beatmap)
         {
             Playback.Pause();
+            DiscordManager.Pause();
         }
 
         private void StopBeatmap(Beatmap beatmap)
@@ -287,6 +285,9 @@ namespace Osu.Music.UI.ViewModels
         {
             int index = GetNextMapIndex(beatmap);
 
+            if (beatmap != null)
+                Model.PreviousBeatmaps.Push(Playback.Beatmap);
+
             Model.SelectedBeatmap = Model.Beatmaps[index];
             PlayBeatmap(Model.SelectedBeatmap);
         }
@@ -311,6 +312,8 @@ namespace Osu.Music.UI.ViewModels
         {
             if (progress.HasValue)
                 _playback.CurrentTime = progress.Value;
+
+            DiscordManager.Resume(_playback.CurrentTime);
         }
 
         private void OpenPage(BindableBase page)
@@ -354,12 +357,27 @@ namespace Osu.Music.UI.ViewModels
             Process.Start(new ProcessStartInfo("cmd", $"/c start https://github.com/Laritello/osu-music") { CreateNoWindow = true });
         }
 
+        #region Handlers
         private void UpdateBeatmapProgress(object sender, EventArgs e)
         {
             Model.CurrentTime = Playback.CurrentTime;
             Model.TotalTime = Playback.TotalTime;
             Model.Progress = Playback.CurrentTime.TotalSeconds / Playback.TotalTime.TotalSeconds;
         }
+
+        private void Playback_BeatmapEnded(object sender, BeatmapEventArgs e)
+        {
+            if (Repeat)
+                PlayBeatmap(Model.SelectedBeatmap);
+            else
+                NextBeatmap(Model.SelectedBeatmap);
+        }
+
+        private void Playback_FftCalculated(object sender, FftEventArgs e)
+        {
+            Visualization.OnFftCalculated(e.Result);
+        }
+        #endregion
 
         #region Hotkeys
         private void HotkeyManager_HotkeyUsed(object sender, HotkeyEventArgs e)

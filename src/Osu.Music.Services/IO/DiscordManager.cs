@@ -93,6 +93,18 @@ namespace Osu.Music.Services.IO
             }
         }
 
+        public void Pause()
+        {
+            if (Client != null)
+                Client.UpdateClearTime();
+        }
+
+        public void Resume(TimeSpan resumeFrom)
+        {
+            if (Client != null)
+                Client.UpdateStartTime(DateTime.Now.Subtract(resumeFrom).ToUniversalTime());
+        }
+
         public void Dispose()
         {
             Deinitialize();
