@@ -81,8 +81,7 @@
         <controls:BeatmapProgressBar Grid.Row="2" Grid.ColumnSpan="2" Total="{Binding Model.TotalTime}" Current="{Binding Model.CurrentTime}" Progress="{Binding Model.Progress}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="ProgressChanged">
-                    <prism:InvokeCommandAction Command="{Binding ScrollBeatmapCommand}"
-                                               TriggerParameterPath="Progress" />
+                    <prism:InvokeCommandAction Command="{Binding ScrollBeatmapCommand}" TriggerParameterPath="Progress" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </controls:BeatmapProgressBar>
@@ -108,7 +107,7 @@
             <StackPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0 0 5 0">
                 <ToggleButton Style="{DynamicResource PlayerToggleButtonVolume}" Command="{Binding MuteCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}"
                               IsChecked="{Binding Playback.Mute}"/>
-                <Slider Style="{DynamicResource VolumeSlider}" Minimum="0" Maximum="1" Value="{Binding Playback.Volume}" Margin="0 0 5 0"/>
+                <Slider Style="{DynamicResource VolumeSlider}" Minimum="0" Maximum="1" Value="{Binding Playback.Volume}" IsMoveToPointEnabled="True" Margin="0 0 5 0"/>
                 <ToggleButton Style="{DynamicResource PlayerToggleButtonShuffle}" IsChecked="{Binding Random}"/>
                 <ToggleButton Style="{DynamicResource PlayerToggleButtonRandom}" IsChecked="{Binding Repeat}"/>
             </StackPanel>
