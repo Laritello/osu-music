@@ -18,15 +18,14 @@
 * Audio visualization
 * Customizable UI color scheme
 * Global hotkeys
+* Discord RPC
 
 ## Planned features
 
 * Search
-* Collection (import from osu!)
 * Playlists
-* Launching beatmap in osu!
 * More visualizations
-* Mini-player when minimized
+* Mini player
 
 ## Requirements
 
