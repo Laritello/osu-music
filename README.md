@@ -58,7 +58,8 @@ Distributed under the MIT License. See `LICENSE` for more information.
 * <a href="https://github.com/ppy">ppy</a> for <a href="https://osu.ppy.sh/home">an awesome game</a>
 * <a href="https://github.com/HoLLy-HaCKeR">HoLLy-HaCKeR</a> for the <a href="https://github.com/HoLLy-HaCKeR/osu-database-reader">osu-database-reader</a> 
 * Norberth Csorba for the <a href="https://stackoverflow.com/questions/55599743/naudio-fft-returns-small-and-equal-magnitude-values-for-all-frequencies">FrequencySpectrum class</a>
-* amdpastrana for the <a href="https://www.aimp.ru/forum/index.php?topic=60001.0">AIMP Skin</a> which I used as a base for osu.Music UI.
+* amdpastrana for the <a href="https://www.aimp.ru/forum/index.php?topic=60001.0">AIMP Skin</a> which I used as a base for osu.Music UI
+* <a href="https://github.com/meJevin">meJevin</a> for the <a href="https://www.youtube.com/watch?v=nwsEi0JZM3k">Squirrel update tutorial</a>
 
-## Credits
-Full list of used libraries and resources soon will be available in "About" section within the program.
+## Open source notices
+Full list of used libraries and resources is available in "About" section within the program.
