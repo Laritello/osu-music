@@ -80,6 +80,7 @@ namespace Osu.Music.Services.Audio
 
         private void CloseFile()
         {
+            fileStream?.Close();
             fileStream?.Dispose();
             fileStream = null;
         }
@@ -106,8 +107,13 @@ namespace Osu.Music.Services.Audio
 
         private void EnsureDeviceCreated()
         {
-            if (playbackDevice == null)
-                CreateDevice();
+            if (playbackDevice != null)
+            {
+                playbackDevice.Dispose();
+                playbackDevice = null;
+            }
+
+            CreateDevice();
         }
 
         private void CreateDevice()
