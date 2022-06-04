@@ -45,14 +45,21 @@ namespace Osu.Music.Views
 		private async void Window_Loaded(object sender, RoutedEventArgs e)
 		{
 #if (!DEBUG)
-			var dc = (MainWindowViewModel)DataContext;
-			dc.Updater = new GitHubUpdater();
-
-            if (dc != null)
+			try
 			{
-				var manager = await UpdateManager.GitHubUpdateManager("https://github.com/Laritello/osu-music");
-				dc.Updater.Manager = manager;
-				dc.Updater.CheckForUpdates();
+				var dc = (MainWindowViewModel)DataContext;
+				dc.Updater = new GitHubUpdater();
+
+				if (dc != null)
+				{
+					var manager = await UpdateManager.GitHubUpdateManager("https://github.com/Laritello/osu-music");
+					dc.Updater.Manager = manager;
+					dc.Updater.CheckForUpdates();
+				}
+			}
+			catch (Exception E)
+			{
+				// Ignore updater fail
 			}
 #endif
 		}
