@@ -12,6 +12,7 @@ using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
@@ -99,6 +100,7 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand<Popup> ChangePopupStateCommand { get; private set; }
         public DelegateCommand<Color?> UpdateColorCommand { get; private set; }
         public DelegateCommand UpdateDiscordRpcCommand { get; private set; }
+        public DelegateCommand<Beatmap> OpenBeatmapInExplorerCommand { get; private set; }
         public DelegateCommand ExitCommand { get; private set; }
         #endregion
 
@@ -143,6 +145,7 @@ namespace Osu.Music.UI.ViewModels
             ChangePopupStateCommand = new DelegateCommand<Popup>(ChangePopupState);
             UpdateColorCommand = new DelegateCommand<Color?>(UpdateColor);
             UpdateDiscordRpcCommand = new DelegateCommand(UpdateDiscordRpc);
+            OpenBeatmapInExplorerCommand = new DelegateCommand<Beatmap>(OpenBeatmapInExplorer);
             ExitCommand = new DelegateCommand(Exit);
         }
         
@@ -345,6 +348,19 @@ namespace Osu.Music.UI.ViewModels
 
             if (!DiscordManager.Enabled)
                 DiscordManager.ClearPresence();
+        }
+
+        private void OpenBeatmapInExplorer(Beatmap beatmap)
+        {
+            try
+            {
+                if (beatmap != null && Directory.Exists(beatmap.Directory))
+                    Process.Start("explorer.exe", beatmap.Directory);
+            }
+            catch
+            {
+                // Ignore
+            }
         }
 
         private void Exit()

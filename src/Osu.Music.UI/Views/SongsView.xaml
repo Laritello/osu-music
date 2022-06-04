@@ -8,13 +8,20 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ListView Style="{DynamicResource ListViewBeatmaps}" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding DataContext.Model.Beatmaps, RelativeSource={RelativeSource FindAncestor, 
+        <ListView x:Name="SongsList" Style="{DynamicResource ListViewBeatmaps}" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding DataContext.Model.Beatmaps, RelativeSource={RelativeSource FindAncestor, 
             AncestorType={x:Type local:MainView}}}" SelectedItem="{Binding DataContext.Model.SelectedBeatmap, RelativeSource={RelativeSource FindAncestor, 
-            AncestorType={x:Type local:MainView}}}">
+            AncestorType={x:Type local:MainView}}}" Tag="{Binding Path=DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}">
             <ListView.InputBindings>
                 <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.PlayBeatmapCommand, RelativeSource={RelativeSource FindAncestor, 
                     AncestorType={x:Type local:MainView}}}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=SelectedItem}"/>
             </ListView.InputBindings>
+            <ListView.ContextMenu>
+                <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
+                    <MenuItem Header="Open in Explorer" Command="{Binding DataContext.OpenBeatmapInExplorerCommand, RelativeSource={RelativeSource FindAncestor, 
+                        AncestorType={x:Type ContextMenu}}}" CommandParameter="{Binding Path=PlacementTarget.SelectedItem, RelativeSource={RelativeSource FindAncestor, 
+                        AncestorType={x:Type ContextMenu}}}"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
         </ListView>
     </Grid>
 </UserControl>
