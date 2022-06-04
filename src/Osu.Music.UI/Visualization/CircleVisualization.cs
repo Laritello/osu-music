@@ -1,6 +1,6 @@
 ﻿using Osu.Music.Services.Audio;
 using Osu.Music.UI.Interfaces;
-using Osu.Music.UI.UserControls.SpectrumAnalyzers;
+using Osu.Music.UI.SpectrumAnalyzers;
 
 namespace Osu.Music.UI.Visualization
 {

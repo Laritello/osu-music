@@ -2,7 +2,7 @@
 using System;
 using System.Windows.Controls;
 
-namespace Osu.Music.UI.UserControls.SpectrumAnalyzers
+namespace Osu.Music.UI.SpectrumAnalyzers
 {
     public partial class CircleSpectrumVisualizer : UserControl
     {

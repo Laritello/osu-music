@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace Osu.Music.UI.Resources.Converters
 {
-    public class ProgressToWidthConverter : IMultiValueConverter
+    public class ProgressToSizeConverter : IMultiValueConverter
     {
         public object Convert(object[] value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -12,9 +12,9 @@ namespace Osu.Music.UI.Resources.Converters
                 return 0;
 
             double progress = Math.Min(Math.Max((double)value[1], 0), 1);
-            double width = (double)value[0];
+            double max = (double)value[0];
 
-            return width * progress;
+            return max * progress;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

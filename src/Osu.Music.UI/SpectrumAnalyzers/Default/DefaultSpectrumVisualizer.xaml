@@ -1,0 +1,5 @@
+﻿<UserControl x:Class="Osu.Music.UI.SpectrumAnalyzers.DefaultSpectrumVisualizer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Height="250">
+    <Grid x:Name="Bars" VerticalAlignment="Bottom" Height="80"/>
+</UserControl>

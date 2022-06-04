@@ -10,7 +10,7 @@
         <Rectangle x:Name="RectangleTotal" Opacity="1" Width="{Binding ElementName=SliderPart, Path=ActualWidth}" MinHeight="20" MaxHeight="20" Fill="{DynamicResource SolidColorBrushMainLight}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"/>
         <Rectangle x:Name="RectangleProgress" Opacity="1" MinHeight="20" MaxHeight="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Fill="{DynamicResource SolidColorBrushMainDark}">
             <Rectangle.Width>
-                <MultiBinding Converter="{StaticResource ProgressToWidthConverter}">
+                <MultiBinding Converter="{StaticResource ProgressToSizeConverter}">
                     <Binding Path="ActualWidth" ElementName="SliderPart"/>
                     <Binding Path="Progress" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:BeatmapProgressBar}}"/>
                 </MultiBinding>

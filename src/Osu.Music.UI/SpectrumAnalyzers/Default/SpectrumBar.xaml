@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="Osu.Music.UI.SpectrumAnalyzers.Default.SpectrumBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Osu.Music.UI.SpectrumAnalyzers.Default"
+             mc:Ignorable="d">
+    <Canvas x:Name="Canvas" Margin="1 0 1 0">
+        <Rectangle Width="{Binding Path=ActualWidth, ElementName=Canvas}" Canvas.Bottom="0">
+            <Rectangle.Fill>
+                <LinearGradientBrush>
+                    <GradientStop Color="{DynamicResource ColorMainLight}" Offset="0.0"/>
+                    <GradientStop Color="{DynamicResource ColorMainDark}" Offset="1.0"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+            <Rectangle.Height>
+                <MultiBinding Converter="{StaticResource ProgressToSizeConverter}">
+                    <Binding Path="ActualHeight" ElementName="Canvas"/>
+                    <Binding Path="Value" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:SpectrumBar}}"/>
+                </MultiBinding>
+            </Rectangle.Height>
+        </Rectangle>
+    </Canvas>
+</UserControl>
