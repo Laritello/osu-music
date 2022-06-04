@@ -1,8 +1,6 @@
 ﻿using Osu.Music.Services.Audio;
 using System;
-using System.Linq;
 using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace Osu.Music.UI.UserControls.SpectrumAnalyzers
@@ -12,12 +10,7 @@ namespace Osu.Music.UI.UserControls.SpectrumAnalyzers
     /// </summary>
     public partial class DefaultSpectrumVisualizer : UserControl
     {
-        public int ColumnsCount { get; set; } = 24;
-
-        public double MinimumFrequency { get; set; } = 20;
-        public double MaximumFrequency { get; set; } = 20000;
-
-        private readonly float minimum = -60;
+        public int ColumnsCount { get; set; } = 18;
 
         public DefaultSpectrumVisualizer()
         {
@@ -26,32 +19,7 @@ namespace Osu.Music.UI.UserControls.SpectrumAnalyzers
 
         public void Update(FrequencySpectrum spectrum)
         {
-            float[] data = new float[ColumnsCount];
-
-            double minFreq = Math.Max(0, MinimumFrequency);
-            double maxFreq = Math.Min(spectrum.SamplingFrequency, MaximumFrequency);
-            double step = (double)maxFreq / ColumnsCount;
-
-            for (double freq = minFreq; freq < maxFreq; freq += step)
-            {
-                if (freq > spectrum.SamplingFrequency)
-                    freq = spectrum.SamplingFrequency;
-
-                int index = (int)(freq / step);
-                data[index] = (float)(10 * Math.Log10(spectrum[freq, freq + step])); // Probably correct visualization
-            }
-
-            float localMinimum = data.Min();
-
-            if (float.IsInfinity(localMinimum))
-                return;
-
-            if (minimum != 0)
-            {
-                for (int i = 0; i < ColumnsCount; i++)
-                    data[i] = 1 - (data[i] / minimum);
-            }
-
+            float[] data = spectrum.GetLogarithmicallyScaledSpectrum();
             UpdateCanvas(data);
         }
 
@@ -65,7 +33,7 @@ namespace Osu.Music.UI.UserControls.SpectrumAnalyzers
 
         private void AddResult(int index, double columnWidth, float value)
         {
-            double height = value < 0 ? 0 : value * ActualHeight;
+            double height = value < 0 ? 0 : value * canvas.ActualHeight;
             if (index >= canvas.Children.Count)
             {
                 Rectangle rect = new Rectangle()

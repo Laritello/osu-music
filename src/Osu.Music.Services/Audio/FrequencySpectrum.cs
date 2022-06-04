@@ -1,4 +1,5 @@
 ﻿using NAudio.Dsp;
+using Osu.Music.Services.UItility;
 using System;
 using System.Linq;
 
@@ -66,9 +67,107 @@ namespace Osu.Music.Services.Audio
                 int startIndex = (int)Math.Round(startFrequency / ((float)SamplingFrequency / FftWindowSize));
                 int endIndex = (int)Math.Round(endFrequency / ((float)SamplingFrequency / FftWindowSize));
 
-                Complex[] range = frequencyDomain[startIndex..endIndex];
-                return range.Select(c => (float)Math.Sqrt((c.X * c.X) + (c.Y * c.Y))).Average();
+                if (startIndex == endIndex)
+                {
+                    Complex c = frequencyDomain[checked((uint)startIndex)];
+                    return (float)Math.Sqrt((c.X * c.X) + (c.Y * c.Y));
+                }
+                else
+                {
+                    Complex[] range = frequencyDomain[startIndex..endIndex];
+                    return range.Length > 0 ? range.Select(c => (float)Math.Sqrt((c.X * c.X) + (c.Y * c.Y))).Median() : 0;
+                }
             }
         }
+
+        public float[] GetLogarithmicallyScaledSpectrum(
+            int minFrequency = 10, 
+            int maxFrequency = 44100, 
+            int binsCount = 18, 
+            float maxDb = -30,
+            float minDb = -90,
+            SpectrumSize size = SpectrumSize.Half)
+        {
+            if (minFrequency < 0)
+                throw new ArgumentException(nameof(minFrequency));
+
+            if (binsCount == 0)
+                throw new ArgumentException(nameof(binsCount));
+
+            if (minDb == 0)
+                throw new ArgumentException(nameof(minDb));
+
+            maxFrequency = Math.Min(maxFrequency, SamplingFrequency);
+
+            float[] data = new float[binsCount];
+            double[] frequencies = GenerateLogSpace(minFrequency, size == SpectrumSize.Full ? maxFrequency : maxFrequency / 2, binsCount);
+
+            for (int i = 0; i < frequencies.Length - 1; i++)
+            {
+                var amplitude = (float)(20 * Math.Log10(this[frequencies[i], frequencies[i + 1]])); // Probably correct visualization
+                amplitude = float.IsInfinity(amplitude) ? minDb : amplitude; // Safety check
+                amplitude = MathF.Min(MathF.Max(minDb, amplitude), maxDb);
+                data[i] = amplitude;
+            }
+
+            var topRange = MathF.Log10(Math.Abs(maxDb));
+            var bottomRange = MathF.Log10(Math.Abs(minDb));
+
+            for (int i = 0; i < binsCount; i++)
+            {
+                var value = MathF.Log10(MathF.Abs(data[i]));
+                var pos = (value - topRange) / (bottomRange - topRange);
+                data[i] = 1 - pos;
+            }
+                
+
+            return data;
+        }
+
+        private static double[] GenerateLogSpace(int min, int max, int logBins)
+        {
+            double logarithmicBase = Math.E;
+            double logMin = Math.Log(min);
+            double logMax = Math.Log(max);
+            double delta = (logMax - logMin) / logBins;
+
+
+            double accDelta = 0;
+            double[] v = new double[logBins + 1];
+            for (int i = 0; i <= logBins; ++i)
+            {
+                v[i] = Math.Pow(logarithmicBase, logMin + accDelta);
+                accDelta += delta;// accDelta = delta * i
+            }
+
+            v[^1] = max;
+            return v;
+        }
+
+        private static double[] GenerateLogSpace(double min, double max, int logBins)
+        {
+            double logarithmicBase = Math.E;
+            double logMin = Math.Log(min);
+            double logMax = Math.Log(max);
+            double delta = (logMax - logMin) / logBins;
+
+
+            double accDelta = 0;
+            double[] v = new double[logBins + 1];
+            for (int i = 0; i <= logBins; ++i)
+            {
+                v[i] = Math.Pow(logarithmicBase, logMin + accDelta);
+                accDelta += delta;// accDelta = delta * i
+            }
+
+            v[^1] = max;
+            return v;
+        }
+    }
+
+    public enum SpectrumSize
+    {
+        Full,
+        Half
     }
 }

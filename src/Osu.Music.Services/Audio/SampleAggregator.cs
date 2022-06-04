@@ -23,7 +23,7 @@ namespace Osu.Music.Services.Audio
 
         private int sampleCount;
 
-        public SampleAggregator(ISampleProvider source, int fftLength = 2048)
+        public SampleAggregator(ISampleProvider source, int fftLength = 4096)
         {
             if (!IsPowerOfTwo(fftLength))
                 throw new ArgumentException("FFT Length must be a power of two");

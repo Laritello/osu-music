@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 
@@ -43,6 +46,45 @@ namespace Osu.Music.Services.UItility
         public static ulong ToUnix(this DateTime dt)
         {
             return (ulong)dt.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Local)).TotalSeconds;
+        }
+
+        public static double Median(this IEnumerable<int> source)
+        {
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (source.Count() == 0) throw new ArgumentException("Sequence has no elements");
+
+            var sorted = source.OrderBy(x => x).ToArray();
+            int size = sorted.Length;
+
+            return size % 2 != 0 ?
+                sorted[(int)Math.Ceiling(size / 2.0) - 1] :
+                (sorted[(size / 2) - 1] + sorted[size / 2]) / 2;
+        }
+
+        public static double Median(this IEnumerable<double> source)
+        {
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (source.Count() == 0) throw new ArgumentException("Sequence has no elements");
+
+            var sorted = source.OrderBy(x => x).ToArray();
+            int size = sorted.Length;
+
+            return size % 2 != 0 ?
+                sorted[(int)Math.Ceiling(size / 2.0) - 1] :
+                (sorted[(size / 2) - 1] + sorted[size / 2]) / 2;
+        }
+
+        public static float Median(this IEnumerable<float> source)
+        {
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (source.Count() == 0) throw new ArgumentException("Sequence has no elements");
+
+            var sorted = source.OrderBy(x => x).ToArray();
+            int size = sorted.Length;
+
+            return size % 2 != 0 ?
+                sorted[(int)Math.Ceiling(size / 2.0) - 1] :
+                (sorted[(size / 2) - 1] + sorted[size / 2]) / 2;
         }
     }
 }
