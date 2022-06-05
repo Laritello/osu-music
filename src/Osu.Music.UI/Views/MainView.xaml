@@ -58,7 +58,7 @@
                 <Button Style="{StaticResource TitleBarClose}" Command="{Binding CloseCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
             </StackPanel>
         </Grid>
-        
+
         <Grid Grid.RowSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>

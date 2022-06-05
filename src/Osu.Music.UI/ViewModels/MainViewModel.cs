@@ -1,14 +1,17 @@
 ﻿using Osu.Music.Common.Enums;
 using Osu.Music.Common.Models;
 using Osu.Music.Services.Audio;
+using Osu.Music.Services.Dialog;
 using Osu.Music.Services.Events;
 using Osu.Music.Services.Hotkeys;
 using Osu.Music.Services.IO;
 using Osu.Music.Services.UItility;
 using Osu.Music.UI.Interfaces;
 using Osu.Music.UI.Models;
+using Osu.Music.UI.Views;
 using Osu.Music.UI.Visualization;
 using Prism.Commands;
+using Prism.Ioc;
 using Prism.Mvvm;
 using System;
 using System.Diagnostics;
@@ -49,6 +52,13 @@ namespace Osu.Music.UI.ViewModels
         {
             get => _discordManager;
             set => SetProperty(ref _discordManager, value);
+        }
+
+        private IPopupDialogService _dialogService;
+        public IPopupDialogService DialogService
+        {
+            get => _dialogService;
+            set => SetProperty(ref _dialogService, value);
         }
 
         private AudioPlayback _playback;
@@ -106,19 +116,20 @@ namespace Osu.Music.UI.ViewModels
 
         private DispatcherTimer _audioProgressTimer;
 
-        public MainViewModel()
+        public MainViewModel(IContainerExtension container)
         {
             Model = new MainModel();
             SelectedPage = Model.SongsPage;
             Visualization = new DefaultVisualization();
 
+            InitializeDialogService(container);
             InitializeSettings();
             InitializeCommands();
             InitializePlayback();
             InitializeAudioProgressTimer();
             InitializeHotkeys();
             InitializeDiscord();
-
+            
             LoadBeatmaps();
         }
 
@@ -186,6 +197,11 @@ namespace Osu.Music.UI.ViewModels
             };
 
             DiscordManager.Initialize();
+        }
+
+        private void InitializeDialogService(IContainerExtension container)
+        {
+            _dialogService = new PopupDialogService(container);
         }
         #endregion
 
