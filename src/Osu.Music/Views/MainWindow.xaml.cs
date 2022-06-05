@@ -57,7 +57,7 @@ namespace Osu.Music.Views
 					dc.Updater.CheckForUpdates();
 				}
 			}
-			catch (Exception E)
+			catch
 			{
 				// Ignore updater fail
 			}
