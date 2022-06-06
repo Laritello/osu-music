@@ -10,17 +10,6 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="550" d:DesignWidth="900">
-    <UserControl.Resources>
-        <ControlTemplate x:Key="PopupTemplate">
-            <Border Background="{DynamicResource SolidColorBrushMain}" BorderBrush="Transparent" Padding="0" BorderThickness="0" HorizontalAlignment="Left">
-                <StackPanel Orientation="Vertical">
-                    <Button Style="{DynamicResource PopupButton}" Content="About" Command="{Binding OpenPageCommand}" CommandParameter="{Binding Model.AboutPage}"/>
-                    <Button Style="{DynamicResource PopupButton}" Content="Settings" Command="{Binding OpenPageCommand}" CommandParameter="{Binding Model.SettingsPage}"/>
-                    <Button Style="{DynamicResource PopupButton}" Content="Exit" Command="{Binding ExitCommand}"/>
-                </StackPanel>
-            </Border>
-        </ControlTemplate>
-    </UserControl.Resources>
     <Grid Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250"/>
