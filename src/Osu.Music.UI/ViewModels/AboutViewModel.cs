@@ -18,16 +18,14 @@ namespace Osu.Music.UI.ViewModels
         }
 
         private string _version;
-
-        public event Action<IDialogResult> RequestClose;
-
         public string Version
         {
             get => _version;
             set => SetProperty(ref _version, value);
         }
 
-        public DelegateCommand<dynamic> OpenRepositoryCommand { get; set; }
+        public event Action<IDialogResult> RequestClose;
+        public DelegateCommand<dynamic> OpenRepositoryCommand { get; private set; }
 
         public string Title => throw new NotImplementedException();
 
