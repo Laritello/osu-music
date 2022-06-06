@@ -1,20 +1,23 @@
 ﻿using Osu.Music.Common.Enums;
 using Osu.Music.Common.Models;
 using Osu.Music.Services.Audio;
+using Osu.Music.Services.Dialog;
 using Osu.Music.Services.Events;
 using Osu.Music.Services.Hotkeys;
 using Osu.Music.Services.IO;
 using Osu.Music.Services.UItility;
 using Osu.Music.UI.Interfaces;
 using Osu.Music.UI.Models;
+using Osu.Music.UI.Views;
 using Osu.Music.UI.Visualization;
 using Prism.Commands;
+using Prism.Ioc;
 using Prism.Mvvm;
+using Prism.Services.Dialogs;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
-using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Windows.Threading;
 
@@ -49,6 +52,13 @@ namespace Osu.Music.UI.ViewModels
         {
             get => _discordManager;
             set => SetProperty(ref _discordManager, value);
+        }
+
+        private IPopupDialogService _dialogService;
+        public IPopupDialogService DialogService
+        {
+            get => _dialogService;
+            set => SetProperty(ref _dialogService, value);
         }
 
         private AudioPlayback _playback;
@@ -97,28 +107,27 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand OpenGitHubCommand { get; private set; }
         public DelegateCommand<TimeSpan?> ScrollBeatmapCommand { get; private set; }
         public DelegateCommand<BindableBase> OpenPageCommand { get; private set; }
-        public DelegateCommand<Popup> ChangePopupStateCommand { get; private set; }
-        public DelegateCommand<Color?> UpdateColorCommand { get; private set; }
-        public DelegateCommand UpdateDiscordRpcCommand { get; private set; }
+        public DelegateCommand OpenAboutCommand { get; private set; }
+        public DelegateCommand OpenSettingsCommand { get; private set; }
         public DelegateCommand<Beatmap> OpenBeatmapInExplorerCommand { get; private set; }
-        public DelegateCommand ExitCommand { get; private set; }
         #endregion
 
         private DispatcherTimer _audioProgressTimer;
 
-        public MainViewModel()
+        public MainViewModel(IContainerExtension container)
         {
             Model = new MainModel();
             SelectedPage = Model.SongsPage;
             Visualization = new DefaultVisualization();
 
+            InitializeDialogService(container);
             InitializeSettings();
             InitializeCommands();
             InitializePlayback();
             InitializeAudioProgressTimer();
             InitializeHotkeys();
             InitializeDiscord();
-
+            
             LoadBeatmaps();
         }
 
@@ -142,11 +151,9 @@ namespace Osu.Music.UI.ViewModels
             OpenGitHubCommand = new DelegateCommand(OpenGitHub);
             ScrollBeatmapCommand = new DelegateCommand<TimeSpan?>(ScrollBeatmap);
             OpenPageCommand = new DelegateCommand<BindableBase>(OpenPage);
-            ChangePopupStateCommand = new DelegateCommand<Popup>(ChangePopupState);
-            UpdateColorCommand = new DelegateCommand<Color?>(UpdateColor);
-            UpdateDiscordRpcCommand = new DelegateCommand(UpdateDiscordRpc);
+            OpenAboutCommand = new DelegateCommand(OpenAbout);
+            OpenSettingsCommand = new DelegateCommand(OpenSettings);
             OpenBeatmapInExplorerCommand = new DelegateCommand<Beatmap>(OpenBeatmapInExplorer);
-            ExitCommand = new DelegateCommand(Exit);
         }
         
         private void InitializePlayback()
@@ -186,6 +193,11 @@ namespace Osu.Music.UI.ViewModels
             };
 
             DiscordManager.Initialize();
+        }
+
+        private void InitializeDialogService(IContainerExtension container)
+        {
+            _dialogService = new PopupDialogService(container);
         }
         #endregion
 
@@ -324,30 +336,20 @@ namespace Osu.Music.UI.ViewModels
             SelectedPage = page;
         }
 
-        private void ChangePopupState(Popup popup)
+        private void OpenAbout()
         {
-            popup.IsOpen = !popup.IsOpen;
+            DialogService.ShowPopupDialog<AboutView, AboutViewModel>();
         }
 
-        private void UpdateColor(Color? color)
+        private void OpenSettings()
         {
-            if (!color.HasValue)
-                return;
-
-            Settings.MainColor = color.Value.ToHex();
-            ResourceDictionary resource = Application.Current.Resources;
-            resource.MergedDictionaries.SetMainColor(Settings.MainColor);
-
-            SettingsManager.Save(Settings);
-        }
-
-        private void UpdateDiscordRpc()
-        {
-            SettingsManager.Save(Settings);
-            DiscordManager.Enabled = Settings.DiscordRpcEnabled;
-
-            if (!DiscordManager.Enabled)
-                DiscordManager.ClearPresence();
+            var parameters = new DialogParameters
+            {
+                { "settings", Settings },
+                { "hotkey", HotkeyManager },
+                { "discord", DiscordManager }
+            };
+            DialogService.ShowPopupDialog<SettingsView, SettingsViewModel>(parameters, callback => { });
         }
 
         private void OpenBeatmapInExplorer(Beatmap beatmap)
@@ -361,11 +363,6 @@ namespace Osu.Music.UI.ViewModels
             {
                 // Ignore
             }
-        }
-
-        private void Exit()
-        {
-            Application.Current.Shutdown();
         }
 
         private void OpenGitHub()

@@ -40,12 +40,11 @@
             </Grid.ColumnDefinitions>
 
             <ContentControl Margin="13 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top">
-                <Grid>
-                    <Button Style="{DynamicResource SidebarButtonOsu}" Command="{Binding ChangePopupStateCommand}" CommandParameter="{Binding ElementName=MenuPopup}"/>
-                    <Popup x:Name="MenuPopup" StaysOpen="False" Placement="Left" HorizontalOffset="-100" VerticalOffset="30">
-                        <ContentControl Template="{StaticResource PopupTemplate}"/>
-                    </Popup>
-                </Grid>
+                <StackPanel Orientation="Horizontal" 
+                            Background="{DynamicResource SolidColorBrushMain}">
+                    <Button Style="{DynamicResource SidebarButtonOsu}" Command="{Binding OpenAboutCommand}"/>
+                    <Button Style="{DynamicResource SettingsButton}" Command="{Binding OpenSettingsCommand}"/>
+                </StackPanel>
             </ContentControl>
             <StackPanel Grid.Column="1"  HorizontalAlignment="Right" Orientation="Horizontal">
                 <Button Style="{StaticResource TitleBarUpdates}" Visibility="{Binding DataContext.Updater.State, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Converter={StaticResource UpdateStateToVisibilityConverter}, FallbackValue=Collapsed}"
@@ -58,7 +57,7 @@
                 <Button Style="{StaticResource TitleBarClose}" Command="{Binding CloseCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
             </StackPanel>
         </Grid>
-        
+
         <Grid Grid.RowSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>

@@ -11,6 +11,7 @@
 	<StartupObject>Osu.Music.App</StartupObject>
 	</PropertyGroup>
 	<ItemGroup>
+	<PackageReference Include="MaterialDesignThemes" Version="4.5.0" />
 	<PackageReference Include="NuGet.CommandLine" Version="5.11.0">
 		<PrivateAssets>all</PrivateAssets>
 		<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

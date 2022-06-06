@@ -3,20 +3,18 @@ using Osu.Music.ViewModels;
 using Prism.Commands;
 using Squirrel;
 using System;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interop;
 
 namespace Osu.Music.Views
 {
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
-	public partial class MainWindow : Window
-    {
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+	{
 		public DelegateCommand MinimizeCommand { get; private set; }
         public DelegateCommand<Button> MaximizeOrRestoreCommand { get; private set; }
         public DelegateCommand CloseCommand { get; private set; }

@@ -16,7 +16,9 @@ namespace Osu.Music.Services.UItility
 
         public static void SetMainColor(this Collection<ResourceDictionary> collection, string hex)
         {
-            ResourceDictionary dictionary = collection[0];
+            // Using index is cool, but if I change order of dictionaries in App.xaml
+            // it won't be that cool anymore. Maybe switch to naming or someting.
+            ResourceDictionary dictionary = collection[1];
 
             Color mainColor = hex.FromHex();
             Color lightColor = new Color()

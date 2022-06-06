@@ -5,10 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Osu.Music.UI.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             Width="600" MinWidth="600" MaxWidth="600"
+             Height="450" MaxHeight="450" MinHeight="450">
     <UserControl.Resources>
         <DataTemplate x:Key="LicenseTemplate">
-            <StackPanel Width="577" Margin="23 0 0 0">
+            <StackPanel Margin="0 0 0 0">
                 <TextBlock Style="{DynamicResource LinkText}" Text="{Binding name}">
                     <TextBlock.InputBindings>
                         <MouseBinding MouseAction="LeftClick"
@@ -24,40 +25,45 @@
             </StackPanel>
         </DataTemplate>
     </UserControl.Resources>
-    <Grid>
-        <ScrollViewer>
-            <StackPanel Orientation="Vertical" Margin="5" Width="600">
-                <Image Source="/Osu.Music.UI;component/Resources/Images/Logo/Logo.png" Width="100" RenderOptions.BitmapScalingMode="HighQuality"/>
-                <TextBlock Text="osu.Music" Style="{DynamicResource MenuHeader}" HorizontalAlignment="Center" Margin="0"/>
-                <TextBlock Style="{DynamicResource MenuDefault}" HorizontalAlignment="Center" Margin="0 0 0 20"
+    <Border Background="White" CornerRadius="5" Padding="0 5 0 5">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="15" ShadowDepth="0" Direction="0"/>
+        </Border.Effect>
+        <Grid>
+            <ScrollViewer>
+                <StackPanel Orientation="Vertical" Margin="5">
+                    <Image Source="/Osu.Music.UI;component/Resources/Images/Logo/Logo.png" Width="50" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    <TextBlock Text="osu.Music" Style="{DynamicResource MenuHeader}" HorizontalAlignment="Center" Margin="0" FontSize="14"/>
+                    <TextBlock Style="{DynamicResource MenuDefault}" HorizontalAlignment="Center" Margin="0 0 0 20" FontSize="14"
                            Text="{Binding DataContext.Version, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:AboutView}}}"/>
-                <Expander>
-                    <Expander.Header>
-                        <TextBlock Text="License" Style="{DynamicResource MenuHeader}" VerticalAlignment="Center" Padding="0 17 0 0"/>
-                    </Expander.Header>
-                    <TextBlock Style="{DynamicResource LicenseText}" Margin="39 0 0 0" TextWrapping="Wrap"
+                    <Expander>
+                        <Expander.Header>
+                            <TextBlock Text="License" Style="{DynamicResource MenuHeader}" VerticalAlignment="Center" Padding="0 0 0 0"/>
+                        </Expander.Header>
+                        <TextBlock Style="{DynamicResource LicenseText}" Margin="39 0 0 0" TextWrapping="Wrap"
                                Text="{Binding DataContext.Licenses.application.sourceText, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:AboutView}}}"/>
-                </Expander>
-                <Expander>
-                    <Expander.Header>
-                        <TextBlock Text="Open Source Notices" Style="{DynamicResource MenuHeader}" VerticalAlignment="Center" Padding="0 17 0 0"/>
-                    </Expander.Header>
-                    <ItemsControl ItemsSource="{Binding DataContext.Licenses.notices, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:AboutView}}}" ItemTemplate="{StaticResource LicenseTemplate}"
+                    </Expander>
+                    <Expander>
+                        <Expander.Header>
+                            <TextBlock Text="Open Source Notices" Style="{DynamicResource MenuHeader}" VerticalAlignment="Center" Padding="0 0 0 0"/>
+                        </Expander.Header>
+                        <ItemsControl ItemsSource="{Binding DataContext.Licenses.notices, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:AboutView}}}" ItemTemplate="{StaticResource LicenseTemplate}"
                               ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel Margin="23 0 0 0" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
 
-                        <ItemsControl.Template>
-                            <ControlTemplate TargetType="ItemsControl">
-                                <ItemsPresenter/>
-                            </ControlTemplate>
-                        </ItemsControl.Template>
-                    </ItemsControl>
-                </Expander>
-            </StackPanel>
-        </ScrollViewer>
-    </Grid>
+                            <ItemsControl.Template>
+                                <ControlTemplate TargetType="ItemsControl">
+                                    <ItemsPresenter/>
+                                </ControlTemplate>
+                            </ItemsControl.Template>
+                        </ItemsControl>
+                    </Expander>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Border>
 </UserControl>
