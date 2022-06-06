@@ -35,14 +35,23 @@ namespace Osu.Music.Services.UItility
                 G = (byte)Math.Floor(0.75 * mainColor.G),
                 B = (byte)Math.Floor(0.75 * mainColor.B)
             };
+            Color borderColor = new Color()
+            {
+                A = 64,
+                R = mainColor.R,
+                G = mainColor.G,
+                B = mainColor.B
+            };
 
             dictionary["ColorMain"] = mainColor;
             dictionary["ColorMainLight"] = lightColor;
             dictionary["ColorMainDark"] = darkColor;
+            dictionary["ColorMainBorder"] = borderColor;
 
             dictionary["SolidColorBrushMain"] = new SolidColorBrush(mainColor);
             dictionary["SolidColorBrushMainLight"] = new SolidColorBrush(lightColor);
             dictionary["SolidColorBrushMainDark"] = new SolidColorBrush(darkColor);
+            dictionary["SolidColorBrushMainBorder"] = new SolidColorBrush(borderColor);
         }
 
         public static ulong ToUnix(this DateTime dt)
