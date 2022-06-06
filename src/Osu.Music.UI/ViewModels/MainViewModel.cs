@@ -211,7 +211,7 @@ namespace Osu.Music.UI.ViewModels
                     SettingsManager.Save(Settings);
                 }
 
-                Model.Beatmaps = await LibraryLoader.LoadAsync(Settings.OsuFolder);
+                Model.Beatmaps = await LibraryManager.LoadAsync(Settings.OsuFolder);
             }
             catch(Exception E)
             {

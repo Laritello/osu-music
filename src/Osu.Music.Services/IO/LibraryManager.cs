@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Osu.Music.Services.IO
 {
-    public static class LibraryLoader
+    public static class LibraryManager
     {
         public static async Task<IList<Beatmap>> LoadAsync(string osuFolder)
         {
