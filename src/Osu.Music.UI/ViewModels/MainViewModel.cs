@@ -18,7 +18,6 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace Osu.Music.UI.ViewModels
@@ -52,13 +51,6 @@ namespace Osu.Music.UI.ViewModels
         {
             get => _discordManager;
             set => SetProperty(ref _discordManager, value);
-        }
-
-        private IPopupDialogService _dialogService;
-        public IPopupDialogService DialogService
-        {
-            get => _dialogService;
-            set => SetProperty(ref _dialogService, value);
         }
 
         private AudioPlayback _playback;
@@ -106,7 +98,7 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand<Beatmap> NextBeatmapCommand { get; private set; }
         public DelegateCommand OpenGitHubCommand { get; private set; }
         public DelegateCommand<TimeSpan?> ScrollBeatmapCommand { get; private set; }
-        public DelegateCommand<BindableBase> OpenPageCommand { get; private set; }
+        public DelegateCommand<string> OpenPageCommand { get; private set; }
         public DelegateCommand OpenAboutCommand { get; private set; }
         public DelegateCommand OpenSettingsCommand { get; private set; }
         public DelegateCommand<Beatmap> OpenBeatmapInExplorerCommand { get; private set; }
@@ -117,7 +109,7 @@ namespace Osu.Music.UI.ViewModels
         public MainViewModel(IContainerExtension container)
         {
             Model = new MainModel();
-            SelectedPage = Model.SongsPage;
+            SelectedPage = new SongsViewModel();
             Visualization = new DefaultVisualization();
 
             InitializeDialogService(container);
@@ -128,7 +120,7 @@ namespace Osu.Music.UI.ViewModels
             InitializeHotkeys();
             InitializeDiscord();
             
-            LoadBeatmaps();
+            LoadData();
         }
 
         #region Initialization
@@ -150,7 +142,7 @@ namespace Osu.Music.UI.ViewModels
             NextBeatmapCommand = new DelegateCommand<Beatmap>(NextBeatmap);
             OpenGitHubCommand = new DelegateCommand(OpenGitHub);
             ScrollBeatmapCommand = new DelegateCommand<TimeSpan?>(ScrollBeatmap);
-            OpenPageCommand = new DelegateCommand<BindableBase>(OpenPage);
+            OpenPageCommand = new DelegateCommand<string>(OpenPage);
             OpenAboutCommand = new DelegateCommand(OpenAbout);
             OpenSettingsCommand = new DelegateCommand(OpenSettings);
             OpenBeatmapInExplorerCommand = new DelegateCommand<Beatmap>(OpenBeatmapInExplorer);
@@ -197,11 +189,11 @@ namespace Osu.Music.UI.ViewModels
 
         private void InitializeDialogService(IContainerExtension container)
         {
-            _dialogService = new PopupDialogService(container);
+            Model.DialogService = new PopupDialogService(container);
         }
         #endregion
 
-        private async void LoadBeatmaps()
+        private async void LoadData()
         {
             try
             {
@@ -212,6 +204,7 @@ namespace Osu.Music.UI.ViewModels
                 }
 
                 Model.Beatmaps = await LibraryManager.LoadAsync(Settings.OsuFolder);
+                Model.Playlists = await PlaylistManager.LoadAsync(Model.Beatmaps);
             }
             catch(Exception E)
             {
@@ -331,14 +324,22 @@ namespace Osu.Music.UI.ViewModels
             DiscordManager.Resume(_playback.CurrentTime);
         }
 
-        private void OpenPage(BindableBase page)
+        private void OpenPage(string pageName)
         {
-            SelectedPage = page;
+            switch (pageName)
+            {
+                case "Songs":
+                    SelectedPage = new SongsViewModel();
+                    break;
+                case "Playlists":
+                    SelectedPage = new PlaylistsViewModel(Model.Playlists,Model.DialogService);
+                    break;
+            }
         }
 
         private void OpenAbout()
         {
-            DialogService.ShowPopupDialog<AboutView, AboutViewModel>();
+            Model.DialogService.ShowPopupDialog<AboutView, AboutViewModel>();
         }
 
         private void OpenSettings()
@@ -349,7 +350,7 @@ namespace Osu.Music.UI.ViewModels
                 { "hotkey", HotkeyManager },
                 { "discord", DiscordManager }
             };
-            DialogService.ShowPopupDialog<SettingsView, SettingsViewModel>(parameters, callback => { });
+            Model.DialogService.ShowPopupDialog<SettingsView, SettingsViewModel>(parameters, callback => { });
         }
 
         private void OpenBeatmapInExplorer(Beatmap beatmap)

@@ -1,4 +1,5 @@
 ﻿using Osu.Music.Common.Models;
+using Osu.Music.Services.Dialog;
 using Osu.Music.UI.ViewModels;
 using Prism.Mvvm;
 using System;
@@ -17,6 +18,16 @@ namespace Osu.Music.UI.Models
         {
             get => _beatmaps;
             set => SetProperty(ref _beatmaps, value);
+        }
+
+        private ICollection<Playlist> _playlists;
+        /// <summary>
+        /// Collection of user-created playlists.
+        /// </summary>
+        public ICollection<Playlist> Playlists
+        {
+            get => _playlists;
+            set => SetProperty(ref _playlists, value);
         }
 
         private Beatmap _playingBeatmap;
@@ -70,35 +81,17 @@ namespace Osu.Music.UI.Models
             set => SetProperty(ref _progress, value);
         }
 
-        private BindableBase _songsPage;
-        public BindableBase SongsPage
+        private IPopupDialogService _dialogService;
+        public IPopupDialogService DialogService
         {
-            get => _songsPage;
-            set => SetProperty(ref _songsPage, value);
-        }
-
-        private BindableBase _settingsPage;
-        public BindableBase SettingsPage
-        {
-            get => _settingsPage;
-            set => SetProperty(ref _settingsPage, value);
-        }
-
-        private BindableBase _aboutPage;
-        public BindableBase AboutPage
-        {
-            get => _aboutPage;
-            set => SetProperty(ref _aboutPage, value);
+            get => _dialogService;
+            set => SetProperty(ref _dialogService, value);
         }
         #endregion
 
         public MainModel()
         {
             PreviousBeatmaps = new Stack<Beatmap>(100);
-            AboutPage = new AboutViewModel();
-            SettingsPage = new SettingsViewModel();
-
-            SongsPage = new SongsViewModel();
         }
     }
 }

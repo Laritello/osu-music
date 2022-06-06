@@ -21,35 +21,44 @@ namespace Osu.Music.Services.IO
                 if (!Directory.Exists(playlistDirectory))
                     throw new ArgumentException("The specified folder does not exist.");
 
+                var s = Directory.GetFiles(playlistDirectory);
                 var playlists = Directory.GetFiles(playlistDirectory)
                 .Where(x => x.Contains("json"))
                 .Select(file => ConvertPlaylistFromJson(file, beatmaps))
                 .Where(x => x != null)
                 .ToList();
 
-                return playlists;
+                return new ObservableCollection<Playlist>(playlists);
             });
         }
 
         public static void Save(ICollection<Playlist> playlists)
         {
+            // TODO: More elegant way of tracking removed playlists
+            foreach (var file in Directory.GetFiles(AppDataHelper.PlaylistDirectory))
+                File.Delete(file);
+
             foreach (var playlist in playlists)
+                Save(playlist);
+        }
+
+        public static void Save(Playlist playlist)
+        {
+            try
             {
-                try
-                {
-                    var _playlistFile = Path.Combine(AppDataHelper.PlaylistDirectory, $"{playlist.Name}.json");
-                    string json = JsonConvert.SerializeObject(playlist);
-                    File.WriteAllText(_playlistFile, json);
-                }
-                catch { }
+                var _playlistFile = Path.Combine(AppDataHelper.PlaylistDirectory, $"{playlist.Name}.json");
+                string json = JsonConvert.SerializeObject(playlist);
+                File.WriteAllText(_playlistFile, json);
             }
+            catch { }
         }
 
         private static Playlist ConvertPlaylistFromJson(string filePath, ICollection<Beatmap> beatmaps)
         {
             try
             {
-                var playlist = JsonConvert.DeserializeObject<Playlist>(filePath);
+                string json = File.Exists(filePath) ? File.ReadAllText(filePath) : null;
+                var playlist = json != null ? JsonConvert.DeserializeObject<Playlist>(json) : null;
                 playlist?.UpdateMaps(beatmaps);
 
                 return playlist;

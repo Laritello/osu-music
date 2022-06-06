@@ -41,4 +41,16 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="DialogBorder" TargetType="{x:Type Border}">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="CornerRadius" Value="5"/>
+        <Setter Property="Padding" Value="0 5 0 5"/>
+
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect BlurRadius="15" ShadowDepth="0" Direction="0"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
