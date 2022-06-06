@@ -11,63 +11,68 @@
              xmlns:models="clr-namespace:Osu.Music.Common.Models;assembly=Osu.Music.Common"
              xmlns:uc="clr-namespace:Osu.Music.UI.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             Width="600" MinWidth="600" MaxWidth="600"
+             Height="450" MaxHeight="450" MinHeight="450">
     <UserControl.Resources>
         <DataTemplate x:Key="HotkeyTemplate" DataType="{x:Type models:Hotkey}">
             <uc:HotkeyListItem Margin="0 5 0 5" Combination="{Binding Path=Combination}" Type="{Binding Path=Type}"
-                               SelectedHotkey="{Binding DataContext.HotkeyManager.EditedHotkey, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}"/>
+                               SelectedHotkey="{Binding DataContext.HotkeyManager.EditedHotkey, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SettingsView}}}"/>
         </DataTemplate>
     </UserControl.Resources>
-    <Grid>
-        <ScrollViewer>
-            <StackPanel Orientation="Vertical" Margin="5" Width="600">
-                <TextBlock Text="Player Color" Style="{DynamicResource MenuHeader}"/>
-                <colorpicker:SquarePicker Name="ColorPicker" HorizontalAlignment="Center" Height="150" Width="150" SelectedColor="{Binding DataContext.Settings.MainColor, RelativeSource={RelativeSource FindAncestor, 
-                    AncestorType={x:Type local:MainView}}, Converter={StaticResource ColorStringConverter}}" Margin="0 0 0 50">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="ColorChanged">
-                            <prism:InvokeCommandAction Command="{Binding DataContext.UpdateColorCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}"
-                                               CommandParameter="{Binding ElementName=ColorPicker, Path=SelectedColor}" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </colorpicker:SquarePicker>
-
-                <TextBlock Text="Hotkeys" Style="{DynamicResource MenuHeader}"/>
-                <ItemsControl ItemsSource="{Binding DataContext.HotkeyManager.Hotkeys, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}" ItemTemplate="{StaticResource HotkeyTemplate}"
-                              ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
-                               Margin="0 0 0 50">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-
-                    <ItemsControl.Template>
-                        <ControlTemplate TargetType="ItemsControl">
-                            <ItemsPresenter/>
-                        </ControlTemplate>
-                    </ItemsControl.Template>
-                </ItemsControl>
-                <TextBlock Text="Social" Style="{DynamicResource MenuHeader}"/>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Show current beatmap in Discord activity" Width="555"/>
-                    <CheckBox x:Name="CheckBoxDiscordRpc" Style="{DynamicResource CheckBoxAsToggleStyle}" IsChecked="{Binding DataContext.Settings.DiscordRpcEnabled, RelativeSource={RelativeSource FindAncestor, 
-                    AncestorType={x:Type local:MainView}}}">
+    <Border Background="White" CornerRadius="5" Padding="0 5 0 5">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="15" ShadowDepth="0" Direction="0"/>
+        </Border.Effect>
+        <Grid>
+            <ScrollViewer>
+                <StackPanel Orientation="Vertical" Margin="5">
+                    <TextBlock Text="Player Color" Style="{DynamicResource MenuHeader}"/>
+                    <colorpicker:SquarePicker Name="ColorPicker" HorizontalAlignment="Center" Height="150" Width="150" SelectedColor="{Binding Settings.MainColor, Converter={StaticResource ColorStringConverter}}" Margin="0 0 0 50">
                         <i:Interaction.Triggers>
-                            <!--Not very MVVM of me-->
-                            <i:EventTrigger EventName="Checked">
-                                <prism:InvokeCommandAction Command="{Binding DataContext.UpdateDiscordRpcCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}"
-                                               CommandParameter="{Binding ElementName=CheckBoxDiscordRpc, Path=IsChecked}" />
-                            </i:EventTrigger>
-
-                            <i:EventTrigger EventName="Unchecked">
-                                <prism:InvokeCommandAction Command="{Binding DataContext.UpdateDiscordRpcCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}"
-                                               CommandParameter="{Binding ElementName=CheckBoxDiscordRpc, Path=IsChecked}" />
+                            <i:EventTrigger EventName="ColorChanged">
+                                <prism:InvokeCommandAction Command="{Binding UpdateColorCommand}"
+                                               CommandParameter="{Binding ElementName=ColorPicker, Path=SelectedColor}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </CheckBox>
+                    </colorpicker:SquarePicker>
+
+                    <TextBlock Text="Hotkeys" Style="{DynamicResource MenuHeader}"/>
+                    <ItemsControl ItemsSource="{Binding HotkeyManager.Hotkeys}" ItemTemplate="{StaticResource HotkeyTemplate}"
+                              ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                               Margin="0 0 0 50">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.Template>
+                            <ControlTemplate TargetType="ItemsControl">
+                                <ItemsPresenter/>
+                            </ControlTemplate>
+                        </ItemsControl.Template>
+                    </ItemsControl>
+                    <TextBlock Text="Social" Style="{DynamicResource MenuHeader}"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Show current beatmap in Discord activity" Width="530"/>
+                        <CheckBox x:Name="CheckBoxDiscordRpc" Style="{DynamicResource CheckBoxAsToggleStyle}" IsChecked="{Binding Settings.DiscordRpcEnabled}">
+                            <i:Interaction.Triggers>
+                                <!--Not very MVVM of me-->
+                                <i:EventTrigger EventName="Checked">
+                                    <prism:InvokeCommandAction Command="{Binding UpdateDiscordRpcCommand}"
+                                               CommandParameter="{Binding ElementName=CheckBoxDiscordRpc, Path=IsChecked}" />
+                                </i:EventTrigger>
+
+                                <i:EventTrigger EventName="Unchecked">
+                                    <prism:InvokeCommandAction Command="{Binding UpdateDiscordRpcCommand}"
+                                               CommandParameter="{Binding ElementName=CheckBoxDiscordRpc, Path=IsChecked}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </CheckBox>
+                    </StackPanel>
                 </StackPanel>
-            </StackPanel>
-        </ScrollViewer>
-    </Grid>
+            </ScrollViewer>
+        </Grid>
+    </Border>
 </UserControl>

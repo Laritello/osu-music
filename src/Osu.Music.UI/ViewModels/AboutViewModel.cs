@@ -1,12 +1,14 @@
 ﻿using Osu.Music.Services.UItility;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Services.Dialogs;
+using System;
 using System.Diagnostics;
 using System.Reflection;
 
 namespace Osu.Music.UI.ViewModels
 {
-    public class AboutViewModel : BindableBase
+    public class AboutViewModel : BindableBase, IDialogAware
     {
         private dynamic _licenses;
         public dynamic Licenses
@@ -16,6 +18,9 @@ namespace Osu.Music.UI.ViewModels
         }
 
         private string _version;
+
+        public event Action<IDialogResult> RequestClose;
+
         public string Version
         {
             get => _version;
@@ -23,6 +28,8 @@ namespace Osu.Music.UI.ViewModels
         }
 
         public DelegateCommand<dynamic> OpenRepositoryCommand { get; set; }
+
+        public string Title => throw new NotImplementedException();
 
         public AboutViewModel()
         {
@@ -41,5 +48,11 @@ namespace Osu.Music.UI.ViewModels
         {
             Process.Start(new ProcessStartInfo("cmd", $"/c start {(string)url}") { CreateNoWindow = true });
         }
+
+        public bool CanCloseDialog() => true;
+
+        public void OnDialogClosed() { }
+
+        public void OnDialogOpened(IDialogParameters parameters) { }
     }
 }

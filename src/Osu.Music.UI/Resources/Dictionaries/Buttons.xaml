@@ -319,14 +319,14 @@
     </Style>
 
     <Style x:Key="SidebarButtonOsu" TargetType="{x:Type Button}">
-        <Setter Property="Width" Value="100"/>
+        <Setter Property="Width" Value="85"/>
         <Setter Property="Height" Value="30"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Top"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Background" Value="{DynamicResource SolidColorBrushMain}"/>
         <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Background" Value="Transparent"/>
         <Setter Property="FontFamily" Value="Roboto"/>
         <Setter Property="FontWeight" Value="Normal"/>
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
@@ -345,6 +345,37 @@
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
                     <!--<TextBlock x:Name="Logo" FontFamily="{DynamicResource MaterialIconsOutlined}" FontSize="19" Text="&#xe039;" Margin="0 0 3 0" VerticalAlignment="Center"/>-->
                     <TextBlock Text="osu.Music" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SettingsButton" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="30"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="FontFamily" Value="Roboto"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="0 0 0 0" Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="0" >
+                        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Content">
+            <Setter.Value>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                    <TextBlock x:Name="Logo" FontFamily="{DynamicResource MaterialIcons}" FontSize="19" Text="&#xe8b8;" Margin="0 0 3 0" VerticalAlignment="Center"/>
                 </StackPanel>
             </Setter.Value>
         </Setter>
