@@ -28,13 +28,11 @@ namespace Osu.Music.Services.Dialog
 					DialogHost.CloseDialogCommand.Execute(e, null);
 					viewModel.OnDialogClosed();
 				}
-
 			});
 
 			viewModel.RequestClose += closeHandler;
 			DialogHost.Show(dialogView);
 		}
-
 
 		public void ShowPopupDialog<TView, TViewModel>(string dialogHost) where TView : FrameworkElement where TViewModel : IDialogAware
 		{
@@ -49,14 +47,12 @@ namespace Osu.Music.Services.Dialog
 					DialogHost.CloseDialogCommand.Execute(e, null);
 					viewModel.OnDialogClosed();
 				}
-
 			});
 
 			viewModel.RequestClose += closeHandler;
 
 			DialogHost.Show(dialogView, dialogHost);
 		}
-
 
 		public void ShowPopupDialog<TView, TViewModel>(Action<IDialogResult> callBack) where TView : FrameworkElement where TViewModel : IDialogAware
 		{
@@ -72,14 +68,12 @@ namespace Osu.Music.Services.Dialog
 					viewModel.OnDialogClosed();
 					callBack?.Invoke(e);
 				}
-
 			});
 
 			viewModel.RequestClose += closeHandler;
 
 			DialogHost.Show(dialogView);
 		}
-
 
 		public void ShowPopupDialog<TView, TViewModel>(string dialogHost, Action<IDialogResult> callBack) where TView : FrameworkElement where TViewModel : IDialogAware
 		{
@@ -95,14 +89,12 @@ namespace Osu.Music.Services.Dialog
 					viewModel.OnDialogClosed();
 					callBack?.Invoke(e);
 				}
-
 			});
 
 			viewModel.RequestClose += closeHandler;
 
 			DialogHost.Show(dialogView, dialogHost);
 		}
-
 
 		public void ShowPopupDialog<TView, TViewModel>(IDialogParameters parameters, Action<IDialogResult> callBack) where TView : FrameworkElement where TViewModel : IDialogAware
 		{
@@ -118,7 +110,6 @@ namespace Osu.Music.Services.Dialog
 					viewModel.OnDialogClosed();
 					callBack?.Invoke(e);
 				}
-
 			});
 
 			viewModel.RequestClose += closeHandler;
@@ -126,7 +117,6 @@ namespace Osu.Music.Services.Dialog
 			DialogHost.Show(dialogView);
 			viewModel.OnDialogOpened(parameters);
 		}
-
 
 		public void ShowPopupDialog<TView, TViewModel>(string dialogHost, IDialogParameters parameters, Action<IDialogResult> callBack) where TView : FrameworkElement where TViewModel : IDialogAware
 		{
@@ -142,7 +132,6 @@ namespace Osu.Music.Services.Dialog
 					viewModel.OnDialogClosed();
 					callBack?.Invoke(e);
 				}
-
 			});
 
 			viewModel.RequestClose += closeHandler;
