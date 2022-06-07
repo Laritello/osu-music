@@ -4,19 +4,46 @@
              xmlns:m="clr-namespace:Osu.Music.Common.Models;assembly=Osu.Music.Common"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:Osu.Music.UI.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Margin="5">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <Border BorderBrush="{DynamicResource SolidColorBrushMainBorder}" BorderThickness="1" CornerRadius="10">
+        <Border BorderBrush="{DynamicResource SolidColorBrushMainBorder}" BorderThickness="1" CornerRadius="10" Margin="5" Height="275">
+            <Border.Style>
+                <Style TargetType="{x:Type Border}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsChecked, ElementName=ToggleMinimize}" Value="True">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.250" To="40"
+                                                         Storyboard.TargetProperty="Height"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.250" To="275"
+                                                         Storyboard.TargetProperty="Height"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
             <StackPanel Orientation="Vertical">
                 <DockPanel>
-                    <TextBlock Text="Playlists" FontFamily="{DynamicResource Roboto}" Foreground="{DynamicResource SolidColorBrushMain}" FontSize="16" FontWeight="DemiBold" Margin="10"/>
-                    <Button Style="{DynamicResource PlaylistAction}" Foreground="{DynamicResource SolidColorBrushMain}" Content="&#xe03b;" DockPanel.Dock="Right" HorizontalAlignment="Right" 
+                    <TextBlock Text="Playlists" FontFamily="{DynamicResource Roboto}" Foreground="{DynamicResource SolidColorBrushMain}" FontSize="16" FontWeight="DemiBold" Margin="7 10 0 10"/>
+                    <ToggleButton x:Name="ToggleMinimize" Style="{DynamicResource AccordeonToggle}" DockPanel.Dock="Left">
+                    </ToggleButton>
+                    <Button Style="{DynamicResource PlaylistAction}" Foreground="{DynamicResource SolidColorBrushMain}" Content="&#xe03b;" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"
                             Command="{Binding ShowCreatePlaylistDialogCommand}"/>
                 </DockPanel>
 
@@ -36,6 +63,48 @@
                     </ItemsControl.Template>
                 </ItemsControl>
             </StackPanel>
+        </Border>
+        <Border Grid.Row="1" BorderBrush="{DynamicResource SolidColorBrushMainBorder}" BorderThickness="1" CornerRadius="10" Margin="5" Padding="0 0 0 5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <DockPanel>
+                    <TextBlock FontFamily="{DynamicResource Roboto}" Foreground="{DynamicResource SolidColorBrushMain}" FontSize="16" FontWeight="DemiBold" Margin="7 10 0 10" DockPanel.Dock="Left"
+                    Text="{Binding DataContext.Model.SelectedPlaylist.Name, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}"/>
+
+                    <Button Style="{DynamicResource PlaylistAction}" Foreground="{DynamicResource SolidColorBrushMain}" Content="&#xe3c9;" FontSize="15"
+                            HorizontalAlignment="Right" Margin="0 0 10 0" DockPanel.Dock="Right"
+                            Command="{Binding ShowCreatePlaylistDialogCommand}"/>
+                </DockPanel>
+                
+                <ListView x:Name="SongsList" Grid.Row="1" Style="{DynamicResource ListViewBeatmaps}" ItemsSource="{Binding DataContext.Model.SelectedPlaylist.Beatmaps, RelativeSource={RelativeSource FindAncestor, 
+            AncestorType={x:Type local:MainView}}}" SelectedItem="{Binding DataContext.Model.SelectedBeatmap, RelativeSource={RelativeSource FindAncestor, 
+            AncestorType={x:Type local:MainView}}}" Tag="{Binding Path=DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}">
+                    <ListView.InputBindings>
+                        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.PlayBeatmapCommand, RelativeSource={RelativeSource FindAncestor, 
+                    AncestorType={x:Type local:MainView}}}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=SelectedItem}"/>
+                    </ListView.InputBindings>
+                    <ListView.ContextMenu>
+                        <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}" Background="White" x:Name="SourceMenu">
+                            <MenuItem Header="Open in Explorer" Background="White"
+                              Command="{Binding DataContext.OpenBeatmapInExplorerCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}" 
+                              CommandParameter="{Binding Path=PlacementTarget.SelectedItem, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
+                            <MenuItem Header="Add to Playlist" Background="White"
+                              ItemsSource="{Binding DataContext.Model.Playlists, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}">
+                                <MenuItem.ItemContainerStyle>
+                                    <Style BasedOn="{StaticResource MaterialDesignMenuItem}" TargetType="{x:Type MenuItem}">
+                                        <Setter Property="MenuItem.Header" Value="{Binding Name}"/>
+                                        <Setter Property="Command" Value="{Binding DataContext.SendBeatmapToPlaylistCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
+                                        <Setter Property="CommandParameter" Value="{Binding}"/>
+                                    </Style>
+                                </MenuItem.ItemContainerStyle>
+                            </MenuItem>
+                        </ContextMenu>
+                    </ListView.ContextMenu>
+                </ListView>
+            </Grid>
         </Border>
     </Grid>
 </UserControl>

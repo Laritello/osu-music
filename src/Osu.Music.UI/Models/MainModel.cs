@@ -20,16 +20,6 @@ namespace Osu.Music.UI.Models
             set => SetProperty(ref _beatmaps, value);
         }
 
-        private IList<Playlist> _playlists;
-        /// <summary>
-        /// Collection of user-created playlists.
-        /// </summary>
-        public IList<Playlist> Playlists
-        {
-            get => _playlists;
-            set => SetProperty(ref _playlists, value);
-        }
-
         private Beatmap _playingBeatmap;
         /// <summary>
         /// Beatmap that is currently playing.
@@ -58,6 +48,26 @@ namespace Osu.Music.UI.Models
         {
             get => _previousBeatmaps;
             set => SetProperty(ref _previousBeatmaps, value);
+        }
+
+        private IList<Playlist> _playlists;
+        /// <summary>
+        /// Collection of user-created playlists.
+        /// </summary>
+        public IList<Playlist> Playlists
+        {
+            get => _playlists;
+            set => SetProperty(ref _playlists, value);
+        }
+
+        private Playlist _selectedPlaylist;
+        /// <summary>
+        /// Collection of user-created playlists.
+        /// </summary>
+        public Playlist SelectedPlaylist
+        {
+            get => _selectedPlaylist;
+            set => SetProperty(ref _selectedPlaylist, value);
         }
 
         private TimeSpan currentTime;

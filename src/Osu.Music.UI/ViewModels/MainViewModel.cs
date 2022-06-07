@@ -103,6 +103,7 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand OpenSettingsCommand { get; private set; }
         public DelegateCommand<Beatmap> OpenBeatmapInExplorerCommand { get; private set; }
         public DelegateCommand<Playlist> SendBeatmapToPlaylistCommand { get; private set; }
+        public DelegateCommand<Playlist> SelectPlaylistCommand { get; private set; }
         #endregion
 
         private DispatcherTimer _audioProgressTimer;
@@ -147,6 +148,7 @@ namespace Osu.Music.UI.ViewModels
             OpenSettingsCommand = new DelegateCommand(OpenSettings);
             OpenBeatmapInExplorerCommand = new DelegateCommand<Beatmap>(OpenBeatmapInExplorer);
             SendBeatmapToPlaylistCommand = new DelegateCommand<Playlist>(SendBeatmapToPlaylist);
+            SelectPlaylistCommand = new DelegateCommand<Playlist>(SelectPlaylist);
         }
         
         private void InitializePlayback()
@@ -378,6 +380,11 @@ namespace Osu.Music.UI.ViewModels
                 playlist.Beatmaps.Add(beatmap);
                 PlaylistManager.Save(playlist);
             }
+        }
+
+        private void SelectPlaylist(Playlist playlist)
+        {
+            Model.SelectedPlaylist = playlist;
         }
 
         private void OpenGitHub()

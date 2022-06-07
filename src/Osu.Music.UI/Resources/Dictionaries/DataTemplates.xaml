@@ -1,5 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+                    xmlns:prism="http://prismlibrary.com/"
                     xmlns:cm="clr-namespace:Osu.Music.Common.Models;assembly=Osu.Music.Common"
                     xmlns:vm="clr-namespace:Osu.Music.UI.ViewModels"
                     xmlns:v="clr-namespace:Osu.Music.UI.Views">
@@ -39,7 +41,7 @@
                 </Trigger.ExitActions>
             </Trigger>
         </DataTemplate.Triggers>
-        <Border BorderBrush="{DynamicResource SolidColorBrushMainBorder}" BorderThickness="1" CornerRadius="5" Height="210" Width="160" Margin="5">
+        <Border BorderBrush="{DynamicResource SolidColorBrushMainBorder}" Background="White" BorderThickness="1" CornerRadius="5" Height="210" Width="160" Margin="5">
             <StackPanel Margin="3">
                 <Grid>
                     <Grid>
@@ -55,7 +57,9 @@
                             <Button Style="{DynamicResource PlaylistAction}" Content="&#xe3c9;" FontSize="24"
                                     HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                             <Button Style="{DynamicResource PlaylistAction}" Content="&#xe037;" FontSize="70" Margin="5 0 5 0" Height="40" Width="40"
-                                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                    Command="{Binding DataContext.SelectPlaylistCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type v:MainView}}}"
+                                    CommandParameter="{Binding Path=.}"/>
                             <Button Style="{DynamicResource PlaylistAction}" Content="&#xe15e;" FontSize="24"
                                     HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
                                 <Button.LayoutTransform>
@@ -66,6 +70,15 @@
                     </Border>
                 </Grid>
                 <TextBlock Text="{Binding Path=Name}" FontFamily="{DynamicResource Roboto}" Foreground="{DynamicResource SolidColorBrushMain}" Background="White" FontSize="14" FontWeight="DemiBold" Margin="11 20 11 0">
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Cursor" Value="Hand"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
                     <TextBlock.OpacityMask>
                         <LinearGradientBrush StartPoint="0.0,0.5" EndPoint="1.0,0.5">
                             <LinearGradientBrush.GradientStops>
@@ -75,6 +88,13 @@
                             </LinearGradientBrush.GradientStops>
                         </LinearGradientBrush>
                     </TextBlock.OpacityMask>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseLeftButtonUp">
+                            <prism:InvokeCommandAction 
+                                Command="{Binding DataContext.SelectPlaylistCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type v:MainView}}}"
+                                CommandParameter="{Binding Path=.}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                 </TextBlock>
                 <TextBlock Text="{Binding Path=Beatmaps, Converter={StaticResource PlaylistCountToStringConverter}}" FontFamily="{DynamicResource Roboto}" FontSize="14" FontWeight="Light" Foreground="Gray" Margin="11 5 11 0"/>
             </StackPanel>
