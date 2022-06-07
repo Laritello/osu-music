@@ -59,7 +59,7 @@
                                     HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                                     Command="{Binding DataContext.SelectPlaylistCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type v:MainView}}}"
                                     CommandParameter="{Binding Path=.}"/>
-                            <Button Style="{DynamicResource PlaylistAction}" Content="&#xe15e;" FontSize="24"
+                            <Button Style="{DynamicResource PlaylistAction}" Content="&#xe872;" FontSize="24"
                                     HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
                                 <Button.LayoutTransform>
                                     <ScaleTransform ScaleX="-1"/>
