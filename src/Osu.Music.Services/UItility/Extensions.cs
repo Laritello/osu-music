@@ -18,7 +18,7 @@ namespace Osu.Music.Services.UItility
         {
             // Using index is cool, but if I change order of dictionaries in App.xaml
             // it won't be that cool anymore. Maybe switch to naming or someting.
-            ResourceDictionary dictionary = collection[1];
+            ResourceDictionary dictionary = collection[2];
 
             Color mainColor = hex.FromHex();
             Color lightColor = new Color()

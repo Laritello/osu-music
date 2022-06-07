@@ -102,6 +102,7 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand OpenAboutCommand { get; private set; }
         public DelegateCommand OpenSettingsCommand { get; private set; }
         public DelegateCommand<Beatmap> OpenBeatmapInExplorerCommand { get; private set; }
+        public DelegateCommand<Playlist> SendBeatmapToPlaylistCommand { get; private set; }
         #endregion
 
         private DispatcherTimer _audioProgressTimer;
@@ -109,7 +110,6 @@ namespace Osu.Music.UI.ViewModels
         public MainViewModel(IContainerExtension container)
         {
             Model = new MainModel();
-            SelectedPage = new SongsViewModel();
             Visualization = new DefaultVisualization();
 
             InitializeDialogService(container);
@@ -146,6 +146,7 @@ namespace Osu.Music.UI.ViewModels
             OpenAboutCommand = new DelegateCommand(OpenAbout);
             OpenSettingsCommand = new DelegateCommand(OpenSettings);
             OpenBeatmapInExplorerCommand = new DelegateCommand<Beatmap>(OpenBeatmapInExplorer);
+            SendBeatmapToPlaylistCommand = new DelegateCommand<Playlist>(SendBeatmapToPlaylist);
         }
         
         private void InitializePlayback()
@@ -205,6 +206,8 @@ namespace Osu.Music.UI.ViewModels
 
                 Model.Beatmaps = await LibraryManager.LoadAsync(Settings.OsuFolder);
                 Model.Playlists = await PlaylistManager.LoadAsync(Model.Beatmaps);
+
+                SelectedPage = new SongsViewModel();
             }
             catch(Exception E)
             {
@@ -363,6 +366,17 @@ namespace Osu.Music.UI.ViewModels
             catch
             {
                 // Ignore
+            }
+        }
+
+        private void SendBeatmapToPlaylist(Playlist playlist)
+        {
+            var beatmap = Model.SelectedBeatmap;
+
+            if (!playlist.Beatmaps.Contains(beatmap))
+            {
+                playlist.Beatmaps.Add(beatmap);
+                PlaylistManager.Save(playlist);
             }
         }
 

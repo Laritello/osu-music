@@ -12,7 +12,7 @@ namespace Osu.Music.Services.IO
 {
     public static class PlaylistManager
     {
-        public static async Task<ICollection<Playlist>> LoadAsync(ICollection<Beatmap> beatmaps)
+        public static async Task<IList<Playlist>> LoadAsync(IList<Beatmap> beatmaps)
         {
             return await Task.Run(() =>
             {
@@ -53,7 +53,7 @@ namespace Osu.Music.Services.IO
             catch { }
         }
 
-        private static Playlist ConvertPlaylistFromJson(string filePath, ICollection<Beatmap> beatmaps)
+        private static Playlist ConvertPlaylistFromJson(string filePath, IList<Beatmap> beatmaps)
         {
             try
             {

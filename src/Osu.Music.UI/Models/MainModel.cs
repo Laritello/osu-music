@@ -1,9 +1,9 @@
 ﻿using Osu.Music.Common.Models;
 using Osu.Music.Services.Dialog;
-using Osu.Music.UI.ViewModels;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Osu.Music.UI.Models
 {
@@ -20,11 +20,11 @@ namespace Osu.Music.UI.Models
             set => SetProperty(ref _beatmaps, value);
         }
 
-        private ICollection<Playlist> _playlists;
+        private IList<Playlist> _playlists;
         /// <summary>
         /// Collection of user-created playlists.
         /// </summary>
-        public ICollection<Playlist> Playlists
+        public IList<Playlist> Playlists
         {
             get => _playlists;
             set => SetProperty(ref _playlists, value);
@@ -92,6 +92,7 @@ namespace Osu.Music.UI.Models
         public MainModel()
         {
             PreviousBeatmaps = new Stack<Beatmap>(100);
+            Playlists = new ObservableCollection<Playlist>();
         }
     }
 }

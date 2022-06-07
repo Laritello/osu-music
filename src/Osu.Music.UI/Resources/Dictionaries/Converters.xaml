@@ -12,4 +12,5 @@
     <convert:KeyCombinationToStringConverter x:Key="KeyCombinationToStringConverter"/>
     <convert:UpdateStateToVisibilityConverter x:Key="UpdateStateToVisibilityConverter"/>
     <convert:PlaylistCountToStringConverter x:Key="PlaylistCountToStringConverter"/>
+    <convert:BeatmapToAvailablePlaylistsConverter x:Key="BeatmapToAvailablePlaylistsConverter"/>
 </ResourceDictionary>
