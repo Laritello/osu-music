@@ -726,7 +726,7 @@
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="Gray"/>
+        <Setter Property="Foreground" Value="White"/>
         
         <Setter Property="FontFamily" Value="{DynamicResource MaterialIcons}"/>
         <Setter Property="FontSize" Value="22"/>
@@ -761,7 +761,7 @@
                 <MultiTrigger.Setters>
                     <Setter Property="Foreground">
                         <Setter.Value>
-                            <SolidColorBrush Color="Black" Opacity="1.0"/>
+                            <SolidColorBrush Color="LightGray" Opacity="1"/>
                         </Setter.Value>
                     </Setter>
                 </MultiTrigger.Setters>
@@ -775,7 +775,7 @@
                 <MultiTrigger.Setters>
                     <Setter Property="Foreground">
                         <Setter.Value>
-                            <SolidColorBrush Color="Black" Opacity="0.8"/>
+                            <SolidColorBrush Color="Gray" Opacity="1"/>
                         </Setter.Value>
                     </Setter>
                 </MultiTrigger.Setters>

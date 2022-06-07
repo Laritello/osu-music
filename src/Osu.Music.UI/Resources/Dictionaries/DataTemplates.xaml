@@ -17,6 +17,28 @@
     </DataTemplate>
 
     <DataTemplate x:Key="PlaylistTile" DataType="{x:Type cm:Playlist}">
+        <DataTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Duration="0:0:0.250" To="1.0"
+                                                         Storyboard.TargetName="PlaylistControls"
+                                                         Storyboard.TargetProperty="Opacity"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Duration="0:0:0.250" To="0.0"
+                                                         Storyboard.TargetName="PlaylistControls"
+                                                         Storyboard.TargetProperty="Opacity"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.ExitActions>
+            </Trigger>
+        </DataTemplate.Triggers>
         <Border BorderBrush="{DynamicResource SolidColorBrushMainBorder}" BorderThickness="1" CornerRadius="5" Height="210" Width="160" Margin="5">
             <StackPanel Margin="3">
                 <Grid>
@@ -28,6 +50,20 @@
                     <Grid>
                         <Image Width="130" Height="122"/>
                     </Grid>
+                    <Border x:Name="PlaylistControls" Width="130" Height="122" Background="#70000000" Opacity="0.0" CornerRadius="15" Margin="0 15 0 0">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Button Style="{DynamicResource PlaylistAction}" Content="&#xe3c9;" FontSize="24"
+                                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                            <Button Style="{DynamicResource PlaylistAction}" Content="&#xe037;" FontSize="70" Margin="5 0 5 0" Height="40" Width="40"
+                                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                            <Button Style="{DynamicResource PlaylistAction}" Content="&#xe15e;" FontSize="24"
+                                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                                <Button.LayoutTransform>
+                                    <ScaleTransform ScaleX="-1"/>
+                                </Button.LayoutTransform>
+                            </Button>
+                        </StackPanel>
+                    </Border>
                 </Grid>
                 <TextBlock Text="{Binding Path=Name}" FontFamily="{DynamicResource Roboto}" Foreground="{DynamicResource SolidColorBrushMain}" Background="White" FontSize="14" FontWeight="DemiBold" Margin="11 20 11 0">
                     <TextBlock.OpacityMask>
