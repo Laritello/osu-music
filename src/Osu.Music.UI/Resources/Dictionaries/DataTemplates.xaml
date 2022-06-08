@@ -60,7 +60,9 @@
                                     Command="{Binding DataContext.SelectPlaylistCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type v:MainView}}}"
                                     CommandParameter="{Binding Path=.}"/>
                             <Button Style="{DynamicResource PlaylistAction}" Content="&#xe872;" FontSize="24"
-                                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                    Command="{Binding DataContext.DeletePlaylistCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type v:MainView}}}"
+                                    CommandParameter="{Binding Path=.}">
                                 <Button.LayoutTransform>
                                     <ScaleTransform ScaleX="-1"/>
                                 </Button.LayoutTransform>

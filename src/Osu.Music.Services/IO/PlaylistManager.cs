@@ -53,6 +53,16 @@ namespace Osu.Music.Services.IO
             catch { }
         }
 
+        public static void Remove(Playlist playlist)
+        {
+            try
+            {
+                var _playlistFile = Path.Combine(AppDataHelper.PlaylistDirectory, $"{playlist.Name}.json");
+                File.Delete(_playlistFile);
+            }
+            catch { }
+        }
+
         private static Playlist ConvertPlaylistFromJson(string filePath, IList<Beatmap> beatmaps)
         {
             try
