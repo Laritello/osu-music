@@ -1,5 +1,6 @@
 ﻿using MaterialDesignThemes.Wpf;
 using Osu.Music.Common.Models;
+using Osu.Music.Services.IO;
 using Osu.Music.UI.Utility;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -9,6 +10,7 @@ using System.Collections.Generic;
 
 namespace Osu.Music.UI.ViewModels
 {
+    // TODO: Validation, renaming, check for dups
     public class DialogEditPlaylistViewModel : BindableBase, IDialogAware
     {
         private IEnumerable<PackIconKind> _icons;
@@ -51,7 +53,8 @@ namespace Osu.Music.UI.ViewModels
 
         private void Confirm()
         {
-
+            var result = new DialogResult(ButtonResult.OK);
+            RequestClose?.Invoke(result);
         }
     }
 }
