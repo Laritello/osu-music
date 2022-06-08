@@ -12,7 +12,7 @@ namespace Osu.Music.Services.IO
 {
     public static class PlaylistManager
     {
-        public static async Task<IList<Playlist>> LoadAsync(IList<Beatmap> beatmaps)
+        public static async Task<ObservableCollection<Playlist>> LoadAsync(IList<Beatmap> beatmaps)
         {
             return await Task.Run(() =>
             {

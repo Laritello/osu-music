@@ -10,14 +10,24 @@ namespace Osu.Music.UI.Models
     public class MainModel : BindableBase
     {
         #region Properties
-        private IList<Beatmap> _beatmaps;
+        private ObservableCollection<Beatmap> _beatmaps;
         /// <summary>
         /// Full list of beatmaps from osu library.
         /// </summary>
-        public IList<Beatmap> Beatmaps
+        public ObservableCollection<Beatmap> Beatmaps
         {
             get => _beatmaps;
             set => SetProperty(ref _beatmaps, value);
+        }
+
+        private ObservableCollection<Beatmap> _selectedBeatmaps;
+        /// <summary>
+        /// Current list of played beatmaps.
+        /// </summary>
+        public ObservableCollection<Beatmap> SelectedBeatmaps
+        {
+            get => _selectedBeatmaps;
+            set => SetProperty(ref _selectedBeatmaps, value);
         }
 
         private Beatmap _playingBeatmap;
@@ -50,11 +60,11 @@ namespace Osu.Music.UI.Models
             set => SetProperty(ref _previousBeatmaps, value);
         }
 
-        private IList<Playlist> _playlists;
+        private ObservableCollection<Playlist> _playlists;
         /// <summary>
         /// Collection of user-created playlists.
         /// </summary>
-        public IList<Playlist> Playlists
+        public ObservableCollection<Playlist> Playlists
         {
             get => _playlists;
             set => SetProperty(ref _playlists, value);

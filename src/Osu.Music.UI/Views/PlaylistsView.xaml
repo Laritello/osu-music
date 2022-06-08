@@ -79,13 +79,40 @@
                             Command="{Binding ShowCreatePlaylistDialogCommand}"/>
                 </DockPanel>
                 
-                <ListView x:Name="SongsList" Grid.Row="1" Style="{DynamicResource ListViewBeatmaps}" ItemsSource="{Binding DataContext.Model.SelectedPlaylist.Beatmaps, RelativeSource={RelativeSource FindAncestor, 
-            AncestorType={x:Type local:MainView}}}" SelectedItem="{Binding DataContext.Model.SelectedBeatmap, RelativeSource={RelativeSource FindAncestor, 
-            AncestorType={x:Type local:MainView}}}" Tag="{Binding Path=DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}">
-                    <ListView.InputBindings>
-                        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.PlayBeatmapCommand, RelativeSource={RelativeSource FindAncestor, 
-                    AncestorType={x:Type local:MainView}}}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=SelectedItem}"/>
-                    </ListView.InputBindings>
+                <ListView x:Name="SongsList" Grid.Row="1" Style="{DynamicResource ListViewBeatmaps}" 
+                          ItemsSource="{Binding DataContext.Model.SelectedPlaylist.Beatmaps, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}" 
+                          SelectedItem="{Binding DataContext.Model.SelectedBeatmap, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}" 
+                          Tag="{Binding Path=DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate DataType="{x:Type m:Beatmap}">
+                            <Grid>
+                                <Grid.InputBindings>
+                                    <MouseBinding Gesture="LeftDoubleClick" 
+                                          Command="{Binding DataContext.PlayBeatmapAndUpdateCollectionCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}">
+                                        <MouseBinding.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource MultipleParametersConverter}">
+                                                <Binding Path="SelectedItem" RelativeSource="{RelativeSource AncestorType=ListView}"/>
+                                                <Binding Path="DataContext.Model.SelectedPlaylist.Beatmaps" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}"/>
+                                            </MultiBinding>
+                                        </MouseBinding.CommandParameter>
+                                    </MouseBinding>
+                                </Grid.InputBindings>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Style="{DynamicResource TitleStyle}" Text="{Binding Path=Title}" 
+                                   Foreground="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}"/>
+                                    <TextBlock Style="{DynamicResource ArtistStyle}" Text="{Binding Path=Artist}"
+                                   Foreground="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}"/>
+                                </StackPanel>
+
+                                <TextBlock Style="{DynamicResource TitleStyle}" Grid.Column="1" Text="{Binding Path=TotalTime, Converter={StaticResource TimeSpanToStringConverter}, FallbackValue=''}" 
+                                   Foreground="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
                     <ListView.ContextMenu>
                         <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}" Background="White" x:Name="SourceMenu">
                             <MenuItem Header="Open in Explorer" Background="White"

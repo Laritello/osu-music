@@ -6,19 +6,20 @@ using osu_database_reader.BinaryFiles;
 using osu_database_reader.Components.Beatmaps;
 using System;
 using System.Linq;
+using System.Collections.ObjectModel;
 
 namespace Osu.Music.Services.IO
 {
     public static class LibraryManager
     {
-        public static async Task<IList<Beatmap>> LoadAsync(string osuFolder)
+        public static async Task<ObservableCollection<Beatmap>> LoadAsync(string osuFolder)
         {
             return await Task.Run(() =>
             {
                 if (!Directory.Exists(osuFolder))
                     throw new ArgumentException("The specified folder does not exist.");
 
-                List<Beatmap> beatmaps = new List<Beatmap>();
+                ObservableCollection<Beatmap> beatmaps = new ObservableCollection<Beatmap>();
 
                 OsuDb db;
 
