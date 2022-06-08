@@ -15,6 +15,11 @@ namespace Osu.Music.Services.UItility
 
         public static Color FromHex(this string str) => (Color)ColorConverter.ConvertFromString(str);
 
+        public static Color GetMainColor(this Collection<ResourceDictionary> collection)
+        {
+            return collection[0]["ColorMain"] != null ? (Color)collection[0]["ColorMain"] : Colors.Transparent;
+        }
+
         public static void SetMainColor(this Collection<ResourceDictionary> collection, string hex)
         {
             // Using index is cool, but if I change order of dictionaries in App.xaml

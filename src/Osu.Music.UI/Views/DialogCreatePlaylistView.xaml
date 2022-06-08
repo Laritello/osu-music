@@ -4,22 +4,69 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Osu.Music.UI.Views"
-             xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              Width="450" MinWidth="450" MaxWidth="450">
-    <Grid Margin="16" Background="White">
+    <Grid Margin="16">
         <StackPanel>
-            <TextBlock>New Playlist:</TextBlock>
-            <TextBox wpf:HintAssist.Hint="Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}"                 
+            <TextBlock>New Playlist</TextBlock>
+            <TextBox materialDesign:HintAssist.Hint="Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}"                 
                  Margin="0 6 0 0"
-                 FontSize="18" Grid.Row="1"
-                 Text="{Binding PlaylistName}">
+                 FontSize="18"
+                 Text="{Binding Playlist.Name}">
             </TextBox>
+            <Grid Margin="0 24 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <Expander HorizontalAlignment="Stretch" Header="Background"
+                              materialDesign:ExpanderAssist.HorizontalHeaderPadding="0,2,24,2">
+                        <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Margin="0,8,24,16">
+                            <materialDesign:ColorPicker Color="{Binding Playlist.Cover.BackgroundColor, Converter={StaticResource ColorStringConverter}}" Height="150"/>
+                        </StackPanel>
+                    </Expander>
+                    <Expander HorizontalAlignment="Stretch" Header="Icon"
+                              materialDesign:ExpanderAssist.HorizontalHeaderPadding="0,2,24,2">
+                        <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Margin="0,8,24,16">
+                            <ComboBox materialDesign:HintAssist.Hint="Icon" Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                      FontSize="18"
+                                      ItemsSource="{Binding Icons}"
+                                      SelectedItem="{Binding Playlist.Cover.Icon}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate DataType="{x:Type materialDesign:PackIconKind}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="30"/>
+                                                <ColumnDefinition Width="1*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <materialDesign:PackIcon Kind="{Binding Path=.}" HorizontalAlignment="Left"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding Path=., Converter={StaticResource PackIconKindToStringConverter}}"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <materialDesign:ColorPicker Color="{Binding Playlist.Cover.IconColor, Converter={StaticResource ColorStringConverter}}" Height="150" Margin="0 6 0 0"/>
+                        </StackPanel>
+                    </Expander>
+                </StackPanel>
+                <Grid Grid.Column="1" VerticalAlignment="Top" Margin="10 0 5 5">
+                    <Rectangle Width="130" Height="122" RadiusX="15" RadiusY="15" 
+                               Fill="{Binding Playlist.Cover.BackgroundColor, Converter={StaticResource BrushStringConverter}}"/>
+                    <materialDesign:PackIcon HorizontalAlignment="Center" VerticalAlignment="Center" Width="80" Height="80"
+                                             Foreground="{Binding Playlist.Cover.IconColor, Converter={StaticResource BrushStringConverter}}"
+                                             Kind="{Binding Playlist.Cover.Icon, Mode=OneWay}">
+                    </materialDesign:PackIcon>
+                </Grid>
+            </Grid>
+
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2"
                     Margin="0 16 0 0">
                 <Button IsDefault="True" Style="{StaticResource MaterialDesignFlatButton}"
                     Command="{Binding ConfirmCommand}">
-                    ACCEPT
+                    CREATE
                 </Button>
                 <Button IsCancel="True" Margin="8 0 0 0" Style="{StaticResource MaterialDesignFlatButton}"
                     Command="{Binding CancelCommand}">

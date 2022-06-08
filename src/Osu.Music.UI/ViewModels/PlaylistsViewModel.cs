@@ -3,10 +3,8 @@ using Osu.Music.Services.Dialog;
 using Osu.Music.Services.IO;
 using Osu.Music.UI.Views;
 using Prism.Commands;
-using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Osu.Music.UI.ViewModels
@@ -31,6 +29,7 @@ namespace Osu.Music.UI.ViewModels
         }
 
         public DelegateCommand ShowCreatePlaylistDialogCommand { get; private set; }
+        public DelegateCommand<Playlist> ShowEditPlaylistDialogCommand { get; private set; }
 
         public PlaylistsViewModel(ICollection<Playlist> playlists, IPopupDialogService dialogService)
         {
@@ -43,6 +42,7 @@ namespace Osu.Music.UI.ViewModels
         private void InitializeCommands()
         {
             ShowCreatePlaylistDialogCommand = new DelegateCommand(ShowCreatePlaylistDialog);
+            ShowEditPlaylistDialogCommand = new DelegateCommand<Playlist>(ShowEditPlaylistDialog);
         }
 
         private void ShowCreatePlaylistDialog()
@@ -56,15 +56,26 @@ namespace Osu.Music.UI.ViewModels
             {
                 if (e.Result == ButtonResult.OK)
                 {
-                    var playlist = new Playlist()
-                    {
-                        Name = e.Parameters.GetValue<string>("name")
-                    };
-
-                    PlaylistManager.Save(playlist);
-
+                    var playlist = e.Parameters.GetValue<Playlist>("playlist");
                     Playlists.Add(playlist);
+                    PlaylistManager.Save(playlist);
                 }
+            });
+        }
+
+        private void ShowEditPlaylistDialog(Playlist playlist)
+        {
+            if (playlist == null)
+                return;
+
+            DialogParameters parameters = new DialogParameters()
+            {
+                { "playlist", playlist }
+            };
+
+            DialogService.ShowPopupDialog<DialogEditPlaylistView, DialogEditPlaylistViewModel>(parameters, e =>
+            {
+                PlaylistManager.Save(playlist);
             });
         }
     }

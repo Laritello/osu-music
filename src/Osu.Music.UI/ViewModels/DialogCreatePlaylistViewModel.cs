@@ -1,24 +1,32 @@
-﻿using Osu.Music.Common.Models;
+﻿using MaterialDesignThemes.Wpf;
+using Osu.Music.Common.Models;
+using Osu.Music.Services.UItility;
+using Osu.Music.UI.Utility;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
+using System.Windows.Media;
 
 namespace Osu.Music.UI.ViewModels
 {
     public class DialogCreatePlaylistViewModel : BindableBase, IDialogAware
     {
-        public DelegateCommand CancelCommand { get; private set; }
-        public DelegateCommand ConfirmCommand { get; private set; }
-
-        private string _playlistName;
-        public string PlaylistName
+        private IEnumerable<PackIconKind> _icons;
+        public IEnumerable<PackIconKind> Icons
         {
-            get => _playlistName;
-            set => SetProperty(ref _playlistName, value);
+            get => _icons;
+            set => SetProperty(ref _icons, value);
+        }
+
+        private Playlist _playlist;
+        public Playlist Playlist
+        {
+            get => _playlist;
+            set => SetProperty(ref _playlist, value);
         }
 
         private ICollection<Playlist> _playlists;
@@ -31,6 +39,9 @@ namespace Osu.Music.UI.ViewModels
             set => SetProperty(ref _playlists, value);
         }
 
+        public DelegateCommand CancelCommand { get; private set; }
+        public DelegateCommand ConfirmCommand { get; private set; }
+
         public string Title => "Create Playlist";
 
         public event Action<IDialogResult> RequestClose;
@@ -39,8 +50,21 @@ namespace Osu.Music.UI.ViewModels
 
         public DialogCreatePlaylistViewModel()
         {
+            ResourceDictionary resource = Application.Current.Resources;
+
+            Playlist = new Playlist()
+            {
+                Cover = new PlaylistCover()
+                {
+                    Icon = PackIconKind.PlaylistMusic,
+                    IconColor = Colors.White.ToHex(),
+                    BackgroundColor = resource.MergedDictionaries.GetMainColor().ToHex(),
+                }
+            };
+
             CancelCommand = new DelegateCommand(Cancel);
             ConfirmCommand = new DelegateCommand(Confirm);
+            Icons = PlaylistIcons.GetIcons();
         }
 
         private void Cancel()
@@ -51,12 +75,12 @@ namespace Osu.Music.UI.ViewModels
         private void Confirm()
         {
             // Can't have empty name or duplicates of playlists
-            if (string.IsNullOrEmpty(PlaylistName) || Playlists.Any(x => x.Name == PlaylistName))
+            if (string.IsNullOrEmpty(Playlist.Name) || Playlists.Any(x => x.Name == Playlist.Name))
                 return;
 
             var result = new DialogResult(ButtonResult.OK, new DialogParameters()
             {
-                { "name", PlaylistName }
+                { "playlist", Playlist }
             });
             RequestClose?.Invoke(result);
         }

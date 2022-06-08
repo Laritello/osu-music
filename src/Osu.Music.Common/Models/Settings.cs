@@ -37,7 +37,7 @@ namespace Osu.Music.Common.Models
 
         public Settings()
         {
-            MainColor = "#800080";
+            MainColor = "#FF800080";
             DiscordRpcEnabled = true;
             InitializeHotkeys();
         }

@@ -3,6 +3,7 @@
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     xmlns:prism="http://prismlibrary.com/"
                     xmlns:cm="clr-namespace:Osu.Music.Common.Models;assembly=Osu.Music.Common"
+                                 xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                     xmlns:vm="clr-namespace:Osu.Music.UI.ViewModels"
                     xmlns:v="clr-namespace:Osu.Music.UI.Views">
     <DataTemplate DataType="{x:Type vm:AboutViewModel}">
@@ -23,9 +24,12 @@
             <StackPanel Margin="3">
                 <Grid>
                     <Grid>
-                        <Rectangle Width="130" Height="122" RadiusX="15" RadiusY="15" Stroke="{DynamicResource SolidColorBrushMain}" Margin="0 15 0 0"/>
-                        <TextBlock FontFamily="{DynamicResource MaterialIcons}" FontSize="100" Text="&#xe03d;" Foreground="{DynamicResource SolidColorBrushMain}" HorizontalAlignment="Center"
-                               VerticalAlignment="Center" Padding="0" Margin="0 10 0 0"/>
+                        <Rectangle Width="130" Height="122" RadiusX="15" RadiusY="15"  Margin="0 15 0 0"
+                               Fill="{Binding Cover.BackgroundColor, Converter={StaticResource BrushStringConverter}}"/>
+                        <materialDesign:PackIcon HorizontalAlignment="Center" VerticalAlignment="Center" Width="80" Height="80" Margin="0 10 0 0"
+                                             Foreground="{Binding Cover.IconColor, Converter={StaticResource BrushStringConverter}}"
+                                             Kind="{Binding Cover.Icon, Mode=OneWay}">
+                        </materialDesign:PackIcon>
                     </Grid>
                     <Border x:Name="PlaylistControls" Width="130" Height="122" Background="#70000000" Opacity="0.0" CornerRadius="15" Margin="0 15 0 0">
                         <Border.Style>
@@ -54,7 +58,9 @@
                         </Border.Style>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Button Style="{DynamicResource PlaylistAction}" Content="&#xe3c9;" FontSize="24"
-                                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                    Command="{Binding DataContext.ShowEditPlaylistDialogCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type v:PlaylistsView}}}"
+                                    CommandParameter="{Binding Path=.}"/>
                             <Button Style="{DynamicResource PlaylistAction}" Content="&#xe037;" FontSize="70" Margin="5 0 5 0" Height="40" Width="40"
                                     HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                                     Command="{Binding DataContext.SelectPlaylistCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type v:MainView}}}"

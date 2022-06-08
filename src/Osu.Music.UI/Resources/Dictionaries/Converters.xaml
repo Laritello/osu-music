@@ -14,4 +14,6 @@
     <convert:PlaylistCountToStringConverter x:Key="PlaylistCountToStringConverter"/>
     <convert:BeatmapToAvailablePlaylistsConverter x:Key="BeatmapToAvailablePlaylistsConverter"/>
     <convert:MultipleParametersConverter x:Key="MultipleParametersConverter"/>
+    <convert:PackIconKindToStringConverter x:Key="PackIconKindToStringConverter"/>
+    <convert:BrushStringConverter x:Key="BrushStringConverter"/>
 </ResourceDictionary>
