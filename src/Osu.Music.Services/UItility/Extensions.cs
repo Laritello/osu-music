@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,7 +19,7 @@ namespace Osu.Music.Services.UItility
         {
             // Using index is cool, but if I change order of dictionaries in App.xaml
             // it won't be that cool anymore. Maybe switch to naming or someting.
-            ResourceDictionary dictionary = collection[2];
+            ResourceDictionary dictionary = collection[0];
 
             Color mainColor = hex.FromHex();
             Color lightColor = new Color()
@@ -52,6 +53,9 @@ namespace Osu.Music.Services.UItility
             dictionary["SolidColorBrushMainLight"] = new SolidColorBrush(lightColor);
             dictionary["SolidColorBrushMainDark"] = new SolidColorBrush(darkColor);
             dictionary["SolidColorBrushMainBorder"] = new SolidColorBrush(borderColor);
+
+            CustomColorTheme theme = collection[1] as CustomColorTheme;
+            theme.PrimaryColor = mainColor;
         }
 
         public static ulong ToUnix(this DateTime dt)

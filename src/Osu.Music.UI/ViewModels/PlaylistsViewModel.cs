@@ -49,7 +49,6 @@ namespace Osu.Music.UI.ViewModels
         {
             DialogParameters parameters = new DialogParameters()
             {
-                { "name", "New Playlist" },
                 { "playlists", Playlists }
             };
 

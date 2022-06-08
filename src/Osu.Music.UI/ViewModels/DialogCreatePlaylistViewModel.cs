@@ -68,7 +68,6 @@ namespace Osu.Music.UI.ViewModels
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
-            PlaylistName = parameters.GetValue<string>("name");
             Playlists = parameters.GetValue<ICollection<Playlist>>("playlists");
         }
     }
