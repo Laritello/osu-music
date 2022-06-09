@@ -8,6 +8,7 @@ namespace Osu.Music.Services.UItility
     {
         private static readonly string AppName = "osu.Music";
         public static string Path => GetPath();
+        public static string PlaylistDirectory => GetPlaylistsDirectory();
 
         private static string GetPath()
         {
@@ -25,6 +26,16 @@ namespace Osu.Music.Services.UItility
 
             string json = File.Exists(file) ? File.ReadAllText(file) : null;
             return json != null ? JsonConvert.DeserializeObject(json) : null;
+        }
+
+        public static string GetPlaylistsDirectory()
+        {
+            string path = System.IO.Path.Combine(Path, "playlists");
+
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
+            return path;
         }
     }
 }

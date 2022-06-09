@@ -1,22 +1,33 @@
 ﻿using Osu.Music.Common.Models;
-using Osu.Music.UI.ViewModels;
+using Osu.Music.Services.Dialog;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Osu.Music.UI.Models
 {
     public class MainModel : BindableBase
     {
         #region Properties
-        private IList<Beatmap> _beatmaps;
+        private ObservableCollection<Beatmap> _beatmaps;
         /// <summary>
         /// Full list of beatmaps from osu library.
         /// </summary>
-        public IList<Beatmap> Beatmaps
+        public ObservableCollection<Beatmap> Beatmaps
         {
             get => _beatmaps;
             set => SetProperty(ref _beatmaps, value);
+        }
+
+        private ObservableCollection<Beatmap> _selectedBeatmaps;
+        /// <summary>
+        /// Current list of played beatmaps.
+        /// </summary>
+        public ObservableCollection<Beatmap> SelectedBeatmaps
+        {
+            get => _selectedBeatmaps;
+            set => SetProperty(ref _selectedBeatmaps, value);
         }
 
         private Beatmap _playingBeatmap;
@@ -49,6 +60,26 @@ namespace Osu.Music.UI.Models
             set => SetProperty(ref _previousBeatmaps, value);
         }
 
+        private ObservableCollection<Playlist> _playlists;
+        /// <summary>
+        /// Collection of user-created playlists.
+        /// </summary>
+        public ObservableCollection<Playlist> Playlists
+        {
+            get => _playlists;
+            set => SetProperty(ref _playlists, value);
+        }
+
+        private Playlist _selectedPlaylist;
+        /// <summary>
+        /// Collection of user-created playlists.
+        /// </summary>
+        public Playlist SelectedPlaylist
+        {
+            get => _selectedPlaylist;
+            set => SetProperty(ref _selectedPlaylist, value);
+        }
+
         private TimeSpan currentTime;
         public TimeSpan CurrentTime
         {
@@ -70,35 +101,18 @@ namespace Osu.Music.UI.Models
             set => SetProperty(ref _progress, value);
         }
 
-        private BindableBase _songsPage;
-        public BindableBase SongsPage
+        private IPopupDialogService _dialogService;
+        public IPopupDialogService DialogService
         {
-            get => _songsPage;
-            set => SetProperty(ref _songsPage, value);
-        }
-
-        private BindableBase _settingsPage;
-        public BindableBase SettingsPage
-        {
-            get => _settingsPage;
-            set => SetProperty(ref _settingsPage, value);
-        }
-
-        private BindableBase _aboutPage;
-        public BindableBase AboutPage
-        {
-            get => _aboutPage;
-            set => SetProperty(ref _aboutPage, value);
+            get => _dialogService;
+            set => SetProperty(ref _dialogService, value);
         }
         #endregion
 
         public MainModel()
         {
             PreviousBeatmaps = new Stack<Beatmap>(100);
-            AboutPage = new AboutViewModel();
-            SettingsPage = new SettingsViewModel();
-
-            SongsPage = new SongsViewModel();
+            Playlists = new ObservableCollection<Playlist>();
         }
     }
 }

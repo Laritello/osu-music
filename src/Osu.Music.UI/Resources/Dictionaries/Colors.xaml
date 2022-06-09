@@ -3,8 +3,10 @@
     <Color x:Key="ColorMain">#FF800080</Color>
     <Color x:Key="ColorMainLight">#FFb200b3</Color>
     <Color x:Key="ColorMainDark">#FF4c004d</Color>
+    <Color x:Key="ColorMainBorder">#40800080</Color>
     
     <SolidColorBrush x:Key="SolidColorBrushMain" Color="{DynamicResource ColorMain}"/>
     <SolidColorBrush x:Key="SolidColorBrushMainLight" Color="{DynamicResource ColorMainLight}"/>
     <SolidColorBrush x:Key="SolidColorBrushMainDark" Color="{DynamicResource ColorMainDark}"/>
+    <SolidColorBrush x:Key="SolidColorBrushMainBorder" Color="{DynamicResource ColorMainBorder}"/>
 </ResourceDictionary>

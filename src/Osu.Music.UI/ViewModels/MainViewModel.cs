@@ -8,6 +8,7 @@ using Osu.Music.Services.IO;
 using Osu.Music.Services.UItility;
 using Osu.Music.UI.Interfaces;
 using Osu.Music.UI.Models;
+using Osu.Music.UI.Parameters;
 using Osu.Music.UI.Views;
 using Osu.Music.UI.Visualization;
 using Prism.Commands;
@@ -15,10 +16,12 @@ using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace Osu.Music.UI.ViewModels
@@ -52,13 +55,6 @@ namespace Osu.Music.UI.ViewModels
         {
             get => _discordManager;
             set => SetProperty(ref _discordManager, value);
-        }
-
-        private IPopupDialogService _dialogService;
-        public IPopupDialogService DialogService
-        {
-            get => _dialogService;
-            set => SetProperty(ref _dialogService, value);
         }
 
         private AudioPlayback _playback;
@@ -99,6 +95,7 @@ namespace Osu.Music.UI.ViewModels
 
         #region Commands
         public DelegateCommand<bool?> MuteCommand { get; private set; }
+        public DelegateCommand<object[]> PlayBeatmapAndUpdateCollectionCommand { get; private set; }
         public DelegateCommand<Beatmap> PlayBeatmapCommand { get; private set; }
         public DelegateCommand<Beatmap> PauseBeatmapCommand { get; private set; }
         public DelegateCommand<Beatmap> StopBeatmapCommand { get; private set; }
@@ -106,10 +103,15 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand<Beatmap> NextBeatmapCommand { get; private set; }
         public DelegateCommand OpenGitHubCommand { get; private set; }
         public DelegateCommand<TimeSpan?> ScrollBeatmapCommand { get; private set; }
-        public DelegateCommand<BindableBase> OpenPageCommand { get; private set; }
+        public DelegateCommand<string> OpenPageCommand { get; private set; }
         public DelegateCommand OpenAboutCommand { get; private set; }
         public DelegateCommand OpenSettingsCommand { get; private set; }
         public DelegateCommand<Beatmap> OpenBeatmapInExplorerCommand { get; private set; }
+        public DelegateCommand<Playlist> SendBeatmapToPlaylistCommand { get; private set; }
+        public DelegateCommand<Playlist> SelectPlaylistCommand { get; private set; }
+        public DelegateCommand<Playlist> SelectPlaylistAndPlayCommand { get; private set; }
+        public DelegateCommand<Playlist> DeletePlaylistCommand { get; private set; }
+        public DelegateCommand<Beatmap> RemoveBeatmapFromPlaylistCommand { get; private set; }
         #endregion
 
         private DispatcherTimer _audioProgressTimer;
@@ -117,7 +119,6 @@ namespace Osu.Music.UI.ViewModels
         public MainViewModel(IContainerExtension container)
         {
             Model = new MainModel();
-            SelectedPage = Model.SongsPage;
             Visualization = new DefaultVisualization();
 
             InitializeDialogService(container);
@@ -128,7 +129,7 @@ namespace Osu.Music.UI.ViewModels
             InitializeHotkeys();
             InitializeDiscord();
             
-            LoadBeatmaps();
+            LoadData();
         }
 
         #region Initialization
@@ -143,6 +144,7 @@ namespace Osu.Music.UI.ViewModels
         private void InitializeCommands()
         {
             MuteCommand = new DelegateCommand<bool?>(MuteVolume);
+            PlayBeatmapAndUpdateCollectionCommand = new DelegateCommand<object[]>(PlayBeatmapAndUpdateCollection);
             PlayBeatmapCommand = new DelegateCommand<Beatmap>(PlayBeatmap);
             PauseBeatmapCommand = new DelegateCommand<Beatmap>(PauseBeatmap);
             StopBeatmapCommand = new DelegateCommand<Beatmap>(StopBeatmap);
@@ -150,10 +152,15 @@ namespace Osu.Music.UI.ViewModels
             NextBeatmapCommand = new DelegateCommand<Beatmap>(NextBeatmap);
             OpenGitHubCommand = new DelegateCommand(OpenGitHub);
             ScrollBeatmapCommand = new DelegateCommand<TimeSpan?>(ScrollBeatmap);
-            OpenPageCommand = new DelegateCommand<BindableBase>(OpenPage);
+            OpenPageCommand = new DelegateCommand<string>(OpenPage);
             OpenAboutCommand = new DelegateCommand(OpenAbout);
             OpenSettingsCommand = new DelegateCommand(OpenSettings);
             OpenBeatmapInExplorerCommand = new DelegateCommand<Beatmap>(OpenBeatmapInExplorer);
+            SendBeatmapToPlaylistCommand = new DelegateCommand<Playlist>(SendBeatmapToPlaylist);
+            SelectPlaylistCommand = new DelegateCommand<Playlist>(SelectPlaylist);
+            SelectPlaylistAndPlayCommand = new DelegateCommand<Playlist>(SelectPlaylistAndPlay);
+            DeletePlaylistCommand = new DelegateCommand<Playlist>(DeletePlaylist);
+            RemoveBeatmapFromPlaylistCommand = new DelegateCommand<Beatmap>(RemoveBeatmapFromPlaylist);
         }
         
         private void InitializePlayback()
@@ -197,11 +204,11 @@ namespace Osu.Music.UI.ViewModels
 
         private void InitializeDialogService(IContainerExtension container)
         {
-            _dialogService = new PopupDialogService(container);
+            Model.DialogService = new PopupDialogService(container);
         }
         #endregion
 
-        private async void LoadBeatmaps()
+        private async void LoadData()
         {
             try
             {
@@ -211,7 +218,10 @@ namespace Osu.Music.UI.ViewModels
                     SettingsManager.Save(Settings);
                 }
 
-                Model.Beatmaps = await LibraryLoader.LoadAsync(Settings.OsuFolder);
+                Model.Beatmaps = await LibraryManager.LoadAsync(Settings.OsuFolder);
+                Model.Playlists = await PlaylistManager.LoadAsync(Model.Beatmaps);
+
+                SelectedPage = new SongsViewModel();
             }
             catch(Exception E)
             {
@@ -222,6 +232,38 @@ namespace Osu.Music.UI.ViewModels
         private void MuteVolume(bool? mute)
         {
             Playback.Mute = mute ?? false;
+        }
+
+        private void PlayBeatmapAndUpdateCollection(object[] parameters)
+        {
+            var beatmap = parameters[0] as Beatmap;
+            var collection = parameters[1] as ObservableCollection<Beatmap>;
+
+            Model.SelectedBeatmaps = collection;
+           
+            // If user tried to start playback without selected song
+            // Select first song if possible
+            CheckBeatmap(ref beatmap);
+
+            // If new song was selected
+            // Update playback
+            if (Playback.Beatmap != beatmap)
+            {
+                Model.PlayingBeatmap = beatmap;
+                Playback.Beatmap = beatmap;
+                Playback.Load();
+
+                DiscordManager.Update(Model.PlayingBeatmap);
+            }
+
+            // TODO: Rework this section
+            if (Playback.PlaybackState != NAudio.Wave.PlaybackState.Paused)
+                Playback.Load();
+
+            if (Playback.PlaybackState == NAudio.Wave.PlaybackState.Paused)
+                DiscordManager.Resume(Playback.CurrentTime);
+
+            Playback.Play();
         }
 
         private void PlayBeatmap(Beatmap beatmap)
@@ -253,11 +295,11 @@ namespace Osu.Music.UI.ViewModels
 
         private void CheckBeatmap(ref Beatmap beatmap)
         {
-            if (Model.Beatmaps == null || Model.Beatmaps.Count == 0)
+            if (Model.SelectedBeatmaps == null || Model.SelectedBeatmaps.Count == 0)
                 return;
 
             if (beatmap == null)
-                beatmap = Model.Beatmaps[0];
+                beatmap = Model.SelectedBeatmaps[0];
         }
 
         private void PauseBeatmap(Beatmap beatmap)
@@ -275,10 +317,10 @@ namespace Osu.Music.UI.ViewModels
         {
             if (Model.PreviousBeatmaps.Count == 0)
             {
-                int index = Model.Beatmaps.IndexOf(beatmap) - 1;
-                index = index < 0 ? Model.Beatmaps.Count - 1 : index;
+                int index = Model.SelectedBeatmaps.IndexOf(beatmap) - 1;
+                index = index < 0 ? Model.SelectedBeatmaps.Count - 1 : index;
 
-                Model.SelectedBeatmap = Model.Beatmaps[index];
+                Model.SelectedBeatmap = Model.SelectedBeatmaps[index];
             }
             else
             {
@@ -303,7 +345,7 @@ namespace Osu.Music.UI.ViewModels
             if (beatmap != null)
                 Model.PreviousBeatmaps.Push(Playback.Beatmap);
 
-            Model.SelectedBeatmap = Model.Beatmaps[index];
+            Model.SelectedBeatmap = Model.SelectedBeatmaps[index];
             PlayBeatmap(Model.SelectedBeatmap);
         }
 
@@ -313,14 +355,14 @@ namespace Osu.Music.UI.ViewModels
             if (Random)
             {
                 Random rnd = new Random();
-                index = rnd.Next(0, Model.Beatmaps.Count);
+                index = rnd.Next(0, Model.SelectedBeatmaps.Count);
             }
             else
             {
-                index = Model.Beatmaps.IndexOf(beatmap) + 1;
+                index = Model.SelectedBeatmaps.IndexOf(beatmap) + 1;
             }
 
-            return index >= Model.Beatmaps.Count ? 0 : index;
+            return index >= Model.SelectedBeatmaps.Count ? 0 : index;
         }
 
         private void ScrollBeatmap(TimeSpan? progress)
@@ -331,14 +373,22 @@ namespace Osu.Music.UI.ViewModels
             DiscordManager.Resume(_playback.CurrentTime);
         }
 
-        private void OpenPage(BindableBase page)
+        private void OpenPage(string pageName)
         {
-            SelectedPage = page;
+            switch (pageName)
+            {
+                case "Songs":
+                    SelectedPage = new SongsViewModel();
+                    break;
+                case "Playlists":
+                    SelectedPage = new PlaylistsViewModel(Model.Playlists,Model.DialogService);
+                    break;
+            }
         }
 
         private void OpenAbout()
         {
-            DialogService.ShowPopupDialog<AboutView, AboutViewModel>();
+            Model.DialogService.ShowPopupDialog<AboutView, AboutViewModel>();
         }
 
         private void OpenSettings()
@@ -349,7 +399,7 @@ namespace Osu.Music.UI.ViewModels
                 { "hotkey", HotkeyManager },
                 { "discord", DiscordManager }
             };
-            DialogService.ShowPopupDialog<SettingsView, SettingsViewModel>(parameters, callback => { });
+            Model.DialogService.ShowPopupDialog<SettingsView, SettingsViewModel>(parameters, callback => { });
         }
 
         private void OpenBeatmapInExplorer(Beatmap beatmap)
@@ -363,6 +413,45 @@ namespace Osu.Music.UI.ViewModels
             {
                 // Ignore
             }
+        }
+
+        private void SendBeatmapToPlaylist(Playlist playlist)
+        {
+            var beatmap = Model.SelectedBeatmap;
+
+            if (!playlist.Beatmaps.Contains(beatmap))
+            {
+                playlist.Beatmaps.Add(beatmap);
+                PlaylistManager.Save(playlist);
+            }
+        }
+
+        private void SelectPlaylist(Playlist playlist)
+        {
+            Model.SelectedPlaylist = playlist;
+        }
+
+        private void SelectPlaylistAndPlay(Playlist playlist)
+        {
+            Model.SelectedPlaylist = playlist;
+
+            if (playlist.Beatmaps == null || playlist.Beatmaps.Count == 0)
+                return;
+
+            PlayBeatmapAndUpdateCollection(new object[2] { playlist.Beatmaps[0], playlist.Beatmaps });
+        }
+
+        private void DeletePlaylist(Playlist playlist)
+        {
+            Model.Playlists.Remove(playlist);
+
+            PlaylistManager.Remove(playlist);
+        }
+
+        private void RemoveBeatmapFromPlaylist(Beatmap beatmap)
+        {
+            Model.SelectedPlaylist.Beatmaps.Remove(beatmap);
+            PlaylistManager.Save(Model.SelectedPlaylist);
         }
 
         private void OpenGitHub()

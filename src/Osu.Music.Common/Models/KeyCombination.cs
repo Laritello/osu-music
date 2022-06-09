@@ -1,5 +1,5 @@
 ﻿using Prism.Mvvm;
-using System.Windows.Forms;
+using System.Windows.Forms; // Using this from NAudio dependency. Kinda weird?
 
 namespace Osu.Music.Common.Models
 {
@@ -35,7 +35,7 @@ namespace Osu.Music.Common.Models
 
         public override string ToString()
         {
-            return $"{(ShiftPressed ? "Shitf+" : "")}{(ControlPressed ? "Ctrl+" : "")}{(AltPressed ? "Alt+" : "")}{Key}";
+            return $"{(ShiftPressed ? "Shift+" : "")}{(ControlPressed ? "Ctrl+" : "")}{(AltPressed ? "Alt+" : "")}{Key}";
         }
         public override bool Equals(object obj)
         {

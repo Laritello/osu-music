@@ -20,34 +20,6 @@
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="Background" Value="White"/>
         <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushMain}"/>
-        <Setter Property="ItemTemplate">
-            <Setter.Value>
-                <DataTemplate>
-                    <DataTemplate.Resources>
-                        <convert:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter"/>
-                    </DataTemplate.Resources>
-                    <Grid>
-                        <Grid.InputBindings>
-                            <MouseBinding Gesture="LeftDoubleClick" Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=InputBindings[0].Command}"
-                                          CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=SelectedItem}"/>
-                        </Grid.InputBindings>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="auto"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock Style="{DynamicResource TitleStyle}" Text="{Binding Path=Title}" 
-                                   Foreground="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}"/>
-                            <TextBlock Style="{DynamicResource ArtistStyle}" Text="{Binding Path=Artist}"
-                                   Foreground="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}"/>
-                        </StackPanel>
-
-                        <TextBlock Style="{DynamicResource TitleStyle}" Grid.Column="1" Text="{Binding Path=TotalTime, Converter={StaticResource TimeSpanToStringConverter}, FallbackValue=''}" 
-                                   Foreground="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}"/>
-                    </Grid>
-                </DataTemplate>
-            </Setter.Value>
-        </Setter>
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="{x:Type ListViewItem}">

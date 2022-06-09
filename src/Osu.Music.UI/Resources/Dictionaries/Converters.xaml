@@ -11,4 +11,10 @@
     <convert:SelectedHotkeyToBooleanConverter x:Key="SelectedHotkeyToBooleanConverter"/>
     <convert:KeyCombinationToStringConverter x:Key="KeyCombinationToStringConverter"/>
     <convert:UpdateStateToVisibilityConverter x:Key="UpdateStateToVisibilityConverter"/>
+    <convert:PlaylistCountToStringConverter x:Key="PlaylistCountToStringConverter"/>
+    <convert:BeatmapToAvailablePlaylistsConverter x:Key="BeatmapToAvailablePlaylistsConverter"/>
+    <convert:MultipleParametersConverter x:Key="MultipleParametersConverter"/>
+    <convert:PackIconKindToStringConverter x:Key="PackIconKindToStringConverter"/>
+    <convert:BrushStringConverter x:Key="BrushStringConverter"/>
+    <convert:PlayerObjectToStringConverter x:Key="PlayerObjectToStringConverter"/>
 </ResourceDictionary>
