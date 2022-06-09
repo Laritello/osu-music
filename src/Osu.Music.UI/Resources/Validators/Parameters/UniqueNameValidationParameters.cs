@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 
-namespace Osu.Music.UI.Resources.Validators.Parameters
+namespace Osu.Music.UI.Resources.Validators
 {
     public class UniqueNameValidationParameters : DependencyObject
     {
