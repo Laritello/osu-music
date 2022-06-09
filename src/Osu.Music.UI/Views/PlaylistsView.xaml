@@ -64,7 +64,8 @@
                 </ItemsControl>
             </StackPanel>
         </Border>
-        <Border Grid.Row="1" BorderBrush="{DynamicResource SolidColorBrushMainBorder}" BorderThickness="1" CornerRadius="10" Margin="5" Padding="0 0 0 5">
+        <Border Grid.Row="1" BorderBrush="{DynamicResource SolidColorBrushMainBorder}" BorderThickness="1" CornerRadius="10" Margin="5" Padding="0 0 0 5"
+                Visibility="{Binding DataContext.Model.SelectedPlaylist, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}, Converter={StaticResource NullableToVisibilityConverter}}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
@@ -76,7 +77,8 @@
 
                     <Button Style="{DynamicResource PlaylistAction}" Foreground="{DynamicResource SolidColorBrushMain}" Content="&#xe3c9;" FontSize="15"
                             HorizontalAlignment="Right" Margin="0 0 10 0" DockPanel.Dock="Right"
-                            Command="{Binding ShowCreatePlaylistDialogCommand}"/>
+                            Command="{Binding DataContext.ShowEditPlaylistDialogCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:PlaylistsView}}}"
+                            CommandParameter="{Binding DataContext.Model.SelectedPlaylist, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}"/>
                 </DockPanel>
                 
                 <ListView x:Name="SongsList" Grid.Row="1" Style="{DynamicResource ListViewBeatmaps}" 
@@ -118,15 +120,9 @@
                             <MenuItem Header="Open in Explorer" Background="White"
                               Command="{Binding DataContext.OpenBeatmapInExplorerCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}" 
                               CommandParameter="{Binding Path=PlacementTarget.SelectedItem, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
-                            <MenuItem Header="Add to Playlist" Background="White"
-                              ItemsSource="{Binding DataContext.Model.Playlists, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}">
-                                <MenuItem.ItemContainerStyle>
-                                    <Style BasedOn="{StaticResource MaterialDesignMenuItem}" TargetType="{x:Type MenuItem}">
-                                        <Setter Property="MenuItem.Header" Value="{Binding Name}"/>
-                                        <Setter Property="Command" Value="{Binding DataContext.SendBeatmapToPlaylistCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
-                                        <Setter Property="CommandParameter" Value="{Binding}"/>
-                                    </Style>
-                                </MenuItem.ItemContainerStyle>
+                            <MenuItem Header="Remove from Playlist" Background="White"
+                                      Command="{Binding DataContext.RemoveBeatmapFromPlaylistCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"
+                                      CommandParameter="{Binding Path=PlacementTarget.SelectedItem, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}">
                             </MenuItem>
                         </ContextMenu>
                     </ListView.ContextMenu>

@@ -110,6 +110,7 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand<Playlist> SendBeatmapToPlaylistCommand { get; private set; }
         public DelegateCommand<Playlist> SelectPlaylistCommand { get; private set; }
         public DelegateCommand<Playlist> DeletePlaylistCommand { get; private set; }
+        public DelegateCommand<Beatmap> RemoveBeatmapFromPlaylistCommand { get; private set; }
         #endregion
 
         private DispatcherTimer _audioProgressTimer;
@@ -157,6 +158,7 @@ namespace Osu.Music.UI.ViewModels
             SendBeatmapToPlaylistCommand = new DelegateCommand<Playlist>(SendBeatmapToPlaylist);
             SelectPlaylistCommand = new DelegateCommand<Playlist>(SelectPlaylist);
             DeletePlaylistCommand = new DelegateCommand<Playlist>(DeletePlaylist);
+            RemoveBeatmapFromPlaylistCommand = new DelegateCommand<Beatmap>(RemoveBeatmapFromPlaylist);
         }
         
         private void InitializePlayback()
@@ -432,6 +434,12 @@ namespace Osu.Music.UI.ViewModels
             Model.Playlists.Remove(playlist);
 
             PlaylistManager.Remove(playlist);
+        }
+
+        private void RemoveBeatmapFromPlaylist(Beatmap beatmap)
+        {
+            Model.SelectedPlaylist.Beatmaps.Remove(beatmap);
+            PlaylistManager.Save(Model.SelectedPlaylist);
         }
 
         private void OpenGitHub()

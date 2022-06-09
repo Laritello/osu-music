@@ -9,7 +9,6 @@ using System.Collections.Generic;
 
 namespace Osu.Music.UI.ViewModels
 {
-    // TODO: check for dups
     public class DialogEditPlaylistViewModel : BindableBase, IDialogAware
     {
         private IEnumerable<PackIconKind> _icons;
