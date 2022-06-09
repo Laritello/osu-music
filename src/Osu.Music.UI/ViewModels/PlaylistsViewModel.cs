@@ -70,12 +70,16 @@ namespace Osu.Music.UI.ViewModels
 
             DialogParameters parameters = new DialogParameters()
             {
-                { "playlist", playlist }
+                { "playlist", playlist },
+                { "playlists", Playlists }
             };
 
             DialogService.ShowPopupDialog<DialogEditPlaylistView, DialogEditPlaylistViewModel>(parameters, e =>
             {
-                PlaylistManager.Save(playlist);
+                if (e.Result == ButtonResult.OK)
+                {
+                    PlaylistManager.Save(playlist);
+                }
             });
         }
     }

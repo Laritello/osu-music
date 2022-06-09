@@ -39,6 +39,14 @@ namespace Osu.Music.UI.ViewModels
             set => SetProperty(ref _playlists, value);
         }
 
+        #region Validation
+        private bool _nameHasError;
+        public bool NameHasError
+        {
+            get => _nameHasError;
+            set => SetProperty(ref _nameHasError, value);
+        }
+        #endregion
         public DelegateCommand CancelCommand { get; private set; }
         public DelegateCommand ConfirmCommand { get; private set; }
 
@@ -74,6 +82,9 @@ namespace Osu.Music.UI.ViewModels
 
         private void Confirm()
         {
+            if (NameHasError)
+                return;
+
             // Can't have empty name or duplicates of playlists
             if (string.IsNullOrEmpty(Playlist.Name) || Playlists.Any(x => x.Name == Playlist.Name))
                 return;

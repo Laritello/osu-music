@@ -1,6 +1,5 @@
 ﻿using MaterialDesignThemes.Wpf;
 using Osu.Music.Common.Models;
-using Osu.Music.Services.IO;
 using Osu.Music.UI.Utility;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -27,7 +26,26 @@ namespace Osu.Music.UI.ViewModels
             set => SetProperty(ref _playlist, value);
         }
 
+        private ICollection<Playlist> _playlists;
+        /// <summary>
+        /// Collection of user-created playlists.
+        /// </summary>
+        public ICollection<Playlist> Playlists
+        {
+            get => _playlists;
+            set => SetProperty(ref _playlists, value);
+        }
+
+        #region Validation
+        private bool _nameHasError;
+        public bool NameHasError
+        {
+            get => _nameHasError;
+            set => SetProperty(ref _nameHasError, value);
+        }
+        #endregion
         public DelegateCommand ConfirmCommand { get; private set; }
+        public DelegateCommand CancelCommand { get; private set; }
 
         public string Title => throw new NotImplementedException();
 
@@ -38,23 +56,37 @@ namespace Osu.Music.UI.ViewModels
         public DialogEditPlaylistViewModel()
         {
             ConfirmCommand = new DelegateCommand(Confirm);
+            CancelCommand = new DelegateCommand(Cancel);
+
             Icons = PlaylistIcons.GetIcons();
         }
 
         public void OnDialogClosed()
         {
-            
+            Playlist.CancelEdit();
         }
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
             Playlist = parameters.GetValue<Playlist>("playlist");
+            Playlist.BeginEdit();
+
+            Playlists = parameters.GetValue<ICollection<Playlist>>("playlists");
+        }
+
+        private void Cancel()
+        {
+            Playlist.CancelEdit();
+            RequestClose?.Invoke(new DialogResult(ButtonResult.Cancel));
         }
 
         private void Confirm()
         {
-            var result = new DialogResult(ButtonResult.OK);
-            RequestClose?.Invoke(result);
+            if (NameHasError)
+                return;
+
+            Playlist.EndEdit();
+            RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
         }
     }
 }

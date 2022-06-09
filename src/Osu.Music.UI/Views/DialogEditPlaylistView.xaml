@@ -6,17 +6,34 @@
              xmlns:local="clr-namespace:Osu.Music.UI.Views"
              xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:validators="clr-namespace:Osu.Music.UI.Resources.Validators"
+             xmlns:utility="clr-namespace:Osu.Music.UI.Utility"
              mc:Ignorable="d" 
              Width="450" MinWidth="450" MaxWidth="450">
+    <UserControl.Resources>
+        <utility:DialogEditPlaylistProxy x:Key="proxy" Data="{Binding}"/>
+    </UserControl.Resources>
     <Grid Margin="16">
         <StackPanel>
             <TextBlock>Edit Playlist</TextBlock>
-            <TextBox materialDesign:HintAssist.Hint="Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}"                 
-                 Margin="0 6 0 0"
-                 FontSize="18"
-                 Text="{Binding Playlist.Name}">
+            <TextBox Margin="0 6 0 0" FontSize="18"
+                     materialDesign:HintAssist.Hint="Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                     utility:ValidationBehaviour.HasError="{Binding NameHasError}">
+                <TextBox.Text>
+                    <Binding Path="Playlist.Name" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validators:NotEmptyValidationRule ValidatesOnTargetUpdated="True"/>
+                            <validators:UniqueNameValidationRule ValidatesOnTargetUpdated="True">
+                                <validators:UniqueNameValidationRule.Parameters>
+                                    <validators:UniqueNameValidationParameters Items="{Binding Data.Playlists, Source={StaticResource proxy}}"
+                                                                               Item="{Binding Data.Playlist, Source={StaticResource proxy}}"/>
+                                </validators:UniqueNameValidationRule.Parameters>
+                            </validators:UniqueNameValidationRule>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
             </TextBox>
-            <Grid Margin="0 24 0 0">
+                <Grid Margin="0 24 0 0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="auto"/>
@@ -65,8 +82,12 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2"
                     Margin="0 16 0 0">
                 <Button IsDefault="True" Style="{StaticResource MaterialDesignFlatButton}"
-                    Command="{Binding ConfirmCommand}">
+                    Command="{Binding ConfirmCommand}" Cursor="Hand">
                     SAVE
+                </Button>
+                <Button IsCancel="True" Margin="8 0 0 0" Style="{StaticResource MaterialDesignFlatButton}"
+                    Command="{Binding CancelCommand}" Cursor="Hand">
+                    CANCEL
                 </Button>
             </StackPanel>
         </StackPanel>
