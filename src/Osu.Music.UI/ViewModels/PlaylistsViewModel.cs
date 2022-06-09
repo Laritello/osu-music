@@ -78,6 +78,11 @@ namespace Osu.Music.UI.ViewModels
             {
                 if (e.Result == ButtonResult.OK)
                 {
+                    var originalName = e.Parameters.GetValue<string>("originalName");
+
+                    if (!playlist.Name.Equals(originalName))
+                        PlaylistManager.RemoveByName(originalName);
+
                     PlaylistManager.Save(playlist);
                 }
             });

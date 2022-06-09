@@ -55,9 +55,20 @@ namespace Osu.Music.Services.IO
 
         public static void Remove(Playlist playlist)
         {
+            if (playlist == null)
+                return;
+
+            RemoveByName(playlist.Name);
+        }
+
+        public static void RemoveByName(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+                return;
+
             try
             {
-                var _playlistFile = Path.Combine(AppDataHelper.PlaylistDirectory, $"{playlist.Name}.json");
+                var _playlistFile = Path.Combine(AppDataHelper.PlaylistDirectory, $"{name}.json");
                 File.Delete(_playlistFile);
             }
             catch { }

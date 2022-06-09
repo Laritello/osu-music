@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Osu.Music.UI.ViewModels
 {
-    // TODO: Validation, renaming, check for dups
+    // TODO: check for dups
     public class DialogEditPlaylistViewModel : BindableBase, IDialogAware
     {
         private IEnumerable<PackIconKind> _icons;
@@ -44,6 +44,7 @@ namespace Osu.Music.UI.ViewModels
             set => SetProperty(ref _nameHasError, value);
         }
         #endregion
+
         public DelegateCommand ConfirmCommand { get; private set; }
         public DelegateCommand CancelCommand { get; private set; }
 
@@ -52,6 +53,8 @@ namespace Osu.Music.UI.ViewModels
         public event Action<IDialogResult> RequestClose;
 
         public bool CanCloseDialog() => true;
+
+        private string _originalName;
 
         public DialogEditPlaylistViewModel()
         {
@@ -70,6 +73,7 @@ namespace Osu.Music.UI.ViewModels
         {
             Playlist = parameters.GetValue<Playlist>("playlist");
             Playlist.BeginEdit();
+            _originalName = Playlist.Name;
 
             Playlists = parameters.GetValue<ICollection<Playlist>>("playlists");
         }
@@ -85,8 +89,13 @@ namespace Osu.Music.UI.ViewModels
             if (NameHasError)
                 return;
 
+            var result = new DialogResult(ButtonResult.OK, new DialogParameters()
+            {
+                { "originalName", _originalName }
+            });
+
             Playlist.EndEdit();
-            RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
+            RequestClose?.Invoke(result);
         }
     }
 }
