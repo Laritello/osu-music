@@ -44,6 +44,36 @@ namespace Osu.Music.UI.ViewModels
         }
         #endregion
 
+        #region Expanders
+        private bool _backgroundExpanded = true;
+        public bool BackgroundExpanded
+        {
+            get => _backgroundExpanded;
+            set
+            {
+                if (_backgroundExpanded == value)
+                    return;
+
+                SetProperty(ref _backgroundExpanded, value);
+                IconExpanded = !value;
+            }
+        }
+
+        private bool _iconExpanded = false;
+        public bool IconExpanded
+        {
+            get => _iconExpanded;
+            set
+            {
+                if (_iconExpanded == value)
+                    return;
+
+                SetProperty(ref _iconExpanded, value);
+                BackgroundExpanded = !value;
+            }
+        }
+        #endregion
+
         public DelegateCommand ConfirmCommand { get; private set; }
         public DelegateCommand CancelCommand { get; private set; }
 

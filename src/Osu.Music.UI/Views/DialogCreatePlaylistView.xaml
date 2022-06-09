@@ -8,7 +8,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:validators="clr-namespace:Osu.Music.UI.Resources.Validators"
              xmlns:utility="clr-namespace:Osu.Music.UI.Utility"
-             mc:Ignorable="d" 
+             mc:Ignorable="d" Height="418"
              Width="450" MinWidth="450" MaxWidth="450">
     <UserControl.Resources>
         <utility:DialogCreatePlaylistProxy x:Key="proxy" Data="{Binding}"/>
@@ -33,20 +33,21 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <Grid Margin="0 24 0 0">
+            <Grid Margin="0 24 0 0" Height="230">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel>
                     <Expander HorizontalAlignment="Stretch" Header="Background"
-                              materialDesign:ExpanderAssist.HorizontalHeaderPadding="0,2,24,2">
-                        <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Margin="0,8,24,16">
-                            <materialDesign:ColorPicker Color="{Binding Playlist.Cover.BackgroundColor, Converter={StaticResource ColorStringConverter}}" Height="150"/>
-                        </StackPanel>
+                              materialDesign:ExpanderAssist.HorizontalHeaderPadding="0,2,24,2" IsExpanded="{Binding BackgroundExpanded}">
+                        <Grid TextBlock.Foreground="{DynamicResource MaterialDesignBody}" 
+                                    Margin="0,8,24,16" Height="150">
+                            <materialDesign:ColorPicker Color="{Binding Playlist.Cover.BackgroundColor, Converter={StaticResource ColorStringConverter}}"/>
+                        </Grid>
                     </Expander>
                     <Expander HorizontalAlignment="Stretch" Header="Icon"
-                              materialDesign:ExpanderAssist.HorizontalHeaderPadding="0,2,24,2">
+                              materialDesign:ExpanderAssist.HorizontalHeaderPadding="0,2,24,2" IsExpanded="{Binding IconExpanded}">
                         <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Margin="0,8,24,16">
                             <ComboBox materialDesign:HintAssist.Hint="Icon" Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                       FontSize="18"
