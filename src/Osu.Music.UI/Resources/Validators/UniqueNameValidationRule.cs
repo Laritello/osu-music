@@ -1,9 +1,8 @@
 ﻿using Osu.Music.UI.Resources.Converters;
+using Osu.Music.UI.Resources.Validators.Parameters;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Windows;
 using System.Windows.Controls;
 
 namespace Osu.Music.UI.Resources.Validators
@@ -28,23 +27,6 @@ namespace Osu.Music.UI.Resources.Validators
             return names.Contains((value ?? "").ToString())
                 ? new ValidationResult(false, "Field must be unique.")
                 : ValidationResult.ValidResult;
-        }
-    }
-
-    public class UniqueNameValidationParameters : DependencyObject
-    {
-        public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register("Items", typeof(IEnumerable<object>), typeof(UniqueNameValidationParameters), new PropertyMetadata(null));
-        public IEnumerable<object> Items
-        {
-            get => (IEnumerable<object>)GetValue(ItemsProperty);
-            set => SetValue(ItemsProperty, value);
-        }
-
-        public static readonly DependencyProperty ItemProperty = DependencyProperty.Register("Item", typeof(object), typeof(UniqueNameValidationParameters), new PropertyMetadata(null));
-        public object Item
-        {
-            get => GetValue(ItemProperty);
-            set => SetValue(ItemProperty, value);
         }
     }
 }

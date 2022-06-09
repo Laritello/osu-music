@@ -8,9 +8,5 @@ namespace Osu.Music.UI.ViewModels
 {
     public class SongsViewModel : BindableBase
     {
-        public SongsViewModel()
-        {
-            
-        }
     }
 }

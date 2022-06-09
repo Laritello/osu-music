@@ -1,7 +1,7 @@
 ﻿using Osu.Music.UI.ViewModels;
 using System.Windows;
 
-namespace Osu.Music.UI.Utility
+namespace Osu.Music.UI.Utility.Proxies
 {
     #region Base Class
     public class BindingProxy<T> : Freezable
@@ -20,10 +20,5 @@ namespace Osu.Music.UI.Utility
             set => SetValue(DataProperty, value);
         }
     }
-    #endregion
-
-    #region Specific Implemantations
-    public sealed class DialogCreatePlaylistProxy : BindingProxy<DialogCreatePlaylistViewModel> { }
-    public sealed class DialogEditPlaylistProxy : BindingProxy<DialogEditPlaylistViewModel> { }
     #endregion
 }

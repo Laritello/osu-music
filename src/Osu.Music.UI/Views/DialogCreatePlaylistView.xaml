@@ -8,10 +8,11 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:validators="clr-namespace:Osu.Music.UI.Resources.Validators"
              xmlns:utility="clr-namespace:Osu.Music.UI.Utility"
+             xmlns:proxy="clr-namespace:Osu.Music.UI.Utility.Proxies"
              mc:Ignorable="d" Height="418"
              Width="450" MinWidth="450" MaxWidth="450">
     <UserControl.Resources>
-        <utility:DialogCreatePlaylistProxy x:Key="proxy" Data="{Binding}"/>
+        <proxy:DialogCreatePlaylistProxy x:Key="proxy" Data="{Binding}"/>
     </UserControl.Resources>
     <Grid Margin="16">
         <StackPanel>

@@ -129,7 +129,7 @@ namespace Osu.Music.UI.ViewModels
 
         public void OnDialogClosed()
         {
-            
+            // Do nothing
         }
 
         public void OnDialogOpened(IDialogParameters parameters)
