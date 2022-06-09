@@ -63,7 +63,7 @@
                                     CommandParameter="{Binding Path=.}"/>
                             <Button Style="{DynamicResource PlaylistAction}" Content="&#xe037;" FontSize="70" Margin="5 0 5 0" Height="40" Width="40"
                                     HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                                    Command="{Binding DataContext.SelectPlaylistCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type v:MainView}}}"
+                                    Command="{Binding DataContext.SelectPlaylistAndPlayCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type v:MainView}}}"
                                     CommandParameter="{Binding Path=.}"/>
                             <Button Style="{DynamicResource PlaylistAction}" Content="&#xe872;" FontSize="24"
                                     HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
