@@ -1,7 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>osu.Music</title>
+		<link rel="stylesheet" href="style.css">
+		<link rel="shortcut icon" type="image/x-icon" href="assets/favicon.svg"/>
+	</head>
 	<body>
-		<h1>Hello World</h1>
-		<p>I'm hosted with GitHub Pages.</p>
+		<section>
+			<div class="circle"></div>
+			<div class="credits">
+				<p>Site template by <a href="https://www.youtube.com/c/OnlineTutorials4Designers">Online Tutorials</a></p>
+			</div>
+			<header>
+				<a href="#" class="link"><img src="assets\headphones.svg" class="logo"><span class="text">OSU.MUSIC</span></a>
+				<ul>
+					<li><a href="#">Home</a></li>
+					<li><a href="#">What's New?</a></li>
+					<li><a href="#">Github</a></li>
+				</ul>
+			</header>
+			<div class="content">
+				<div class="textBox">
+					<h2>Simple player<br>for <span>osu!</span></h2>
+					<p>A simple and easy to use music player for osu! The perfect choice for those who love listening to their osu! library but does not want to suffer with importing music into regular player. This project is still under development.</p>
+					<a href="#">Download</a>
+				</div>
+				<div class="imgBox">
+					<video id="preview" autoplay muted loop>
+						<source id="previewSource" src="assets\previews\general.mp4" type="video/mp4">
+					</video>
+				</div>
+			</div>
+			<ul class="thumb">
+				<li><img src="assets\icons\headphones.svg" onclick="imgSlider('assets\\previews\\general.mp4')"></li>
+				<li><img src="assets\icons\palette.svg" onclick="imgSlider('assets\\previews\\palette.mp4')"></li>
+				<li><img src="assets\icons\playlist.svg" onclick="imgSlider('assets\\previews\\playlists.mp4')"></li>
+			</ul>
+		</section>
+		
+		<script type="text/javascript">
+			function imgSlider(anything){
+				video = document.getElementById('preview');
+				source = document.getElementById('previewSource');
+
+				video.pause();
+				source.src = anything;
+				video.load();
+				video.play();
+			}
+		</script>
 	</body>
 </html>
