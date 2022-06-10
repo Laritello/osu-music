@@ -272,15 +272,14 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
-                    <Border x:Name="Bd" CornerRadius="0" Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="0 0 0 0" Padding="5 0 0 0">
+                    <StackPanel Orientation="Horizontal" Background="{TemplateBinding Background}">
+                        <Border x:Name="Bd" Width="5" BorderThickness="0 0 5 0" CornerRadius="0 5 5 0"/>
                         <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                    </Border>
+                    </StackPanel>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushMain}"/>
                             <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource SolidColorBrushMain}"/>
-                            <Setter TargetName="Bd" Property="BorderThickness" Value="5 0 0 0"/>
-                            <Setter TargetName="Bd" Property="Padding" Value="0 0 0 0"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
