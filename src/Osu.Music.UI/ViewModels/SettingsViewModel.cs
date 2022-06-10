@@ -2,7 +2,7 @@
 using Osu.Music.Services.Hotkeys;
 using Osu.Music.Services.IO;
 using Osu.Music.Services.UItility;
-using Osu.Music.UI.UserControls;
+using Osu.Music.UI.Resources.Converters;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
@@ -16,6 +16,17 @@ namespace Osu.Music.UI.ViewModels
     {
         public string Title => "Settings";
         public bool CanCloseDialog() => true;
+
+        private string _color;
+        public string Color
+        {
+            get => _color;
+            set
+            {
+                SetProperty(ref _color, value);
+                UpdateColor((Color)colorConverter.Convert(value, typeof(Color), null, null));
+            }
+        }
 
         private Settings _settings;
         public Settings Settings
@@ -42,15 +53,19 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand<Color?> UpdateColorCommand { get; private set; }
         public DelegateCommand UpdateDiscordRpcCommand { get; private set; }
 
+        private ColorStringConverter colorConverter = new ColorStringConverter();
         public SettingsViewModel()
         {
+            ResourceDictionary resource = Application.Current.Resources;
+            Color = resource.MergedDictionaries.GetMainColor().ToHex();
+
             UpdateColorCommand = new DelegateCommand<Color?>(UpdateColor);
             UpdateDiscordRpcCommand = new DelegateCommand(UpdateDiscordRpc);
         }
 
         private void UpdateColor(Color? color)
         {
-            if (!color.HasValue)
+            if (!color.HasValue || Settings == null)
                 return;
 
             Settings.MainColor = color.Value.ToHex();
@@ -80,6 +95,8 @@ namespace Osu.Music.UI.ViewModels
             Settings = parameters.GetValue<Settings>("settings");
             HotkeyManager = parameters.GetValue<HotkeyManager>("hotkey");
             DiscordManager = parameters.GetValue<DiscordManager>("discord");
+
+            _color = Settings.MainColor;
         }
     }
 }
