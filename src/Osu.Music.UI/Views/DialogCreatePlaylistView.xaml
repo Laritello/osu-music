@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Osu.Music.UI.Views"
-             xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:validators="clr-namespace:Osu.Music.UI.Resources.Validators"
              xmlns:utility="clr-namespace:Osu.Music.UI.Utility"

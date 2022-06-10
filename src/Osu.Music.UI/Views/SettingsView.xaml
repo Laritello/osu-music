@@ -7,7 +7,6 @@
              xmlns:prism="http://prismlibrary.com/"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:Osu.Music.UI.Views"
-             xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
              xmlns:models="clr-namespace:Osu.Music.Common.Models;assembly=Osu.Music.Common"
              xmlns:uc="clr-namespace:Osu.Music.UI.UserControls"
              mc:Ignorable="d" 
@@ -28,14 +27,8 @@
             <ScrollViewer>
                 <StackPanel Orientation="Vertical" Margin="5">
                     <TextBlock Text="Player Color" Style="{DynamicResource MenuHeader}"/>
-                    <colorpicker:SquarePicker Name="ColorPicker" HorizontalAlignment="Center" Height="150" Width="150" SelectedColor="{Binding Settings.MainColor, Converter={StaticResource ColorStringConverter}}" Margin="0 0 0 50">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="ColorChanged">
-                                <prism:InvokeCommandAction Command="{Binding UpdateColorCommand}"
-                                               CommandParameter="{Binding ElementName=ColorPicker, Path=SelectedColor}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </colorpicker:SquarePicker>
+                    <materialDesign:ColorPicker Name="ColorPicker" Height="200" Color="{Binding Color, Converter={StaticResource ColorStringConverter}}" Margin="0 0 0 50">
+                    </materialDesign:ColorPicker>
 
                     <TextBlock Text="Hotkeys" Style="{DynamicResource MenuHeader}"/>
                     <ItemsControl ItemsSource="{Binding HotkeyManager.Hotkeys}" ItemTemplate="{StaticResource HotkeyTemplate}"
