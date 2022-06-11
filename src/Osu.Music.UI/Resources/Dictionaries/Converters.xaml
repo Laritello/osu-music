@@ -18,4 +18,5 @@
     <convert:BrushStringConverter x:Key="BrushStringConverter"/>
     <convert:PlayerObjectToStringConverter x:Key="PlayerObjectToStringConverter"/>
     <convert:SelectedPageToToggleCheckCovnerter x:Key="SelectedPageToToggleCheckCovnerter"/>
+    <convert:SongTitleColumnConverter x:Key="SongTitleColumnConverter"/>
 </ResourceDictionary>
