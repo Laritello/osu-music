@@ -100,8 +100,8 @@
                                     </MouseBinding>
                                 </Grid.InputBindings>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="{Binding ElementName=SongsList, Path=ActualWidth, Converter={StaticResource SongTitleColumnConverter}}"/>
+                                    <ColumnDefinition Width="70"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Orientation="Vertical">
                                     <TextBlock Style="{DynamicResource TitleStyle}" Text="{Binding Path=Title}" 
@@ -111,7 +111,8 @@
                                 </StackPanel>
 
                                 <TextBlock Style="{DynamicResource TitleStyle}" Grid.Column="1" Text="{Binding Path=TotalTime, Converter={StaticResource TimeSpanToStringConverter}, FallbackValue=''}" 
-                                   Foreground="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}"/>
+                                           Foreground="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}"
+                                           HorizontalAlignment="Right"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
