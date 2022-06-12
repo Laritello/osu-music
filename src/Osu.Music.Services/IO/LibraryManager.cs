@@ -37,7 +37,7 @@ namespace Osu.Music.Services.IO
         {
             return new Beatmap()
             {
-                BeatmapSetID = entry.BeatmapSetId,
+                BeatmapSetId = entry.BeatmapSetId,
                 Title = entry.Title,
                 TitleUnicode = entry.TitleUnicode,
                 Artist = entry.Artist,

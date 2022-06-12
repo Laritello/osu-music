@@ -1,75 +1,143 @@
 ﻿using Newtonsoft.Json;
+using Prism.Mvvm;
 using System;
+using System.Drawing;
 using System.IO;
 
 namespace Osu.Music.Common.Models
 {
-    public class Beatmap
+    public class Beatmap : BindableBase
     {
+        private int _beatmapSetId;
         /// <summary>
         /// Beatmap ID.
         /// </summary>
-        public int BeatmapSetID { get; set; }
+        public int BeatmapSetId
+        {
+            get => _beatmapSetId;
+            set => SetProperty(ref _beatmapSetId, value);
+        }
 
+        private string _title;
         /// <summary>
         /// Romanised song title.
         /// </summary>
         [JsonIgnore]
-        public string Title { get; set; }
+        public string Title
+        {
+            get => _title;
+            set => SetProperty(ref _title, value);
+        }
 
+        private string _titleUnicode;
         /// <summary>
         /// Song title.
         /// </summary>
         [JsonIgnore]
-        public string TitleUnicode { get; set; }
+        public string TitleUnicode
+        {
+            get => _titleUnicode;
+            set => SetProperty(ref _titleUnicode, value);
+        }
 
+        private string _artist;
         /// <summary>
         /// Romanised song artist.
         /// </summary>
         [JsonIgnore]
-        public string Artist { get; set; }
+        public string Artist
+        {
+            get => _artist;
+            set => SetProperty(ref _artist, value);
+        }
 
+        private string _artistUnicode;
         /// <summary>
         /// Song artist.
         /// </summary>
         [JsonIgnore]
-        public string ArtistUnicode { get; set; }
+        public string ArtistUnicode
+        {
+            get => _artistUnicode;
+            set => SetProperty(ref _artistUnicode, value);
+        }
 
+        private string _creator;
         /// <summary>
         /// Beatmap creator.
         /// </summary>
         [JsonIgnore]
-        public string Creator { get; set; }
+        public string Creator
+        {
+            get => _creator;
+            set => SetProperty(ref _creator, value);
+        }
 
+        private string _audioFileName;
         /// <summary>
         /// Location of the audio file.
         /// </summary>
         [JsonIgnore]
-        public string AudioFileName { get; set; }
+        public string AudioFileName
+        {
+            get => _audioFileName;
+            set => SetProperty(ref _audioFileName, value);
+        }
 
+        private TimeSpan _totalTime;
         /// <summary>
         /// Total duration of the audio file.
         /// </summary>
         [JsonIgnore]
-        public TimeSpan TotalTime { get; set; }
+        public TimeSpan TotalTime
+        {
+            get => _totalTime;
+            set => SetProperty(ref _totalTime, value);
+        }
 
+        private string _backgroundFileName;
         /// <summary>
         /// Location of the background image file.
         /// </summary>
         [JsonIgnore]
-        public string BackgroundFileName { get; set; }
+        public string BackgroundFileName
+        {
+            get => _backgroundFileName;
+            set => SetProperty(ref _backgroundFileName, value);
+        }
 
+        private string _tags;
         /// <summary>
         /// Space-separated list of search terms.
         /// </summary>
         [JsonIgnore]
-        public string Tags { get; set; }
+        public string Tags
+        {
+            get => _tags;
+            set => SetProperty(ref _tags, value);
+        }
 
+        private string _directory;
         /// <summary>
         /// Location of the beatmap.
         /// </summary>
         [JsonIgnore]
-        public string Directory { get; set; }
+        public string Directory
+        {
+            get => _directory;
+            set => SetProperty(ref _directory, value);
+        }
+
+        private string _fileName;
+        /// <summary>
+        /// Name of the .osu file
+        /// </summary>
+        [JsonIgnore]
+        public string FileName
+        {
+            get => _fileName;
+            set => SetProperty(ref _fileName, value);
+        }
 
         /// <summary>
         /// Full path to audio file.
@@ -92,7 +160,7 @@ namespace Osu.Music.Common.Models
             else
             {
                 Beatmap b = (Beatmap)obj;
-                return BeatmapSetID == b.BeatmapSetID && Title == b.Title && Artist == b.Artist && Creator == b.Creator; // Leave only ID check?
+                return BeatmapSetId == b.BeatmapSetId && Title == b.Title && Artist == b.Artist && Creator == b.Creator; // Leave only ID check?
             }
         }
 
