@@ -46,7 +46,8 @@ namespace Osu.Music.Services.IO
                 AudioFileName = entry.AudioFileName,
                 TotalTime = TimeSpan.FromMilliseconds(entry.TotalTime),
                 Tags = entry.SongTags,
-                Directory = $@"{osuFolder}\Songs\{entry.FolderName}"
+                Directory = $@"{osuFolder}\Songs\{entry.FolderName}",
+                FileName = entry.BeatmapFileName
             };
         }
 
