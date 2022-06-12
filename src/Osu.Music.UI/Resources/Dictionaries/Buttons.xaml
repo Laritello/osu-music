@@ -557,15 +557,30 @@
     <Style x:Key="TitleBarUpdates" TargetType="Button" BasedOn="{StaticResource TitleBarButtonStyle}">
         <Setter Property="Content">
             <Setter.Value>
-                <Path Width="46" Height="32" StrokeThickness="0.629426" Fill="{Binding Path=Foreground,
-							 RelativeSource={RelativeSource AncestorType={x:Type Button}}}">
-                    <Path.Data>
-                        <PathGeometry Figures="M 21 10.12 H 14.22 L 16.96 7.3 C 14.23 4.6 9.81 4.5 7.08 7.2 c -2.73 2.71 -2.73 7.08 0 9.79 2.73 2.71 7.15 2.71 9.88 0 C 18.32 15.65 19 14.08 19 12.1 h 2 c 0 1.98 -0.88 4.55 -2.64 6.29 -3.51 3.48 -9.21 3.48 -12.72 0 C 2.14 14.92 2.11 9.28 5.62 5.81 9.13 2.34 14.76 2.34 18.27 5.81 L 21 3 Z M 12.5 8 v 4.25 L 16 14.33 15.28 15.54 11 13 V 8 Z" FillRule="NonZero"/>
-                    </Path.Data>
-                    <Path.RenderTransform>
-                        <TranslateTransform X="10.999392" Y="4"/>
-                    </Path.RenderTransform>
-                </Path>
+                <Grid>
+                    <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+                        <Canvas Name="svg6" Width="34" Height="24">
+                            <Canvas.RenderTransform>
+                                <TransformGroup>
+                                    <TranslateTransform X="7" Y="2"/>
+                                    <ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
+                                </TransformGroup>
+                            </Canvas.RenderTransform>
+                            <Canvas.Resources/>
+                            <Path>
+                                <Path.Data>
+                                    <PathGeometry Figures="M0 0h24v24H0z" FillRule="NonZero"/>
+                                </Path.Data>
+                            </Path>
+                            <Path Fill="#00AA00">
+                                <Path.Data>
+                                    <PathGeometry Figures="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" FillRule="NonZero"/>
+                                </Path.Data>
+                            </Path>
+                        </Canvas>
+                    </Viewbox>
+
+                </Grid>
             </Setter.Value>
         </Setter>
     </Style>
