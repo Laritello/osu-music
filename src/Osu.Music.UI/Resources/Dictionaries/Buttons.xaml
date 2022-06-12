@@ -562,7 +562,7 @@
                         <Canvas Name="svg6" Width="34" Height="24">
                             <Canvas.RenderTransform>
                                 <TransformGroup>
-                                    <TranslateTransform X="7" Y="1"/>
+                                    <TranslateTransform X="7" Y="2"/>
                                     <ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
                                 </TransformGroup>
                             </Canvas.RenderTransform>
