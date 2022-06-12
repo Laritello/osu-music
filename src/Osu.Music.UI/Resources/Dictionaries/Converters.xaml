@@ -19,4 +19,5 @@
     <convert:PlayerObjectToStringConverter x:Key="PlayerObjectToStringConverter"/>
     <convert:SelectedPageToToggleCheckCovnerter x:Key="SelectedPageToToggleCheckCovnerter"/>
     <convert:SongTitleColumnConverter x:Key="SongTitleColumnConverter"/>
+    <convert:BeatmapToImageConverter x:Key="BeatmapToImageConverter"/>
 </ResourceDictionary>

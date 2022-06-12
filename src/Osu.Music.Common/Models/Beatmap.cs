@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using Osu.Music.Common.Asynchronous;
+using Osu.Music.Common.Utility;
 using Prism.Mvvm;
 using System;
 using System.Drawing;
@@ -168,5 +170,12 @@ namespace Osu.Music.Common.Models
         {
             return base.GetHashCode();
         }
+
+        //public NotifyTaskCompletion<Bitmap> Image { get; private set; }
+
+        //public Beatmap()
+        //{
+        //    Image = new NotifyTaskCompletion<Bitmap>(BackgroundRepository.GetImageAsync(this));
+        //}
     }
 }
