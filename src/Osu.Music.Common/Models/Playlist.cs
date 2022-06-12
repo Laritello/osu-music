@@ -37,11 +37,11 @@ namespace Osu.Music.Common.Models
 
         public void UpdateMaps(ICollection<Beatmap> beatmaps)
         {
-            var id = Beatmaps.Select(x => x.BeatmapSetID).ToList();
-            var playlistBeatmaps = beatmaps.Where(x => id.Contains(x.BeatmapSetID)).ToList();
+            var id = Beatmaps.Select(x => x.BeatmapSetId).ToList();
+            var playlistBeatmaps = beatmaps.Where(x => id.Contains(x.BeatmapSetId)).ToList();
 
             for (int i = 0; i < Beatmaps.Count; i++)
-                Beatmaps[i] = playlistBeatmaps.Where(x => x.BeatmapSetID == Beatmaps[i].BeatmapSetID).FirstOrDefault() ?? Beatmaps[i];
+                Beatmaps[i] = playlistBeatmaps.Where(x => x.BeatmapSetId == Beatmaps[i].BeatmapSetId).FirstOrDefault() ?? Beatmaps[i];
         }
 
         #region IEditableObject Implemantation

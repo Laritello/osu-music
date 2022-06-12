@@ -11,7 +11,7 @@
 
             <Style x:Key="ArtistStyle" TargetType="{x:Type TextBlock}">
                 <Setter Property="FontSize" Value="14"/>
-                <Setter Property="FontWeight" Value="Light"/>
+                <Setter Property="FontWeight" Value="Regular"/>
                 <Setter Property="Foreground" Value="White"/>
             </Style>
         </Style.Resources>
@@ -43,8 +43,9 @@
                                             <Condition Property="Selector.IsSelectionActive" Value="False"/>
                                             <Condition Property="IsSelected" Value="True"/>
                                         </MultiTrigger.Conditions>
-                                        <Setter Property="Background" TargetName="Bd" Value="LightGray"/>
-                                        <Setter Property="BorderBrush" TargetName="Bd" Value="LightGray"/>
+                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource SolidColorBrushMain}"/>
+                                        <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource SolidColorBrushMain}"/>
+                                        <Setter Property="Foreground" Value="White"/>
                                     </MultiTrigger>
                                     <MultiTrigger>
                                         <MultiTrigger.Conditions>
