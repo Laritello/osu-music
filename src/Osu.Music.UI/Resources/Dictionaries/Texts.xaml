@@ -8,7 +8,7 @@
 
     <Style x:Key="PlayerBeatmapArtist" TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="14"/>
-        <Setter Property="FontWeight" Value="Light"/>
+        <Setter Property="FontWeight" Value="Regular"/>
         <Setter Property="Foreground" Value="White"/>
     </Style>
 
