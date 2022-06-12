@@ -34,7 +34,7 @@
             </Border>
             <Button Style="{DynamicResource SettingsButton}" Command="{Binding OpenSettingsCommand}" HorizontalAlignment="Right"/>
             <StackPanel Grid.Column="1"  HorizontalAlignment="Right" Orientation="Horizontal">
-                <Button Style="{StaticResource TitleBarUpdates}" Visibility="{Binding DataContext.Updater.State, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Converter={StaticResource UpdateStateToVisibilityConverter}, FallbackValue=Collapsed}"
+                <Button Style="{StaticResource TitleBarUpdates}" Visibility="{Binding DataContext.Updater.State, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Converter={StaticResource UpdateStateToVisibilityConverter}, FallbackValue=Visible}"
                         Command="{Binding DataContext.UpdateAppCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
                 <Button Style="{StaticResource TitleBarGitHub}" Command="{Binding OpenGitHubCommand}"/>
                 <Button Style="{StaticResource TitleBarMinimize}" Command="{Binding MinimizeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
