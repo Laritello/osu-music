@@ -136,4 +136,30 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="{x:Type ToolTip}">
+        <Setter Property="Placement" Value="Center"/>
+        <Setter Property="VerticalOffset" Value="{Binding Path=PlacementTarget.ActualHeight, RelativeSource={RelativeSource Mode=Self}}"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Background">
+            <Setter.Value>
+                <SolidColorBrush Color="{DynamicResource ColorMainLight}" Opacity="1.0"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToolTip}">
+                    <StackPanel Margin="10 20 10 10" HorizontalAlignment="Center">
+                        <StackPanel.Effect>
+                            <DropShadowEffect BlurRadius="5" ShadowDepth="0" Direction="0"/>
+                        </StackPanel.Effect>
+                        <Polygon Points="0,5 5,0, 10,5" Stroke="#333333" Fill="#333333" HorizontalAlignment="Center"/>
+                        <Border CornerRadius="5" Background="#333333" Padding="5">
+                            <ContentPresenter/>
+                        </Border>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
