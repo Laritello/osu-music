@@ -119,7 +119,6 @@ namespace Osu.Music.Services.Audio
                 var pos = (value - topRange) / (bottomRange - topRange);
                 data[i] = 1 - pos;
             }
-                
 
             return data;
         }
@@ -131,13 +130,12 @@ namespace Osu.Music.Services.Audio
             double logMax = Math.Log(max);
             double delta = (logMax - logMin) / logBins;
 
-
             double accDelta = 0;
             double[] v = new double[logBins + 1];
             for (int i = 0; i <= logBins; ++i)
             {
                 v[i] = Math.Pow(logarithmicBase, logMin + accDelta);
-                accDelta += delta;// accDelta = delta * i
+                accDelta += delta; // accDelta = delta * i
             }
 
             v[^1] = max;
@@ -151,13 +149,12 @@ namespace Osu.Music.Services.Audio
             double logMax = Math.Log(max);
             double delta = (logMax - logMin) / logBins;
 
-
             double accDelta = 0;
             double[] v = new double[logBins + 1];
             for (int i = 0; i <= logBins; ++i)
             {
                 v[i] = Math.Pow(logarithmicBase, logMin + accDelta);
-                accDelta += delta;// accDelta = delta * i
+                accDelta += delta; // accDelta = delta * i
             }
 
             v[^1] = max;

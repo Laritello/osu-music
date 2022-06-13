@@ -31,7 +31,6 @@ namespace Osu.Music.UI.SpectrumAnalyzers
 
                 Bars.Children.Add(bar);
             }
-                
         }
 
         public void Update(FrequencySpectrum spectrum)
