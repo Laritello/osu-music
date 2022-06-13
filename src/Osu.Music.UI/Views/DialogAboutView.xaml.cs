@@ -16,9 +16,9 @@ namespace Osu.Music.UI.Views
     /// <summary>
     /// Логика взаимодействия для AboutView.xaml
     /// </summary>
-    public partial class AboutView : UserControl
+    public partial class DialogAboutView : UserControl
     {
-        public AboutView()
+        public DialogAboutView()
         {
             InitializeComponent();
         }

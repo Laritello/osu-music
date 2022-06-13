@@ -12,7 +12,7 @@ using System.Windows.Media;
 
 namespace Osu.Music.UI.ViewModels
 {
-    public class SettingsViewModel : BindableBase, IDialogAware
+    public class DialogSettingsViewModel : BindableBase, IDialogAware
     {
         public string Title => "Settings";
         public bool CanCloseDialog() => true;
@@ -54,7 +54,7 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand UpdateDiscordRpcCommand { get; private set; }
 
         private ColorStringConverter colorConverter = new ColorStringConverter();
-        public SettingsViewModel()
+        public DialogSettingsViewModel()
         {
             ResourceDictionary resource = Application.Current.Resources;
             Color = resource.MergedDictionaries.GetMainColor().ToHex();

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Osu.Music.UI.Views.AboutView"
+﻿<UserControl x:Class="Osu.Music.UI.Views.DialogAboutView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -13,7 +13,7 @@
                 <TextBlock Style="{DynamicResource LinkText}" Text="{Binding name}">
                     <TextBlock.InputBindings>
                         <MouseBinding MouseAction="LeftClick"
-                                      Command="{Binding DataContext.OpenRepositoryCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:AboutView}}}"
+                                      Command="{Binding DataContext.OpenRepositoryCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:DialogAboutView}}}"
                                       CommandParameter="{Binding repository}"/>
                     </TextBlock.InputBindings>
                 </TextBlock>
@@ -39,7 +39,7 @@
                     <TextBlock FontFamily="{DynamicResource MaterialIcons}" Text="&#xf01f;" FontSize="100" Foreground="White"/>
                     <TextBlock Text="osu.Music" Style="{DynamicResource MenuHeader}" HorizontalAlignment="Center" Margin="0" FontSize="16" Foreground="White"/>
                     <TextBlock Style="{DynamicResource MenuDefault}" HorizontalAlignment="Center" Margin="0 5 0 20" FontSize="16" Foreground="White"
-                           Text="{Binding DataContext.Version, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:AboutView}}}"/>
+                           Text="{Binding DataContext.Version, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:DialogAboutView}}}"/>
                 </StackPanel>
             </Border>
             <ScrollViewer Grid.Row="1" Margin="0 5 0 0">
@@ -49,13 +49,13 @@
                             <TextBlock Text="License" Style="{DynamicResource MenuHeader}" VerticalAlignment="Center" Padding="0 0 0 0"/>
                         </Expander.Header>
                         <TextBlock Style="{DynamicResource LicenseText}" Margin="39 0 0 0" TextWrapping="Wrap"
-                               Text="{Binding DataContext.Licenses.application.sourceText, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:AboutView}}}"/>
+                               Text="{Binding DataContext.Licenses.application.sourceText, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:DialogAboutView}}}"/>
                     </Expander>
                     <Expander>
                         <Expander.Header>
                             <TextBlock Text="Open Source Notices" Style="{DynamicResource MenuHeader}" VerticalAlignment="Center" Padding="0 0 0 0"/>
                         </Expander.Header>
-                        <ItemsControl ItemsSource="{Binding DataContext.Licenses.notices, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:AboutView}}}" ItemTemplate="{StaticResource LicenseTemplate}"
+                        <ItemsControl ItemsSource="{Binding DataContext.Licenses.notices, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:DialogAboutView}}}" ItemTemplate="{StaticResource LicenseTemplate}"
                               ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>

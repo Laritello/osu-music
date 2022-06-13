@@ -388,7 +388,7 @@ namespace Osu.Music.UI.ViewModels
 
         private void OpenAbout()
         {
-            Model.DialogService.ShowPopupDialog<AboutView, AboutViewModel>();
+            Model.DialogService.ShowPopupDialog<DialogAboutView, DialogAboutViewModel>();
         }
 
         private void OpenSettings()
@@ -399,7 +399,7 @@ namespace Osu.Music.UI.ViewModels
                 { "hotkey", HotkeyManager },
                 { "discord", DiscordManager }
             };
-            Model.DialogService.ShowPopupDialog<SettingsView, SettingsViewModel>(parameters, callback => { });
+            Model.DialogService.ShowPopupDialog<DialogSettingsView, DialogSettingsViewModel>(parameters, callback => { });
         }
 
         private void OpenBeatmapInExplorer(Beatmap beatmap)
