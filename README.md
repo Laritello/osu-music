@@ -4,6 +4,7 @@
 [![.NET](https://github.com/Laritello/osu-music/actions/workflows/dotnet.yml/badge.svg)](https://github.com/Laritello/osu-music/actions/workflows/dotnet.yml)
 [![CodeFactor](https://www.codefactor.io/repository/github/laritello/osu-music/badge)](https://www.codefactor.io/repository/github/laritello/osu-music)
 [![GitHub issues](https://img.shields.io/github/issues/Laritello/osu-music)](https://github.com/Laritello/osu-music/issues)
+[![Release](https://img.shields.io/github/v/release/laritello/osu-music?display_name=release)](https://github.com/Laritello/osu-music/releases/latest)
 
 **osu.Music** is a simple music player for osu! players that want to access their beatmap library without launching the game. It is easy to use because player will automatically find osu! installation folder and import current list of beatmaps. Currently osu.Music is in aplha version, which means that it's only barebone player that offers only basic player functions. More features such as collections import, custom playlists and more are planned in the future releases.
 
