@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace Osu.Music.UI.ViewModels
 {
-    public class AboutViewModel : BindableBase, IDialogAware
+    public class DialogAboutViewModel : BindableBase, IDialogAware
     {
         private dynamic _licenses;
         public dynamic Licenses
@@ -29,7 +29,7 @@ namespace Osu.Music.UI.ViewModels
 
         public string Title => throw new NotImplementedException();
 
-        public AboutViewModel()
+        public DialogAboutViewModel()
         {
             Version = ReadVersion();
             Licenses = AppDataHelper.GetLicenses();

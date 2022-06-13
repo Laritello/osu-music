@@ -16,9 +16,9 @@ namespace Osu.Music.UI.Views
     /// <summary>
     /// Логика взаимодействия для SettingsView.xaml
     /// </summary>
-    public partial class SettingsView : UserControl
+    public partial class DialogSettingsView : UserControl
     {
-        public SettingsView()
+        public DialogSettingsView()
         {
             InitializeComponent();
         }

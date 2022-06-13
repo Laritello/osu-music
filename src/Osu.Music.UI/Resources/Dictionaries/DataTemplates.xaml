@@ -6,14 +6,14 @@
                                  xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                     xmlns:vm="clr-namespace:Osu.Music.UI.ViewModels"
                     xmlns:v="clr-namespace:Osu.Music.UI.Views">
-    <DataTemplate DataType="{x:Type vm:AboutViewModel}">
-        <v:AboutView/>
+    <DataTemplate DataType="{x:Type vm:DialogAboutViewModel}">
+        <v:DialogAboutView/>
     </DataTemplate>
     <DataTemplate DataType="{x:Type vm:SongsViewModel}">
         <v:SongsView/>
     </DataTemplate>
-    <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
-        <v:SettingsView/>
+    <DataTemplate DataType="{x:Type vm:DialogSettingsViewModel}">
+        <v:DialogSettingsView/>
     </DataTemplate>
     <DataTemplate DataType="{x:Type vm:PlaylistsViewModel}">
         <v:PlaylistsView/>

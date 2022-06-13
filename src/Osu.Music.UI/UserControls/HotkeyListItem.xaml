@@ -10,7 +10,7 @@
         <TextBlock Name="LabelName" Width="400" Text="{Binding ElementName=HotkeyItem, Path=Type, Converter={StaticResource HotkeyTypeToStringConverter}}" Padding="0 6 0 0"/>
         <TextBlock Name="LabelHotkey" FontWeight="Bold" Width="150" Height="30" Text="{Binding ElementName=HotkeyItem, Path=Combination, Converter={StaticResource KeyCombinationToStringConverter}}" Padding="0 6 0 0"/>
         <ToggleButton Name="ButtonEdit" Width="30" Height="30" Style="{DynamicResource HotkeyEditButton}" 
-                      Command="{Binding DataContext.HotkeyManager.SetEditedHotkeyCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type views:SettingsView}}}"
+                      Command="{Binding DataContext.HotkeyManager.SetEditedHotkeyCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type views:DialogSettingsView}}}"
                       CommandParameter="{Binding ElementName=HotkeyItem, Path=Type}">
             <ToggleButton.IsChecked>
                 <MultiBinding Converter="{StaticResource SelectedHotkeyToBooleanConverter}" Mode="OneWay">
