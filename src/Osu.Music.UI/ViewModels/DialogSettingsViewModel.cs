@@ -1,4 +1,5 @@
 ﻿using Osu.Music.Common.Models;
+using Osu.Music.Services.Dialog;
 using Osu.Music.Services.Hotkeys;
 using Osu.Music.Services.IO;
 using Osu.Music.Services.UItility;
@@ -8,14 +9,20 @@ using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using System;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Media;
 
 namespace Osu.Music.UI.ViewModels
 {
     public class DialogSettingsViewModel : BindableBase, IDialogAware
     {
-        public string Title => "Settings";
-        public bool CanCloseDialog() => true;
+        #region Properties
+        private string _title;
+        public string Title
+        {
+            get => _title;
+            set => SetProperty(ref _title, value);
+        }
 
         private string _color;
         public string Color
@@ -24,7 +31,7 @@ namespace Osu.Music.UI.ViewModels
             set
             {
                 SetProperty(ref _color, value);
-                UpdateColor((Color)colorConverter.Convert(value, typeof(Color), null, null));
+                UpdateColor((Color)_colorConverter.Convert(value, typeof(Color), null, null));
             }
         }
 
@@ -48,19 +55,43 @@ namespace Osu.Music.UI.ViewModels
             get => _discordManager;
             set => SetProperty(ref _discordManager, value);
         }
+        #endregion
 
-        public event Action<IDialogResult> RequestClose;
+        #region Commands
         public DelegateCommand<Color?> UpdateColorCommand { get; private set; }
         public DelegateCommand UpdateDiscordRpcCommand { get; private set; }
+        public DelegateCommand UpdateOsuFolderCommand { get; private set; }
+        #endregion
 
-        private ColorStringConverter colorConverter = new ColorStringConverter();
+        #region Variables
+        private IValueConverter _colorConverter;
+        private IFileDialogService _fileDialogService;
+        #endregion
+
+        #region Events
+        public event Action<IDialogResult> RequestClose;
+        #endregion
+
         public DialogSettingsViewModel()
+        {
+            _colorConverter = new ColorStringConverter();
+            _fileDialogService = new FileDialogService();
+
+            InitializeColor();
+            InitializeCommands();
+        }
+
+        private void InitializeColor()
         {
             ResourceDictionary resource = Application.Current.Resources;
             Color = resource.MergedDictionaries.GetMainColor().ToHex();
+        }
 
+        private void InitializeCommands()
+        {
             UpdateColorCommand = new DelegateCommand<Color?>(UpdateColor);
             UpdateDiscordRpcCommand = new DelegateCommand(UpdateDiscordRpc);
+            UpdateOsuFolderCommand = new DelegateCommand(UpdateOsuFolder);
         }
 
         private void UpdateColor(Color? color)
@@ -84,6 +115,18 @@ namespace Osu.Music.UI.ViewModels
                 DiscordManager.ClearPresence();
         }
 
+        private void UpdateOsuFolder()
+        {
+            var result = _fileDialogService.ShowOpenFolderDialog(out string path);
+
+            if (result)
+            {
+                Settings.OsuFolder = path;
+                SettingsManager.Save(Settings);
+            }
+        }
+
+        #region IDialogAware Implementation
         public void OnDialogClosed() 
         {
             if (Settings != null)
@@ -98,5 +141,8 @@ namespace Osu.Music.UI.ViewModels
 
             _color = Settings.MainColor;
         }
+
+        public bool CanCloseDialog() => true;
+        #endregion
     }
 }
