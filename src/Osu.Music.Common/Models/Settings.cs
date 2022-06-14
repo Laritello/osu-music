@@ -27,6 +27,13 @@ namespace Osu.Music.Common.Models
             set => SetProperty(ref _mainColor, value);
         }
 
+        private bool _hotkeysEnabled;
+        public bool HotkeysEnabled
+        {
+            get => _hotkeysEnabled;
+            set => SetProperty(ref _hotkeysEnabled, value);
+        }
+
         private ICollection<Hotkey> _hotkeys;
         public ICollection<Hotkey> Hotkeys
         {
@@ -50,6 +57,7 @@ namespace Osu.Music.Common.Models
         public Settings()
         {
             MainColor = "#FF800080";
+            HotkeysEnabled = true;
             DiscordRpcEnabled = true;
             InitializeHotkeys();
         }
