@@ -136,6 +136,7 @@ namespace Osu.Music.UI.ViewModels
         private void InitializeSettings()
         {
             Settings = SettingsManager.Load();
+            Settings.OsuFolderChanged += Settings_OsuFolderChanged;
 
             ResourceDictionary resource = Application.Current.Resources;
             resource.MergedDictionaries.SetMainColor(Settings.MainColor);
@@ -478,6 +479,11 @@ namespace Osu.Music.UI.ViewModels
         private void Playback_FftCalculated(object sender, FftEventArgs e)
         {
             Visualization.OnFftCalculated(e.Result);
+        }
+
+        private void Settings_OsuFolderChanged(string path)
+        {
+            LoadData();
         }
         #endregion
 
