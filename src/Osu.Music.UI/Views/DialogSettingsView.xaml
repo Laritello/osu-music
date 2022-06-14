@@ -41,6 +41,14 @@
                     </materialDesign:ColorPicker>
 
                     <TextBlock Text="Hotkeys" Style="{DynamicResource MenuHeader}"/>
+                    <Grid Margin="0 0 0 10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Enabled" Width="543"/>
+                        <ToggleButton IsChecked="{Binding Settings.HotkeysEnabled}" Grid.Column="1"/>
+                    </Grid>
                     <ItemsControl ItemsSource="{Binding HotkeyManager.Hotkeys}" ItemTemplate="{StaticResource HotkeyTemplate}"
                               ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
                                Margin="0 0 0 50">
