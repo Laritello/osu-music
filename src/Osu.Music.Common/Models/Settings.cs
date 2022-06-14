@@ -1,5 +1,6 @@
 ﻿using Osu.Music.Common.Enums;
 using Prism.Mvvm;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -7,11 +8,16 @@ namespace Osu.Music.Common.Models
 {
     public class Settings : BindableBase
     {
+        #region Properties
         private string _osuFolder;
         public string OsuFolder
         {
             get => _osuFolder;
-            set => SetProperty(ref _osuFolder, value);
+            set
+            {
+                SetProperty(ref _osuFolder, value);
+                OsuFolderChanged?.Invoke(_osuFolder);
+            }
         }
 
         private string _mainColor;
@@ -34,6 +40,12 @@ namespace Osu.Music.Common.Models
             get => _discordRpcEnabled;
             set => SetProperty(ref _discordRpcEnabled, value);
         }
+        #endregion
+
+        #region Events
+        public delegate void OsuFolderChangedEventHander(string path);
+        public event OsuFolderChangedEventHander OsuFolderChanged;
+        #endregion
 
         public Settings()
         {
