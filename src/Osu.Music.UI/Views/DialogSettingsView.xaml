@@ -26,6 +26,16 @@
         <Grid>
             <ScrollViewer>
                 <StackPanel Orientation="Vertical" Margin="5">
+                    <TextBlock Text="Osu Folder" Style="{DynamicResource MenuHeader}"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding Settings.OsuFolder}" Margin="0 0 10 0"/>
+                        <Button Content="Change" Command="{Binding UpdateOsuFolderCommand}" Grid.Column="1" Margin="5 0 0 0"/>
+                    </Grid>
+
                     <TextBlock Text="Player Color" Style="{DynamicResource MenuHeader}"/>
                     <materialDesign:ColorPicker Name="ColorPicker" Height="200" Color="{Binding Color, Converter={StaticResource ColorStringConverter}}" Margin="0 0 0 50">
                     </materialDesign:ColorPicker>

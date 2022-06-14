@@ -379,7 +379,7 @@
         <Setter Property="Content">
             <Setter.Value>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
-                    <TextBlock x:Name="Logo" FontFamily="{DynamicResource MaterialIcons}" FontSize="22" Text="&#xe8b8;" Margin="0 0 3 0" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="Logo" FontFamily="{DynamicResource MaterialIcons}" FontSize="22" Text="&#xe8b8;" VerticalAlignment="Center"/>
                 </StackPanel>
             </Setter.Value>
         </Setter>

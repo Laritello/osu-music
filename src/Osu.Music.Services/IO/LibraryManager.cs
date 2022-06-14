@@ -16,20 +16,27 @@ namespace Osu.Music.Services.IO
         {
             return await Task.Run(() =>
             {
-                if (!Directory.Exists(osuFolder))
-                    throw new ArgumentException("The specified folder does not exist.");
+                try
+                {
+                    if (!Directory.Exists(osuFolder))
+                        throw new ArgumentException("The specified folder does not exist.");
 
-                ObservableCollection<Beatmap> beatmaps = new ObservableCollection<Beatmap>();
+                    ObservableCollection<Beatmap> beatmaps = new ObservableCollection<Beatmap>();
 
-                OsuDb db;
+                    OsuDb db;
 
-                using (FileStream stream = File.OpenRead($@"{osuFolder}\osu!.db"))
-                    db = OsuDb.Read(stream);
+                    using (FileStream stream = File.OpenRead($@"{osuFolder}\osu!.db"))
+                        db = OsuDb.Read(stream);
 
-                foreach (var beatmap in db.Beatmaps.DistinctBy(x => x.BeatmapSetId).OrderBy(x => x.Title))
-                    beatmaps.Add(Convert(osuFolder, beatmap));
+                    foreach (var beatmap in db.Beatmaps.DistinctBy(x => x.BeatmapSetId).OrderBy(x => x.Title))
+                        beatmaps.Add(Convert(osuFolder, beatmap));
 
-                return beatmaps;
+                    return beatmaps;
+                }
+                catch
+                {
+                    return new ObservableCollection<Beatmap>();
+                }
             });
         }
 
