@@ -490,6 +490,9 @@ namespace Osu.Music.UI.ViewModels
         #region Hotkeys
         private void HotkeyManager_HotkeyUsed(object sender, HotkeyEventArgs e)
         {
+            if (!Settings.HotkeysEnabled)
+                return;
+
             switch (e.Type)
             {
                 case HotkeyType.PlayPause:
