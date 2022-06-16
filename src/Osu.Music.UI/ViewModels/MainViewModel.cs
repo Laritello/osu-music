@@ -5,6 +5,7 @@ using Osu.Music.Services.Dialog;
 using Osu.Music.Services.Events;
 using Osu.Music.Services.Hotkeys;
 using Osu.Music.Services.IO;
+using Osu.Music.Services.Search;
 using Osu.Music.Services.UItility;
 using Osu.Music.UI.Interfaces;
 using Osu.Music.UI.Models;
@@ -459,7 +460,7 @@ namespace Osu.Music.UI.ViewModels
 
         private void Search(string request)
         {
-
+            var result = BeatmapSearch.Search(Model.SelectedBeatmaps, request);
         }
 
         private void OpenGitHub()
