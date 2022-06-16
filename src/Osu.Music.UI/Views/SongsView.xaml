@@ -24,9 +24,11 @@
                     <TextBlock FontFamily="{DynamicResource Roboto}" Foreground="{DynamicResource SolidColorBrushMain}" 
                                FontSize="16" FontWeight="DemiBold" Margin="7 10 0 10" DockPanel.Dock="Left"
                                Text="Songs"/>
-                    <TextBox Style="{DynamicResource SearchText}" Grid.Column="1" MinWidth="200"/>
+                    <TextBox x:Name="SearchField" Style="{DynamicResource SearchText}" Grid.Column="1" MinWidth="200"/>
                     <Button Style="{DynamicResource PlaylistAction}" Foreground="{DynamicResource SolidColorBrushMain}" Content="&#xe8b6;" FontSize="18"
-                            HorizontalAlignment="Right" Margin="0 0 10 0" Grid.Column="2"/>
+                            HorizontalAlignment="Right" Margin="0 0 10 0" Grid.Column="2"
+                            Command="{Binding DataContext.SearchCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}"
+                            CommandParameter="{Binding ElementName=SearchField, Path=Text}"/>
                 </Grid>
                 <ListView x:Name="SongsList" Style="{DynamicResource ListViewBeatmaps}" Grid.Row="1" 
                   ItemsSource="{Binding DataContext.Model.Beatmaps, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}" 
