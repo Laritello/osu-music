@@ -29,6 +29,8 @@ namespace Osu.Music.Services.Search.Queries
                 "artist" => new ArtistQuery(value),
                 "creator" => new CreatorQuery(value),
                 "mapper" => new CreatorQuery(value),
+                "tag" => new TagQuery(value),
+                "tags" => new TagQuery(value),
                 _ => new GeneralQuery(query),
             };
         }
