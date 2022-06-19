@@ -1,22 +1,22 @@
 ﻿using Osu.Music.Common.Models;
 using Osu.Music.Services.Search.Queries;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Osu.Music.Services.Search
 {
     public static class BeatmapSearch
     {
-        public static ICollection<Beatmap> Search(ICollection<Beatmap> source, string query)
+        public static ObservableCollection<Beatmap> Search(ICollection<Beatmap> source, string query)
         {
             var queries = BuildQueries(query);
 
             if (queries.Count == 0)
-                return new List<Beatmap>();
+                return new ObservableCollection<Beatmap>();
 
-            return source.Where(x => queries.All(q => q.Check(x))).ToList();
+            return new ObservableCollection<Beatmap>(source.Where(x => queries.All(q => q.Check(x))));
         }
-        //dragonforce artist:alan walker title: (Vocal) You
 
         private static ICollection<SearchQuery> BuildQueries(string query)
         {
