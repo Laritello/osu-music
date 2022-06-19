@@ -1,5 +1,6 @@
 ﻿using Osu.Music.Common.Models;
 using Osu.Music.Services.Search;
+using Prism.Commands;
 using Prism.Mvvm;
 using System.Collections.ObjectModel;
 
@@ -34,12 +35,20 @@ namespace Osu.Music.UI.ViewModels
             set => SetProperty(ref _request, value); 
         }
 
+        public DelegateCommand SearchCommand { get; set; }
+
         public SearchViewModel(ObservableCollection<Beatmap> beatmaps, string request = null)
         {
             Beatmaps = beatmaps;
             Request = request;
 
+            InitializeCommands();
             Search();
+        }
+
+        private void InitializeCommands()
+        {
+            SearchCommand = new DelegateCommand(Search);
         }
 
         private void Search() => Result = BeatmapSearch.Search(Beatmaps, Request);
