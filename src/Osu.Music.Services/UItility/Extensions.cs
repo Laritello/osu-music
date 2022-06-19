@@ -106,5 +106,7 @@ namespace Osu.Music.Services.UItility
                 sorted[(int)Math.Ceiling(size / 2.0) - 1] :
                 (sorted[(size / 2) - 1] + sorted[size / 2]) / 2;
         }
+
+        public static bool ContainsLower(this string source, string value) => source.ToLower().Contains(value.ToLower());
     }
 }

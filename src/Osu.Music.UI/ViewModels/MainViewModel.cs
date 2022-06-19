@@ -5,6 +5,7 @@ using Osu.Music.Services.Dialog;
 using Osu.Music.Services.Events;
 using Osu.Music.Services.Hotkeys;
 using Osu.Music.Services.IO;
+using Osu.Music.Services.Search;
 using Osu.Music.Services.UItility;
 using Osu.Music.UI.Interfaces;
 using Osu.Music.UI.Models;
@@ -112,6 +113,7 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand<Playlist> SelectPlaylistAndPlayCommand { get; private set; }
         public DelegateCommand<Playlist> DeletePlaylistCommand { get; private set; }
         public DelegateCommand<Beatmap> RemoveBeatmapFromPlaylistCommand { get; private set; }
+        public DelegateCommand<string> SearchCommand { get; set; }
         #endregion
 
         private DispatcherTimer _audioProgressTimer;
@@ -162,6 +164,7 @@ namespace Osu.Music.UI.ViewModels
             SelectPlaylistAndPlayCommand = new DelegateCommand<Playlist>(SelectPlaylistAndPlay);
             DeletePlaylistCommand = new DelegateCommand<Playlist>(DeletePlaylist);
             RemoveBeatmapFromPlaylistCommand = new DelegateCommand<Beatmap>(RemoveBeatmapFromPlaylist);
+            SearchCommand = new DelegateCommand<string>(Search);
         }
         
         private void InitializePlayback()
@@ -384,6 +387,9 @@ namespace Osu.Music.UI.ViewModels
                 case "Playlists":
                     SelectedPage = new PlaylistsViewModel(Model.Playlists,Model.DialogService);
                     break;
+                case "Search":
+                    SelectedPage = new SearchViewModel(Model.Beatmaps);
+                    break;
             }
         }
 
@@ -453,6 +459,11 @@ namespace Osu.Music.UI.ViewModels
         {
             Model.SelectedPlaylist.Beatmaps.Remove(beatmap);
             PlaylistManager.Save(Model.SelectedPlaylist);
+        }
+
+        private void Search(string request)
+        {
+            SelectedPage = new SearchViewModel(Model.Beatmaps, request);
         }
 
         private void OpenGitHub()

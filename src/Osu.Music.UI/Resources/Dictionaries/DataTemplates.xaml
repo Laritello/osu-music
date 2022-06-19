@@ -18,6 +18,9 @@
     <DataTemplate DataType="{x:Type vm:PlaylistsViewModel}">
         <v:PlaylistsView/>
     </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:SearchViewModel}">
+        <v:SearchView/>
+    </DataTemplate>
 
     <DataTemplate x:Key="PlaylistTile" DataType="{x:Type cm:Playlist}">
         <Border BorderBrush="{DynamicResource SolidColorBrushMainBorder}" Background="White" BorderThickness="1" CornerRadius="5" Height="210" Width="160" Margin="5">

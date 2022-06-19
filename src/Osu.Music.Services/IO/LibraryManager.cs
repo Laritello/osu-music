@@ -45,16 +45,16 @@ namespace Osu.Music.Services.IO
             return new Beatmap()
             {
                 BeatmapSetId = entry.BeatmapSetId,
-                Title = entry.Title,
-                TitleUnicode = entry.TitleUnicode,
-                Artist = entry.Artist,
-                ArtistUnicode = entry.ArtistUnicode,
-                Creator = entry.Creator,
-                AudioFileName = entry.AudioFileName,
+                Title = entry.Title ?? string.Empty,
+                TitleUnicode = entry.TitleUnicode ?? string.Empty,
+                Artist = entry.Artist ?? string.Empty,
+                ArtistUnicode = entry.ArtistUnicode ?? string.Empty,
+                Creator = entry.Creator ?? string.Empty,
+                AudioFileName = entry.AudioFileName ?? string.Empty,
                 TotalTime = TimeSpan.FromMilliseconds(entry.TotalTime),
-                Tags = entry.SongTags,
+                Tags = entry.SongTags ?? string.Empty,
                 Directory = $@"{osuFolder}\Songs\{entry.FolderName}",
-                FileName = entry.BeatmapFileName
+                FileName = entry.BeatmapFileName ?? string.Empty
             };
         }
 

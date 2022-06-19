@@ -1,10 +1,9 @@
-﻿<UserControl x:Class="Osu.Music.UI.Views.SongsView"
+﻿<UserControl x:Class="Osu.Music.UI.Views.SearchView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Osu.Music.UI.Views"
-             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:m="clr-namespace:Osu.Music.Common.Models;assembly=Osu.Music.Common"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -23,21 +22,18 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock FontFamily="{DynamicResource Roboto}" Foreground="{DynamicResource SolidColorBrushMain}" 
                                FontSize="16" FontWeight="DemiBold" Margin="7 10 0 10" DockPanel.Dock="Left"
-                               Text="Songs"/>
-                    <TextBox x:Name="SearchField" Style="{DynamicResource SearchText}" Grid.Column="1" MinWidth="200">
+                               Text="Search"/>
+                    <TextBox x:Name="SearchField" Style="{DynamicResource SearchText}" Text="{Binding Request, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" MinWidth="200">
                         <TextBox.InputBindings>
-                            <KeyBinding Command="{Binding DataContext.SearchCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}" 
-                                        CommandParameter="{Binding ElementName=SearchField, Path=Text}"
-                                        Key="Return"/>
+                            <KeyBinding Command="{Binding SearchCommand}" Key="Return"/>
                         </TextBox.InputBindings>
                     </TextBox>
                     <Button Style="{DynamicResource PlaylistAction}" Foreground="{DynamicResource SolidColorBrushMain}" Content="&#xe8b6;" FontSize="18"
                             HorizontalAlignment="Right" Margin="0 0 10 0" Grid.Column="2"
-                            Command="{Binding DataContext.SearchCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}"
-                            CommandParameter="{Binding ElementName=SearchField, Path=Text}"/>
+                            Command="{Binding SearchCommand}"/>
                 </Grid>
                 <ListView x:Name="SongsList" Style="{DynamicResource ListViewBeatmaps}" Grid.Row="1" 
-                  ItemsSource="{Binding DataContext.Model.Beatmaps, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}" 
+                  ItemsSource="{Binding Result}" 
                   SelectedItem="{Binding DataContext.Model.SelectedBeatmap, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}" 
                   Tag="{Binding Path=DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}"
                   HorizontalContentAlignment="Stretch">
@@ -50,7 +46,7 @@
                                         <MouseBinding.CommandParameter>
                                             <MultiBinding Converter="{StaticResource MultipleParametersConverter}">
                                                 <Binding Path="SelectedItem" RelativeSource="{RelativeSource AncestorType=ListView}"/>
-                                                <Binding Path="DataContext.Model.Beatmaps" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}"/>
+                                                <Binding Path="DataContext.Result" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:SearchView}}"/>
                                             </MultiBinding>
                                         </MouseBinding.CommandParameter>
                                     </MouseBinding>
