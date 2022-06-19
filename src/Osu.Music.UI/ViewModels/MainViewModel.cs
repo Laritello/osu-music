@@ -460,7 +460,7 @@ namespace Osu.Music.UI.ViewModels
 
         private void Search(string request)
         {
-            var result = BeatmapSearch.Search(Model.Beatmaps, request);
+            SelectedPage = new SearchViewModel(this, Model.Beatmaps, request);
         }
 
         private void OpenGitHub()
