@@ -28,7 +28,7 @@ namespace Osu.Music.Services.Search
                 var values = query.Split(' ');
                 var requests = new List<string>();
 
-                List<string> tags = new List<string>() { "title", "artist" };
+                List<string> tags = new List<string>() { "title", "artist", "creator", "mapper" };
 
                 List<int> indexes = new List<int>();
 
