@@ -512,6 +512,17 @@
         </Setter>
     </Style>
 
+    <Style x:Key="SidebarButtonSearch" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource SidebarToggleButtonBase}">
+        <Setter Property="Content">
+            <Setter.Value>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                    <TextBlock FontFamily="{DynamicResource MaterialIconsOutlined}" FontSize="24" Text="&#xe8b6;" Margin="5 0 10 0" VerticalAlignment="Center"/>
+                    <TextBlock Text="SEARCH" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 
     <Style x:Key="TitleBarButtonStyle" TargetType="Button">
         <Setter Property="Foreground" Value="{DynamicResource WindowTextBrush}" />

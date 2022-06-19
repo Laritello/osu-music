@@ -387,6 +387,9 @@ namespace Osu.Music.UI.ViewModels
                 case "Playlists":
                     SelectedPage = new PlaylistsViewModel(Model.Playlists,Model.DialogService);
                     break;
+                case "Search":
+                    SelectedPage = new SearchViewModel(Model.Beatmaps);
+                    break;
             }
         }
 
@@ -460,7 +463,7 @@ namespace Osu.Music.UI.ViewModels
 
         private void Search(string request)
         {
-            SelectedPage = new SearchViewModel(this, Model.Beatmaps, request);
+            SelectedPage = new SearchViewModel(Model.Beatmaps, request);
         }
 
         private void OpenGitHub()
