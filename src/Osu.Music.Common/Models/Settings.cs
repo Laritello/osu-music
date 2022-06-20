@@ -1,7 +1,6 @@
 ﻿using Osu.Music.Common.Enums;
 using Osu.Music.Common.Structures;
 using Prism.Mvvm;
-using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 

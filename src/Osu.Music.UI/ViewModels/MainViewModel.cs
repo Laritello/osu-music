@@ -5,11 +5,9 @@ using Osu.Music.Services.Dialog;
 using Osu.Music.Services.Events;
 using Osu.Music.Services.Hotkeys;
 using Osu.Music.Services.IO;
-using Osu.Music.Services.Search;
 using Osu.Music.Services.UItility;
 using Osu.Music.UI.Interfaces;
 using Osu.Music.UI.Models;
-using Osu.Music.UI.Parameters;
 using Osu.Music.UI.Views;
 using Osu.Music.UI.Visualization;
 using Prism.Commands;
@@ -17,11 +15,10 @@ using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -130,8 +127,9 @@ namespace Osu.Music.UI.ViewModels
             InitializeAudioProgressTimer();
             InitializeHotkeys();
             InitializeDiscord();
-            
-            LoadData();
+
+            LoadState();
+            Load();
         }
 
         #region Initialization
@@ -212,7 +210,7 @@ namespace Osu.Music.UI.ViewModels
         }
         #endregion
 
-        private async void LoadData()
+        private async void Load()
         {
             try
             {
@@ -226,6 +224,12 @@ namespace Osu.Music.UI.ViewModels
                 Model.Playlists = await PlaylistManager.LoadAsync(Model.Beatmaps);
 
                 SelectedPage = new SongsViewModel();
+
+                if (Model.PlaybackInitializationRequired)
+                {
+                    Model.PlaybackInitializationRequired = false;
+                    LoadSavedPlayback();
+                }
             }
             catch(Exception E)
             {
@@ -494,7 +498,35 @@ namespace Osu.Music.UI.ViewModels
 
         private void Settings_OsuFolderChanged(string path)
         {
-            LoadData();
+            Load();
+        }
+        #endregion
+
+        #region General Methods
+        private void LoadState()
+        {
+            Random = Settings.State.Shuffle;
+            Repeat = Settings.State.Repeat;
+            Playback.Volume = Settings.State.Volume;
+
+            Model.PlaybackInitializationRequired = Settings.State.SelectedBeatmapId.HasValue;
+        }
+
+        private void LoadSavedPlayback()
+        {
+            var beatmap = Model.Beatmaps.Where(x => x.BeatmapSetId == Settings.State.SelectedBeatmapId).FirstOrDefault();
+
+            if (beatmap != null)
+            {
+                Model.SelectedBeatmap = beatmap;
+                Model.SelectedBeatmaps = Model.Beatmaps;
+                Playback.Beatmap = beatmap;
+                Playback.Load();
+                Playback.Position = Settings.State.Position;
+
+                if (Settings.State.IsPlaying)
+                    Playback.Play();
+            }
         }
         #endregion
 

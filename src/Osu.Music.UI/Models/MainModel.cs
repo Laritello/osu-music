@@ -101,6 +101,13 @@ namespace Osu.Music.UI.Models
             set => SetProperty(ref _progress, value);
         }
 
+        private bool _playbackInitializationRequired;
+        public bool PlaybackInitializationRequired
+        {
+            get => _playbackInitializationRequired;
+            set => SetProperty(ref _playbackInitializationRequired, value);
+        }
+
         private IPopupDialogService _dialogService;
         public IPopupDialogService DialogService
         {
