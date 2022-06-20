@@ -1,5 +1,6 @@
 ﻿using Osu.Music.Common.Enums;
 using Osu.Music.Common.Models;
+using Osu.Music.Common.Structures;
 using Osu.Music.Services.Audio;
 using Osu.Music.Services.Dialog;
 using Osu.Music.Services.Events;
@@ -8,6 +9,7 @@ using Osu.Music.Services.IO;
 using Osu.Music.Services.UItility;
 using Osu.Music.UI.Interfaces;
 using Osu.Music.UI.Models;
+using Osu.Music.UI.Utility;
 using Osu.Music.UI.Views;
 using Osu.Music.UI.Visualization;
 using Prism.Commands;
@@ -20,6 +22,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Threading;
 
 namespace Osu.Music.UI.ViewModels
@@ -110,7 +114,9 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand<Playlist> SelectPlaylistAndPlayCommand { get; private set; }
         public DelegateCommand<Playlist> DeletePlaylistCommand { get; private set; }
         public DelegateCommand<Beatmap> RemoveBeatmapFromPlaylistCommand { get; private set; }
-        public DelegateCommand<string> SearchCommand { get; set; }
+        public DelegateCommand<string> SearchCommand { get; private set; }
+        public DelegateCommand<RoutedEventArgs> OnLoadedCommand { get; private set; }
+        public DelegateCommand OnCloseCommand { get; private set; }
         #endregion
 
         private DispatcherTimer _audioProgressTimer;
@@ -163,6 +169,8 @@ namespace Osu.Music.UI.ViewModels
             DeletePlaylistCommand = new DelegateCommand<Playlist>(DeletePlaylist);
             RemoveBeatmapFromPlaylistCommand = new DelegateCommand<Beatmap>(RemoveBeatmapFromPlaylist);
             SearchCommand = new DelegateCommand<string>(Search);
+            OnLoadedCommand = new DelegateCommand<RoutedEventArgs>(OnLoaded);
+            OnCloseCommand = new DelegateCommand(OnClose);
         }
         
         private void InitializePlayback()
@@ -468,6 +476,42 @@ namespace Osu.Music.UI.ViewModels
         private void Search(string request)
         {
             SelectedPage = new SearchViewModel(Model.Beatmaps, request);
+        }
+
+        private void OnLoaded(RoutedEventArgs args)
+        {
+            if (args.Source is UserControl view)
+            {
+                Binding b = new Binding()
+                {
+                    Source = view.DataContext,
+                    Path = new PropertyPath("OnCloseCommand"),
+                    UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+                };
+
+                var window = Window.GetWindow(view);
+                window.SetBinding(WindowClosingBehavior.ClosingProperty, b);
+            }
+        }
+
+        private void OnClose()
+        {
+            try
+            {
+                Settings.State = new PlayerState()
+                {
+                    Repeat = Repeat,
+                    Shuffle = Random,
+                    Volume = Playback.Volume,
+                    SelectedBeatmapId = Model.SelectedBeatmap?.BeatmapSetId,
+                    IsPlaying = Playback.PlaybackState == NAudio.Wave.PlaybackState.Playing,
+                    Position = Playback.Position
+                };
+
+                SettingsManager.Save(Settings);
+            } catch
+            {
+            }
         }
 
         private void OpenGitHub()
