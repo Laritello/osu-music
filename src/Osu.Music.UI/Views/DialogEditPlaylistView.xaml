@@ -9,7 +9,7 @@
              xmlns:validators="clr-namespace:Osu.Music.UI.Resources.Validators"
              xmlns:utility="clr-namespace:Osu.Music.UI.Utility"
              xmlns:proxy="clr-namespace:Osu.Music.UI.Utility.Proxies"
-             mc:Ignorable="d" Height="418"
+             mc:Ignorable="d" Height="450"
              Width="450" MinWidth="450" MaxWidth="450">
     <UserControl.Resources>
         <proxy:DialogEditPlaylistProxy x:Key="proxy" Data="{Binding}"/>
@@ -34,7 +34,7 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <Grid Margin="0 24 0 0" Height="230">
+            <Grid Margin="0 24 0 0" Height="262">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="auto"/>
