@@ -1,6 +1,6 @@
 ﻿using Osu.Music.Common.Enums;
+using Osu.Music.Common.Structures;
 using Prism.Mvvm;
-using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -47,6 +47,13 @@ namespace Osu.Music.Common.Models
             get => _discordRpcEnabled;
             set => SetProperty(ref _discordRpcEnabled, value);
         }
+
+        private PlayerState _state;
+        public PlayerState State
+        {
+            get => _state;
+            set => SetProperty(ref _state, value);
+        }
         #endregion
 
         #region Events
@@ -59,6 +66,14 @@ namespace Osu.Music.Common.Models
             MainColor = "#FF800080";
             HotkeysEnabled = true;
             DiscordRpcEnabled = true;
+            State = new PlayerState()
+            {
+                Volume = 0.3f,
+                Shuffle = false,
+                Repeat = false,
+                IsPlaying = false
+            };
+
             InitializeHotkeys();
         }
 

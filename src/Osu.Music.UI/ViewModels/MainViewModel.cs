@@ -1,15 +1,15 @@
 ﻿using Osu.Music.Common.Enums;
 using Osu.Music.Common.Models;
+using Osu.Music.Common.Structures;
 using Osu.Music.Services.Audio;
 using Osu.Music.Services.Dialog;
 using Osu.Music.Services.Events;
 using Osu.Music.Services.Hotkeys;
 using Osu.Music.Services.IO;
-using Osu.Music.Services.Search;
 using Osu.Music.Services.UItility;
 using Osu.Music.UI.Interfaces;
 using Osu.Music.UI.Models;
-using Osu.Music.UI.Parameters;
+using Osu.Music.UI.Utility;
 using Osu.Music.UI.Views;
 using Osu.Music.UI.Visualization;
 using Prism.Commands;
@@ -17,12 +17,13 @@ using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Threading;
 
 namespace Osu.Music.UI.ViewModels
@@ -113,7 +114,9 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand<Playlist> SelectPlaylistAndPlayCommand { get; private set; }
         public DelegateCommand<Playlist> DeletePlaylistCommand { get; private set; }
         public DelegateCommand<Beatmap> RemoveBeatmapFromPlaylistCommand { get; private set; }
-        public DelegateCommand<string> SearchCommand { get; set; }
+        public DelegateCommand<string> SearchCommand { get; private set; }
+        public DelegateCommand<RoutedEventArgs> OnLoadedCommand { get; private set; }
+        public DelegateCommand OnCloseCommand { get; private set; }
         #endregion
 
         private DispatcherTimer _audioProgressTimer;
@@ -130,8 +133,9 @@ namespace Osu.Music.UI.ViewModels
             InitializeAudioProgressTimer();
             InitializeHotkeys();
             InitializeDiscord();
-            
-            LoadData();
+
+            LoadState();
+            Load();
         }
 
         #region Initialization
@@ -165,6 +169,8 @@ namespace Osu.Music.UI.ViewModels
             DeletePlaylistCommand = new DelegateCommand<Playlist>(DeletePlaylist);
             RemoveBeatmapFromPlaylistCommand = new DelegateCommand<Beatmap>(RemoveBeatmapFromPlaylist);
             SearchCommand = new DelegateCommand<string>(Search);
+            OnLoadedCommand = new DelegateCommand<RoutedEventArgs>(OnLoaded);
+            OnCloseCommand = new DelegateCommand(OnClose);
         }
         
         private void InitializePlayback()
@@ -212,7 +218,7 @@ namespace Osu.Music.UI.ViewModels
         }
         #endregion
 
-        private async void LoadData()
+        private async void Load()
         {
             try
             {
@@ -226,6 +232,12 @@ namespace Osu.Music.UI.ViewModels
                 Model.Playlists = await PlaylistManager.LoadAsync(Model.Beatmaps);
 
                 SelectedPage = new SongsViewModel();
+
+                if (Model.PlaybackInitializationRequired)
+                {
+                    Model.PlaybackInitializationRequired = false;
+                    LoadSavedPlayback();
+                }
             }
             catch(Exception E)
             {
@@ -416,10 +428,7 @@ namespace Osu.Music.UI.ViewModels
                 if (beatmap != null && Directory.Exists(beatmap.Directory))
                     Process.Start("explorer.exe", beatmap.Directory);
             }
-            catch
-            {
-                // Ignore
-            }
+            catch {}
         }
 
         private void SendBeatmapToPlaylist(Playlist playlist)
@@ -433,10 +442,7 @@ namespace Osu.Music.UI.ViewModels
             }
         }
 
-        private void SelectPlaylist(Playlist playlist)
-        {
-            Model.SelectedPlaylist = playlist;
-        }
+        private void SelectPlaylist(Playlist playlist) => Model.SelectedPlaylist = playlist;
 
         private void SelectPlaylistAndPlay(Playlist playlist)
         {
@@ -461,15 +467,43 @@ namespace Osu.Music.UI.ViewModels
             PlaylistManager.Save(Model.SelectedPlaylist);
         }
 
-        private void Search(string request)
+        private void Search(string request) => SelectedPage = new SearchViewModel(Model.Beatmaps, request);
+
+        private void OnLoaded(RoutedEventArgs args)
         {
-            SelectedPage = new SearchViewModel(Model.Beatmaps, request);
+            if (args.Source is UserControl view)
+            {
+                Binding b = new Binding()
+                {
+                    Source = view.DataContext,
+                    Path = new PropertyPath("OnCloseCommand"),
+                    UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+                };
+
+                var window = Window.GetWindow(view);
+                window.SetBinding(WindowClosingBehavior.ClosingProperty, b);
+            }
         }
 
-        private void OpenGitHub()
+        private void OnClose()
         {
-            Process.Start(new ProcessStartInfo("cmd", $"/c start https://github.com/Laritello/osu-music") { CreateNoWindow = true });
+            try
+            {
+                Settings.State = new PlayerState()
+                {
+                    Repeat = Repeat,
+                    Shuffle = Random,
+                    Volume = Playback.Volume,
+                    SelectedBeatmapId = Model.SelectedBeatmap?.BeatmapSetId,
+                    IsPlaying = Playback.PlaybackState == NAudio.Wave.PlaybackState.Playing,
+                    Position = Playback.Position
+                };
+
+                SettingsManager.Save(Settings);
+            } catch {}
         }
+
+        private void OpenGitHub() => Process.Start(new ProcessStartInfo("cmd", $"/c start https://github.com/Laritello/osu-music") { CreateNoWindow = true });
 
         #region Handlers
         private void UpdateBeatmapProgress(object sender, EventArgs e)
@@ -487,14 +521,38 @@ namespace Osu.Music.UI.ViewModels
                 NextBeatmap(Model.SelectedBeatmap);
         }
 
-        private void Playback_FftCalculated(object sender, FftEventArgs e)
+        private void Playback_FftCalculated(object sender, FftEventArgs e) => Visualization.OnFftCalculated(e.Result);
+
+        private void Settings_OsuFolderChanged(string path) => Load();
+        #endregion
+
+        #region General Methods
+        private void LoadState()
         {
-            Visualization.OnFftCalculated(e.Result);
+            Random = Settings.State.Shuffle;
+            Repeat = Settings.State.Repeat;
+            Playback.Volume = Settings.State.Volume;
+
+            Model.PlaybackInitializationRequired = Settings.State.SelectedBeatmapId.HasValue;
         }
 
-        private void Settings_OsuFolderChanged(string path)
+        private void LoadSavedPlayback()
         {
-            LoadData();
+            var beatmap = Model.Beatmaps.Where(x => x.BeatmapSetId == Settings.State.SelectedBeatmapId).FirstOrDefault();
+
+            if (beatmap != null)
+            {
+                Model.SelectedBeatmap = beatmap;
+                Model.PlayingBeatmap = beatmap;
+                Model.SelectedBeatmaps = Model.Beatmaps;
+
+                Playback.Beatmap = beatmap;
+                Playback.Load();
+                Playback.Position = Settings.State.Position;
+
+                if (Settings.State.IsPlaying)
+                    Playback.Play();
+            }
         }
         #endregion
 
@@ -547,40 +605,19 @@ namespace Osu.Music.UI.ViewModels
                 PlayBeatmap(Model.SelectedBeatmap);
         }
 
-        private void PreviousBeatmapHotkeyHandler()
-        {
-            PreviousBeatmap(Model.SelectedBeatmap);
-        }
+        private void PreviousBeatmapHotkeyHandler() => PreviousBeatmap(Model.SelectedBeatmap);
 
-        private void NextBeatmapHotkeyHandler()
-        {
-            NextBeatmap(Model.SelectedBeatmap);
-        }
+        private void NextBeatmapHotkeyHandler() => NextBeatmap(Model.SelectedBeatmap);
 
-        private void RepeatHotkeyHandler()
-        {
-            Repeat = !Repeat;
-        }
+        private void RepeatHotkeyHandler() => Repeat = !Repeat;
 
-        private void MuteHotkeyHandler()
-        {
-            MuteVolume(!Playback.Mute);
-        }
+        private void MuteHotkeyHandler() => MuteVolume(!Playback.Mute);
 
-        private void RandomHotkeyHandler()
-        {
-            Random = !Random;
-        }
+        private void RandomHotkeyHandler() => Random = !Random;
 
-        private void VolumeUpHotkeyHandler()
-        {
-            Playback.Volume += 0.05f;
-        }
+        private void VolumeUpHotkeyHandler() => Playback.Volume += 0.05f;
 
-        private void VolumeDownHotkeyHandler()
-        {
-            Playback.Volume -= 0.05f;
-        }
+        private void VolumeDownHotkeyHandler() => Playback.Volume -= 0.05f;
         #endregion
     }
 }
