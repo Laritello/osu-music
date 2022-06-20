@@ -428,10 +428,7 @@ namespace Osu.Music.UI.ViewModels
                 if (beatmap != null && Directory.Exists(beatmap.Directory))
                     Process.Start("explorer.exe", beatmap.Directory);
             }
-            catch
-            {
-                // Ignore
-            }
+            catch {}
         }
 
         private void SendBeatmapToPlaylist(Playlist playlist)
@@ -445,10 +442,7 @@ namespace Osu.Music.UI.ViewModels
             }
         }
 
-        private void SelectPlaylist(Playlist playlist)
-        {
-            Model.SelectedPlaylist = playlist;
-        }
+        private void SelectPlaylist(Playlist playlist) => Model.SelectedPlaylist = playlist;
 
         private void SelectPlaylistAndPlay(Playlist playlist)
         {
@@ -473,10 +467,7 @@ namespace Osu.Music.UI.ViewModels
             PlaylistManager.Save(Model.SelectedPlaylist);
         }
 
-        private void Search(string request)
-        {
-            SelectedPage = new SearchViewModel(Model.Beatmaps, request);
-        }
+        private void Search(string request) => SelectedPage = new SearchViewModel(Model.Beatmaps, request);
 
         private void OnLoaded(RoutedEventArgs args)
         {
@@ -509,15 +500,10 @@ namespace Osu.Music.UI.ViewModels
                 };
 
                 SettingsManager.Save(Settings);
-            } catch
-            {
-            }
+            } catch {}
         }
 
-        private void OpenGitHub()
-        {
-            Process.Start(new ProcessStartInfo("cmd", $"/c start https://github.com/Laritello/osu-music") { CreateNoWindow = true });
-        }
+        private void OpenGitHub() => Process.Start(new ProcessStartInfo("cmd", $"/c start https://github.com/Laritello/osu-music") { CreateNoWindow = true });
 
         #region Handlers
         private void UpdateBeatmapProgress(object sender, EventArgs e)
@@ -535,15 +521,9 @@ namespace Osu.Music.UI.ViewModels
                 NextBeatmap(Model.SelectedBeatmap);
         }
 
-        private void Playback_FftCalculated(object sender, FftEventArgs e)
-        {
-            Visualization.OnFftCalculated(e.Result);
-        }
+        private void Playback_FftCalculated(object sender, FftEventArgs e) => Visualization.OnFftCalculated(e.Result);
 
-        private void Settings_OsuFolderChanged(string path)
-        {
-            Load();
-        }
+        private void Settings_OsuFolderChanged(string path) => Load();
         #endregion
 
         #region General Methods
@@ -625,40 +605,19 @@ namespace Osu.Music.UI.ViewModels
                 PlayBeatmap(Model.SelectedBeatmap);
         }
 
-        private void PreviousBeatmapHotkeyHandler()
-        {
-            PreviousBeatmap(Model.SelectedBeatmap);
-        }
+        private void PreviousBeatmapHotkeyHandler() => PreviousBeatmap(Model.SelectedBeatmap);
 
-        private void NextBeatmapHotkeyHandler()
-        {
-            NextBeatmap(Model.SelectedBeatmap);
-        }
+        private void NextBeatmapHotkeyHandler() => NextBeatmap(Model.SelectedBeatmap);
 
-        private void RepeatHotkeyHandler()
-        {
-            Repeat = !Repeat;
-        }
+        private void RepeatHotkeyHandler() => Repeat = !Repeat;
 
-        private void MuteHotkeyHandler()
-        {
-            MuteVolume(!Playback.Mute);
-        }
+        private void MuteHotkeyHandler() => MuteVolume(!Playback.Mute);
 
-        private void RandomHotkeyHandler()
-        {
-            Random = !Random;
-        }
+        private void RandomHotkeyHandler() => Random = !Random;
 
-        private void VolumeUpHotkeyHandler()
-        {
-            Playback.Volume += 0.05f;
-        }
+        private void VolumeUpHotkeyHandler() => Playback.Volume += 0.05f;
 
-        private void VolumeDownHotkeyHandler()
-        {
-            Playback.Volume -= 0.05f;
-        }
+        private void VolumeDownHotkeyHandler() => Playback.Volume -= 0.05f;
         #endregion
     }
 }
