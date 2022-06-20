@@ -26,6 +26,8 @@ namespace Osu.Music.UI.ViewModels
 
         public event Action<IDialogResult> RequestClose;
         public DelegateCommand<dynamic> OpenRepositoryCommand { get; private set; }
+        public DelegateCommand ConfirmCommand { get; private set; }
+        public DelegateCommand CancelCommand { get; private set; }
 
         public string Title => throw new NotImplementedException();
 
@@ -34,6 +36,8 @@ namespace Osu.Music.UI.ViewModels
             Version = ReadVersion();
             Licenses = AppDataHelper.GetLicenses();
             OpenRepositoryCommand = new DelegateCommand<dynamic>(OpenRepository);
+            ConfirmCommand = new DelegateCommand(Confirm);
+            CancelCommand = new DelegateCommand(Cancel);
         }
 
         private string ReadVersion()
@@ -45,6 +49,16 @@ namespace Osu.Music.UI.ViewModels
         private void OpenRepository(dynamic url)
         {
             Process.Start(new ProcessStartInfo("cmd", $"/c start {(string)url}") { CreateNoWindow = true });
+        }
+
+        private void Cancel()
+        {
+            RequestClose?.Invoke(new DialogResult(ButtonResult.Cancel));
+        }
+
+        private void Confirm()
+        {
+            RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
         }
 
         public bool CanCloseDialog() => true;

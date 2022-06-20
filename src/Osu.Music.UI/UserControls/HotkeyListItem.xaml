@@ -7,7 +7,7 @@
              xmlns:views="clr-namespace:Osu.Music.UI.Views"
              mc:Ignorable="d" Name="HotkeyItem">
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Height="30">
-        <TextBlock Name="LabelName" Width="400" Text="{Binding ElementName=HotkeyItem, Path=Type, Converter={StaticResource HotkeyTypeToStringConverter}}" Padding="0 6 0 0"/>
+        <TextBlock Name="LabelName" Width="384" Text="{Binding ElementName=HotkeyItem, Path=Type, Converter={StaticResource HotkeyTypeToStringConverter}}" Padding="0 6 0 0"/>
         <TextBlock Name="LabelHotkey" FontWeight="Bold" Width="150" Height="30" Text="{Binding ElementName=HotkeyItem, Path=Combination, Converter={StaticResource KeyCombinationToStringConverter}}" Padding="0 6 0 0"/>
         <ToggleButton Name="ButtonEdit" Width="30" Height="30" Style="{DynamicResource HotkeyEditButton}" 
                       Command="{Binding DataContext.HotkeyManager.SetEditedHotkeyCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type views:DialogSettingsView}}}"
