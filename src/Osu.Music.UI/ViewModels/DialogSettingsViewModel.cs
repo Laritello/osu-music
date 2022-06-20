@@ -61,6 +61,8 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand<Color?> UpdateColorCommand { get; private set; }
         public DelegateCommand UpdateDiscordRpcCommand { get; private set; }
         public DelegateCommand UpdateOsuFolderCommand { get; private set; }
+        public DelegateCommand ConfirmCommand { get; private set; }
+        public DelegateCommand CancelCommand { get; private set; }
         #endregion
 
         #region Variables
@@ -92,6 +94,8 @@ namespace Osu.Music.UI.ViewModels
             UpdateColorCommand = new DelegateCommand<Color?>(UpdateColor);
             UpdateDiscordRpcCommand = new DelegateCommand(UpdateDiscordRpc);
             UpdateOsuFolderCommand = new DelegateCommand(UpdateOsuFolder);
+            ConfirmCommand = new DelegateCommand(Confirm);
+            CancelCommand = new DelegateCommand(Cancel);
         }
 
         private void UpdateColor(Color? color)
@@ -124,6 +128,16 @@ namespace Osu.Music.UI.ViewModels
                 Settings.OsuFolder = path;
                 SettingsManager.Save(Settings);
             }
+        }
+
+        private void Cancel()
+        {
+            RequestClose?.Invoke(new DialogResult(ButtonResult.Cancel));
+        }
+
+        private void Confirm()
+        {
+            RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
         }
 
         #region IDialogAware Implementation

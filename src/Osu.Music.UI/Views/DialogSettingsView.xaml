@@ -19,71 +19,81 @@
                                SelectedHotkey="{Binding DataContext.HotkeyManager.EditedHotkey, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:DialogSettingsView}}}"/>
         </DataTemplate>
     </UserControl.Resources>
-    <Border Background="White" CornerRadius="5" Padding="0 5 0 5">
-        <Border.Effect>
-            <DropShadowEffect BlurRadius="15" ShadowDepth="0" Direction="0"/>
-        </Border.Effect>
-        <Grid>
-            <ScrollViewer>
-                <StackPanel Orientation="Vertical" Margin="5">
-                    <TextBlock Text="Osu Folder" Style="{DynamicResource MenuHeader}"/>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="100"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding Settings.OsuFolder}" Margin="0 0 10 0"/>
-                        <Button Content="Change" Command="{Binding UpdateOsuFolderCommand}" Grid.Column="1" Margin="5 0 0 0"/>
-                    </Grid>
+    <Grid Margin="0 16 0 16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <ScrollViewer Margin="16 0 0 0">
+            <StackPanel Orientation="Vertical" Margin="5">
+                <TextBlock Text="Osu Folder" Style="{DynamicResource MenuHeader}"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="{Binding Settings.OsuFolder}" Margin="0 0 10 0"/>
+                    <Button Content="Change" Command="{Binding UpdateOsuFolderCommand}" Grid.Column="1" Margin="5 0 0 0"/>
+                </Grid>
 
-                    <TextBlock Text="Player Color" Style="{DynamicResource MenuHeader}"/>
-                    <materialDesign:ColorPicker Name="ColorPicker" Height="200" Color="{Binding Color, Converter={StaticResource ColorStringConverter}}" Margin="0 0 0 50">
-                    </materialDesign:ColorPicker>
+                <TextBlock Text="Player Color" Style="{DynamicResource MenuHeader}"/>
+                <materialDesign:ColorPicker Name="ColorPicker" Height="200" Color="{Binding Color, Converter={StaticResource ColorStringConverter}}" Margin="0 0 0 50">
+                </materialDesign:ColorPicker>
 
-                    <TextBlock Text="Hotkeys" Style="{DynamicResource MenuHeader}"/>
-                    <Grid Margin="0 0 0 10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="auto"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Enabled" Width="543"/>
-                        <ToggleButton IsChecked="{Binding Settings.HotkeysEnabled}" Grid.Column="1"/>
-                    </Grid>
-                    <ItemsControl ItemsSource="{Binding HotkeyManager.Hotkeys}" ItemTemplate="{StaticResource HotkeyTemplate}"
+                <TextBlock Text="Hotkeys" Style="{DynamicResource MenuHeader}"/>
+                <Grid Margin="0 0 0 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Enabled" Width="527"/>
+                    <ToggleButton IsChecked="{Binding Settings.HotkeysEnabled}" Grid.Column="1"/>
+                </Grid>
+                <ItemsControl ItemsSource="{Binding HotkeyManager.Hotkeys}" ItemTemplate="{StaticResource HotkeyTemplate}"
                               ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
                                Margin="0 0 0 50">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
 
-                        <ItemsControl.Template>
-                            <ControlTemplate TargetType="ItemsControl">
-                                <ItemsPresenter/>
-                            </ControlTemplate>
-                        </ItemsControl.Template>
-                    </ItemsControl>
-                    <TextBlock Text="Social" Style="{DynamicResource MenuHeader}"/>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Show current beatmap in Discord activity" Width="530"/>
-                        <CheckBox x:Name="CheckBoxDiscordRpc" Style="{DynamicResource CheckBoxAsToggleStyle}" IsChecked="{Binding Settings.DiscordRpcEnabled}">
-                            <i:Interaction.Triggers>
-                                <!--Not very MVVM of me-->
-                                <i:EventTrigger EventName="Checked">
-                                    <prism:InvokeCommandAction Command="{Binding UpdateDiscordRpcCommand}"
+                    <ItemsControl.Template>
+                        <ControlTemplate TargetType="ItemsControl">
+                            <ItemsPresenter/>
+                        </ControlTemplate>
+                    </ItemsControl.Template>
+                </ItemsControl>
+                <TextBlock Text="Social" Style="{DynamicResource MenuHeader}"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Show current beatmap in Discord activity" Width="514"/>
+                    <CheckBox x:Name="CheckBoxDiscordRpc" Style="{DynamicResource CheckBoxAsToggleStyle}" IsChecked="{Binding Settings.DiscordRpcEnabled}">
+                        <i:Interaction.Triggers>
+                            <!--Not very MVVM of me-->
+                            <i:EventTrigger EventName="Checked">
+                                <prism:InvokeCommandAction Command="{Binding UpdateDiscordRpcCommand}"
                                                CommandParameter="{Binding ElementName=CheckBoxDiscordRpc, Path=IsChecked}" />
-                                </i:EventTrigger>
+                            </i:EventTrigger>
 
-                                <i:EventTrigger EventName="Unchecked">
-                                    <prism:InvokeCommandAction Command="{Binding UpdateDiscordRpcCommand}"
+                            <i:EventTrigger EventName="Unchecked">
+                                <prism:InvokeCommandAction Command="{Binding UpdateDiscordRpcCommand}"
                                                CommandParameter="{Binding ElementName=CheckBoxDiscordRpc, Path=IsChecked}" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </CheckBox>
-                    </StackPanel>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </CheckBox>
                 </StackPanel>
-            </ScrollViewer>
-        </Grid>
-    </Border>
+            </StackPanel>
+        </ScrollViewer>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2"
+                    Margin="0 16 16 0">
+            <Button IsDefault="True" Style="{StaticResource MaterialDesignFlatButton}"
+                    Command="{Binding ConfirmCommand}" Cursor="Hand" Visibility="Hidden">
+                SAVE
+            </Button>
+            <Button IsCancel="True" Margin="8 0 0 0" Style="{StaticResource MaterialDesignFlatButton}"
+                    Command="{Binding CancelCommand}" Cursor="Hand">
+                CLOSE
+            </Button>
+        </StackPanel>
+    </Grid>
 </UserControl>
