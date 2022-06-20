@@ -563,7 +563,9 @@ namespace Osu.Music.UI.ViewModels
             if (beatmap != null)
             {
                 Model.SelectedBeatmap = beatmap;
+                Model.PlayingBeatmap = beatmap;
                 Model.SelectedBeatmaps = Model.Beatmaps;
+
                 Playback.Beatmap = beatmap;
                 Playback.Load();
                 Playback.Position = Settings.State.Position;
