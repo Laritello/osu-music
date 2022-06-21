@@ -9,22 +9,22 @@
 **osu.Music** is a simple music player for osu! players that want to access their beatmap library without launching the game. It is easy to use because player will automatically find osu! installation folder and import current list of beatmaps. Currently osu.Music is in aplha version, which means that it's only barebone player that offers only basic player functions. More features such as collections import, custom playlists and more are planned in the future releases.
 
 <p align="center">
-  <img width=800 src="https://i.imgur.com/lfU1TfU.png">
+  <img width=800 src="https://i.imgur.com/75EMfs3.png">
 </p>
 
 ## Features
 
-* Basic music player features
-* Playlists
-* Auto-import from osu! library
 * Audio visualization
+* Auto-import from osu! library
+* Basic music player features
 * Customizable UI color scheme
-* Global hotkeys
 * Discord RPC
+* Global hotkeys
+* Playlists
+* Search
 
 ## Planned features
 
-* Search
 * More visualizations
 * Mini player
 
