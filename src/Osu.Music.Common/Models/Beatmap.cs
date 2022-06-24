@@ -3,6 +3,7 @@ using Osu.Music.Common.Asynchronous;
 using Osu.Music.Common.Utility;
 using Prism.Mvvm;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 
@@ -141,15 +142,15 @@ namespace Osu.Music.Common.Models
             set => SetProperty(ref _fileName, value);
         }
 
-        private string _hash;
+        private ICollection<string> _hashes;
         /// <summary>
         /// Hash of the .osu file
         /// </summary>
         [JsonIgnore]
-        public string Hash
+        public ICollection<string> Hashes
         {
-            get => _hash;
-            set => SetProperty(ref _hash, value);
+            get => _hashes;
+            set => SetProperty(ref _hashes, value);
         }
 
         /// <summary>
@@ -184,9 +185,10 @@ namespace Osu.Music.Common.Models
 
         //public NotifyTaskCompletion<Bitmap> Image { get; private set; }
 
-        //public Beatmap()
-        //{
-        //    Image = new NotifyTaskCompletion<Bitmap>(BackgroundRepository.GetImageAsync(this));
-        //}
+        public Beatmap()
+        {
+            Hashes = new List<string>();
+            //Image = new NotifyTaskCompletion<Bitmap>(BackgroundRepository.GetImageAsync(this));
+        }
     }
 }

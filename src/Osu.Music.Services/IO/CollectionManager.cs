@@ -44,7 +44,7 @@ namespace Osu.Music.Services.IO
 
         private static ObservableCollection<Beatmap> GetCollectionBeatmaps(IList<Beatmap> beatmaps, List<string> hashes)
         {
-            return new ObservableCollection<Beatmap>(beatmaps.Where(x => hashes.Contains(x.Hash)));
+            return new ObservableCollection<Beatmap>(beatmaps.Where(x => hashes.Any(y => x.Hashes.Contains(y))));
         }
     }
 }
