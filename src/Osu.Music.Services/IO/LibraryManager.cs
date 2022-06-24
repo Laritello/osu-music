@@ -28,8 +28,11 @@ namespace Osu.Music.Services.IO
                     using (FileStream stream = File.OpenRead($@"{osuFolder}\osu!.db"))
                         db = OsuDb.Read(stream);
 
-                    foreach (var beatmap in db.Beatmaps.DistinctBy(x => x.BeatmapSetId).OrderBy(x => x.Title))
-                        beatmaps.Add(Convert(osuFolder, beatmap));
+                    foreach (var beatmapSet in db.Beatmaps.GroupBy(x => x.BeatmapSetId))
+                    {
+                        if (beatmapSet.Count() > 0)
+                            beatmaps.Add(Convert(osuFolder, beatmapSet));
+                    }
 
                     return beatmaps;
                 }
@@ -40,8 +43,10 @@ namespace Osu.Music.Services.IO
             });
         }
 
-        private static Beatmap Convert(string osuFolder, BeatmapEntry entry)
+        private static Beatmap Convert(string osuFolder, IGrouping<int, BeatmapEntry> set)
         {
+            var entry = set.First();
+
             return new Beatmap()
             {
                 BeatmapSetId = entry.BeatmapSetId,
@@ -55,9 +60,11 @@ namespace Osu.Music.Services.IO
                 Tags = entry.SongTags ?? string.Empty,
                 Directory = $@"{osuFolder}\Songs\{entry.FolderName}",
                 FileName = entry.BeatmapFileName ?? string.Empty,
-                Hash = entry.BeatmapChecksum ?? string.Empty,
+                Hashes = GetSetHashes(set),
             };
         }
+
+        private static List<string> GetSetHashes(IGrouping<int, BeatmapEntry> set) => set.Select(x => x.BeatmapChecksum).ToList();
 
         public static IEnumerable<TSource> DistinctBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
         {
