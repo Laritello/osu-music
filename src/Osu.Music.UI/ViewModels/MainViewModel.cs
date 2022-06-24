@@ -230,6 +230,7 @@ namespace Osu.Music.UI.ViewModels
 
                 Model.Beatmaps = await LibraryManager.LoadAsync(Settings.OsuFolder);
                 Model.Playlists = await PlaylistManager.LoadAsync(Model.Beatmaps);
+                Model.Collections = await CollectionManager.LoadAsync(Settings.OsuFolder, Model.Beatmaps);
 
                 SelectedPage = new SongsViewModel();
 

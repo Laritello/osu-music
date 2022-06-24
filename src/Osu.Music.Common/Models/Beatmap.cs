@@ -141,6 +141,17 @@ namespace Osu.Music.Common.Models
             set => SetProperty(ref _fileName, value);
         }
 
+        private string _hash;
+        /// <summary>
+        /// Hash of the .osu file
+        /// </summary>
+        [JsonIgnore]
+        public string Hash
+        {
+            get => _hash;
+            set => SetProperty(ref _hash, value);
+        }
+
         /// <summary>
         /// Full path to audio file.
         /// </summary>

@@ -54,7 +54,8 @@ namespace Osu.Music.Services.IO
                 TotalTime = TimeSpan.FromMilliseconds(entry.TotalTime),
                 Tags = entry.SongTags ?? string.Empty,
                 Directory = $@"{osuFolder}\Songs\{entry.FolderName}",
-                FileName = entry.BeatmapFileName ?? string.Empty
+                FileName = entry.BeatmapFileName ?? string.Empty,
+                Hash = entry.BeatmapChecksum ?? string.Empty,
             };
         }
 
