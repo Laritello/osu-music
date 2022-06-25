@@ -14,7 +14,7 @@ namespace Osu.Music.Services.Search.Queries
             if (beatmap == null)
                 return false;
 
-            return beatmap.Artist.ContainsLower(Value) 
+            return beatmap.Artist.ContainsLower(Value)
                 || beatmap.ArtistUnicode.ContainsLower(Value);
         }
     }

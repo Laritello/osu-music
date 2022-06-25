@@ -1,5 +1,4 @@
-﻿using Osu.Music.UI.ViewModels;
-using System.Windows;
+﻿using System.Windows;
 
 namespace Osu.Music.UI.Utility.Proxies
 {

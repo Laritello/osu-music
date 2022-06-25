@@ -70,9 +70,29 @@ namespace Osu.Music.UI.Models
             set => SetProperty(ref _playlists, value);
         }
 
+        private ObservableCollection<Collection> _collections;
+        /// <summary>
+        /// Collection of osu! collections.
+        /// </summary>
+        public ObservableCollection<Collection> Collections
+        {
+            get => _collections;
+            set => SetProperty(ref _collections, value);
+        }
+
+        private Collection _selectedCollection;
+        /// <summary>
+        /// Selected osu! collection.
+        /// </summary>
+        public Collection SelectedCollection
+        {
+            get => _selectedCollection;
+            set => SetProperty(ref _selectedCollection, value);
+        }
+
         private Playlist _selectedPlaylist;
         /// <summary>
-        /// Collection of user-created playlists.
+        /// Selected user-created playlist.
         /// </summary>
         public Playlist SelectedPlaylist
         {
@@ -120,6 +140,7 @@ namespace Osu.Music.UI.Models
         {
             PreviousBeatmaps = new Stack<Beatmap>(100);
             Playlists = new ObservableCollection<Playlist>();
+            Collections = new ObservableCollection<Collection>();
         }
     }
 }

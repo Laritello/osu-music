@@ -3,11 +3,11 @@
 namespace Osu.Music.UI.Views
 {
     /// <summary>
-    /// Логика взаимодействия для AboutView.xaml
+    /// Логика взаимодействия для CollectionsView.xaml
     /// </summary>
-    public partial class DialogAboutView : UserControl
+    public partial class CollectionsView : UserControl
     {
-        public DialogAboutView()
+        public CollectionsView()
         {
             InitializeComponent();
         }

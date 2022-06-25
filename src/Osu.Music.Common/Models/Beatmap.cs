@@ -1,9 +1,7 @@
 ﻿using Newtonsoft.Json;
-using Osu.Music.Common.Asynchronous;
-using Osu.Music.Common.Utility;
 using Prism.Mvvm;
 using System;
-using System.Drawing;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Osu.Music.Common.Models
@@ -141,6 +139,17 @@ namespace Osu.Music.Common.Models
             set => SetProperty(ref _fileName, value);
         }
 
+        private ICollection<string> _hashes;
+        /// <summary>
+        /// Hash of the .osu file
+        /// </summary>
+        [JsonIgnore]
+        public ICollection<string> Hashes
+        {
+            get => _hashes;
+            set => SetProperty(ref _hashes, value);
+        }
+
         /// <summary>
         /// Full path to audio file.
         /// </summary>
@@ -151,7 +160,7 @@ namespace Osu.Music.Common.Models
         /// Full path to background image file.
         /// </summary>
         [JsonIgnore]
-        public string BackgroundFilePath { get =>  (Directory == null || BackgroundFileName == null) ? "" : Path.Combine(Directory, BackgroundFileName); }
+        public string BackgroundFilePath { get => (Directory == null || BackgroundFileName == null) ? "" : Path.Combine(Directory, BackgroundFileName); }
 
         public override bool Equals(object obj)
         {
@@ -173,9 +182,10 @@ namespace Osu.Music.Common.Models
 
         //public NotifyTaskCompletion<Bitmap> Image { get; private set; }
 
-        //public Beatmap()
-        //{
-        //    Image = new NotifyTaskCompletion<Bitmap>(BackgroundRepository.GetImageAsync(this));
-        //}
+        public Beatmap()
+        {
+            Hashes = new List<string>();
+            //Image = new NotifyTaskCompletion<Bitmap>(BackgroundRepository.GetImageAsync(this));
+        }
     }
 }

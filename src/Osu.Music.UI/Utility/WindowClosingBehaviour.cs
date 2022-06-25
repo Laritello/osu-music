@@ -1,7 +1,6 @@
 ﻿using Prism.Commands;
 using System.ComponentModel;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace Osu.Music.UI.Utility
 {

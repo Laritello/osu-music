@@ -80,8 +80,8 @@
             <StackPanel Orientation="Vertical" Margin="0 50 0 0">
                 <ToggleButton Style="{DynamicResource SidebarButtonAllSongs}" IsChecked="{Binding SelectedPage, Converter={StaticResource SelectedPageToToggleCheckCovnerter}, ConverterParameter=SongsViewModel, Mode=OneWay}" Command="{Binding OpenPageCommand}" CommandParameter="Songs"/>
                 <ToggleButton Style="{DynamicResource SidebarButtonPlaylists}" IsChecked="{Binding SelectedPage, Converter={StaticResource SelectedPageToToggleCheckCovnerter}, ConverterParameter=PlaylistsViewModel, Mode=OneWay}" Command="{Binding OpenPageCommand}" CommandParameter="Playlists"/>
+                <ToggleButton Style="{DynamicResource SidebarButtonCollection}" IsChecked="{Binding SelectedPage, Converter={StaticResource SelectedPageToToggleCheckCovnerter}, ConverterParameter=CollectionsViewModel, Mode=OneWay}" Command="{Binding OpenPageCommand}" CommandParameter="Collections"/>
                 <ToggleButton Style="{DynamicResource SidebarButtonSearch}" IsChecked="{Binding SelectedPage, Converter={StaticResource SelectedPageToToggleCheckCovnerter}, ConverterParameter=SearchViewModel, Mode=OneWay}" Command="{Binding OpenPageCommand}" CommandParameter="Search"/>
-                <ToggleButton Style="{DynamicResource SidebarButtonCollection}" IsEnabled="False"/>
             </StackPanel>
 
             <ContentPresenter x:Name="contentPresenter" Grid.Row="1" Content="{Binding Visualization.Content}"/>

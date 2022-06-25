@@ -21,7 +21,7 @@ namespace Osu.Music.Services.Search.Queries
             if (beatmap == null)
                 return false;
 
-            foreach(var tag in _tags)
+            foreach (var tag in _tags)
             {
                 if (beatmap.Tags.ContainsLower(tag))
                     return true;

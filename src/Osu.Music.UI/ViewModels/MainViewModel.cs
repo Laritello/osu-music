@@ -114,6 +114,8 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand<Playlist> SelectPlaylistAndPlayCommand { get; private set; }
         public DelegateCommand<Playlist> DeletePlaylistCommand { get; private set; }
         public DelegateCommand<Beatmap> RemoveBeatmapFromPlaylistCommand { get; private set; }
+        public DelegateCommand<Collection> SelectCollectionCommand { get; private set; }
+        public DelegateCommand<Collection> SelectCollectionAndPlayCommand { get; private set; }
         public DelegateCommand<string> SearchCommand { get; private set; }
         public DelegateCommand<RoutedEventArgs> OnLoadedCommand { get; private set; }
         public DelegateCommand OnCloseCommand { get; private set; }
@@ -168,18 +170,20 @@ namespace Osu.Music.UI.ViewModels
             SelectPlaylistAndPlayCommand = new DelegateCommand<Playlist>(SelectPlaylistAndPlay);
             DeletePlaylistCommand = new DelegateCommand<Playlist>(DeletePlaylist);
             RemoveBeatmapFromPlaylistCommand = new DelegateCommand<Beatmap>(RemoveBeatmapFromPlaylist);
+            SelectCollectionCommand = new DelegateCommand<Collection>(SelectCollection);
+            SelectCollectionAndPlayCommand = new DelegateCommand<Collection>(SelectCollectionAndPlay);
             SearchCommand = new DelegateCommand<string>(Search);
             OnLoadedCommand = new DelegateCommand<RoutedEventArgs>(OnLoaded);
             OnCloseCommand = new DelegateCommand(OnClose);
         }
-        
+
         private void InitializePlayback()
         {
             Playback = new AudioPlayback();
             Playback.BeatmapEnded += Playback_BeatmapEnded;
             Playback.FftCalculated += Playback_FftCalculated;
         }
-        
+
         private void InitializeAudioProgressTimer()
         {
             _audioProgressTimer = new DispatcherTimer(DispatcherPriority.Render)
@@ -230,6 +234,7 @@ namespace Osu.Music.UI.ViewModels
 
                 Model.Beatmaps = await LibraryManager.LoadAsync(Settings.OsuFolder);
                 Model.Playlists = await PlaylistManager.LoadAsync(Model.Beatmaps);
+                Model.Collections = await CollectionManager.LoadAsync(Settings.OsuFolder, Model.Beatmaps);
 
                 SelectedPage = new SongsViewModel();
 
@@ -239,7 +244,7 @@ namespace Osu.Music.UI.ViewModels
                     LoadSavedPlayback();
                 }
             }
-            catch(Exception E)
+            catch (Exception E)
             {
                 MessageBox.Show(E.Message);
             }
@@ -256,30 +261,7 @@ namespace Osu.Music.UI.ViewModels
             var collection = parameters[1] as ObservableCollection<Beatmap>;
 
             Model.SelectedBeatmaps = collection;
-           
-            // If user tried to start playback without selected song
-            // Select first song if possible
-            CheckBeatmap(ref beatmap);
-
-            // If new song was selected
-            // Update playback
-            if (Playback.Beatmap != beatmap)
-            {
-                Model.PlayingBeatmap = beatmap;
-                Playback.Beatmap = beatmap;
-                Playback.Load();
-
-                DiscordManager.Update(Model.PlayingBeatmap);
-            }
-
-            // TODO: Rework this section
-            if (Playback.PlaybackState != NAudio.Wave.PlaybackState.Paused)
-                Playback.Load();
-
-            if (Playback.PlaybackState == NAudio.Wave.PlaybackState.Paused)
-                DiscordManager.Resume(Playback.CurrentTime);
-
-            Playback.Play();
+            PlayBeatmap(beatmap);
         }
 
         private void PlayBeatmap(Beatmap beatmap)
@@ -397,7 +379,10 @@ namespace Osu.Music.UI.ViewModels
                     SelectedPage = new SongsViewModel();
                     break;
                 case "Playlists":
-                    SelectedPage = new PlaylistsViewModel(Model.Playlists,Model.DialogService);
+                    SelectedPage = new PlaylistsViewModel(Model.Playlists, Model.DialogService);
+                    break;
+                case "Collections":
+                    SelectedPage = new CollectionsViewModel(Model.Collections);
                     break;
                 case "Search":
                     SelectedPage = new SearchViewModel(Model.Beatmaps);
@@ -428,7 +413,7 @@ namespace Osu.Music.UI.ViewModels
                 if (beatmap != null && Directory.Exists(beatmap.Directory))
                     Process.Start("explorer.exe", beatmap.Directory);
             }
-            catch {}
+            catch { }
         }
 
         private void SendBeatmapToPlaylist(Playlist playlist)
@@ -452,6 +437,18 @@ namespace Osu.Music.UI.ViewModels
                 return;
 
             PlayBeatmapAndUpdateCollection(new object[2] { playlist.Beatmaps[0], playlist.Beatmaps });
+        }
+
+        private void SelectCollection(Collection collection) => Model.SelectedCollection = collection;
+
+        private void SelectCollectionAndPlay(Collection collection)
+        {
+            Model.SelectedCollection = collection;
+
+            if (collection.Beatmaps == null || collection.Beatmaps.Count == 0)
+                return;
+
+            PlayBeatmapAndUpdateCollection(new object[2] { collection.Beatmaps[0], collection.Beatmaps });
         }
 
         private void DeletePlaylist(Playlist playlist)
@@ -500,7 +497,8 @@ namespace Osu.Music.UI.ViewModels
                 };
 
                 SettingsManager.Save(Settings);
-            } catch {}
+            }
+            catch { }
         }
 
         private void OpenGitHub() => Process.Start(new ProcessStartInfo("cmd", $"/c start https://github.com/Laritello/osu-music") { CreateNoWindow = true });

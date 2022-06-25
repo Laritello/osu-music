@@ -118,7 +118,7 @@ namespace Osu.Music.Services.Audio
 
         private void CreateDevice()
         {
-            playbackDevice = new WaveOut { DesiredLatency = 200, Volume = _mute ? 0 :_volume };
+            playbackDevice = new WaveOut { DesiredLatency = 200, Volume = _mute ? 0 : _volume };
 
             playbackDevice.PlaybackStopped += (s, a) =>
             {
