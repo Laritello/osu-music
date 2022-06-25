@@ -73,13 +73,6 @@ namespace Osu.Music.UI.ViewModels
             set => SetProperty(ref _selectedPage, value);
         }
 
-        private bool _random;
-        public bool Random
-        {
-            get => _random;
-            set => SetProperty(ref _random, value);
-        }
-
         private IVisualizationPlugin _visualization;
         public IVisualizationPlugin Visualization
         {
@@ -343,7 +336,7 @@ namespace Osu.Music.UI.ViewModels
         private int GetNextMapIndex(Beatmap beatmap)
         {
             int index;
-            if (Random)
+            if (Playback.Shuffle)
             {
                 Random rnd = new Random();
                 index = rnd.Next(0, Model.SelectedBeatmaps.Count);
@@ -482,7 +475,7 @@ namespace Osu.Music.UI.ViewModels
                 Settings.State = new PlayerState()
                 {
                     Repeat = Playback.Repeat,
-                    Shuffle = Random,
+                    Shuffle = Playback.Shuffle,
                     Volume = Playback.Volume,
                     SelectedBeatmapId = Model.SelectedBeatmap?.BeatmapSetId,
                     IsPlaying = Playback.PlaybackState == NAudio.Wave.PlaybackState.Playing,
@@ -520,7 +513,7 @@ namespace Osu.Music.UI.ViewModels
         #region General Methods
         private void LoadState()
         {
-            Random = Settings.State.Shuffle;
+            Playback.Shuffle = Settings.State.Shuffle;
             Playback.Repeat = Settings.State.Repeat;
             Playback.Volume = Settings.State.Volume;
 
@@ -571,7 +564,7 @@ namespace Osu.Music.UI.ViewModels
                     MuteHotkeyHandler();
                     break;
                 case HotkeyType.Shuffle:
-                    RandomHotkeyHandler();
+                    ShuffleHotkeyHandler();
                     break;
                 case HotkeyType.VolumeDown:
                     VolumeDownHotkeyHandler();
@@ -604,7 +597,7 @@ namespace Osu.Music.UI.ViewModels
 
         private void MuteHotkeyHandler() => MuteVolume(!Playback.Mute);
 
-        private void RandomHotkeyHandler() => Random = !Random;
+        private void ShuffleHotkeyHandler() => Playback.Shuffle = !Playback.Shuffle;
 
         private void VolumeUpHotkeyHandler() => Playback.Volume += 0.05f;
 
