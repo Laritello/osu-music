@@ -1,8 +1,4 @@
-﻿using Osu.Music.Common.Models;
-using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Prism.Mvvm;
 
 namespace Osu.Music.UI.ViewModels
 {

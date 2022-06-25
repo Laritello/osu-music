@@ -1,12 +1,12 @@
 ﻿using Osu.Music.Common.Models;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
 using osu_database_reader.BinaryFiles;
 using osu_database_reader.Components.Beatmaps;
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Osu.Music.Services.IO
 {

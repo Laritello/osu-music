@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Osu.Music.Services.Dialog
+﻿namespace Osu.Music.Services.Dialog
 {
     public interface IFileDialogService
     {

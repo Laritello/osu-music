@@ -6,7 +6,7 @@ namespace Osu.Music.Services.Dialog
     {
         private readonly FolderBrowserDialog _folderBrowserDialog = new FolderBrowserDialog();
         private readonly OpenFileDialog _openFileDialog = new OpenFileDialog();
-        
+
         public bool? ShowOpenFileDialog()
         {
             return _openFileDialog.ShowDialog() == DialogResult.OK;

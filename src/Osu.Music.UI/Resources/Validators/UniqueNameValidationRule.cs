@@ -21,7 +21,7 @@ namespace Osu.Music.UI.Resources.Validators
                 return ValidationResult.ValidResult;
 
             var converter = new PlayerObjectToStringConverter();
-            var names = Parameters.Items.Where(x=>x != Parameters.Item).Select(x => converter.Convert(x, typeof(string), null, cultureInfo));
+            var names = Parameters.Items.Where(x => x != Parameters.Item).Select(x => converter.Convert(x, typeof(string), null, cultureInfo));
 
             return names.Contains((value ?? "").ToString())
                 ? new ValidationResult(false, "Field must be unique.")

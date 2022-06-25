@@ -29,7 +29,7 @@ namespace Osu.Music.UI.UserControls
             set => SetValue(ProgressProperty, value);
         }
 
-        public static readonly RoutedEvent ProgressChangedEvent = EventManager.RegisterRoutedEvent("ProgressChanged", RoutingStrategy.Bubble, 
+        public static readonly RoutedEvent ProgressChangedEvent = EventManager.RegisterRoutedEvent("ProgressChanged", RoutingStrategy.Bubble,
             typeof(RoutedEventHandler), typeof(BeatmapProgressBar));
 
         public event RoutedEventHandler ProgressChanged

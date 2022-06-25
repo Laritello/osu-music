@@ -141,13 +141,13 @@ namespace Osu.Music.UI.ViewModels
         }
 
         #region IDialogAware Implementation
-        public void OnDialogClosed() 
+        public void OnDialogClosed()
         {
             if (Settings != null)
                 SettingsManager.Save(Settings);
         }
 
-        public void OnDialogOpened(IDialogParameters parameters) 
+        public void OnDialogOpened(IDialogParameters parameters)
         {
             Settings = parameters.GetValue<Settings>("settings");
             HotkeyManager = parameters.GetValue<HotkeyManager>("hotkey");

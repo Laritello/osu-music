@@ -1,6 +1,5 @@
 ﻿using Osu.Music.Common.Models;
 using Osu.Music.Services.UItility;
-using System;
 
 namespace Osu.Music.Services.Search.Queries
 {
@@ -17,7 +16,7 @@ namespace Osu.Music.Services.Search.Queries
 
             return beatmap.Title.ContainsLower(Value)
                 || beatmap.TitleUnicode.ContainsLower(Value)
-                || beatmap.Artist.ContainsLower(Value) 
+                || beatmap.Artist.ContainsLower(Value)
                 || beatmap.ArtistUnicode.ContainsLower(Value);
         }
     }

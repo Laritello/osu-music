@@ -86,7 +86,7 @@ namespace Osu.Music.Services.IO
                         LargeImageText = $"{beatmap.Title} - {beatmap.Artist}"
                     }
                 });
-            } 
+            }
             else
             {
                 Client.ClearPresence();

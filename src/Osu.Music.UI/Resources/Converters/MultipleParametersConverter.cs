@@ -1,7 +1,4 @@
-﻿using Osu.Music.Common.Models;
-using Osu.Music.UI.Parameters;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Globalization;
 using System.Windows.Data;
 

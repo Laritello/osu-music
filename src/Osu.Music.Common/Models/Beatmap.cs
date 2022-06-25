@@ -1,10 +1,7 @@
 ﻿using Newtonsoft.Json;
-using Osu.Music.Common.Asynchronous;
-using Osu.Music.Common.Utility;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 
 namespace Osu.Music.Common.Models
@@ -163,7 +160,7 @@ namespace Osu.Music.Common.Models
         /// Full path to background image file.
         /// </summary>
         [JsonIgnore]
-        public string BackgroundFilePath { get =>  (Directory == null || BackgroundFileName == null) ? "" : Path.Combine(Directory, BackgroundFileName); }
+        public string BackgroundFilePath { get => (Directory == null || BackgroundFileName == null) ? "" : Path.Combine(Directory, BackgroundFileName); }
 
         public override bool Equals(object obj)
         {

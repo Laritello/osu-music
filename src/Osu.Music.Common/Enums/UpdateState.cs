@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Osu.Music.Common.Enums
+﻿namespace Osu.Music.Common.Enums
 {
     public enum UpdateState
     {

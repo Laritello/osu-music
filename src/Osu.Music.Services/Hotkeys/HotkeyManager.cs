@@ -57,7 +57,7 @@ namespace Osu.Music.Services.Hotkeys
                     CheckHotkeys(e);
                 else
                     SaveHotkey(e);
-            }  
+            }
         }
 
         private bool UpdateModifierKeys(GlobalKeyboardHookEventArgs e)
@@ -100,7 +100,7 @@ namespace Osu.Music.Services.Hotkeys
             Keyboard.Key = e.KeyboardData.Key;
             var currentCombination = Keyboard.Combination;
 
-            foreach (Hotkey hotkey in Hotkeys.Where(x=>x.Combination != null))
+            foreach (Hotkey hotkey in Hotkeys.Where(x => x.Combination != null))
             {
                 if (hotkey.Combination.Equals(currentCombination))
                     TriggerEvent(hotkey.Type);

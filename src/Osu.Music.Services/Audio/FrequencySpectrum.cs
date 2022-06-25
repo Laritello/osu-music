@@ -81,9 +81,9 @@ namespace Osu.Music.Services.Audio
         }
 
         public float[] GetLogarithmicallyScaledSpectrum(
-            int minFrequency = 10, 
-            int maxFrequency = 44100, 
-            int binsCount = 18, 
+            int minFrequency = 10,
+            int maxFrequency = 44100,
+            int binsCount = 18,
             float maxDb = -30,
             float minDb = -90,
             SpectrumSize size = SpectrumSize.Half)

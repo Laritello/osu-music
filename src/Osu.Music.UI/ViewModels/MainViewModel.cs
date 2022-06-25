@@ -176,14 +176,14 @@ namespace Osu.Music.UI.ViewModels
             OnLoadedCommand = new DelegateCommand<RoutedEventArgs>(OnLoaded);
             OnCloseCommand = new DelegateCommand(OnClose);
         }
-        
+
         private void InitializePlayback()
         {
             Playback = new AudioPlayback();
             Playback.BeatmapEnded += Playback_BeatmapEnded;
             Playback.FftCalculated += Playback_FftCalculated;
         }
-        
+
         private void InitializeAudioProgressTimer()
         {
             _audioProgressTimer = new DispatcherTimer(DispatcherPriority.Render)
@@ -244,7 +244,7 @@ namespace Osu.Music.UI.ViewModels
                     LoadSavedPlayback();
                 }
             }
-            catch(Exception E)
+            catch (Exception E)
             {
                 MessageBox.Show(E.Message);
             }
@@ -379,7 +379,7 @@ namespace Osu.Music.UI.ViewModels
                     SelectedPage = new SongsViewModel();
                     break;
                 case "Playlists":
-                    SelectedPage = new PlaylistsViewModel(Model.Playlists,Model.DialogService);
+                    SelectedPage = new PlaylistsViewModel(Model.Playlists, Model.DialogService);
                     break;
                 case "Collections":
                     SelectedPage = new CollectionsViewModel(Model.Collections);
@@ -413,7 +413,7 @@ namespace Osu.Music.UI.ViewModels
                 if (beatmap != null && Directory.Exists(beatmap.Directory))
                     Process.Start("explorer.exe", beatmap.Directory);
             }
-            catch {}
+            catch { }
         }
 
         private void SendBeatmapToPlaylist(Playlist playlist)
@@ -497,7 +497,8 @@ namespace Osu.Music.UI.ViewModels
                 };
 
                 SettingsManager.Save(Settings);
-            } catch {}
+            }
+            catch { }
         }
 
         private void OpenGitHub() => Process.Start(new ProcessStartInfo("cmd", $"/c start https://github.com/Laritello/osu-music") { CreateNoWindow = true });

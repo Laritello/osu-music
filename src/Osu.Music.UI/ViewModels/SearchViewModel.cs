@@ -29,10 +29,10 @@ namespace Osu.Music.UI.ViewModels
         }
 
         private string _request;
-        public string Request 
-        { 
-            get => _request; 
-            set => SetProperty(ref _request, value); 
+        public string Request
+        {
+            get => _request;
+            set => SetProperty(ref _request, value);
         }
 
         public DelegateCommand SearchCommand { get; set; }
