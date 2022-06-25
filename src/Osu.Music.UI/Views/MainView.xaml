@@ -119,7 +119,7 @@
                               IsChecked="{Binding Playback.Mute}"/>
                 <Slider Style="{DynamicResource VolumeSlider}" Minimum="0" Maximum="1" Value="{Binding Playback.Volume}" IsMoveToPointEnabled="True" Margin="0 0 5 0"/>
                 <ToggleButton Style="{DynamicResource PlayerToggleButtonShuffle}" IsChecked="{Binding Random}"/>
-                <ToggleButton Style="{DynamicResource PlayerToggleButtonRandom}" IsChecked="{Binding Repeat}"/>
+                <ToggleButton Style="{DynamicResource PlayerToggleButtonRepeat}" IsChecked="{Binding Playback.Repeat}"/>
             </StackPanel>
         </Grid>
     </Grid>

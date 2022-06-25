@@ -206,7 +206,7 @@
         <Setter Property="Content" Value="&#xe043;"/>
     </Style>
 
-    <Style x:Key="PlayerToggleButtonRandom" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource PlayerToggleButtonBase}">
+    <Style x:Key="PlayerToggleButtonRepeat" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource PlayerToggleButtonBase}">
         <Setter Property="Content" Value="&#xe028;"/>
     </Style>
 
