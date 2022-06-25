@@ -62,7 +62,7 @@
             </StackPanel>
         </Border>
         <Border Grid.Row="1" BorderBrush="{DynamicResource SolidColorBrushMainBorder}" BorderThickness="1" CornerRadius="10" Margin="5" Padding="0 0 0 5"
-                Visibility="{Binding DataContext.Model.SelectedPlaylist, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}, Converter={StaticResource NullableToVisibilityConverter}}">
+                Visibility="{Binding DataContext.Model.SelectedCollection, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}, Converter={StaticResource NullableToVisibilityConverter}}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
@@ -70,7 +70,7 @@
                 </Grid.RowDefinitions>
                 <DockPanel>
                     <TextBlock FontFamily="{DynamicResource Roboto}" Foreground="{DynamicResource SolidColorBrushMain}" FontSize="16" FontWeight="DemiBold" Margin="7 10 0 10" DockPanel.Dock="Left"
-                    Text="{Binding DataContext.Model.SelectedPlaylist.Name, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}"/>
+                    Text="{Binding DataContext.Model.SelectedCollection.Name, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}"/>
                 </DockPanel>
 
                 <ListView x:Name="SongsList" Grid.Row="1" Style="{DynamicResource ListViewBeatmaps}" 
