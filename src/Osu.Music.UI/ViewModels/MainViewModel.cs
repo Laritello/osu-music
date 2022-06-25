@@ -73,13 +73,6 @@ namespace Osu.Music.UI.ViewModels
             set => SetProperty(ref _selectedPage, value);
         }
 
-        private bool _repeat;
-        public bool Repeat
-        {
-            get => _repeat;
-            set => SetProperty(ref _repeat, value);
-        }
-
         private bool _random;
         public bool Random
         {
@@ -488,7 +481,7 @@ namespace Osu.Music.UI.ViewModels
             {
                 Settings.State = new PlayerState()
                 {
-                    Repeat = Repeat,
+                    Repeat = Playback.Repeat,
                     Shuffle = Random,
                     Volume = Playback.Volume,
                     SelectedBeatmapId = Model.SelectedBeatmap?.BeatmapSetId,
@@ -513,7 +506,7 @@ namespace Osu.Music.UI.ViewModels
 
         private void Playback_BeatmapEnded(object sender, BeatmapEventArgs e)
         {
-            if (Repeat)
+            if (Playback.Repeat)
                 PlayBeatmap(Model.SelectedBeatmap);
             else
                 NextBeatmap(Model.SelectedBeatmap);
@@ -528,7 +521,7 @@ namespace Osu.Music.UI.ViewModels
         private void LoadState()
         {
             Random = Settings.State.Shuffle;
-            Repeat = Settings.State.Repeat;
+            Playback.Repeat = Settings.State.Repeat;
             Playback.Volume = Settings.State.Volume;
 
             Model.PlaybackInitializationRequired = Settings.State.SelectedBeatmapId.HasValue;
@@ -607,7 +600,7 @@ namespace Osu.Music.UI.ViewModels
 
         private void NextBeatmapHotkeyHandler() => NextBeatmap(Model.SelectedBeatmap);
 
-        private void RepeatHotkeyHandler() => Repeat = !Repeat;
+        private void RepeatHotkeyHandler() => Playback.Repeat = !Playback.Repeat;
 
         private void MuteHotkeyHandler() => MuteVolume(!Playback.Mute);
 
