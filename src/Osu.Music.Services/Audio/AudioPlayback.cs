@@ -34,6 +34,20 @@ namespace Osu.Music.Services.Audio
             }
         }
 
+        private bool _repeat;
+        public bool Repeat
+        {
+            get => _repeat;
+            set => SetProperty(ref _repeat, value);
+        }
+
+        private bool _shuffle;
+        public bool Shuffle
+        {
+            get => _shuffle;
+            set => SetProperty(ref _shuffle, value);
+        }
+
         public TimeSpan CurrentTime
         {
             get => fileStream != null ? fileStream.CurrentTime : TimeSpan.Zero;
