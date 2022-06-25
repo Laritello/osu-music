@@ -80,9 +80,19 @@ namespace Osu.Music.UI.Models
             set => SetProperty(ref _collections, value);
         }
 
+        private Collection _selectedCollection;
+        /// <summary>
+        /// Selected osu! collection.
+        /// </summary>
+        public Collection SelectedCollection
+        {
+            get => _selectedCollection;
+            set => SetProperty(ref _selectedCollection, value);
+        }
+
         private Playlist _selectedPlaylist;
         /// <summary>
-        /// Collection of user-created playlists.
+        /// Selected user-created playlist.
         /// </summary>
         public Playlist SelectedPlaylist
         {
