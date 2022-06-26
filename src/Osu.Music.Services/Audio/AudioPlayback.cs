@@ -1,5 +1,4 @@
 ﻿using NAudio.Wave;
-using Osu.Music.Common.Models;
 using Osu.Music.Services.Events;
 using Prism.Mvvm;
 using System;
@@ -61,7 +60,7 @@ namespace Osu.Music.Services.Audio
         {
             try
             {
-                AudioFileReader inputStream = new AudioFileReader(Player.Beatmap.AudioFilePath);
+                AudioFileReader inputStream = new AudioFileReader(Player.PlayingBeatmap.AudioFilePath);
                 Stream = inputStream;
 
                 SampleAggregator aggregator = new SampleAggregator(inputStream)
@@ -100,7 +99,7 @@ namespace Osu.Music.Services.Audio
                 // next song. But it should occur extremly rarely. If someone will suggest better way to detect when song ended by itself
                 // I'll fix this semi hack.
                 if (a.Exception == null && Stream != null && (Stream.TotalTime - Stream.CurrentTime).TotalMilliseconds < 100)
-                    BeatmapEnded?.Invoke(this, new BeatmapEventArgs(Player.Beatmap));
+                    BeatmapEnded?.Invoke(this, new BeatmapEventArgs(Player.PlayingBeatmap));
             };
         }
 
