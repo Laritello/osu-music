@@ -74,7 +74,7 @@ namespace Osu.Music.Services.Audio
                 }
                 else
                 {
-                    Complex[] range = frequencyDomain[startIndex..endIndex];
+                    Complex[] range = frequencyDomain[startIndex..(endIndex+1)];
                     return range.Length > 0 ? range.Select(c => (float)Math.Sqrt((c.X * c.X) + (c.Y * c.Y))).Median() : 0;
                 }
             }
