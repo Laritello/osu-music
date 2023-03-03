@@ -17,7 +17,6 @@
     <convert:PackIconKindToStringConverter x:Key="PackIconKindToStringConverter"/>
     <convert:BrushStringConverter x:Key="BrushStringConverter"/>
     <convert:PlayerObjectToStringConverter x:Key="PlayerObjectToStringConverter"/>
-    <convert:SelectedPageToToggleCheckCovnerter x:Key="SelectedPageToToggleCheckCovnerter"/>
     <convert:SongTitleColumnConverter x:Key="SongTitleColumnConverter"/>
     <convert:BeatmapToImageConverter x:Key="BeatmapToImageConverter"/>
 </ResourceDictionary>

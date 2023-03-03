@@ -1,4 +1,7 @@
-﻿using Prism.Commands;
+﻿using Osu.Music.Services.Updates;
+using Osu.Music.ViewModels;
+using Prism.Commands;
+using Squirrel;
 using System;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -37,9 +40,9 @@ namespace Osu.Music.Views
             maximize.Visibility = WindowState == WindowState.Maximized ? Visibility.Collapsed : Visibility.Visible;
         }
 
+#if (!DEBUG)
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-#if (!DEBUG)
 			try
 			{
 				var dc = (MainWindowViewModel)DataContext;
@@ -56,8 +59,13 @@ namespace Osu.Music.Views
 			{
 				// Ignore updater fail
 			}
-#endif
         }
+#else
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+#endif
 
         protected override void OnSourceInitialized(EventArgs e)
         {

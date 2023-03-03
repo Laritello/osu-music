@@ -12,7 +12,7 @@
     </WindowChrome.WindowChrome>
     <Grid>
         <md:DialogHost DialogTheme="Inherit">
-            <ContentControl prism:RegionManager.RegionName="ContentRegion"/>
+            <ContentControl prism:RegionManager.RegionName="GlobalRegion"/>
         </md:DialogHost>
     </Grid>
 </Window>

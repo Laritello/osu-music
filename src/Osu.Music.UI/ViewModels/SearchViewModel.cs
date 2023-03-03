@@ -1,4 +1,6 @@
-﻿using Osu.Music.Common.Models;
+﻿using DryIoc;
+using Osu.Music.Common.Models;
+using Osu.Music.Services.Interfaces;
 using Osu.Music.Services.Search;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -37,9 +39,17 @@ namespace Osu.Music.UI.ViewModels
 
         public DelegateCommand SearchCommand { get; set; }
 
-        public SearchViewModel(ObservableCollection<Beatmap> beatmaps, string request = null)
+        public SearchViewModel(IContainer container)
         {
-            Beatmaps = beatmaps;
+            Beatmaps = container.Resolve<ILibraryManager>().Beatmaps;
+
+            InitializeCommands();
+            Search();
+        }
+
+        public SearchViewModel(IContainer container, string request = null)
+        {
+            Beatmaps = container.Resolve<ILibraryManager>().Beatmaps;
             Request = request;
 
             InitializeCommands();

@@ -1,4 +1,6 @@
-﻿using Osu.Music.Common.Models;
+﻿using DryIoc;
+using Osu.Music.Common.Models;
+using Osu.Music.Services.Interfaces;
 using Prism.Mvvm;
 using System.Collections.Generic;
 
@@ -16,9 +18,9 @@ namespace Osu.Music.UI.ViewModels
             set => SetProperty(ref _collections, value);
         }
 
-        public CollectionsViewModel(ICollection<Collection> collections)
+        public CollectionsViewModel(IContainer container)
         {
-            Collections = collections;
+            Collections = container.Resolve<ICollectionManager>().Collections;
         }
     }
 }

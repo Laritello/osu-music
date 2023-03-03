@@ -1,4 +1,5 @@
 ﻿using Osu.Music.Common.Models;
+using Osu.Music.Services.Interfaces;
 using osu_database_reader.BinaryFiles;
 using osu_database_reader.Components.Beatmaps;
 using System;
@@ -10,11 +11,13 @@ using System.Threading.Tasks;
 
 namespace Osu.Music.Services.IO
 {
-    public static class LibraryManager
+    public class LibraryManager : ILibraryManager
     {
-        public static async Task<ObservableCollection<Beatmap>> LoadAsync(string osuFolder)
+        public ObservableCollection<Beatmap> Beatmaps { get; private set; }
+
+        public Task<ObservableCollection<Beatmap>> LoadAsync(string osuFolder)
         {
-            return await Task.Run(() =>
+            return Task.Run(() =>
             {
                 try
                 {
@@ -34,16 +37,18 @@ namespace Osu.Music.Services.IO
                             beatmaps.Add(Convert(osuFolder, beatmapSet));
                     }
 
-                    return beatmaps;
+                    Beatmaps = beatmaps;
                 }
                 catch
                 {
-                    return new ObservableCollection<Beatmap>();
+                    Beatmaps = new ObservableCollection<Beatmap>();
                 }
+
+                return Beatmaps;
             });
         }
 
-        private static Beatmap Convert(string osuFolder, IGrouping<int, BeatmapEntry> set)
+        private Beatmap Convert(string osuFolder, IGrouping<int, BeatmapEntry> set)
         {
             var entry = set.First();
 
@@ -64,18 +69,6 @@ namespace Osu.Music.Services.IO
             };
         }
 
-        private static List<string> GetSetHashes(IGrouping<int, BeatmapEntry> set) => set.Select(x => x.BeatmapChecksum).ToList();
-
-        public static IEnumerable<TSource> DistinctBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
-        {
-            HashSet<TKey> seenKeys = new HashSet<TKey>();
-            foreach (TSource element in source)
-            {
-                if (seenKeys.Add(keySelector(element)))
-                {
-                    yield return element;
-                }
-            }
-        }
+        private List<string> GetSetHashes(IGrouping<int, BeatmapEntry> set) => set.Select(x => x.BeatmapChecksum).ToList();
     }
 }

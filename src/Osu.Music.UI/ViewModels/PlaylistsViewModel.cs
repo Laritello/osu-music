@@ -1,5 +1,7 @@
-﻿using Osu.Music.Common.Models;
+﻿using DryIoc;
+using Osu.Music.Common.Models;
 using Osu.Music.Services.Dialog;
+using Osu.Music.Services.Interfaces;
 using Osu.Music.Services.IO;
 using Osu.Music.UI.Views;
 using Prism.Commands;
@@ -11,13 +13,6 @@ namespace Osu.Music.UI.ViewModels
 {
     public class PlaylistsViewModel : BindableBase
     {
-        private IPopupDialogService _dialogService;
-        public IPopupDialogService DialogService
-        {
-            get => _dialogService;
-            set => SetProperty(ref _dialogService, value);
-        }
-
         private ICollection<Playlist> _playlists;
         /// <summary>
         /// Collection of user-created playlists.
@@ -31,11 +26,15 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand ShowCreatePlaylistDialogCommand { get; private set; }
         public DelegateCommand<Playlist> ShowEditPlaylistDialogCommand { get; private set; }
 
-        public PlaylistsViewModel(ICollection<Playlist> playlists, IPopupDialogService dialogService)
-        {
-            Playlists = playlists;
-            DialogService = dialogService;
+        private IPlaylistManager _playlistManager;
+        private IPopupDialogService _dialogService;
 
+        public PlaylistsViewModel(IContainer container)
+        {
+            _playlistManager = container.Resolve<IPlaylistManager>();
+            _dialogService = container.Resolve<IPopupDialogService>(); ;
+
+            Playlists = _playlistManager.Playlists;
             InitializeCommands();
         }
 
@@ -52,13 +51,13 @@ namespace Osu.Music.UI.ViewModels
                 { "playlists", Playlists }
             };
 
-            DialogService.ShowPopupDialog<DialogCreatePlaylistView, DialogCreatePlaylistViewModel>(parameters, e =>
+            _dialogService.ShowPopupDialog<DialogCreatePlaylistView, DialogCreatePlaylistViewModel>(parameters, e =>
             {
                 if (e.Result == ButtonResult.OK)
                 {
                     var playlist = e.Parameters.GetValue<Playlist>("playlist");
                     Playlists.Add(playlist);
-                    PlaylistManager.Save(playlist);
+                    _playlistManager.Save(playlist);
                 }
             });
         }
@@ -74,16 +73,16 @@ namespace Osu.Music.UI.ViewModels
                 { "playlists", Playlists }
             };
 
-            DialogService.ShowPopupDialog<DialogEditPlaylistView, DialogEditPlaylistViewModel>(parameters, e =>
+            _dialogService.ShowPopupDialog<DialogEditPlaylistView, DialogEditPlaylistViewModel>(parameters, e =>
             {
                 if (e.Result == ButtonResult.OK)
                 {
                     var originalName = e.Parameters.GetValue<string>("originalName");
 
                     if (!playlist.Name.Equals(originalName))
-                        PlaylistManager.RemoveByName(originalName);
+                        _playlistManager.RemoveByName(originalName);
 
-                    PlaylistManager.Save(playlist);
+                    _playlistManager.Save(playlist);
                 }
             });
         }

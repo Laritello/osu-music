@@ -1,10 +1,13 @@
-﻿using Osu.Music.Common.Enums;
+﻿using DryIoc;
+using Osu.Music.Common;
+using Osu.Music.Common.Enums;
 using Osu.Music.Common.Models;
 using Osu.Music.Common.Structures;
 using Osu.Music.Services.Audio;
 using Osu.Music.Services.Dialog;
 using Osu.Music.Services.Events;
 using Osu.Music.Services.Hotkeys;
+using Osu.Music.Services.Interfaces;
 using Osu.Music.Services.IO;
 using Osu.Music.Services.UItility;
 using Osu.Music.UI.Interfaces;
@@ -15,6 +18,7 @@ using Osu.Music.UI.Visualization;
 using Prism.Commands;
 using Prism.Ioc;
 using Prism.Mvvm;
+using Prism.Regions;
 using Prism.Services.Dialogs;
 using System;
 using System.Collections.ObjectModel;
@@ -66,13 +70,6 @@ namespace Osu.Music.UI.ViewModels
             set => SetProperty(ref _playback, value);
         }
 
-        private BindableBase _selectedPage;
-        public BindableBase SelectedPage
-        {
-            get => _selectedPage;
-            set => SetProperty(ref _selectedPage, value);
-        }
-
         private IVisualizationPlugin _visualization;
         public IVisualizationPlugin Visualization
         {
@@ -108,9 +105,20 @@ namespace Osu.Music.UI.ViewModels
         #endregion
 
         private DispatcherTimer _audioProgressTimer;
+        private IContainer _container;
+        private IRegionManager _regionManager;
+        private ILibraryManager _libraryManager;
+        private ICollectionManager _collectionManager;
+        private IPlaylistManager _playlistManager;
 
-        public MainViewModel(IContainerExtension container)
+        public MainViewModel(IContainer container)
         {
+            _container = container;
+            _regionManager = container.Resolve<IRegionManager>();
+            _libraryManager = container.Resolve<ILibraryManager>();
+            _collectionManager = container.Resolve<ICollectionManager>();
+            _playlistManager = container.Resolve<IPlaylistManager>();
+
             Model = new MainModel();
             Visualization = new DefaultVisualization();
 
@@ -202,9 +210,9 @@ namespace Osu.Music.UI.ViewModels
             DiscordManager.Initialize();
         }
 
-        private void InitializeDialogService(IContainerExtension container)
+        private void InitializeDialogService(IContainer container)
         {
-            Model.DialogService = new PopupDialogService(container);
+            Model.DialogService = container.Resolve<PopupDialogService>();
         }
         #endregion
 
@@ -218,11 +226,9 @@ namespace Osu.Music.UI.ViewModels
                     SettingsManager.Save(Settings);
                 }
 
-                Model.Beatmaps = await LibraryManager.LoadAsync(Settings.OsuFolder);
-                Model.Playlists = await PlaylistManager.LoadAsync(Model.Beatmaps);
-                Model.Collections = await CollectionManager.LoadAsync(Settings.OsuFolder, Model.Beatmaps);
-
-                SelectedPage = new SongsViewModel();
+                Model.Beatmaps = await _libraryManager.LoadAsync(Settings.OsuFolder);
+                Model.Playlists = await _playlistManager.LoadAsync(Model.Beatmaps);
+                Model.Collections = await _collectionManager.LoadAsync(Settings.OsuFolder, Model.Beatmaps);
 
                 if (Model.PlaybackInitializationRequired)
                 {
@@ -359,21 +365,23 @@ namespace Osu.Music.UI.ViewModels
 
         private void OpenPage(string pageName)
         {
-            switch (pageName)
-            {
-                case "Songs":
-                    SelectedPage = new SongsViewModel();
-                    break;
-                case "Playlists":
-                    SelectedPage = new PlaylistsViewModel(Model.Playlists, Model.DialogService);
-                    break;
-                case "Collections":
-                    SelectedPage = new CollectionsViewModel(Model.Collections);
-                    break;
-                case "Search":
-                    SelectedPage = new SearchViewModel(Model.Beatmaps);
-                    break;
-            }
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, pageName);
+
+            //switch (pageName)
+            //{
+            //    case "Songs":
+            //        SelectedPage = new SongsViewModel();
+            //        break;
+            //    case "Playlists":
+            //        SelectedPage = new PlaylistsViewModel(Model.Playlists, Model.DialogService);
+            //        break;
+            //    case "Collections":
+            //        SelectedPage = new CollectionsViewModel(Model.Collections);
+            //        break;
+            //    case "Search":
+            //        SelectedPage = new SearchViewModel(Model.Beatmaps);
+            //        break;
+            //}
         }
 
         private void OpenAbout()
@@ -409,7 +417,7 @@ namespace Osu.Music.UI.ViewModels
             if (!playlist.Beatmaps.Contains(beatmap))
             {
                 playlist.Beatmaps.Add(beatmap);
-                PlaylistManager.Save(playlist);
+                _playlistManager.Save(playlist);
             }
         }
 
@@ -440,17 +448,16 @@ namespace Osu.Music.UI.ViewModels
         private void DeletePlaylist(Playlist playlist)
         {
             Model.Playlists.Remove(playlist);
-
-            PlaylistManager.Remove(playlist);
+            _playlistManager.Remove(playlist);
         }
 
         private void RemoveBeatmapFromPlaylist(Beatmap beatmap)
         {
             Model.SelectedPlaylist.Beatmaps.Remove(beatmap);
-            PlaylistManager.Save(Model.SelectedPlaylist);
+            _playlistManager.Save(Model.SelectedPlaylist);
         }
 
-        private void Search(string request) => SelectedPage = new SearchViewModel(Model.Beatmaps, request);
+        private void Search(string request) => _regionManager.RequestNavigate(RegionNames.ContentRegion, nameof(SearchView));
 
         private void OnLoaded(RoutedEventArgs args)
         {

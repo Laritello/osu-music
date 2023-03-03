@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using DryIoc;
+using Osu.Music.UI.ViewModels;
+using System.Windows.Controls;
 
 namespace Osu.Music.UI.Views
 {
@@ -7,9 +9,10 @@ namespace Osu.Music.UI.Views
     /// </summary>
     public partial class SongsView : UserControl
     {
-        public SongsView()
+        public SongsView(IContainer container)
         {
             InitializeComponent();
+            DataContext = container.Resolve<SongsViewModel>();
         }
     }
 }
