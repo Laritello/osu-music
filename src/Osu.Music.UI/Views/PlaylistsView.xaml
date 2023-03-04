@@ -42,7 +42,7 @@
             </Border.Style>
             <StackPanel Orientation="Vertical">
                 <DockPanel>
-                    <TextBlock Text="Playlists" FontFamily="{DynamicResource Roboto}" Foreground="{DynamicResource SolidColorBrushMain}" FontSize="16" FontWeight="DemiBold" Margin="7 10 0 10"/>
+                    <TextBlock Text="Playlists" FontFamily="{DynamicResource Poppins}" Foreground="{DynamicResource SolidColorBrushMain}" FontSize="16" FontWeight="DemiBold" Margin="7 10 0 10"/>
                     <ToggleButton x:Name="ToggleMinimize" Style="{DynamicResource AccordeonToggle}" DockPanel.Dock="Left">
                     </ToggleButton>
                     <Button Style="{DynamicResource PlaylistAction}" Foreground="{DynamicResource SolidColorBrushMain}" Content="&#xe03b;" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"
@@ -74,7 +74,7 @@
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <DockPanel>
-                    <TextBlock FontFamily="{DynamicResource Roboto}" Foreground="{DynamicResource SolidColorBrushMain}" FontSize="16" FontWeight="DemiBold" Margin="7 10 0 10" DockPanel.Dock="Left"
+                    <TextBlock FontFamily="{DynamicResource Poppins}" Foreground="{DynamicResource SolidColorBrushMain}" FontSize="16" FontWeight="DemiBold" Margin="7 10 0 10" DockPanel.Dock="Left"
                     Text="{Binding DataContext.Model.SelectedPlaylist.Name, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}"/>
 
                     <Button Style="{DynamicResource PlaylistAction}" Foreground="{DynamicResource SolidColorBrushMain}" Content="&#xe3c9;" FontSize="15"

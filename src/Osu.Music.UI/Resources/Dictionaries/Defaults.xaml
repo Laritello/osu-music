@@ -13,7 +13,7 @@
     </Style>
     <Style TargetType="{x:Type TextBlock}">
         <Setter Property="OverridesDefaultStyle" Value="True"/>
-        <Setter Property="FontFamily" Value="{DynamicResource Roboto}"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
         <Setter Property="FontSize" Value="16"/>
     </Style>
 

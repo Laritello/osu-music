@@ -23,7 +23,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="40"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock FontFamily="{DynamicResource Roboto}" Foreground="{DynamicResource SolidColorBrushMain}" 
+                    <TextBlock FontFamily="{DynamicResource Poppins}" Foreground="{DynamicResource SolidColorBrushMain}" 
                                FontSize="16" FontWeight="DemiBold" Margin="7 10 0 10" DockPanel.Dock="Left"
                                Text="Songs"/>
                     <TextBox x:Name="SearchField" Style="{DynamicResource SearchText}" Grid.Column="1" MinWidth="200">

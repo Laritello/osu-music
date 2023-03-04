@@ -82,7 +82,7 @@
                         </StackPanel>
                     </Border>
                 </Grid>
-                <TextBlock Text="{Binding Path=Name}" FontFamily="{DynamicResource Roboto}" Foreground="{DynamicResource SolidColorBrushMain}" Background="White" FontSize="14" FontWeight="DemiBold" Margin="11 20 11 0">
+                <TextBlock Text="{Binding Path=Name}" FontFamily="{DynamicResource Poppins}" Foreground="{DynamicResource SolidColorBrushMain}" Background="White" FontSize="14" FontWeight="DemiBold" Margin="11 20 11 0">
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}">
                             <Style.Triggers>
@@ -109,7 +109,7 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </TextBlock>
-                <TextBlock Text="{Binding Path=Beatmaps, Converter={StaticResource PlaylistCountToStringConverter}}" FontFamily="{DynamicResource Roboto}" FontSize="14" FontWeight="Light" Foreground="Gray" Margin="11 5 11 0"/>
+                <TextBlock Text="{Binding Path=Beatmaps, Converter={StaticResource PlaylistCountToStringConverter}}" FontFamily="{DynamicResource Poppins}" FontSize="14" FontWeight="Light" Foreground="Gray" Margin="11 5 11 0"/>
             </StackPanel>
         </Border>
     </DataTemplate>
@@ -159,7 +159,7 @@
                         </StackPanel>
                     </Border>
                 </Grid>
-                <TextBlock Text="{Binding Path=Name}" FontFamily="{DynamicResource Roboto}" Foreground="{DynamicResource SolidColorBrushMain}" Background="White" FontSize="14" FontWeight="DemiBold" Margin="11 20 11 0">
+                <TextBlock Text="{Binding Path=Name}" FontFamily="{DynamicResource Poppins}" Foreground="{DynamicResource SolidColorBrushMain}" Background="White" FontSize="14" FontWeight="DemiBold" Margin="11 20 11 0">
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}">
                             <Style.Triggers>
@@ -186,7 +186,7 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </TextBlock>
-                <TextBlock Text="{Binding Path=Beatmaps, Converter={StaticResource PlaylistCountToStringConverter}}" FontFamily="{DynamicResource Roboto}" FontSize="14" FontWeight="Light" Foreground="Gray" Margin="11 5 11 0"/>
+                <TextBlock Text="{Binding Path=Beatmaps, Converter={StaticResource PlaylistCountToStringConverter}}" FontFamily="{DynamicResource Poppins}" FontSize="14" FontWeight="Light" Foreground="Gray" Margin="11 5 11 0"/>
             </StackPanel>
         </Border>
     </DataTemplate>

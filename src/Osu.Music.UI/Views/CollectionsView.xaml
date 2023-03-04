@@ -42,7 +42,7 @@
             </Border.Style>
             <StackPanel Orientation="Vertical">
                 <DockPanel>
-                    <TextBlock Text="Collections" FontFamily="{DynamicResource Roboto}" Foreground="{DynamicResource SolidColorBrushMain}" FontSize="16" FontWeight="DemiBold" Margin="7 10 0 10"/>
+                    <TextBlock Text="Collections" FontFamily="{DynamicResource Poppins}" Foreground="{DynamicResource SolidColorBrushMain}" FontSize="16" FontWeight="DemiBold" Margin="7 10 0 10"/>
                     <ToggleButton x:Name="ToggleMinimize" Style="{DynamicResource AccordeonToggle}" DockPanel.Dock="Left" HorizontalAlignment="Left"/>
                 </DockPanel>
 
@@ -71,7 +71,7 @@
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <DockPanel>
-                    <TextBlock FontFamily="{DynamicResource Roboto}" Foreground="{DynamicResource SolidColorBrushMain}" FontSize="16" FontWeight="DemiBold" Margin="7 10 0 10" DockPanel.Dock="Left"
+                    <TextBlock FontFamily="{DynamicResource Poppins}" Foreground="{DynamicResource SolidColorBrushMain}" FontSize="16" FontWeight="DemiBold" Margin="7 10 0 10" DockPanel.Dock="Left"
                     Text="{Binding DataContext.Model.SelectedCollection.Name, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}"/>
                 </DockPanel>
 
