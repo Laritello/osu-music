@@ -4,17 +4,20 @@
         <Setter Property="FontSize" Value="16"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
     </Style>
 
     <Style x:Key="PlayerBeatmapArtist" TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="FontWeight" Value="Regular"/>
         <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
     </Style>
 
     <Style x:Key="MenuHeader" TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="18"/>
         <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
         <Setter Property="Foreground" Value="#424242"/>
         <Setter Property="Margin" Value="0 0 0 20"/>
     </Style>
@@ -27,7 +30,7 @@
     <Style x:Key="LinkText" TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="16"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
-
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
         <Setter Property="Foreground" Value="#0366d6"/>
 
         <Style.Triggers>

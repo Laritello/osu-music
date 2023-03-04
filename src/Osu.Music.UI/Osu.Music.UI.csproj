@@ -32,18 +32,6 @@
     <None Remove="Resources\Fonts\Poppins\Poppins-SemiBoldItalic.ttf" />
     <None Remove="Resources\Fonts\Poppins\Poppins-Thin.ttf" />
     <None Remove="Resources\Fonts\Poppins\Poppins-ThinItalic.ttf" />
-    <None Remove="Resources\Fonts\Roboto\Roboto-Black.ttf" />
-    <None Remove="Resources\Fonts\Roboto\Roboto-BlackItalic.ttf" />
-    <None Remove="Resources\Fonts\Roboto\Roboto-Bold.ttf" />
-    <None Remove="Resources\Fonts\Roboto\Roboto-BoldItalic.ttf" />
-    <None Remove="Resources\Fonts\Roboto\Roboto-Italic.ttf" />
-    <None Remove="Resources\Fonts\Roboto\Roboto-Light.ttf" />
-    <None Remove="Resources\Fonts\Roboto\Roboto-LightItalic.ttf" />
-    <None Remove="Resources\Fonts\Roboto\Roboto-Medium.ttf" />
-    <None Remove="Resources\Fonts\Roboto\Roboto-MediumItalic.ttf" />
-    <None Remove="Resources\Fonts\Roboto\Roboto-Regular.ttf" />
-    <None Remove="Resources\Fonts\Roboto\Roboto-Thin.ttf" />
-    <None Remove="Resources\Fonts\Roboto\Roboto-ThinItalic.ttf" />
     <None Remove="Resources\Images\Logo\Logo.png" />
     <None Remove="Resources\Images\osu-logo.png" />
     <None Remove="Resources\Images\sidebar-background.png" />
@@ -82,18 +70,6 @@
     <Resource Include="Resources\Fonts\Poppins\Poppins-SemiBoldItalic.ttf" />
     <Resource Include="Resources\Fonts\Poppins\Poppins-Thin.ttf" />
     <Resource Include="Resources\Fonts\Poppins\Poppins-ThinItalic.ttf" />
-    <Resource Include="Resources\Fonts\Roboto\Roboto-Black.ttf" />
-    <Resource Include="Resources\Fonts\Roboto\Roboto-BlackItalic.ttf" />
-    <Resource Include="Resources\Fonts\Roboto\Roboto-Bold.ttf" />
-    <Resource Include="Resources\Fonts\Roboto\Roboto-BoldItalic.ttf" />
-    <Resource Include="Resources\Fonts\Roboto\Roboto-Italic.ttf" />
-    <Resource Include="Resources\Fonts\Roboto\Roboto-Light.ttf" />
-    <Resource Include="Resources\Fonts\Roboto\Roboto-LightItalic.ttf" />
-    <Resource Include="Resources\Fonts\Roboto\Roboto-Medium.ttf" />
-    <Resource Include="Resources\Fonts\Roboto\Roboto-MediumItalic.ttf" />
-    <Resource Include="Resources\Fonts\Roboto\Roboto-Regular.ttf" />
-    <Resource Include="Resources\Fonts\Roboto\Roboto-Thin.ttf" />
-    <Resource Include="Resources\Fonts\Roboto\Roboto-ThinItalic.ttf" />
     <Resource Include="Resources\Images\Logo\Logo.png" />
     <Resource Include="Resources\Images\sidebar-background.png" />
   </ItemGroup>
