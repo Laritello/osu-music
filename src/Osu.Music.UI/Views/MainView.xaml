@@ -34,20 +34,6 @@
                 <ColumnDefinition Width="250"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-
-            <Border Margin="13 0 0 0" Padding="5 0 5 0" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                    Background="{DynamicResource SolidColorBrushMain}" CornerRadius="0 0 10 10">
-                <Button Style="{DynamicResource SidebarButtonOsu}" Command="{Binding OpenAboutCommand}">
-                    <Button.ToolTip>
-                        <TextBlock Text="About"/>
-                    </Button.ToolTip>
-                </Button>
-            </Border>
-            <Button Style="{DynamicResource SettingsButton}" Command="{Binding OpenSettingsCommand}" HorizontalAlignment="Right">
-                <Button.ToolTip>
-                    <TextBlock Text="Settings"/> 
-                </Button.ToolTip>
-            </Button>
             <StackPanel Grid.Column="1"  HorizontalAlignment="Right" Orientation="Horizontal">
                 <Button Style="{StaticResource TitleBarUpdates}" Visibility="{Binding DataContext.Updater.State, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Converter={StaticResource UpdateStateToVisibilityConverter}, FallbackValue=Collapsed}"
                         Command="{Binding DataContext.UpdateAppCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
@@ -68,26 +54,35 @@
             </StackPanel>
         </Grid>
 
-        <Grid Grid.RowSpan="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="250"/>
-            </Grid.RowDefinitions>
-            <Image Source="pack://application:,,,/Osu.Music.UI;component/Resources/Images/sidebar-background.png" 
-                   Grid.RowSpan="2"  Stretch="UniformToFill" HorizontalAlignment="Center"/>
-            <Rectangle Fill="{DynamicResource SolidColorBrushMain}" Opacity="0.2" Grid.RowSpan="2"/>
+        <Border Grid.RowSpan="2" BorderThickness="0 0 1 0" BorderBrush="{DynamicResource SolidColorBrushMainBorder}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="250"/>
+                </Grid.RowDefinitions>
 
-            <StackPanel Orientation="Vertical" Margin="0 50 0 0">
-                <RadioButton Style="{DynamicResource SidebarButtonAllSongs}" Command="{Binding OpenPageCommand}" CommandParameter="SongsView"/>
-                <RadioButton Style="{DynamicResource SidebarButtonPlaylists}" Command="{Binding OpenPageCommand}" CommandParameter="PlaylistsView"/>
-                <RadioButton Style="{DynamicResource SidebarButtonCollection}" Command="{Binding OpenPageCommand}" CommandParameter="CollectionsView"/>
-                <RadioButton Style="{DynamicResource SidebarButtonSearch}" Command="{Binding OpenPageCommand}" CommandParameter="SearchView"/>
-            </StackPanel>
+                <Button Style="{DynamicResource SidebarButtonOsu}" Command="{Binding OpenAboutCommand}">
+                    <Button.ToolTip>
+                        <TextBlock Text="About"/>
+                    </Button.ToolTip>
+                </Button>
+                <Button Style="{DynamicResource SettingsButton}" Command="{Binding OpenSettingsCommand}" HorizontalAlignment="Right">
+                    <Button.ToolTip>
+                        <TextBlock Text="Settings"/>
+                    </Button.ToolTip>
+                </Button>
+                <StackPanel Orientation="Vertical" Margin="0 40 0 0">
+                    <RadioButton Style="{DynamicResource SidebarButtonAllSongs}" Command="{Binding OpenPageCommand}" CommandParameter="SongsView"/>
+                    <RadioButton Style="{DynamicResource SidebarButtonPlaylists}" Command="{Binding OpenPageCommand}" CommandParameter="PlaylistsView"/>
+                    <RadioButton Style="{DynamicResource SidebarButtonCollection}" Command="{Binding OpenPageCommand}" CommandParameter="CollectionsView"/>
+                </StackPanel>
 
-            <ContentPresenter x:Name="contentPresenter" Grid.Row="1" Content="{Binding Visualization.Content}"/>
-        </Grid>
-
+                <ContentPresenter x:Name="contentPresenter" Grid.Row="1" Content="{Binding Visualization.Content}"/>
+            </Grid>
+        </Border>
+        
         <ContentControl prism:RegionManager.RegionName="ContentRegion" Grid.Column="1" Grid.Row="1"/>
+        
         <controls:BeatmapProgressBar Grid.Row="2" Grid.ColumnSpan="2" Total="{Binding Model.TotalTime}" Current="{Binding Model.CurrentTime}" Progress="{Binding Model.Progress}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="ProgressChanged">

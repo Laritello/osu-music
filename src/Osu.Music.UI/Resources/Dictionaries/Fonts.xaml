@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <FontFamily x:Key="Roboto">pack://application:,,,/Osu.Music.UI;component/Resources/Fonts/Roboto/#Roboto</FontFamily>
+    <FontFamily x:Key="Poppins">pack://application:,,,/Osu.Music.UI;component/Resources/Fonts/Poppins/#Poppins</FontFamily>
     
     <FontFamily x:Key="MaterialIcons">pack://application:,,,/Osu.Music.UI;component/Resources/Fonts/Material Icons/#Material Icons</FontFamily>
     <FontFamily x:Key="MaterialIconsSharp">pack://application:,,,/Osu.Music.UI;component/Resources/Fonts/Material Icons/#Material Icons Sharp</FontFamily>
