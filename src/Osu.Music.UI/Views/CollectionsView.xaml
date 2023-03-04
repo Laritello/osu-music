@@ -101,16 +101,14 @@
                                     <RowDefinition Height="50"/>
                                 </Grid.RowDefinitions>
                                 <StackPanel Orientation="Vertical" VerticalAlignment="Center">
-                                    <TextBlock Style="{DynamicResource TitleStyle}" Text="{Binding Path=Title}" 
-                                   Foreground="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}"/>
-                                    <TextBlock Style="{DynamicResource ArtistStyle}" Text="{Binding Path=Artist}" Margin="0 5 0 0"
-                                   Foreground="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}"/>
+                                    <TextBlock Style="{DynamicResource TitleStyle}" Text="{Binding Path=Title}" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}"/>
+                                    <TextBlock Style="{DynamicResource ArtistStyle}" Text="{Binding Path=Artist}" Margin="0 5 0 0" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
                                 </StackPanel>
 
                                 <TextBlock Style="{DynamicResource TitleStyle}" Grid.Column="1" 
                                    Text="{Binding Path=TotalTime, Converter={StaticResource TimeSpanToStringConverter}, FallbackValue=''}" 
-                                   Foreground="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}"
-                                   HorizontalAlignment="Right"/>
+                                   Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"
+                                   HorizontalAlignment="Right" VerticalAlignment="Center"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
