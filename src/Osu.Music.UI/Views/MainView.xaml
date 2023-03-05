@@ -72,7 +72,7 @@
                     </Button.ToolTip>
                 </Button>
                 <StackPanel Orientation="Vertical" Margin="0 40 0 0">
-                    <RadioButton Style="{DynamicResource SidebarButtonAllSongs}" Command="{Binding OpenPageCommand}" CommandParameter="SongsView"/>
+                    <RadioButton Style="{DynamicResource SidebarButtonAllSongs}" Command="{Binding OpenPageCommand}" CommandParameter="SongsView" IsChecked="True"/>
                     <RadioButton Style="{DynamicResource SidebarButtonPlaylists}" Command="{Binding OpenPageCommand}" CommandParameter="PlaylistsView"/>
                     <RadioButton Style="{DynamicResource SidebarButtonCollection}" Command="{Binding OpenPageCommand}" CommandParameter="CollectionsView"/>
                 </StackPanel>
