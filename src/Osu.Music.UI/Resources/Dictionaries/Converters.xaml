@@ -19,4 +19,5 @@
     <convert:PlayerObjectToStringConverter x:Key="PlayerObjectToStringConverter"/>
     <convert:SongTitleColumnConverter x:Key="SongTitleColumnConverter"/>
     <convert:BeatmapToImageConverter x:Key="BeatmapToImageConverter"/>
+    <convert:PlaylistToImageConverter x:Key="PlaylistToImageConverter"/>
 </ResourceDictionary>

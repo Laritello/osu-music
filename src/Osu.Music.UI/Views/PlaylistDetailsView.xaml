@@ -20,11 +20,24 @@
         <Grid>
             <DockPanel HorizontalAlignment="Stretch">
                 <Grid DockPanel.Dock="Left" VerticalAlignment="Top" Margin="10 10 0 0">
-                    <Rectangle Width="145" Height="145" RadiusX="15" RadiusY="10" Fill="#20000000"/>
+                    <Grid.Effect>
+                        <DropShadowEffect BlurRadius="10" ShadowDepth="3" Direction="270"/>
+                    </Grid.Effect>
+                    <Rectangle Width="145" Height="145" RadiusX="10" RadiusY="10" Fill="#20000000"/>
                     <materialDesign:PackIcon HorizontalAlignment="Center" VerticalAlignment="Center" Width="80" Height="80" Margin="0 10 0 0" Foreground="#50000000" Kind="PlaylistNote"/>
+                    <Grid Width="145" Height="145">
+                        <Grid.Clip>
+                            <RectangleGeometry Rect="0 0 145 145" RadiusX="10" RadiusY="10"/>
+                        </Grid.Clip>
+                        <Image Source="{Binding Model.Playlist, Converter={StaticResource PlaylistToImageConverter}}" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
                 </Grid>
                 <StackPanel Margin="10 10 0 0">
                     <TextBlock Text="{Binding Model.Playlist.Name}" FontSize="24"/>
+                    <TextBlock Text="{Binding Path=Model.Playlist.Beatmaps, Converter={StaticResource PlaylistCountToStringConverter}}" FontFamily="{DynamicResource Poppins}" FontSize="16" FontWeight="Light" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
+                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="0 10 0 0">
+                        <Button Style="{DynamicResource MaterialDesignRaisedButton}" Content="Play" Width="80"/>
+                    </StackPanel>
                 </StackPanel>
             </DockPanel>
         </Grid>

@@ -17,6 +17,12 @@
                     <Grid>
                         <Rectangle Width="145" Height="145" RadiusX="15" RadiusY="10" Fill="#20000000"/>
                         <materialDesign:PackIcon HorizontalAlignment="Center" VerticalAlignment="Center" Width="80" Height="80" Margin="0 10 0 0" Foreground="#50000000" Kind="PlaylistNote"/>
+                        <Grid Width="145" Height="145">
+                            <Grid.Clip>
+                                <RectangleGeometry Rect="0 0 145 145" RadiusX="10" RadiusY="10"/>
+                            </Grid.Clip>
+                            <Image Source="{Binding Path=., Converter={StaticResource PlaylistToImageConverter}}" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
                     </Grid>
                     <Border x:Name="PlaylistControls" Width="145" Height="145" Background="#70000000" Opacity="0.0" CornerRadius="15">
                         <Border.Style>
@@ -78,7 +84,7 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </TextBlock>
-                <TextBlock Text="{Binding Path=Beatmaps, Converter={StaticResource PlaylistCountToStringConverter}}" FontFamily="{DynamicResource Poppins}" FontSize="12" FontWeight="Light" Foreground="Gray"/>
+                <TextBlock Text="{Binding Path=Beatmaps, Converter={StaticResource PlaylistCountToStringConverter}}" FontFamily="{DynamicResource Poppins}" FontSize="12" FontWeight="Light" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
             </StackPanel>
         </Border>
     </DataTemplate>

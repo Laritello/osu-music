@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Osu.Music.Common.Utility;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -95,17 +96,6 @@ namespace Osu.Music.Common.Models
             set => SetProperty(ref _totalTime, value);
         }
 
-        private string _backgroundFileName;
-        /// <summary>
-        /// Location of the background image file.
-        /// </summary>
-        [JsonIgnore]
-        public string BackgroundFileName
-        {
-            get => _backgroundFileName;
-            set => SetProperty(ref _backgroundFileName, value);
-        }
-
         private string _tags;
         /// <summary>
         /// Space-separated list of search terms.
@@ -150,17 +140,26 @@ namespace Osu.Music.Common.Models
             set => SetProperty(ref _hashes, value);
         }
 
+        private string _backgroundFilePath;
+        /// <summary>
+        /// Full path to background image file.
+        /// </summary>
+        [JsonIgnore]
+        public string BackgroundFilePath
+        {
+            get
+            {
+                if (_backgroundFilePath != null) return _backgroundFilePath;
+                _backgroundFilePath = BackgroundRepository.GetImagePath(this);
+                return _backgroundFilePath;
+            }
+        }
+
         /// <summary>
         /// Full path to audio file.
         /// </summary>
         [JsonIgnore]
         public string AudioFilePath { get => Path.Combine(Directory, AudioFileName); }
-
-        /// <summary>
-        /// Full path to background image file.
-        /// </summary>
-        [JsonIgnore]
-        public string BackgroundFilePath { get => (Directory == null || BackgroundFileName == null) ? "" : Path.Combine(Directory, BackgroundFileName); }
 
         public override bool Equals(object obj)
         {
