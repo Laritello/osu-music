@@ -3,7 +3,7 @@
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     xmlns:prism="http://prismlibrary.com/"
                     xmlns:cm="clr-namespace:Osu.Music.Common.Models;assembly=Osu.Music.Common"
-                                 xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                     xmlns:vm="clr-namespace:Osu.Music.UI.ViewModels"
                     xmlns:v="clr-namespace:Osu.Music.UI.Views">
     <DataTemplate DataType="{x:Type vm:DialogAboutViewModel}">
