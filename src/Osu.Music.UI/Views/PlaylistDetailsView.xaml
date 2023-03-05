@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Osu.Music.UI.Views"
+             xmlns:m="clr-namespace:Osu.Music.Common.Models;assembly=Osu.Music.Common"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
@@ -11,13 +12,13 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="200"/>
+            <RowDefinition Height="170"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
-        <Grid>
+        <Border BorderBrush="{DynamicResource SolidColorBrushMainBorder}" BorderThickness="0 0 0 1" Grid.Row="0">
             <DockPanel HorizontalAlignment="Stretch">
                 <Grid DockPanel.Dock="Left" VerticalAlignment="Top" Margin="10 10 0 0">
                     <Grid.Effect>
@@ -33,13 +34,85 @@
                     </Grid>
                 </Grid>
                 <StackPanel Margin="10 10 0 0">
-                    <TextBlock Text="{Binding Model.Playlist.Name}" FontSize="24"/>
-                    <TextBlock Text="{Binding Path=Model.Playlist.Beatmaps, Converter={StaticResource PlaylistCountToStringConverter}}" FontFamily="{DynamicResource Poppins}" FontSize="16" FontWeight="Light" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
-                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="0 10 0 0">
-                        <Button Style="{DynamicResource MaterialDesignRaisedButton}" Content="Play" Width="80"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Model.Playlist.Name}" FontSize="24"/>
+                        <Button Style="{DynamicResource MaterialDesignFlatButton}" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}" Width="30" Height="30" 
+                                Padding="0" Margin="5 0 0 0">
+                            <Button.Content>
+                                <materialDesign:PackIcon Kind="Edit"/>
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>
+                    <TextBlock Text="{Binding Model.Playlist.Beatmaps, Converter={StaticResource PlaylistCountToStringConverter}}" FontFamily="{DynamicResource Poppins}" FontSize="16" FontWeight="Light" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}" Margin="0 5 0 0"/>
+                    <TextBlock Text="{Binding Model.Playlist.Updated, StringFormat=Updated {0}}" FontFamily="{DynamicResource Poppins}" FontSize="16" FontWeight="Light" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
+                    <StackPanel Orientation="Horizontal" Margin="0 15 0 0">
+                        <Button Style="{DynamicResource MaterialDesignRaisedButton}" Content="PLAY" Width="80"/>
+                        <Button Style="{DynamicResource MaterialDesignFlatButton}" Content="DELETE" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}" Margin="5 0 0 0"/>
                     </StackPanel>
                 </StackPanel>
             </DockPanel>
-        </Grid>
+        </Border>
+        <ListView x:Name="SongsList" Style="{DynamicResource ListViewBeatmaps}" Grid.Row="1"
+                  ItemsSource="{Binding Model.Playlist.Beatmaps}" 
+                  SelectedItem="{Binding Model.SelectedBeatmap}"
+                  HorizontalContentAlignment="Stretch">
+            <ListView.ItemTemplate>
+                <DataTemplate DataType="{x:Type m:Beatmap}">
+                    <Grid>
+                        <Grid.InputBindings>
+                            <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.PlayBeatmapAndUpdateCollectionCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}">
+                                <MouseBinding.CommandParameter>
+                                    <MultiBinding Converter="{StaticResource MultipleParametersConverter}">
+                                        <Binding Path="SelectedItem" RelativeSource="{RelativeSource AncestorType=ListView}"/>
+                                        <Binding Path="DataContext.Model.Beatmaps" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}"/>
+                                    </MultiBinding>
+                                </MouseBinding.CommandParameter>
+                            </MouseBinding>
+                        </Grid.InputBindings>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="{Binding ElementName=SongsList, Path=ActualWidth, Converter={StaticResource SongTitleColumnConverter}}"/>
+                            <ColumnDefinition Width="70"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+                        <Border CornerRadius="5" Margin="4 0 0 0" Background="#20000000" Width="40" Height="40" HorizontalAlignment="Left">
+                            <Grid>
+                                <TextBlock FontFamily="{DynamicResource MaterialIcons}" FontSize="28" Text="&#xe405;" 
+                                           Foreground="#50000000"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" Grid.Column="1">
+                            <TextBlock Style="{DynamicResource TitleStyle}" Text="{Binding Path=Title}" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}"/>
+                            <TextBlock Style="{DynamicResource ArtistStyle}" Text="{Binding Path=Artist}" Margin="0 1 0 0" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
+                        </StackPanel>
+
+                        <TextBlock Style="{DynamicResource TitleStyle}" Grid.Column="2" 
+                                   Text="{Binding Path=TotalTime, Converter={StaticResource TimeSpanToStringConverter}, FallbackValue=''}" 
+                                   Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"
+                                   HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ContextMenu>
+                <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}" Background="White" x:Name="SourceMenu">
+                    <MenuItem Header="Open in Explorer" Background="White"
+                              Command="{Binding DataContext.OpenBeatmapInExplorerCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}" 
+                              CommandParameter="{Binding Path=PlacementTarget.SelectedItem, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
+                    <MenuItem Header="Add to Playlist" Background="White"
+                              ItemsSource="{Binding DataContext.Model.Playlists, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}">
+                        <MenuItem.ItemContainerStyle>
+                            <Style BasedOn="{StaticResource MaterialDesignMenuItem}" TargetType="{x:Type MenuItem}">
+                                <Setter Property="MenuItem.Header" Value="{Binding Name}"/>
+                                <Setter Property="Command" Value="{Binding DataContext.SendBeatmapToPlaylistCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
+                                <Setter Property="CommandParameter" Value="{Binding}"/>
+                            </Style>
+                        </MenuItem.ItemContainerStyle>
+                    </MenuItem>
+                </ContextMenu>
+            </ListView.ContextMenu>
+        </ListView>
     </Grid>
 </UserControl>

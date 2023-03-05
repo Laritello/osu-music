@@ -11,5 +11,12 @@ namespace Osu.Music.UI.Models
             get => _playlist;
             set => SetProperty(ref _playlist, value);
         }
+
+        private Beatmap _selectedBeatmap;
+        public Beatmap SelectedBeatmap
+        {
+            get => _selectedBeatmap;
+            set => SetProperty(ref _selectedBeatmap, value);
+        }
     }
 }

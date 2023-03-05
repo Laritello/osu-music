@@ -1,4 +1,5 @@
 ﻿using Prism.Mvvm;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -13,6 +14,13 @@ namespace Osu.Music.Common.Models
         {
             get => _name;
             set => SetProperty(ref _name, value);
+        }
+
+        private DateTime _updated;
+        public DateTime Updated
+        {
+            get => _updated;
+            set => SetProperty(ref _updated, value);
         }
 
         private ObservableCollection<Beatmap> _beatmaps;
