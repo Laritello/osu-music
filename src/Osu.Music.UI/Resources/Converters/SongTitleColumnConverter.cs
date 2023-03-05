@@ -9,7 +9,7 @@ namespace Osu.Music.UI.Resources.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (double)value - 105.0;
+            return (double)value - 155.0;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
