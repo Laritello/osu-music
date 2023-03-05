@@ -91,15 +91,7 @@ namespace Osu.Music.UI.ViewModels
         {
             ResourceDictionary resource = Application.Current.Resources;
 
-            Playlist = new Playlist()
-            {
-                Cover = new PlaylistCover()
-                {
-                    Icon = PackIconKind.PlaylistMusic,
-                    IconColor = Colors.White.ToHex(),
-                    BackgroundColor = resource.MergedDictionaries.GetMainColor().ToHex(),
-                }
-            };
+            Playlist = new Playlist();
 
             CancelCommand = new DelegateCommand(Cancel);
             ConfirmCommand = new DelegateCommand(Confirm);

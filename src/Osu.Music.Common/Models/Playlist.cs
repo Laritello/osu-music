@@ -22,17 +22,9 @@ namespace Osu.Music.Common.Models
             set => SetProperty(ref _beatmaps, value);
         }
 
-        private PlaylistCover _cover;
-        public PlaylistCover Cover
-        {
-            get => _cover;
-            set => SetProperty(ref _cover, value);
-        }
-
         public Playlist()
         {
             Beatmaps = new ObservableCollection<Beatmap>();
-            Cover = new PlaylistCover();
         }
 
         public void UpdateMaps(ICollection<Beatmap> beatmaps)
@@ -80,12 +72,6 @@ namespace Osu.Music.Common.Models
             return new Playlist()
             {
                 Name = Name,
-                Cover = new PlaylistCover()
-                {
-                    Icon = Cover.Icon,
-                    IconColor = Cover.IconColor,
-                    BackgroundColor = Cover.BackgroundColor,
-                },
             };
         }
 
@@ -94,9 +80,6 @@ namespace Osu.Music.Common.Models
             if (_backup != null)
             {
                 Name = _backup.Name;
-                Cover.Icon = _backup.Cover.Icon;
-                Cover.IconColor = _backup.Cover.IconColor;
-                Cover.BackgroundColor = _backup.Cover.BackgroundColor;
             }
         }
         #endregion
