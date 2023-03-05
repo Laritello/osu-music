@@ -32,9 +32,17 @@
         <Grid Grid.ColumnSpan="2" Panel.ZIndex="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="300"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="1"  HorizontalAlignment="Right" Orientation="Horizontal">
+            <Border Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" CornerRadius="12" BorderBrush="#30000000" BorderThickness="1" Height="24" Margin="5 0 0 0">
+                <DockPanel HorizontalAlignment="Stretch">
+                    <TextBlock DockPanel.Dock="Left" FontFamily="{DynamicResource MaterialIcons}" Text="&#xe8b6;" FontSize="20" Foreground="#50000000" VerticalAlignment="Center"
+                                       Margin="5 0 0 0"/>
+                    <TextBox Style="{DynamicResource SearchTextBox}" Margin="7 0 0 0" HorizontalAlignment="Stretch" WindowChrome.IsHitTestVisibleInChrome="True"/>
+                </DockPanel>
+            </Border>
+            <StackPanel Grid.Column="2"  HorizontalAlignment="Right" Orientation="Horizontal">
                 <Button Style="{StaticResource TitleBarUpdates}" Visibility="{Binding DataContext.Updater.State, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Converter={StaticResource UpdateStateToVisibilityConverter}, FallbackValue=Collapsed}"
                         Command="{Binding DataContext.UpdateAppCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
                     <Button.ToolTip>
@@ -75,13 +83,6 @@
                     <RadioButton Style="{DynamicResource SidebarButtonAllSongs}" Command="{Binding OpenPageCommand}" CommandParameter="SongsView" IsChecked="True"/>
                     <RadioButton Style="{DynamicResource SidebarButtonPlaylists}" Command="{Binding OpenPageCommand}" CommandParameter="PlaylistsView"/>
                     <RadioButton Style="{DynamicResource SidebarButtonCollection}" Command="{Binding OpenPageCommand}" CommandParameter="CollectionsView"/>
-                    <Border HorizontalAlignment="Stretch" CornerRadius="20" Background="#20000000" Margin="5" Height="40">
-                        <DockPanel>
-                            <TextBlock FontFamily="{DynamicResource MaterialIcons}" Text="&#xe8b6;" FontSize="20" Foreground="#50000000" VerticalAlignment="Center"
-                                       Margin="5 0 0 0"/>
-                            <TextBox Style="{DynamicResource SearchTextBox}" Margin="7 0 0 0"/>
-                        </DockPanel>
-                    </Border>
                 </StackPanel>
 
                 <ContentPresenter x:Name="contentPresenter" Grid.Row="1" Content="{Binding Visualization.Content}"/>
