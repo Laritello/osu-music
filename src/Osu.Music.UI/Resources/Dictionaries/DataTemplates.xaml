@@ -9,35 +9,16 @@
     <DataTemplate DataType="{x:Type vm:DialogAboutViewModel}">
         <v:DialogAboutView/>
     </DataTemplate>
-    <DataTemplate DataType="{x:Type vm:SongsViewModel}">
-        <v:SongsView/>
-    </DataTemplate>
-    <DataTemplate DataType="{x:Type vm:DialogSettingsViewModel}">
-        <v:DialogSettingsView/>
-    </DataTemplate>
-    <DataTemplate DataType="{x:Type vm:PlaylistsViewModel}">
-        <v:PlaylistsView/>
-    </DataTemplate>
-    <DataTemplate DataType="{x:Type vm:SearchViewModel}">
-        <v:SearchView/>
-    </DataTemplate>
-    <DataTemplate DataType="{x:Type vm:CollectionsViewModel}">
-        <v:CollectionsView/>
-    </DataTemplate>
 
     <DataTemplate x:Key="PlaylistTile" DataType="{x:Type cm:Playlist}">
-        <Border BorderBrush="{DynamicResource SolidColorBrushMainBorder}" Background="White" BorderThickness="1" CornerRadius="5" Height="210" Width="160" Margin="5">
-            <StackPanel Margin="3">
+        <Border Margin="5">
+            <StackPanel>
                 <Grid>
                     <Grid>
-                        <Rectangle Width="130" Height="122" RadiusX="15" RadiusY="15"  Margin="0 15 0 0"
-                               Fill="{Binding Cover.BackgroundColor, Converter={StaticResource BrushStringConverter}}"/>
-                        <materialDesign:PackIcon HorizontalAlignment="Center" VerticalAlignment="Center" Width="80" Height="80" Margin="0 10 0 0"
-                                             Foreground="{Binding Cover.IconColor, Converter={StaticResource BrushStringConverter}}"
-                                             Kind="{Binding Cover.Icon, Mode=OneWay}">
-                        </materialDesign:PackIcon>
+                        <Rectangle Width="145" Height="145" RadiusX="15" RadiusY="10" Fill="#20000000"/>
+                        <materialDesign:PackIcon HorizontalAlignment="Center" VerticalAlignment="Center" Width="80" Height="80" Margin="0 10 0 0" Foreground="#50000000" Kind="PlaylistNote"/>
                     </Grid>
-                    <Border x:Name="PlaylistControls" Width="130" Height="122" Background="#70000000" Opacity="0.0" CornerRadius="15" Margin="0 15 0 0">
+                    <Border x:Name="PlaylistControls" Width="145" Height="145" Background="#70000000" Opacity="0.0" CornerRadius="15">
                         <Border.Style>
                             <Style TargetType="{x:Type Border}">
                                 <Style.Triggers>
@@ -63,26 +44,14 @@
                             </Style>
                         </Border.Style>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Button Style="{DynamicResource PlaylistAction}" Content="&#xe3c9;" FontSize="24"
-                                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                                    Command="{Binding DataContext.ShowEditPlaylistDialogCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type v:PlaylistsView}}}"
-                                    CommandParameter="{Binding Path=.}"/>
                             <Button Style="{DynamicResource PlaylistAction}" Content="&#xe037;" FontSize="70" Margin="5 0 5 0" Height="40" Width="40"
                                     HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                                     Command="{Binding DataContext.SelectPlaylistAndPlayCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type v:MainView}}}"
                                     CommandParameter="{Binding Path=.}"/>
-                            <Button Style="{DynamicResource PlaylistAction}" Content="&#xe872;" FontSize="24"
-                                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                                    Command="{Binding DataContext.DeletePlaylistCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type v:MainView}}}"
-                                    CommandParameter="{Binding Path=.}">
-                                <Button.LayoutTransform>
-                                    <ScaleTransform ScaleX="-1"/>
-                                </Button.LayoutTransform>
-                            </Button>
                         </StackPanel>
                     </Border>
                 </Grid>
-                <TextBlock Text="{Binding Path=Name}" FontFamily="{DynamicResource Poppins}" Foreground="{DynamicResource SolidColorBrushMain}" Background="White" FontSize="14" FontWeight="DemiBold" Margin="11 20 11 0">
+                <TextBlock Text="{Binding Path=Name}" FontFamily="{DynamicResource Poppins}" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}" Background="White" FontSize="12" FontWeight="DemiBold">
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}">
                             <Style.Triggers>
@@ -104,12 +73,12 @@
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseLeftButtonUp">
                             <prism:InvokeCommandAction 
-                                Command="{Binding DataContext.SelectPlaylistCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type v:MainView}}}"
+                                Command="{Binding DataContext.SelectPlaylistCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type v:PlaylistsView}}}"
                                 CommandParameter="{Binding Path=.}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </TextBlock>
-                <TextBlock Text="{Binding Path=Beatmaps, Converter={StaticResource PlaylistCountToStringConverter}}" FontFamily="{DynamicResource Poppins}" FontSize="14" FontWeight="Light" Foreground="Gray" Margin="11 5 11 0"/>
+                <TextBlock Text="{Binding Path=Beatmaps, Converter={StaticResource PlaylistCountToStringConverter}}" FontFamily="{DynamicResource Poppins}" FontSize="12" FontWeight="Light" Foreground="Gray"/>
             </StackPanel>
         </Border>
     </DataTemplate>

@@ -93,7 +93,6 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand OpenSettingsCommand { get; private set; }
         public DelegateCommand<Beatmap> OpenBeatmapInExplorerCommand { get; private set; }
         public DelegateCommand<Playlist> SendBeatmapToPlaylistCommand { get; private set; }
-        public DelegateCommand<Playlist> SelectPlaylistCommand { get; private set; }
         public DelegateCommand<Playlist> SelectPlaylistAndPlayCommand { get; private set; }
         public DelegateCommand<Playlist> DeletePlaylistCommand { get; private set; }
         public DelegateCommand<Beatmap> RemoveBeatmapFromPlaylistCommand { get; private set; }
@@ -160,7 +159,6 @@ namespace Osu.Music.UI.ViewModels
             OpenSettingsCommand = new DelegateCommand(OpenSettings);
             OpenBeatmapInExplorerCommand = new DelegateCommand<Beatmap>(OpenBeatmapInExplorer);
             SendBeatmapToPlaylistCommand = new DelegateCommand<Playlist>(SendBeatmapToPlaylist);
-            SelectPlaylistCommand = new DelegateCommand<Playlist>(SelectPlaylist);
             SelectPlaylistAndPlayCommand = new DelegateCommand<Playlist>(SelectPlaylistAndPlay);
             DeletePlaylistCommand = new DelegateCommand<Playlist>(DeletePlaylist);
             RemoveBeatmapFromPlaylistCommand = new DelegateCommand<Beatmap>(RemoveBeatmapFromPlaylist);
@@ -420,8 +418,6 @@ namespace Osu.Music.UI.ViewModels
                 _playlistManager.Save(playlist);
             }
         }
-
-        private void SelectPlaylist(Playlist playlist) => Model.SelectedPlaylist = playlist;
 
         private void SelectPlaylistAndPlay(Playlist playlist)
         {

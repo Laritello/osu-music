@@ -27,6 +27,7 @@ namespace Osu.Music.UI
             containerRegistry.RegisterForNavigation<MainView>();
             containerRegistry.RegisterForNavigation<CollectionsView>();
             containerRegistry.RegisterForNavigation<PlaylistsView>();
+            containerRegistry.RegisterForNavigation<PlaylistDetailsView>();
             containerRegistry.RegisterForNavigation<SearchView>();
             containerRegistry.RegisterForNavigation<SongsView>();
         }
@@ -36,6 +37,7 @@ namespace Osu.Music.UI
             containerRegistry.Register<MainViewModel>();
             containerRegistry.Register<CollectionsViewModel>();
             containerRegistry.Register<PlaylistsViewModel>();
+            containerRegistry.Register<PlaylistDetailsViewModel>();
             containerRegistry.Register<SearchViewModel>();
             containerRegistry.Register<SongsViewModel>();
         }

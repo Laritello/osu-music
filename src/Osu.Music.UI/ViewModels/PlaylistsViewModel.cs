@@ -1,4 +1,5 @@
 ﻿using DryIoc;
+using Osu.Music.Common;
 using Osu.Music.Common.Models;
 using Osu.Music.Services.Dialog;
 using Osu.Music.Services.Interfaces;
@@ -6,6 +7,7 @@ using Osu.Music.Services.IO;
 using Osu.Music.UI.Views;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using Prism.Services.Dialogs;
 using System.Collections.Generic;
 
@@ -23,16 +25,15 @@ namespace Osu.Music.UI.ViewModels
             set => SetProperty(ref _playlists, value);
         }
 
-        public DelegateCommand ShowCreatePlaylistDialogCommand { get; private set; }
-        public DelegateCommand<Playlist> ShowEditPlaylistDialogCommand { get; private set; }
+        public DelegateCommand<Playlist> SelectPlaylistCommand { get; private set; }
 
         private IPlaylistManager _playlistManager;
-        private IPopupDialogService _dialogService;
+        private IRegionManager _regionManager;
 
         public PlaylistsViewModel(IContainer container)
         {
             _playlistManager = container.Resolve<IPlaylistManager>();
-            _dialogService = container.Resolve<IPopupDialogService>(); ;
+            _regionManager = container.Resolve<IRegionManager>();
 
             Playlists = _playlistManager.Playlists;
             InitializeCommands();
@@ -40,51 +41,20 @@ namespace Osu.Music.UI.ViewModels
 
         private void InitializeCommands()
         {
-            ShowCreatePlaylistDialogCommand = new DelegateCommand(ShowCreatePlaylistDialog);
-            ShowEditPlaylistDialogCommand = new DelegateCommand<Playlist>(ShowEditPlaylistDialog);
+            SelectPlaylistCommand = new DelegateCommand<Playlist>(SelectPlaylist);
         }
 
-        private void ShowCreatePlaylistDialog()
+        private void SelectPlaylist(Playlist playlist)
         {
-            DialogParameters parameters = new DialogParameters()
+            if (playlist != null)
             {
-                { "playlists", Playlists }
-            };
-
-            _dialogService.ShowPopupDialog<DialogCreatePlaylistView, DialogCreatePlaylistViewModel>(parameters, e =>
-            {
-                if (e.Result == ButtonResult.OK)
+                var parameters = new NavigationParameters()
                 {
-                    var playlist = e.Parameters.GetValue<Playlist>("playlist");
-                    Playlists.Add(playlist);
-                    _playlistManager.Save(playlist);
-                }
-            });
-        }
+                    { "playlist", playlist }
+                };
 
-        private void ShowEditPlaylistDialog(Playlist playlist)
-        {
-            if (playlist == null)
-                return;
-
-            DialogParameters parameters = new DialogParameters()
-            {
-                { "playlist", playlist },
-                { "playlists", Playlists }
-            };
-
-            _dialogService.ShowPopupDialog<DialogEditPlaylistView, DialogEditPlaylistViewModel>(parameters, e =>
-            {
-                if (e.Result == ButtonResult.OK)
-                {
-                    var originalName = e.Parameters.GetValue<string>("originalName");
-
-                    if (!playlist.Name.Equals(originalName))
-                        _playlistManager.RemoveByName(originalName);
-
-                    _playlistManager.Save(playlist);
-                }
-            });
+                _regionManager.RequestNavigate(RegionNames.ContentRegion, "PlaylistDetailsView", parameters);
+            }
         }
     }
 }
