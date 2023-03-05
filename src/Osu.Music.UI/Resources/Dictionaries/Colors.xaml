@@ -3,7 +3,7 @@
     <Color x:Key="ColorMain">#FF800080</Color>
     <Color x:Key="ColorMainLight">#FFb200b3</Color>
     <Color x:Key="ColorMainDark">#FF4c004d</Color>
-    <Color x:Key="ColorMainBorder">#40800080</Color>
+    <Color x:Key="ColorMainBorder">#20000000</Color>
     <Color x:Key="ColorTextDisabled">#61000000</Color>
     <Color x:Key="ColorTextMediumEmphasis">#99000000</Color>
     <Color x:Key="ColorTextHighEmphasis">#DE000000</Color>
