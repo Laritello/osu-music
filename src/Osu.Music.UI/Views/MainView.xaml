@@ -35,13 +35,6 @@
                 <ColumnDefinition Width="300"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Border Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" CornerRadius="12" BorderBrush="#30000000" BorderThickness="1" Height="24" Margin="5 0 0 0">
-                <DockPanel HorizontalAlignment="Stretch">
-                    <TextBlock DockPanel.Dock="Left" FontFamily="{DynamicResource MaterialIcons}" Text="&#xe8b6;" FontSize="20" Foreground="#50000000" VerticalAlignment="Center"
-                                       Margin="5 0 0 0"/>
-                    <TextBox Style="{DynamicResource SearchTextBox}" Margin="7 0 0 0" HorizontalAlignment="Stretch" WindowChrome.IsHitTestVisibleInChrome="True"/>
-                </DockPanel>
-            </Border>
             <StackPanel Grid.Column="2"  HorizontalAlignment="Right" Orientation="Horizontal">
                 <Button Style="{StaticResource TitleBarUpdates}" Visibility="{Binding DataContext.Updater.State, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Converter={StaticResource UpdateStateToVisibilityConverter}, FallbackValue=Collapsed}"
                         Command="{Binding DataContext.UpdateAppCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
@@ -49,9 +42,9 @@
                         <TextBlock Text="Update osu.Music"/>
                     </Button.ToolTip>
                 </Button>
-                <Button Style="{StaticResource TitleBarGitHub}" Command="{Binding OpenGitHubCommand}">
+                <Button Style="{StaticResource TitleBarSearch}" Command="{Binding OpenGitHubCommand}">
                     <Button.ToolTip>
-                        <TextBlock Text="Go to GitHub"/>
+                        <TextBlock Text="Search"/>
                     </Button.ToolTip>
                 </Button>
                 <Button Style="{StaticResource TitleBarMinimize}" Command="{Binding MinimizeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
@@ -74,11 +67,19 @@
                         <TextBlock Text="About"/>
                     </Button.ToolTip>
                 </Button>
-                <Button Style="{DynamicResource SettingsButton}" HorizontalAlignment="Right" Command="{Binding OpenPageCommand}" CommandParameter="SettingsView">
-                    <Button.ToolTip>
-                        <TextBlock Text="Settings"/>
-                    </Button.ToolTip>
-                </Button>
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <Button Style="{StaticResource GithubButton}" Command="{Binding OpenGitHubCommand}">
+                        <Button.ToolTip>
+                            <TextBlock Text="Go to GitHub"/>
+                        </Button.ToolTip>
+                    </Button>
+
+                    <Button Style="{DynamicResource SettingsButton}" Margin="3 0 0 0"  Command="{Binding OpenPageCommand}" CommandParameter="SettingsView">
+                        <Button.ToolTip>
+                            <TextBlock Text="Settings"/>
+                        </Button.ToolTip>
+                    </Button>
+                </StackPanel>
                 <StackPanel Orientation="Vertical" Margin="0 35 0 0">
                     <RadioButton Style="{DynamicResource SidebarButtonAllSongs}" Command="{Binding OpenPageCommand}" CommandParameter="SongsView" IsChecked="True"/>
                     <RadioButton Style="{DynamicResource SidebarButtonPlaylists}" Command="{Binding OpenPageCommand}" CommandParameter="PlaylistsView"/>
