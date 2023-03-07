@@ -1,41 +1,33 @@
 ﻿using DryIoc;
 using Osu.Music.Common;
 using Osu.Music.Common.Models;
-using Osu.Music.Services.Dialog;
-using Osu.Music.Services.Interfaces;
-using Osu.Music.Services.IO;
-using Osu.Music.UI.Views;
+using Osu.Music.UI.Models;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
-using Prism.Services.Dialogs;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Osu.Music.UI.ViewModels
 {
-    public class PlaylistsViewModel : BindableBase
+    public class PlaylistsViewModel : BindableBase, INavigationAware
     {
-        private ICollection<Playlist> _playlists;
-        /// <summary>
-        /// Collection of user-created playlists.
-        /// </summary>
-        public ICollection<Playlist> Playlists
+        private PlaylistsModel _model;
+        public PlaylistsModel Model
         {
-            get => _playlists;
-            set => SetProperty(ref _playlists, value);
+            get => _model;
+            set => SetProperty(ref _model, value);
         }
 
         public DelegateCommand<Playlist> SelectPlaylistCommand { get; private set; }
 
-        private IPlaylistManager _playlistManager;
         private IRegionManager _regionManager;
 
         public PlaylistsViewModel(IContainer container)
         {
-            _playlistManager = container.Resolve<IPlaylistManager>();
             _regionManager = container.Resolve<IRegionManager>();
 
-            Playlists = _playlistManager.Playlists;
+            Model = new PlaylistsModel();
+
             InitializeCommands();
         }
 
@@ -55,6 +47,22 @@ namespace Osu.Music.UI.ViewModels
 
                 _regionManager.RequestNavigate(RegionNames.ContentRegion, "PlaylistDetailsView", parameters);
             }
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            var playlists = navigationContext.Parameters.GetValue<ObservableCollection<Playlist>>("playlists");
+            return playlists.Equals(Model.Playlists);
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            Model.Playlists = navigationContext.Parameters.GetValue<ObservableCollection<Playlist>>("playlists");
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            
         }
     }
 }

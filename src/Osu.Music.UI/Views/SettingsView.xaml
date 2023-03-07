@@ -1,0 +1,87 @@
+﻿<UserControl x:Class="Osu.Music.UI.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:Osu.Music.UI.Views"
+             xmlns:models="clr-namespace:Osu.Music.Common.Models;assembly=Osu.Music.Common"
+             xmlns:uc="clr-namespace:Osu.Music.UI.UserControls"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <DataTemplate x:Key="HotkeyTemplate" DataType="{x:Type models:Hotkey}">
+            <uc:HotkeyListItem Margin="0 5 0 5" Combination="{Binding Path=Combination}" Type="{Binding Path=Type}" HorizontalAlignment="Stretch"
+                               SelectedHotkey="{Binding DataContext.Model.HotkeyManager.EditedHotkey, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SettingsView}}}"/>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <TabControl Style="{DynamicResource MaterialDesignTabControl}">
+            <TabItem Header="General">
+                <ScrollViewer MaxWidth="700">
+                    <StackPanel Orientation="Vertical" Margin="5">
+                        <Grid Height="35" HorizontalAlignment="Stretch">
+                            <TextBlock Text="PATH TO OSU!" Style="{DynamicResource MenuSubHeader}"/>
+                            <Button Content="CHANGE" Style="{DynamicResource MaterialDesignFlatButton}" Command="{Binding UpdateSourceCommand}" HorizontalAlignment="Right"/>
+                        </Grid>
+                        <TextBlock Text="{Binding Model.Settings.Source}" Margin="0 0 10 0"/>
+                        <TextBlock Text="osu.Music automatically scans your system for osu! folder. However, in some cases (i.e. multiple versions of osu! installed) it may be useful to be able to change this setting manually."
+                                   Style="{DynamicResource MenuDescription}"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Appearance">
+                <ScrollViewer MaxWidth="700">
+                    <StackPanel Orientation="Vertical" Margin="5">
+                        <Grid Height="35">
+                            <TextBlock Text="COLOR" Style="{DynamicResource MenuSubHeader}"/>
+                        </Grid>
+                        <materialDesign:ColorPicker Name="ColorPicker" Height="200" Color="{Binding Model.Settings.Color, Converter={StaticResource ColorStringConverter}}"/>
+                        <TextBlock Text="Why limit yourself to one boring color? Change the color of osu!Music to suit your mood! My personal advice is a refreshing lime green :)"
+                                   Style="{DynamicResource MenuDescription}"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Keybinds">
+                <ScrollViewer MaxWidth="700">
+                    <StackPanel Orientation="Vertical" Margin="5">
+                        <Grid Height="35" HorizontalAlignment="Stretch">
+                            <TextBlock Text="KEYBINDS" Style="{DynamicResource MenuSubHeader}"/>
+                            <ToggleButton IsChecked="{Binding Model.Settings.HotkeysEnabled}" HorizontalAlignment="Right"/>
+                        </Grid>
+                        <ItemsControl ItemsSource="{Binding Model.HotkeyManager.Hotkeys}" ItemTemplate="{StaticResource HotkeyTemplate}"
+                                      ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                                      Cursor="">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.Template>
+                                <ControlTemplate TargetType="ItemsControl">
+                                    <ItemsPresenter/>
+                                </ControlTemplate>
+                            </ItemsControl.Template>
+                        </ItemsControl>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Social">
+                <ScrollViewer MaxWidth="700">
+                    <StackPanel Orientation="Vertical" Margin="5">
+                        <Grid Height="35" HorizontalAlignment="Stretch">
+                            <TextBlock Text="DISCORD" Style="{DynamicResource MenuSubHeader}"/>
+                            <ToggleButton IsChecked="{Binding Model.Settings.DiscordEnabled}" HorizontalAlignment="Right"/>
+                        </Grid>
+                        <TextBlock Text="It's just /np, but for Discord activity. Except, everyone can see it... and judge your taste in music."
+                                   Style="{DynamicResource MenuDescription}"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

@@ -74,7 +74,7 @@
                         <TextBlock Text="About"/>
                     </Button.ToolTip>
                 </Button>
-                <Button Style="{DynamicResource SettingsButton}" Command="{Binding OpenSettingsCommand}" HorizontalAlignment="Right">
+                <Button Style="{DynamicResource SettingsButton}" HorizontalAlignment="Right" Command="{Binding OpenPageCommand}" CommandParameter="SettingsView">
                     <Button.ToolTip>
                         <TextBlock Text="Settings"/>
                     </Button.ToolTip>
@@ -106,16 +106,16 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" VerticalAlignment="Center" Orientation="Horizontal" Margin="5 0 0 0">
                 <StackPanel Orientation="Vertical">
-                    <TextBlock Style="{DynamicResource PlayerBeatmapTitle}" Text="{Binding Model.PlayingBeatmap.Title}"/>
-                    <TextBlock Style="{DynamicResource PlayerBeatmapArtist}" Text="{Binding Model.PlayingBeatmap.Artist}"/>
+                    <TextBlock Style="{DynamicResource PlayerBeatmapTitle}" Text="{Binding Playback.Beatmap.Title}"/>
+                    <TextBlock Style="{DynamicResource PlayerBeatmapArtist}" Text="{Binding Playback.Beatmap.Artist}"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel Grid.Column="1" VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Style="{DynamicResource PlayerButtonPrevious}" Command="{Binding PreviousBeatmapCommand}" CommandParameter="{Binding Model.PlayingBeatmap}"/>
-                <Button Style="{DynamicResource PlayerButtonStop}" Command="{Binding StopBeatmapCommand}" CommandParameter="{Binding Model.PlayingBeatmap}"/>
-                <Button Style="{DynamicResource PlayerButtonPlay}" Command="{Binding PlayBeatmapCommand}" CommandParameter="{Binding Model.SelectedBeatmap}"/>
-                <Button Style="{DynamicResource PlayerButtonPause}" Command="{Binding PauseBeatmapCommand}" CommandParameter="{Binding Model.PlayingBeatmap}"/>
-                <Button Style="{DynamicResource PlayerButtonNext}" Command="{Binding NextBeatmapCommand}" CommandParameter="{Binding Model.PlayingBeatmap}"/>
+                <Button Style="{DynamicResource PlayerButtonPrevious}" Command="{Binding PreviousBeatmapCommand}"/>
+                <Button Style="{DynamicResource PlayerButtonStop}" Command="{Binding StopBeatmapCommand}"/>
+                <Button Style="{DynamicResource PlayerButtonPlay}" Command="{Binding PlayBeatmapCommand}"/>
+                <Button Style="{DynamicResource PlayerButtonPause}" Command="{Binding PauseBeatmapCommand}"/>
+                <Button Style="{DynamicResource PlayerButtonNext}" Command="{Binding NextBeatmapCommand}"/>
             </StackPanel>
             <StackPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0 0 5 0">
                 <ToggleButton Style="{DynamicResource PlayerToggleButtonVolume}" Command="{Binding MuteCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}"

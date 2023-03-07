@@ -13,7 +13,6 @@ namespace Osu.Music.UI
         {
             var regionManager = containerProvider.Resolve<IRegionManager>();
             regionManager.RequestNavigate(RegionNames.GlobalRegion, nameof(MainView));
-            regionManager.RequestNavigate(RegionNames.ContentRegion, nameof(SongsView));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
@@ -30,6 +29,8 @@ namespace Osu.Music.UI
             containerRegistry.RegisterForNavigation<PlaylistDetailsView>();
             containerRegistry.RegisterForNavigation<SearchView>();
             containerRegistry.RegisterForNavigation<SongsView>();
+            containerRegistry.RegisterForNavigation<DialogSettingsView>();
+            containerRegistry.RegisterForNavigation<SettingsView>();
         }
 
         private void RegisterViewModels(IContainerRegistry containerRegistry)
@@ -40,6 +41,8 @@ namespace Osu.Music.UI
             containerRegistry.Register<PlaylistDetailsViewModel>();
             containerRegistry.Register<SearchViewModel>();
             containerRegistry.Register<SongsViewModel>();
+            containerRegistry.Register<DialogSettingsViewModel>();
+            containerRegistry.Register<SettingsViewModel>();
         }
     }
 }

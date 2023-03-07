@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using DryIoc;
+using Newtonsoft.Json;
 using Osu.Music.Common.Models;
 using Osu.Music.Services.Interfaces;
 using Osu.Music.Services.UItility;
@@ -13,15 +14,23 @@ namespace Osu.Music.Services.IO
 {
     public class PlaylistManager : IPlaylistManager
     {
+        private ILibraryManager _libraryManager;
+        
+        public PlaylistManager(IContainer container) 
+        {
+            _libraryManager = container.Resolve<ILibraryManager>();
+        }
+
         public ObservableCollection<Playlist> Playlists { get; private set; }
 
-        public Task<ObservableCollection<Playlist>> LoadAsync(IList<Beatmap> beatmaps)
+        public Task<ObservableCollection<Playlist>> LoadAsync()
         {
-            return Task.Run(() =>
+            return Task.Run(async() =>
             {
                 try
                 {
                     var playlistDirectory = AppDataHelper.PlaylistDirectory;
+                    var beatmaps = await _libraryManager.LoadAsync();
 
                     if (!Directory.Exists(playlistDirectory))
                         throw new ArgumentException("The specified folder does not exist.");
@@ -86,7 +95,7 @@ namespace Osu.Music.Services.IO
             catch { }
         }
 
-        private Playlist ConvertPlaylistFromJson(string filePath, IList<Beatmap> beatmaps)
+        private Playlist ConvertPlaylistFromJson(string filePath, ObservableCollection<Beatmap> beatmaps)
         {
             try
             {

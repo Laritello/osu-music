@@ -12,7 +12,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Padding="5 5 0 0">
-            <ItemsControl ItemsSource="{Binding Playlists}" ItemTemplate="{DynamicResource PlaylistTile}">
+            <ItemsControl ItemsSource="{Binding Model.Playlists}" ItemTemplate="{DynamicResource PlaylistTile}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel Width="{Binding Path=ViewportWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ScrollViewer}}}"/>

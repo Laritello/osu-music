@@ -1,27 +1,38 @@
 ﻿using Newtonsoft.Json;
 using Osu.Music.Common.Models;
 using Osu.Music.Services.UItility;
+using Prism.Mvvm;
 using System.IO;
 
 namespace Osu.Music.Services.IO
 {
-    public static class SettingsManager
+    public class SettingsManager : BindableBase
     {
-        private static readonly string _settingsFile = Path.Combine(AppDataHelper.Path, "settings.json");
-        public static Settings Load()
+        private readonly string _settingsFile = Path.Combine(AppDataHelper.Path, "settings.json");
+
+        private Settings _settings;
+        public Settings Settings
+        {
+            get => _settings ?? Load();
+            set => SetProperty(ref _settings, value);
+        }
+
+        public Settings Load()
         {
             try
             {
                 string json = File.Exists(_settingsFile) ? File.ReadAllText(_settingsFile) : null;
-                return json != null ? JsonConvert.DeserializeObject<Settings>(json, new JsonSerializerSettings() { ObjectCreationHandling = ObjectCreationHandling.Replace }) : new Settings();
+                Settings = json != null ? JsonConvert.DeserializeObject<Settings>(json, new JsonSerializerSettings() { ObjectCreationHandling = ObjectCreationHandling.Replace }) : new Settings();
+                return Settings;
             }
             catch
             {
-                return new Settings();
+                Settings = new Settings();
+                return Settings;
             }
         }
 
-        public static void Save(Settings settings)
+        public void Save(Settings settings)
         {
             try
             {

@@ -3,23 +3,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Osu.Music.UI.UserControls"
              xmlns:views="clr-namespace:Osu.Music.UI.Views"
              mc:Ignorable="d" Name="HotkeyItem">
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Height="30">
-        <TextBlock Name="LabelName" Width="384" Text="{Binding ElementName=HotkeyItem, Path=Type, Converter={StaticResource HotkeyTypeToStringConverter}}" Padding="0 6 0 0"/>
-        <TextBlock Name="LabelHotkey" FontWeight="Bold" Width="150" Height="30" Text="{Binding ElementName=HotkeyItem, Path=Combination, Converter={StaticResource KeyCombinationToStringConverter}}" Padding="0 6 0 0"/>
-        <ToggleButton Name="ButtonEdit" Width="30" Height="30" Style="{DynamicResource HotkeyEditButton}" 
-                      Command="{Binding DataContext.HotkeyManager.SetEditedHotkeyCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type views:DialogSettingsView}}}"
+    <Grid Height="30">
+        <TextBlock Name="LabelName" Text="{Binding ElementName=HotkeyItem, Path=Type, Converter={StaticResource HotkeyTypeToStringConverter}}" Padding="0 6 0 0" HorizontalAlignment="Left"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <TextBlock Name="LabelHotkey" FontWeight="Bold" FontSize="16" Width="150" Height="30" Text="{Binding ElementName=HotkeyItem, Path=Combination, Converter={StaticResource KeyCombinationToStringConverter}}" Padding="0 6 0 0"/>
+            <ToggleButton Name="ButtonEdit" Width="30" Height="30" Style="{DynamicResource HotkeyEditButton}" 
+                      Command="{Binding DataContext.Model.HotkeyManager.SetEditedHotkeyCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type views:SettingsView}}}"
                       CommandParameter="{Binding ElementName=HotkeyItem, Path=Type}">
-            <ToggleButton.IsChecked>
-                <MultiBinding Converter="{StaticResource SelectedHotkeyToBooleanConverter}" Mode="OneWay">
-                    <MultiBinding.Bindings>
-                        <Binding ElementName="HotkeyItem" Path="Type"/>
-                        <Binding ElementName="HotkeyItem" Path="SelectedHotkey"/>
-                    </MultiBinding.Bindings>
-                </MultiBinding>
-            </ToggleButton.IsChecked>
-        </ToggleButton>
-    </StackPanel>
+                <ToggleButton.IsChecked>
+                    <MultiBinding Converter="{StaticResource SelectedHotkeyToBooleanConverter}" Mode="OneWay">
+                        <MultiBinding.Bindings>
+                            <Binding ElementName="HotkeyItem" Path="Type"/>
+                            <Binding ElementName="HotkeyItem" Path="SelectedHotkey"/>
+                        </MultiBinding.Bindings>
+                    </MultiBinding>
+                </ToggleButton.IsChecked>
+            </ToggleButton>
+        </StackPanel>
+    </Grid>
 </UserControl>

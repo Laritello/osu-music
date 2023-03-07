@@ -21,8 +21,8 @@ namespace Osu.Music.UI.ViewModels
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
-            string name = navigationContext.Parameters.GetValue<Playlist>("playlist").Name;
-            return Model.Playlist != null && Model.Playlist.Name == name;
+            var playlist = navigationContext.Parameters.GetValue<Playlist>("playlist");
+            return Model.Playlist == playlist;
         }
 
         public void OnNavigatedFrom(NavigationContext navigationContext)

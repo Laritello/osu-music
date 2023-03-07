@@ -31,8 +31,7 @@ namespace Osu.Music.Services.IO
 
         public void Initialize()
         {
-            if (Client == null)
-                Client = new DiscordRpcClient(APPLICATION_ID);
+            Client ??= new DiscordRpcClient(APPLICATION_ID);
 
             if (!Client.IsInitialized)
                 Client.Initialize();
@@ -95,14 +94,12 @@ namespace Osu.Music.Services.IO
 
         public void Pause()
         {
-            if (Client != null)
-                Client.UpdateClearTime();
+            Client?.UpdateClearTime();
         }
 
         public void Resume(TimeSpan resumeFrom)
         {
-            if (Client != null)
-                Client.UpdateStartTime(DateTime.Now.Subtract(resumeFrom).ToUniversalTime());
+            Client?.UpdateStartTime(DateTime.Now.Subtract(resumeFrom).ToUniversalTime());
         }
 
         public void Dispose()

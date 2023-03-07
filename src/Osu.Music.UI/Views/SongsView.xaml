@@ -12,20 +12,19 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <ListView x:Name="SongsList" Style="{DynamicResource ListViewBeatmaps}"
-                  ItemsSource="{Binding DataContext.Model.Beatmaps, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}" 
-                  SelectedItem="{Binding DataContext.Model.SelectedBeatmap, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}" 
-                  Tag="{Binding Path=DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}"
+                  ItemsSource="{Binding Model.Beatmaps}" 
+                  SelectedItem="{Binding Playback.Beatmap}" 
                   HorizontalContentAlignment="Stretch">
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type m:Beatmap}">
                     <Grid>
                         <Grid.InputBindings>
                             <MouseBinding Gesture="LeftDoubleClick" 
-                                          Command="{Binding DataContext.PlayBeatmapAndUpdateCollectionCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}">
+                                          Command="{Binding DataContext.PlayBeatmapCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SongsView}}}">
                                 <MouseBinding.CommandParameter>
                                     <MultiBinding Converter="{StaticResource MultipleParametersConverter}">
                                         <Binding Path="SelectedItem" RelativeSource="{RelativeSource AncestorType=ListView}"/>
-                                        <Binding Path="DataContext.Model.Beatmaps" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}"/>
+                                        <Binding Path="DataContext.Model.Beatmaps" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:SongsView}}"/>
                                     </MultiBinding>
                                 </MouseBinding.CommandParameter>
                             </MouseBinding>
@@ -57,23 +56,6 @@
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
-            <ListView.ContextMenu>
-                <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}" Background="White" x:Name="SourceMenu">
-                    <MenuItem Header="Open in Explorer" Background="White"
-                              Command="{Binding DataContext.OpenBeatmapInExplorerCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}" 
-                              CommandParameter="{Binding Path=PlacementTarget.SelectedItem, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
-                    <MenuItem Header="Add to Playlist" Background="White"
-                              ItemsSource="{Binding DataContext.Model.Playlists, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}">
-                        <MenuItem.ItemContainerStyle>
-                            <Style BasedOn="{StaticResource MaterialDesignMenuItem}" TargetType="{x:Type MenuItem}">
-                                <Setter Property="MenuItem.Header" Value="{Binding Name}"/>
-                                <Setter Property="Command" Value="{Binding DataContext.SendBeatmapToPlaylistCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
-                                <Setter Property="CommandParameter" Value="{Binding}"/>
-                            </Style>
-                        </MenuItem.ItemContainerStyle>
-                    </MenuItem>
-                </ContextMenu>
-            </ListView.ContextMenu>
         </ListView>
     </Grid>
 </UserControl>

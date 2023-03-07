@@ -1,4 +1,5 @@
-﻿using Osu.Music.Common.Models;
+﻿using DryIoc;
+using Osu.Music.Common.Models;
 using Osu.Music.Services.Interfaces;
 using osu_database_reader.BinaryFiles;
 using osu_database_reader.Components.Beatmaps;
@@ -13,28 +14,38 @@ namespace Osu.Music.Services.IO
 {
     public class LibraryManager : ILibraryManager
     {
+        private Settings _settings;
+
+        public LibraryManager(IContainer container)
+        {
+            var _settingsManager = container.Resolve<SettingsManager>();
+            _settings = _settingsManager.Settings;
+        }
+
         public ObservableCollection<Beatmap> Beatmaps { get; private set; }
 
-        public Task<ObservableCollection<Beatmap>> LoadAsync(string osuFolder)
+        public Task<ObservableCollection<Beatmap>> LoadAsync()
         {
             return Task.Run(() =>
             {
                 try
                 {
-                    if (!Directory.Exists(osuFolder))
+                    var source = _settings.Source;
+
+                    if (!Directory.Exists(source))
                         throw new ArgumentException("The specified folder does not exist.");
 
                     ObservableCollection<Beatmap> beatmaps = new ObservableCollection<Beatmap>();
 
                     OsuDb db;
 
-                    using (FileStream stream = File.OpenRead($@"{osuFolder}\osu!.db"))
+                    using (FileStream stream = File.OpenRead($@"{source}\osu!.db"))
                         db = OsuDb.Read(stream);
 
                     foreach (var beatmapSet in db.Beatmaps.GroupBy(x => x.BeatmapSetId))
                     {
                         if (beatmapSet.Count() > 0)
-                            beatmaps.Add(Convert(osuFolder, beatmapSet));
+                            beatmaps.Add(Convert(source, beatmapSet));
                     }
 
                     Beatmaps = beatmaps;

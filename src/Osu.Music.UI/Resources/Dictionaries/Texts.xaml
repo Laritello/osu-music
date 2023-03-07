@@ -16,19 +16,36 @@
 
     <Style x:Key="MenuHeader" TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="18"/>
+        <Setter Property="FontWeight" Value="DemiBold"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
+        <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushTextHighEmphasis}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+    <Style x:Key="MenuSubHeader" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="14"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
-        <Setter Property="Foreground" Value="#424242"/>
-        <Setter Property="Margin" Value="0 0 0 20"/>
+        <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+    <Style x:Key="MenuDescription" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
+        <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="Margin" Value="0 5 0 0 "/>
     </Style>
 
     <Style x:Key="MenuDefault" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontSize" Value="14"/>
         <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
     </Style>
 
     <Style x:Key="LinkText" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontSize" Value="14"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
         <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
         <Setter Property="Foreground" Value="#0366d6"/>
@@ -43,7 +60,7 @@
 
     <Style x:Key="LicenseText" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="Monospace"/>
-        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontSize" Value="14"/>
     </Style>
 
     <Style x:Key="SearchTextBox" TargetType="{x:Type TextBox}">

@@ -1,4 +1,5 @@
-﻿using Osu.Music.Common.Models;
+﻿using DryIoc;
+using Osu.Music.Common.Models;
 using Osu.Music.Services.Dialog;
 using Osu.Music.Services.Hotkeys;
 using Osu.Music.Services.IO;
@@ -74,8 +75,12 @@ namespace Osu.Music.UI.ViewModels
         public event Action<IDialogResult> RequestClose;
         #endregion
 
-        public DialogSettingsViewModel()
+        private SettingsManager _settingsManager;
+
+        public DialogSettingsViewModel(IContainer container)
         {
+            _settingsManager = container.Resolve<SettingsManager>();
+            
             _colorConverter = new ColorStringConverter();
             _fileDialogService = new FileDialogService();
 
@@ -103,17 +108,17 @@ namespace Osu.Music.UI.ViewModels
             if (!color.HasValue || Settings == null)
                 return;
 
-            Settings.MainColor = color.Value.ToHex();
+            Settings.Color = color.Value.ToHex();
             ResourceDictionary resource = Application.Current.Resources;
-            resource.MergedDictionaries.SetMainColor(Settings.MainColor);
+            resource.MergedDictionaries.SetMainColor(Settings.Color);
 
-            SettingsManager.Save(Settings);
+            _settingsManager.Save(Settings);
         }
 
         private void UpdateDiscordRpc()
         {
-            SettingsManager.Save(Settings);
-            DiscordManager.Enabled = Settings.DiscordRpcEnabled;
+            _settingsManager.Save(Settings);
+            DiscordManager.Enabled = Settings.DiscordEnabled;
 
             if (!DiscordManager.Enabled)
                 DiscordManager.ClearPresence();
@@ -125,8 +130,8 @@ namespace Osu.Music.UI.ViewModels
 
             if (result)
             {
-                Settings.OsuFolder = path;
-                SettingsManager.Save(Settings);
+                Settings.Source = path;
+                _settingsManager.Save(Settings);
             }
         }
 
@@ -144,7 +149,7 @@ namespace Osu.Music.UI.ViewModels
         public void OnDialogClosed()
         {
             if (Settings != null)
-                SettingsManager.Save(Settings);
+                _settingsManager.Save(Settings);
         }
 
         public void OnDialogOpened(IDialogParameters parameters)
@@ -153,7 +158,7 @@ namespace Osu.Music.UI.ViewModels
             HotkeyManager = parameters.GetValue<HotkeyManager>("hotkey");
             DiscordManager = parameters.GetValue<DiscordManager>("discord");
 
-            _color = Settings.MainColor;
+            _color = Settings.Color;
         }
 
         public bool CanCloseDialog() => true;
