@@ -91,7 +91,6 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand<TimeSpan?> ScrollBeatmapCommand { get; private set; }
         public DelegateCommand<string> OpenPageCommand { get; private set; }
         public DelegateCommand OpenAboutCommand { get; private set; }
-        public DelegateCommand OpenSettingsCommand { get; private set; }
         public DelegateCommand<Playlist> SelectPlaylistAndPlayCommand { get; private set; }
         public DelegateCommand<Playlist> DeletePlaylistCommand { get; private set; }
         public DelegateCommand<Beatmap> RemoveBeatmapFromPlaylistCommand { get; private set; }
@@ -162,7 +161,6 @@ namespace Osu.Music.UI.ViewModels
             ScrollBeatmapCommand = new DelegateCommand<TimeSpan?>(ScrollBeatmap);
             OpenPageCommand = new DelegateCommand<string>(OpenPage);
             OpenAboutCommand = new DelegateCommand(OpenAbout);
-            OpenSettingsCommand = new DelegateCommand(OpenSettings);
             SelectPlaylistAndPlayCommand = new DelegateCommand<Playlist>(SelectPlaylistAndPlay);
             DeletePlaylistCommand = new DelegateCommand<Playlist>(DeletePlaylist);
             RemoveBeatmapFromPlaylistCommand = new DelegateCommand<Beatmap>(RemoveBeatmapFromPlaylist);
@@ -314,17 +312,6 @@ namespace Osu.Music.UI.ViewModels
         private void OpenAbout()
         {
             _dialogService.ShowPopupDialog<DialogAboutView, DialogAboutViewModel>();
-        }
-
-        private void OpenSettings()
-        {
-            var parameters = new DialogParameters
-            {
-                { "settings", Settings },
-                { "hotkey", HotkeyManager },
-                { "discord", DiscordManager }
-            };
-            _dialogService.ShowPopupDialog<DialogSettingsView, DialogSettingsViewModel>(parameters, callback => { });
         }
 
         private void SelectPlaylistAndPlay(Playlist playlist)
