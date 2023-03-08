@@ -15,11 +15,11 @@
     </UserControl.Resources>
     <Grid Margin="16">
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
-        <TextBlock FontSize="14">New playlist:</TextBlock>
+        <TextBlock FontSize="14" Text="New playlist:"/>
         <TextBox Grid.Row="1" Margin="0,6,0,0" wpf:HintAssist.Hint="Name" FontSize="18" MinWidth="300"
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                  utility:ValidationBehaviour.HasError="{Binding NameHasError}">
@@ -36,9 +36,9 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <StackPanel Grid.Row="2" Margin="0,16,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Command="{Binding AcceptCommand}" IsDefault="True" Style="{StaticResource MaterialDesignFlatButton}" Content="CREATE"/>
-            <Button Margin="8,0,0,0" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource MaterialDesignFlatButton}" Content="CANCEL"/>
+        <StackPanel Grid.Row="2" Margin="0 20 0 0" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Command="{Binding AcceptCommand}" IsDefault="True" Style="{StaticResource MaterialDesignFlatButton}" Content="CREATE" VerticalContentAlignment="Center"/>
+            <Button Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource MaterialDesignFlatButton}" Content="CANCEL" Margin="8 0 0 0"/>
         </StackPanel>
     </Grid>
 </UserControl>
