@@ -54,6 +54,9 @@
                             <Button Style="{DynamicResource SongListOpenInBrowser}"
                                     Command="{Binding DataContext.OpenBeatmapInBrowserCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:LibraryView}}}" 
                                     CommandParameter="{Binding .}"/>
+                            <Button Style="{DynamicResource SongListSendToPlaylist}" Margin="5 0 0 0"
+                                    Command="{Binding DataContext.OpenBeatmapInBrowserCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:LibraryView}}}" 
+                                    CommandParameter="{Binding .}"/>
                         </StackPanel>
                     </Grid>
                     <DataTemplate.Triggers>

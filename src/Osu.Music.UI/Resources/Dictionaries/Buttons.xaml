@@ -976,7 +976,7 @@
         <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
         <Setter Property="FontFamily" Value="{DynamicResource MaterialIcons}"/>
         <Setter Property="FontWeight" Value="DemiBold"/>
-        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="FontSize" Value="22"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Template">
@@ -1014,5 +1014,8 @@
 
     <Style x:Key="SongListOpenInBrowser" TargetType="Button" BasedOn="{StaticResource SongListButtonBase}">
         <Setter Property="Content" Value="&#xe89d;"/>
+    </Style>
+    <Style x:Key="SongListSendToPlaylist" TargetType="Button" BasedOn="{StaticResource SongListButtonBase}">
+        <Setter Property="Content" Value="&#xe03d;"/>
     </Style>
 </ResourceDictionary>
