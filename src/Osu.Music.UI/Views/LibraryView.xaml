@@ -17,16 +17,11 @@
                   HorizontalContentAlignment="Stretch">
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type m:Beatmap}">
-                    <Grid>
+                    <Grid Name="ItemContainer">
                         <Grid.InputBindings>
                             <MouseBinding Gesture="LeftDoubleClick" 
-                                          Command="{Binding DataContext.PlayBeatmapCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:LibraryView}}}">
-                                <MouseBinding.CommandParameter>
-                                    <MultiBinding Converter="{StaticResource MultipleParametersConverter}">
-                                        <Binding Path="SelectedItem" RelativeSource="{RelativeSource AncestorType=ListView}"/>
-                                        <Binding Path="DataContext.Model.Beatmaps" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:LibraryView}}"/>
-                                    </MultiBinding>
-                                </MouseBinding.CommandParameter>
+                                          Command="{Binding DataContext.PlayBeatmapCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:LibraryView}}}"
+                                          CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType=ListView}}">
                             </MouseBinding>
                         </Grid.InputBindings>
                         <Grid.ColumnDefinitions>
@@ -49,11 +44,26 @@
                             <TextBlock Style="{DynamicResource ArtistStyle}" Text="{Binding Path=Artist}" Margin="0 1 0 0" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
                         </StackPanel>
 
-                        <TextBlock Style="{DynamicResource TitleStyle}" Grid.Column="2" 
+                        <StackPanel Name="TimePanel" Grid.Column="2" VerticalAlignment="Center">
+                            <TextBlock Style="{DynamicResource TitleStyle}" HorizontalAlignment="Right" VerticalAlignment="Center"
                                    Text="{Binding Path=TotalTime, Converter={StaticResource TimeSpanToStringConverter}, FallbackValue=''}" 
-                                   Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"
-                                   HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                   Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
+                        </StackPanel>
+
+                        <StackPanel Name="ActionPanel" Visibility="Hidden" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button Style="{DynamicResource SongListOpenInBrowser}"
+                                    Command="{Binding DataContext.OpenBeatmapInBrowserCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:LibraryView}}}" 
+                                    CommandParameter="{Binding .}"/>
+                        </StackPanel>
                     </Grid>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsMouseOver}" Value="True">
+                            <DataTrigger.Setters>
+                                <Setter TargetName="TimePanel" Property="Visibility" Value="Hidden"/>
+                                <Setter TargetName="ActionPanel" Property="Visibility" Value="Visible"/>
+                            </DataTrigger.Setters>
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

@@ -182,7 +182,6 @@
                 </MultiTrigger.Setters>
             </MultiTrigger>
 
-
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsMouseOver" Value="True"/>
@@ -969,5 +968,51 @@
                 </Trigger.ExitActions>
             </Trigger>
         </Style.Triggers>
+    </Style>
+
+    <Style x:Key="SongListButtonBase" TargetType="{x:Type Button}">
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
+        <Setter Property="FontFamily" Value="{DynamicResource MaterialIcons}"/>
+        <Setter Property="FontWeight" Value="DemiBold"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <TextBlock x:Name="contentPresenter" Text="{TemplateBinding Content}" FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}"
+                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" 
+                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True"/>
+                    <Condition Property="IsPressed" Value="False"/>
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushTextHighEmphasis}"/>
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True"/>
+                    <Condition Property="IsPressed" Value="True"/>
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushTextHighEmphasis}"/>
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="SongListOpenInBrowser" TargetType="Button" BasedOn="{StaticResource SongListButtonBase}">
+        <Setter Property="Content" Value="&#xe89d;"/>
     </Style>
 </ResourceDictionary>

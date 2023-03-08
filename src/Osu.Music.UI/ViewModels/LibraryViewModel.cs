@@ -6,7 +6,7 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using System.Collections.ObjectModel;
-using System.Windows;
+using System.Diagnostics;
 
 namespace Osu.Music.UI.ViewModels
 {
@@ -26,7 +26,8 @@ namespace Osu.Music.UI.ViewModels
             set => SetProperty(ref _playback, value);
         }
 
-        public DelegateCommand<object[]> PlayBeatmapCommand { get; private set; }
+        public DelegateCommand<Beatmap> PlayBeatmapCommand { get; private set; }
+        public DelegateCommand<Beatmap> OpenBeatmapInBrowserCommand { get; private set; }
 
         public LibraryViewModel(IContainer container)
         {
@@ -39,20 +40,20 @@ namespace Osu.Music.UI.ViewModels
 
         private void InitializeCommands()
         {
-            PlayBeatmapCommand = new DelegateCommand<object[]>(PlayBeatmap);
+            PlayBeatmapCommand = new DelegateCommand<Beatmap>(PlayBeatmap);
+            OpenBeatmapInBrowserCommand = new DelegateCommand<Beatmap>(OpenBeatmapInBrowser);
         }
 
-        private void PlayBeatmap(object[] parameters)
+        private void PlayBeatmap(Beatmap beatmap)
         {
-            var beatmap = parameters[0] as Beatmap;
-            var collection = parameters[1] as ObservableCollection<Beatmap>;
-
-            if (Playback.Queue != collection)
-                Playback.Queue = collection;
+            if (Playback.Queue != Model.Beatmaps)
+                Playback.Queue = Model.Beatmaps;
 
             Playback.Beatmap = beatmap;
             Playback.Play();
         }
+
+        private void OpenBeatmapInBrowser(Beatmap beatmap) => Process.Start(new ProcessStartInfo("cmd", $"/c start https://osu.ppy.sh/beatmapsets/{beatmap.BeatmapSetId}") { CreateNoWindow = true });
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {

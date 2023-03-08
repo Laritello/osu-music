@@ -55,7 +55,6 @@
                                             <Condition Property="IsSelected" Value="True"/>
                                         </MultiTrigger.Conditions>
                                         <Setter Property="Background" TargetName="Bd" Value="{DynamicResource HoverBrush}"/>
- 
                                     </MultiTrigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
