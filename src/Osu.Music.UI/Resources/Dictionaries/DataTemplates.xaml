@@ -6,10 +6,6 @@
                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                     xmlns:vm="clr-namespace:Osu.Music.UI.ViewModels"
                     xmlns:v="clr-namespace:Osu.Music.UI.Views">
-    <DataTemplate DataType="{x:Type vm:DialogAboutViewModel}">
-        <v:DialogAboutView/>
-    </DataTemplate>
-
     <DataTemplate x:Key="PlaylistTile" DataType="{x:Type cm:Playlist}">
         <Border Margin="5">
             <StackPanel>
