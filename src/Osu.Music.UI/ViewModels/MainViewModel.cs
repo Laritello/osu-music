@@ -224,7 +224,7 @@ namespace Osu.Music.UI.ViewModels
 
                 Model.Beatmaps = await _libraryManager.LoadAsync();
                 Model.Playlists = await _playlistManager.LoadAsync();
-                OpenPage("SongsView");
+                OpenPage("LibraryView");
 
                 Playback.Queue = Model.Beatmaps;
 
@@ -277,7 +277,7 @@ namespace Osu.Music.UI.ViewModels
         {
             switch (pageName)
             {
-                case "SongsView":
+                case "LibraryView":
                     _regionManager.RequestNavigate(
                         RegionNames.ContentRegion, 
                         pageName, 

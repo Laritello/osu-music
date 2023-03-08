@@ -10,10 +10,10 @@ using System.Windows;
 
 namespace Osu.Music.UI.ViewModels
 {
-    public class SongsViewModel : BindableBase, INavigationAware
+    public class LibraryViewModel : BindableBase, INavigationAware
     {
-        private SongsModel _model;
-        public SongsModel Model
+        private LibraryModel _model;
+        public LibraryModel Model
         {
             get => _model;
             set => SetProperty(ref _model, value);
@@ -28,11 +28,11 @@ namespace Osu.Music.UI.ViewModels
 
         public DelegateCommand<object[]> PlayBeatmapCommand { get; private set; }
 
-        public SongsViewModel(IContainer container)
+        public LibraryViewModel(IContainer container)
         {
             _playback = container.Resolve<AudioPlayback>();
 
-            Model = new SongsModel();
+            Model = new LibraryModel();
 
             InitializeCommands();
         }

@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace Osu.Music.UI.Models
 {
-    public class SongsModel : BindableBase
+    public class LibraryModel : BindableBase
     {
         private ObservableCollection<Beatmap> _beatmaps;
         /// <summary>
@@ -15,6 +15,6 @@ namespace Osu.Music.UI.Models
             get => _beatmaps;
             set => SetProperty(ref _beatmaps, value);
         }
-        public SongsModel() { }
+        public LibraryModel() { }
     }
 }

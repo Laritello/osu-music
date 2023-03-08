@@ -81,7 +81,7 @@
                     </Button>
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Margin="0 35 0 0">
-                    <RadioButton Style="{DynamicResource SidebarButtonAllSongs}" Command="{Binding OpenPageCommand}" CommandParameter="SongsView" IsChecked="True"/>
+                    <RadioButton Style="{DynamicResource SidebarButtonAllSongs}" Command="{Binding OpenPageCommand}" CommandParameter="LibraryView" IsChecked="True"/>
                     <RadioButton Style="{DynamicResource SidebarButtonPlaylists}" Command="{Binding OpenPageCommand}" CommandParameter="PlaylistsView"/>
                     <RadioButton Style="{DynamicResource SidebarButtonCollection}" Command="{Binding OpenPageCommand}" CommandParameter="CollectionsView"/>
                     <Separator Background="{DynamicResource SolidColorBrushMainBorder}"/>
