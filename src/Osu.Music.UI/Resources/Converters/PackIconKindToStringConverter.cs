@@ -12,7 +12,7 @@ namespace Osu.Music.UI.Resources.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         private string ConvertToName(PackIconKind icon)
