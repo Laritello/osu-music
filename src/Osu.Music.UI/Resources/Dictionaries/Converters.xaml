@@ -19,4 +19,5 @@
     <convert:SongTitleColumnConverter x:Key="SongTitleColumnConverter"/>
     <convert:BeatmapToImageConverter x:Key="BeatmapToImageConverter"/>
     <convert:PlaylistToImageConverter x:Key="PlaylistToImageConverter"/>
+    <convert:WidthToHorizontalOffsetConverter x:Key="WidthToHorizontalOffsetConverter"/>
 </ResourceDictionary>
