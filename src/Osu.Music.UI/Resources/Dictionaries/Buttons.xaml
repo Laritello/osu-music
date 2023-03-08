@@ -1014,6 +1014,12 @@
 
     <Style x:Key="SongListOpenInBrowser" TargetType="Button" BasedOn="{StaticResource SongListButtonBase}">
         <Setter Property="Content" Value="&#xe89d;"/>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Cursor" Value="Hand"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
     <Style x:Key="SongListSendToPlaylist" TargetType="Button" BasedOn="{StaticResource SongListButtonBase}">
         <Setter Property="Content" Value="&#xe03d;"/>

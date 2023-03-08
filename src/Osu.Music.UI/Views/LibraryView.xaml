@@ -53,7 +53,11 @@
                         <StackPanel Name="ActionPanel" Visibility="Hidden" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
                             <Button Style="{DynamicResource SongListOpenInBrowser}"
                                     Command="{Binding DataContext.OpenBeatmapInBrowserCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:LibraryView}}}" 
-                                    CommandParameter="{Binding .}"/>
+                                    CommandParameter="{Binding .}">
+                                <Button.ToolTip>
+                                    <TextBlock Style="{DynamicResource TooltipText}" Text="Show on osu! website"/>
+                                </Button.ToolTip>
+                            </Button>
                             <Button Style="{DynamicResource SongListSendToPlaylist}" Margin="5 0 0 0"
                                     Command="{Binding DataContext.OpenBeatmapInBrowserCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:LibraryView}}}" 
                                     CommandParameter="{Binding .}"/>
