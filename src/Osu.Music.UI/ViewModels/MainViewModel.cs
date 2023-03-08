@@ -1,5 +1,4 @@
 ﻿using DryIoc;
-using MaterialDesignThemes.Wpf;
 using Osu.Music.Common;
 using Osu.Music.Common.Enums;
 using Osu.Music.Common.Models;
@@ -26,12 +25,10 @@ using Prism.Services.Dialogs;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace Osu.Music.UI.ViewModels
@@ -95,7 +92,6 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand<string> OpenPageCommand { get; private set; }
         public DelegateCommand<Playlist> SelectPlaylistAndPlayCommand { get; private set; }
         public DelegateCommand CreatePlaylistCommand { get; private set; }
-        public DelegateCommand<Playlist> DeletePlaylistCommand { get; private set; }
         public DelegateCommand<Beatmap> RemoveBeatmapFromPlaylistCommand { get; private set; }
         public DelegateCommand<Collection> SelectCollectionCommand { get; private set; }
         public DelegateCommand<Collection> SelectCollectionAndPlayCommand { get; private set; }
@@ -165,7 +161,6 @@ namespace Osu.Music.UI.ViewModels
             OpenPageCommand = new DelegateCommand<string>(OpenPage);
             SelectPlaylistAndPlayCommand = new DelegateCommand<Playlist>(SelectPlaylistAndPlay);
             CreatePlaylistCommand = new DelegateCommand(CreatePlaylist);
-            DeletePlaylistCommand = new DelegateCommand<Playlist>(DeletePlaylist);
             RemoveBeatmapFromPlaylistCommand = new DelegateCommand<Beatmap>(RemoveBeatmapFromPlaylist);
             SelectCollectionCommand = new DelegateCommand<Collection>(SelectCollection);
             SelectCollectionAndPlayCommand = new DelegateCommand<Collection>(SelectCollectionAndPlay);
@@ -350,13 +345,6 @@ namespace Osu.Music.UI.ViewModels
                     _playlistManager.Save(playlist);
                 }
             });
-        }
-
-        // Rework 
-        private void DeletePlaylist(Playlist playlist)
-        {
-            //Model.Playlists.Remove(playlist);
-            //_playlistManager.Remove(playlist);
         }
 
         private void RemoveBeatmapFromPlaylist(Beatmap beatmap)
