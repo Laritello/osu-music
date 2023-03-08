@@ -1,6 +1,8 @@
 ﻿using DryIoc;
+using Osu.Music.Common;
 using Osu.Music.Common.Models;
 using Osu.Music.Services.Dialog;
+using Osu.Music.Services.Interfaces;
 using Osu.Music.UI.Models;
 using Osu.Music.UI.ViewModels.Dialogs;
 using Osu.Music.UI.Views.Dialogs;
@@ -23,10 +25,14 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand DeleteCommand { get; private set; }
 
         private IPopupDialogService _dialogService;
+        private IPlaylistManager _playlistManager;
+        private IRegionManager _regionManager;
 
         public PlaylistDetailsViewModel(IContainer container)
         {
             _dialogService = container.Resolve<IPopupDialogService>();
+            _playlistManager = container.Resolve<IPlaylistManager>();
+            _regionManager = container.Resolve<IRegionManager>();
 
             Model = new PaylistDetailsModel();
 
@@ -51,7 +57,15 @@ namespace Osu.Music.UI.ViewModels
             {
                 if (e.Result == ButtonResult.OK)
                 {
-                    // TODO: Implement logic
+                    _playlistManager.Playlists.Remove(Model.Playlist);
+                    _playlistManager.Remove(Model.Playlist);
+                    _regionManager.RequestNavigate(
+                        RegionNames.ContentRegion, 
+                        "PlaylistsView", 
+                        new NavigationParameters()
+                        {
+                            { "playlists", _playlistManager.Playlists }
+                        });
                 }
             });
         }
