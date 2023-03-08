@@ -53,7 +53,11 @@ namespace Osu.Music.UI.ViewModels.Dialogs
             if (NameHasError)
                 return;
 
-            Playlist playlist = new Playlist() { Name = Name };
+            Playlist playlist = new Playlist() 
+            {
+                Name = Name,
+                Updated = DateTime.Now
+            };
 
             var result = new DialogResult(ButtonResult.OK, new DialogParameters()
             {
