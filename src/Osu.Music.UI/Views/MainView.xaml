@@ -62,7 +62,7 @@
                     <RowDefinition Height="250"/>
                 </Grid.RowDefinitions>
 
-                <Button Style="{DynamicResource SidebarButtonOsu}" Command="{Binding OpenAboutCommand}">
+                <Button Style="{DynamicResource SidebarButtonOsu}" Command="{Binding OpenPageCommand}" CommandParameter="AboutView">
                     <Button.ToolTip>
                         <TextBlock Text="About"/>
                     </Button.ToolTip>
