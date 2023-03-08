@@ -21,9 +21,6 @@
         <Border BorderBrush="{DynamicResource SolidColorBrushMainBorder}" BorderThickness="0 0 0 1" Grid.Row="0">
             <DockPanel HorizontalAlignment="Stretch">
                 <Grid DockPanel.Dock="Left" VerticalAlignment="Top" Margin="10 10 0 0">
-                    <Grid.Effect>
-                        <DropShadowEffect BlurRadius="10" ShadowDepth="3" Direction="270"/>
-                    </Grid.Effect>
                     <Rectangle Width="145" Height="145" RadiusX="10" RadiusY="10" Fill="#20000000"/>
                     <materialDesign:PackIcon HorizontalAlignment="Center" VerticalAlignment="Center" Width="80" Height="80" Margin="0 10 0 0" Foreground="#50000000" Kind="PlaylistNote"/>
                     <Grid Width="145" Height="145">
@@ -46,8 +43,8 @@
                     <TextBlock Text="{Binding Model.Playlist.Beatmaps, Converter={StaticResource PlaylistCountToStringConverter}}" FontFamily="{DynamicResource Poppins}" FontSize="16" FontWeight="Light" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}" Margin="0 5 0 0"/>
                     <TextBlock Text="{Binding Model.Playlist.Updated, StringFormat=Updated {0}}" FontFamily="{DynamicResource Poppins}" FontSize="16" FontWeight="Light" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
                     <StackPanel Orientation="Horizontal" Margin="0 15 0 0">
-                        <Button Style="{DynamicResource MaterialDesignRaisedButton}" Content="PLAY" Width="80"/>
-                        <Button Style="{DynamicResource MaterialDesignFlatButton}" Content="DELETE" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}" Margin="5 0 0 0"/>
+                        <Button Style="{DynamicResource MaterialDesignRaisedButton}" Foreground="White" Content="PLAY" Width="80"/>
+                        <Button Style="{DynamicResource MaterialDesignFlatButton}" Content="DELETE" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}" Margin="5 0 0 0" Command="{Binding DeleteCommand}"/>
                     </StackPanel>
                 </StackPanel>
             </DockPanel>
