@@ -84,6 +84,8 @@
                     <RadioButton Style="{DynamicResource SidebarButtonAllSongs}" Command="{Binding OpenPageCommand}" CommandParameter="SongsView" IsChecked="True"/>
                     <RadioButton Style="{DynamicResource SidebarButtonPlaylists}" Command="{Binding OpenPageCommand}" CommandParameter="PlaylistsView"/>
                     <RadioButton Style="{DynamicResource SidebarButtonCollection}" Command="{Binding OpenPageCommand}" CommandParameter="CollectionsView"/>
+                    <Separator Background="{DynamicResource SolidColorBrushMainBorder}"/>
+                    <Button Style="{DynamicResource SidebarButtonNewPlaylist}"/>
                 </StackPanel>
 
                 <ContentPresenter x:Name="contentPresenter" Grid.Row="1" Content="{Binding Visualization.Content}"/>

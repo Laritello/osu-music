@@ -211,56 +211,6 @@
         <Setter Property="Content" Value="&#xe028;"/>
     </Style>
 
-    <Style x:Key="SidebarButtonBase" TargetType="{x:Type Button}">
-        <Setter Property="Width" Value="30"/>
-        <Setter Property="Height" Value="30"/>
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushMain}"/>
-        <Setter Property="FontFamily" Value="{DynamicResource MaterialIcons}"/>
-        <Setter Property="FontSize" Value="22"/>
-        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border CornerRadius="15" Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="0" >
-                        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-
-        <Style.Triggers>
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="IsMouseOver" Value="True"/>
-                    <Condition Property="IsPressed" Value="False"/>
-                </MultiTrigger.Conditions>
-                <MultiTrigger.Setters>
-                    <Setter Property="Background">
-                        <Setter.Value>
-                            <SolidColorBrush Color="Black" Opacity="0.1"/>
-                        </Setter.Value>
-                    </Setter>
-                </MultiTrigger.Setters>
-            </MultiTrigger>
-
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="IsMouseOver" Value="True"/>
-                    <Condition Property="IsPressed" Value="True"/>
-                </MultiTrigger.Conditions>
-                <MultiTrigger.Setters>
-                    <Setter Property="Background">
-                        <Setter.Value>
-                            <SolidColorBrush Color="Black" Opacity="0.2"/>
-                        </Setter.Value>
-                    </Setter>
-                </MultiTrigger.Setters>
-            </MultiTrigger>
-        </Style.Triggers>
-    </Style>
-
     <Style x:Key="SidebarToggleButtonBase" TargetType="{x:Type RadioButton}">
         <Setter Property="Height" Value="40"/>
         <Setter Property="Background" Value="Transparent"/>
@@ -557,6 +507,62 @@
         </Setter>
     </Style>
 
+    <Style x:Key="SidebarButtonBase" TargetType="{x:Type Button}">
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
+        <Setter Property="FontWeight" Value="DemiBold"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <StackPanel Orientation="Horizontal" Background="{TemplateBinding Background}">
+                        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Cursor" Value="Hand"/>
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True"/>
+                    <Condition Property="IsPressed" Value="False"/>
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushMain}"/>
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True"/>
+                    <Condition Property="IsPressed" Value="True"/>
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushMainDark}"/>
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="SidebarButtonNewPlaylist" TargetType="{x:Type Button}" BasedOn="{StaticResource SidebarButtonBase}">
+        <Setter Property="Content">
+            <Setter.Value>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                    <TextBlock FontFamily="{DynamicResource MaterialIconsOutlined}" FontSize="24" Text="&#xe03b;" Margin="5 0 10 0" VerticalAlignment="Center"/>
+                    <TextBlock FontFamily="{Binding Path=FontFamily, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                               Text="New Playlist" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
     <Style x:Key="TitleBarButtonStyle" TargetType="Button">
         <Setter Property="Foreground" Value="{DynamicResource WindowTextBrush}" />
