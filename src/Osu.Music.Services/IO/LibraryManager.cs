@@ -35,7 +35,7 @@ namespace Osu.Music.Services.IO
                     if (!Directory.Exists(source))
                         throw new ArgumentException("The specified folder does not exist.");
 
-                    ObservableCollection<Beatmap> beatmaps = new ObservableCollection<Beatmap>();
+                    List<Beatmap> beatmaps = new List<Beatmap>();
 
                     OsuDb db;
 
@@ -48,7 +48,7 @@ namespace Osu.Music.Services.IO
                             beatmaps.Add(Convert(source, beatmapSet));
                     }
 
-                    Beatmaps = beatmaps;
+                    Beatmaps = new ObservableCollection<Beatmap>(beatmaps.OrderBy(x => x.Title));
                 }
                 catch
                 {
