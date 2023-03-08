@@ -16,7 +16,6 @@
     <convert:MultipleParametersConverter x:Key="MultipleParametersConverter"/>
     <convert:PackIconKindToStringConverter x:Key="PackIconKindToStringConverter"/>
     <convert:BrushStringConverter x:Key="BrushStringConverter"/>
-    <convert:PlayerObjectToStringConverter x:Key="PlayerObjectToStringConverter"/>
     <convert:SongTitleColumnConverter x:Key="SongTitleColumnConverter"/>
     <convert:BeatmapToImageConverter x:Key="BeatmapToImageConverter"/>
     <convert:PlaylistToImageConverter x:Key="PlaylistToImageConverter"/>

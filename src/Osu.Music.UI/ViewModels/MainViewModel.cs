@@ -1,4 +1,5 @@
 ﻿using DryIoc;
+using MaterialDesignThemes.Wpf;
 using Osu.Music.Common;
 using Osu.Music.Common.Enums;
 using Osu.Music.Common.Models;
@@ -13,7 +14,9 @@ using Osu.Music.Services.UItility;
 using Osu.Music.UI.Interfaces;
 using Osu.Music.UI.Models;
 using Osu.Music.UI.Utility;
+using Osu.Music.UI.ViewModels.Dialogs;
 using Osu.Music.UI.Views;
+using Osu.Music.UI.Views.Dialogs;
 using Osu.Music.UI.Visualization;
 using Prism.Commands;
 using Prism.Ioc;
@@ -91,6 +94,7 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand<TimeSpan?> ScrollBeatmapCommand { get; private set; }
         public DelegateCommand<string> OpenPageCommand { get; private set; }
         public DelegateCommand<Playlist> SelectPlaylistAndPlayCommand { get; private set; }
+        public DelegateCommand CreatePlaylistCommand { get; private set; }
         public DelegateCommand<Playlist> DeletePlaylistCommand { get; private set; }
         public DelegateCommand<Beatmap> RemoveBeatmapFromPlaylistCommand { get; private set; }
         public DelegateCommand<Collection> SelectCollectionCommand { get; private set; }
@@ -160,6 +164,7 @@ namespace Osu.Music.UI.ViewModels
             ScrollBeatmapCommand = new DelegateCommand<TimeSpan?>(ScrollBeatmap);
             OpenPageCommand = new DelegateCommand<string>(OpenPage);
             SelectPlaylistAndPlayCommand = new DelegateCommand<Playlist>(SelectPlaylistAndPlay);
+            CreatePlaylistCommand = new DelegateCommand(CreatePlaylist);
             DeletePlaylistCommand = new DelegateCommand<Playlist>(DeletePlaylist);
             RemoveBeatmapFromPlaylistCommand = new DelegateCommand<Beatmap>(RemoveBeatmapFromPlaylist);
             SelectCollectionCommand = new DelegateCommand<Collection>(SelectCollection);
@@ -327,6 +332,24 @@ namespace Osu.Music.UI.ViewModels
                 return;
 
             PlayBeatmapAndUpdateCollection(new object[2] { collection.Beatmaps[0], collection.Beatmaps });
+        }
+
+        private void CreatePlaylist()
+        {
+            DialogParameters parameters = new DialogParameters()
+            {
+                { "names", Model.Playlists.Select(x => x.Name) }
+            };
+
+            _dialogService.ShowPopupDialog<NewPlaylistView, NewPlaylistViewModel>(parameters, e =>
+            {
+                if (e.Result == ButtonResult.OK)
+                {
+                    var playlist = e.Parameters.GetValue<Playlist>("playlist");
+                    Model.Playlists.Add(playlist);
+                    _playlistManager.Save(playlist);
+                }
+            });
         }
 
         // Rework 

@@ -558,7 +558,7 @@
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
                     <TextBlock FontFamily="{DynamicResource MaterialIconsOutlined}" FontSize="24" Text="&#xe03b;" Margin="5 0 10 0" VerticalAlignment="Center"/>
                     <TextBlock FontFamily="{Binding Path=FontFamily, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                               Text="New Playlist" VerticalAlignment="Center"/>
+                               Text="New playlist" VerticalAlignment="Center"/>
                 </StackPanel>
             </Setter.Value>
         </Setter>
