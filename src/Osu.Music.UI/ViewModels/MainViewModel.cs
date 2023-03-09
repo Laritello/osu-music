@@ -23,7 +23,6 @@ using Prism.Mvvm;
 using Prism.Regions;
 using Prism.Services.Dialogs;
 using System;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
@@ -43,27 +42,6 @@ namespace Osu.Music.UI.ViewModels
             set => SetProperty(ref _model, value);
         }
 
-        private Settings _settings;
-        public Settings Settings
-        {
-            get => _settings;
-            set => SetProperty(ref _settings, value);
-        }
-
-        private HotkeyManager _hotkeyManager;
-        public HotkeyManager HotkeyManager
-        {
-            get => _hotkeyManager;
-            set => SetProperty(ref _hotkeyManager, value);
-        }
-
-        private DiscordManager _discordManager;
-        public DiscordManager DiscordManager
-        {
-            get => _discordManager;
-            set => SetProperty(ref _discordManager, value);
-        }
-
         private AudioPlayback _playback;
         public AudioPlayback Playback
         {
@@ -81,7 +59,6 @@ namespace Osu.Music.UI.ViewModels
 
         #region Commands
         public DelegateCommand<bool?> MuteCommand { get; private set; }
-        public DelegateCommand<object[]> PlayBeatmapAndUpdateCollectionCommand { get; private set; }
         public DelegateCommand PlayBeatmapCommand { get; private set; }
         public DelegateCommand PauseBeatmapCommand { get; private set; }
         public DelegateCommand StopBeatmapCommand { get; private set; }
@@ -105,6 +82,9 @@ namespace Osu.Music.UI.ViewModels
         private IPlaylistManager _playlistManager;
         private SettingsManager _settingsManager;
         private DispatcherTimer _audioProgressTimer;
+        private DiscordManager _discordManager;
+        private HotkeyManager _hotkeyManager;
+        private Settings _settings;
 
         public MainViewModel(IContainer container, MainModel model)
         {
@@ -116,6 +96,8 @@ namespace Osu.Music.UI.ViewModels
             _playlistManager = container.Resolve<IPlaylistManager>();
             _playback = container.Resolve<AudioPlayback>();
             _settingsManager = container.Resolve<SettingsManager>();
+            _discordManager = container.Resolve<DiscordManager>();
+            _hotkeyManager = container.Resolve<HotkeyManager>();
             _model = model;
 
             Visualization = new DefaultVisualization();
@@ -134,19 +116,18 @@ namespace Osu.Music.UI.ViewModels
         #region Initialization
         private void InitializeSettings()
         {
-            Settings = _settingsManager.Settings;
-            Settings.SourceChanged += Settings_SourceChanged;
-            Settings.ColorChanged += Settings_ColorChanged;
-            Settings.DiscordEnabledChanged += Settings_DiscordEnabledChanged;
+            _settings = _settingsManager.Settings;
+            _settings.SourceChanged += Settings_SourceChanged;
+            _settings.ColorChanged += Settings_ColorChanged;
+            _settings.DiscordEnabledChanged += Settings_DiscordEnabledChanged;
 
             ResourceDictionary resource = Application.Current.Resources;
-            resource.MergedDictionaries.SetMainColor(Settings.Color);
+            resource.MergedDictionaries.SetMainColor(_settings.Color);
         }
 
         private void InitializeCommands()
         {
             MuteCommand = new DelegateCommand<bool?>(MuteVolume);
-            PlayBeatmapAndUpdateCollectionCommand = new DelegateCommand<object[]>(PlayBeatmapAndUpdateCollection);
             PlayBeatmapCommand = new DelegateCommand(PlayBeatmap);
             PauseBeatmapCommand = new DelegateCommand(PauseBeatmap);
             StopBeatmapCommand = new DelegateCommand(StopBeatmap);
@@ -179,24 +160,15 @@ namespace Osu.Music.UI.ViewModels
 
         private void InitializeHotkeys()
         {
-            HotkeyManager = new HotkeyManager
-            {
-                Hotkeys = Settings.Hotkeys
-            };
-
-            HotkeyManager.HotkeyUsed += HotkeyManager_HotkeyUsed;
-            HotkeyManager.HotkeyChanged += HotkeyManager_HotkeyChanged;
+            _hotkeyManager.Hotkeys = _settings.Hotkeys;
+            _hotkeyManager.HotkeyUsed += HotkeyManager_HotkeyUsed;
+            _hotkeyManager.HotkeyChanged += HotkeyManager_HotkeyChanged;
         }
 
-        // TODO: Switch to DI
         private void InitializeDiscord()
         {
-            DiscordManager = new DiscordManager()
-            {
-                Enabled = Settings.DiscordEnabled
-            };
-
-            DiscordManager.Initialize();
+            _discordManager.Enabled = _settings.DiscordEnabled;
+            _discordManager.Initialize();
         }
         #endregion
 
@@ -204,10 +176,10 @@ namespace Osu.Music.UI.ViewModels
         {
             try
             {
-                if (string.IsNullOrEmpty(Settings.Source))
+                if (string.IsNullOrEmpty(_settings.Source))
                 {
-                    Settings.Source = PathHelper.GetOsuInstallationFolder();
-                    _settingsManager.Save(Settings);
+                    _settings.Source = PathHelper.GetOsuInstallationFolder();
+                    _settingsManager.Save(_settings);
                 }
 
                 Model.Beatmaps = await _libraryManager.LoadAsync();
@@ -230,20 +202,7 @@ namespace Osu.Music.UI.ViewModels
             }
         }
 
-        private void MuteVolume(bool? mute)
-        {
-            Playback.Mute = mute ?? false;
-        }
-
-        private void PlayBeatmapAndUpdateCollection(object[] parameters)
-        {
-            var beatmap = parameters[0] as Beatmap;
-            var collection = parameters[1] as ObservableCollection<Beatmap>;
-
-            Playback.Queue = collection;
-            Playback.Beatmap = beatmap;
-            Playback.Play();
-        }
+        private void MuteVolume(bool? mute) => Playback.Mute = mute ?? false;
 
         private void PlayBeatmap() => Playback.Play();
 
@@ -260,7 +219,7 @@ namespace Osu.Music.UI.ViewModels
             if (progress.HasValue)
                 _playback.CurrentTime = progress.Value;
 
-            DiscordManager.Resume(_playback.CurrentTime);
+            _discordManager.Resume(_playback.CurrentTime);
         }
 
         private void OpenPage(string pageName)
@@ -300,9 +259,9 @@ namespace Osu.Music.UI.ViewModels
                         pageName,
                         new NavigationParameters()
                         {
-                            { "settings", Settings },
-                            { "hotkey", HotkeyManager },
-                            { "discord", DiscordManager }
+                            { "settings", _settings },
+                            { "hotkey", _hotkeyManager },
+                            { "discord", _discordManager }
                         });
                     break;
                 default:
@@ -367,7 +326,7 @@ namespace Osu.Music.UI.ViewModels
         {
             try
             {
-                Settings.State = new PlayerState()
+                _settings.State = new PlayerState()
                 {
                     Repeat = Playback.Repeat,
                     Shuffle = Playback.Shuffle,
@@ -377,7 +336,7 @@ namespace Osu.Music.UI.ViewModels
                     Position = Playback.Position
                 };
 
-                _settingsManager.Save(Settings);
+                _settingsManager.Save(_settings);
                 _playlistManager.Save(Model.Playlists);
             }
             catch { }
@@ -408,35 +367,35 @@ namespace Osu.Music.UI.ViewModels
 
         private void Settings_DiscordEnabledChanged(bool enabled)
         {
-            DiscordManager.Enabled = enabled;
+            _discordManager.Enabled = enabled;
 
             if (!enabled)
-                DiscordManager.ClearPresence();
+                _discordManager.ClearPresence();
         }
         #endregion
 
         #region General Methods
         private void LoadState()
         {
-            Playback.Shuffle = Settings.State.Shuffle;
-            Playback.Repeat = Settings.State.Repeat;
-            Playback.Volume = Settings.State.Volume;
+            Playback.Shuffle = _settings.State.Shuffle;
+            Playback.Repeat = _settings.State.Repeat;
+            Playback.Volume = _settings.State.Volume;
 
-            Model.PlaybackInitializationRequired = Settings.State.SelectedBeatmapId.HasValue;
+            Model.PlaybackInitializationRequired = _settings.State.SelectedBeatmapId.HasValue;
         }
 
         private void LoadSavedPlayback()
         {
-            var beatmap = Model.Beatmaps.Where(x => x.BeatmapSetId == Settings.State.SelectedBeatmapId).FirstOrDefault();
+            var beatmap = Model.Beatmaps.Where(x => x.BeatmapSetId == _settings.State.SelectedBeatmapId).FirstOrDefault();
 
             if (beatmap != null)
             {
                 Playback.Beatmap = beatmap;
                 Playback.Queue = Model.Beatmaps;
                 Playback.Load();
-                Playback.Position = Settings.State.Position;
+                Playback.Position = _settings.State.Position;
 
-                if (Settings.State.IsPlaying)
+                if (_settings.State.IsPlaying)
                     Playback.Resume();
             }
         }
@@ -445,7 +404,7 @@ namespace Osu.Music.UI.ViewModels
         #region Hotkeys
         private void HotkeyManager_HotkeyUsed(object sender, HotkeyEventArgs e)
         {
-            if (!Settings.HotkeysEnabled)
+            if (!_settings.HotkeysEnabled)
                 return;
 
             switch (e.Type)
@@ -479,8 +438,8 @@ namespace Osu.Music.UI.ViewModels
 
         private void HotkeyManager_HotkeyChanged()
         {
-            Settings.Hotkeys = HotkeyManager.Hotkeys;
-            _settingsManager.Save(Settings);
+            _settings.Hotkeys = _hotkeyManager.Hotkeys;
+            _settingsManager.Save(_settings);
         }
 
         private void PlayPauseHotkeyHandler()

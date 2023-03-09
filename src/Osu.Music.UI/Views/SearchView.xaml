@@ -42,17 +42,6 @@
                     <ListView.ItemTemplate>
                         <DataTemplate DataType="{x:Type m:Beatmap}">
                             <Grid>
-                                <Grid.InputBindings>
-                                    <MouseBinding Gesture="LeftDoubleClick" 
-                                          Command="{Binding DataContext.PlayBeatmapAndUpdateCollectionCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}">
-                                        <MouseBinding.CommandParameter>
-                                            <MultiBinding Converter="{StaticResource MultipleParametersConverter}">
-                                                <Binding Path="SelectedItem" RelativeSource="{RelativeSource AncestorType=ListView}"/>
-                                                <Binding Path="DataContext.Result" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:SearchView}}"/>
-                                            </MultiBinding>
-                                        </MouseBinding.CommandParameter>
-                                    </MouseBinding>
-                                </Grid.InputBindings>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="{Binding ElementName=SongsList, Path=ActualWidth, Converter={StaticResource SongTitleColumnConverter}}"/>
                                     <ColumnDefinition Width="70"/>
