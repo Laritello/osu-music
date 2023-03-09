@@ -334,14 +334,23 @@ namespace Osu.Music.UI.ViewModels
         {
             DialogParameters parameters = new DialogParameters()
             {
+                { "title", "New playlist" },
+                { "caption", "CREATE" },
                 { "names", Model.Playlists.Select(x => x.Name) }
             };
 
-            _dialogService.ShowPopupDialog<NewPlaylistView, NewPlaylistViewModel>(parameters, e =>
+            _dialogService.ShowPopupDialog<ManagePlaylistNameView, ManagePlaylistNameViewModel>(parameters, e =>
             {
                 if (e.Result == ButtonResult.OK)
                 {
-                    var playlist = e.Parameters.GetValue<Playlist>("playlist");
+                    var name = e.Parameters.GetValue<string>("name");
+
+                    Playlist playlist = new Playlist()
+                    {
+                        Name = name,
+                        Updated = DateTime.Now
+                    };
+
                     Model.Playlists.Add(playlist);
 
                     _regionManager.RequestNavigate(

@@ -39,7 +39,6 @@ namespace Osu.Music.UI.ViewModels.Dialogs
 
         private IPlaylistManager _playlistManager;
 
-        // TODO: If no available -> show message in dialog
         public AddToPlaylistViewModel(IPlaylistManager playlistManager)
         {
             _playlistManager = playlistManager;

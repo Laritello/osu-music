@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Osu.Music.UI.ViewModels.Dialogs
 {
-    public class NewPlaylistViewModel : BindableBase, IDialogAware
+    public class ManagePlaylistNameViewModel : BindableBase, IDialogAware
     {
         private string _name;
         public string Name
@@ -30,14 +30,26 @@ namespace Osu.Music.UI.ViewModels.Dialogs
             set => SetProperty(ref _nameHasError, value);
         }
 
+        private string _title;
+        public string Title
+        {
+            get => _title;
+            set => SetProperty(ref _title, value);
+        }
+
+        private string _caption;
+        public string Caption
+        {
+            get => _caption;
+            set => SetProperty(ref _caption, value);
+        }
+
         public DelegateCommand CancelCommand { get; private set; }
         public DelegateCommand AcceptCommand { get; private set; }
 
-        public string Title => "New Playlist";
-
         public event Action<IDialogResult> RequestClose;
 
-        public NewPlaylistViewModel()
+        public ManagePlaylistNameViewModel()
         {
             CancelCommand = new DelegateCommand(Cancel);
             AcceptCommand = new DelegateCommand(Accept);
@@ -50,15 +62,9 @@ namespace Osu.Music.UI.ViewModels.Dialogs
             if (NameHasError)
                 return;
 
-            Playlist playlist = new Playlist() 
-            {
-                Name = Name,
-                Updated = DateTime.Now
-            };
-
             var result = new DialogResult(ButtonResult.OK, new DialogParameters()
             {
-                { "playlist", playlist }
+                { "name", Name }
             });
             RequestClose?.Invoke(result);
         }
@@ -72,6 +78,9 @@ namespace Osu.Music.UI.ViewModels.Dialogs
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
+            Title = parameters.GetValue<string>("title");
+            Caption = parameters.GetValue<string>("caption");
+            Name = parameters.ContainsKey("name") ? parameters.GetValue<string>("name") : string.Empty;
             Names = parameters.GetValue<IEnumerable<string>>("names");
         }
     }

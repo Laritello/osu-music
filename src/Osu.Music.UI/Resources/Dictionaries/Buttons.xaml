@@ -1059,4 +1059,7 @@
     <Style x:Key="SongListAddToPlaylist" TargetType="Button" BasedOn="{StaticResource SongListButtonBase}">
         <Setter Property="Content" Value="&#xe03d;"/>
     </Style>
+    <Style x:Key="SongListRemoveFromPlaylist" TargetType="Button" BasedOn="{StaticResource SongListButtonBase}">
+        <Setter Property="Content" Value="&#xeb80;"/>
+    </Style>
 </ResourceDictionary>
