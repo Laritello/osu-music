@@ -184,7 +184,7 @@ namespace Osu.Music.Services.Audio
                     BeatmapEnded?.Invoke(this, new BeatmapEventArgs(Beatmap));
 
                     if (Repeat)
-                        PlayBeatmap(Beatmap);
+                        Play();
                     else
                         Next();
                 }
@@ -243,13 +243,7 @@ namespace Osu.Music.Services.Audio
                 _discordManager.Update(Beatmap);
             }
 
-            // TODO: Rework this section
-            if (PlaybackState != PlaybackState.Paused)
-                Load();
-
-            if (PlaybackState == PlaybackState.Paused)
-                _discordManager.Resume(CurrentTime);
-
+            Load();
             Resume();
         }
 
@@ -297,11 +291,10 @@ namespace Osu.Music.Services.Audio
         {
             Beatmap beatmap;
 
-            if (History.Count == 0)
+            if (History.Count == 0 && Queue.Contains(Beatmap))
             {
                 int index = Queue.IndexOf(Beatmap) - 1;
                 index = index < 0 ? Queue.Count - 1 : index;
-
                 beatmap = Queue[index];
             }
             else

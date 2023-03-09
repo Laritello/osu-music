@@ -160,8 +160,6 @@ namespace Osu.Music.UI.ViewModels
 
         private void InitializeHotkeys()
         {
-            _hotkeyManager.Hotkeys = _settings.Hotkeys;
-            _hotkeyManager.HotkeyUsed += HotkeyManager_HotkeyUsed;
             _hotkeyManager.HotkeyChanged += HotkeyManager_HotkeyChanged;
         }
 
@@ -204,7 +202,13 @@ namespace Osu.Music.UI.ViewModels
 
         private void MuteVolume(bool? mute) => Playback.Mute = mute ?? false;
 
-        private void PlayBeatmap() => Playback.Play();
+        private void PlayBeatmap()
+        {
+            if (Playback.PlaybackState == NAudio.Wave.PlaybackState.Paused)
+                Playback.Resume();
+            else
+                Playback.Play();
+        }
 
         private void PauseBeatmap() => Playback.Pause();
 
@@ -402,67 +406,11 @@ namespace Osu.Music.UI.ViewModels
         #endregion
 
         #region Hotkeys
-        private void HotkeyManager_HotkeyUsed(object sender, HotkeyEventArgs e)
-        {
-            if (!_settings.HotkeysEnabled)
-                return;
-
-            switch (e.Type)
-            {
-                case HotkeyType.PlayPause:
-                    PlayPauseHotkeyHandler();
-                    break;
-                case HotkeyType.PreviousTrack:
-                    PreviousBeatmapHotkeyHandler();
-                    break;
-                case HotkeyType.NextTrack:
-                    NextBeatmapHotkeyHandler();
-                    break;
-                case HotkeyType.Repeat:
-                    RepeatHotkeyHandler();
-                    break;
-                case HotkeyType.Mute:
-                    MuteHotkeyHandler();
-                    break;
-                case HotkeyType.Shuffle:
-                    ShuffleHotkeyHandler();
-                    break;
-                case HotkeyType.VolumeDown:
-                    VolumeDownHotkeyHandler();
-                    break;
-                case HotkeyType.VolumeUp:
-                    VolumeUpHotkeyHandler();
-                    break;
-            }
-        }
-
         private void HotkeyManager_HotkeyChanged()
         {
             _settings.Hotkeys = _hotkeyManager.Hotkeys;
             _settingsManager.Save(_settings);
         }
-
-        private void PlayPauseHotkeyHandler()
-        {
-            if (Playback.PlaybackState == NAudio.Wave.PlaybackState.Playing)
-                Playback.Pause();
-            else
-                Playback.Play();
-        }
-
-        private void PreviousBeatmapHotkeyHandler() => Playback.Previous();
-
-        private void NextBeatmapHotkeyHandler() => Playback.Next();
-
-        private void RepeatHotkeyHandler() => Playback.Repeat = !Playback.Repeat;
-
-        private void MuteHotkeyHandler() => MuteVolume(!Playback.Mute);
-
-        private void ShuffleHotkeyHandler() => Playback.Shuffle = !Playback.Shuffle;
-
-        private void VolumeUpHotkeyHandler() => Playback.Volume += 0.05f;
-
-        private void VolumeDownHotkeyHandler() => Playback.Volume -= 0.05f;
         #endregion
     }
 }
