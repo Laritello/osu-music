@@ -13,7 +13,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <TextBlock Style="{DynamicResource HighEmphasisListText}" FontSize="16" Text="{Binding Title}"/>
-        <TextBlock Grid.Row="1" Margin="0 6 0 0" FontSize="18" TextWrapping="WrapWithOverflow" Text="{Binding Message}"/>
+        <TextBlock Style="{DynamicResource MediumEmphasisListText}" Grid.Row="1" Margin="0 6 0 0" FontSize="14" TextWrapping="WrapWithOverflow" Text="{Binding Message}"/>
         <StackPanel Grid.Row="2" Margin="0 16 0 0" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Command="{Binding AcceptCommand}" IsDefault="True" Style="{StaticResource MaterialDesignFlatButton}" Content="{Binding Caption}"/>
             <Button Margin="8,0,0,0" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource MaterialDesignFlatButton}" Content="CANCEL"/>
