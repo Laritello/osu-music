@@ -14,14 +14,14 @@ namespace Osu.Music.Services.IO
 {
     public class PlaylistManager : IPlaylistManager
     {
+        public ObservableCollection<Playlist> Playlists { get; private set; }
+
         private ILibraryManager _libraryManager;
-        
+
         public PlaylistManager(IContainer container) 
         {
             _libraryManager = container.Resolve<ILibraryManager>();
         }
-
-        public ObservableCollection<Playlist> Playlists { get; private set; }
 
         public Task<ObservableCollection<Playlist>> LoadAsync()
         {

@@ -11,7 +11,6 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using Prism.Services.Dialogs;
-using System;
 using System.Diagnostics;
 using System.Linq;
 

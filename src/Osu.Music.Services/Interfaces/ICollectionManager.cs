@@ -8,6 +8,6 @@ namespace Osu.Music.Services.Interfaces
     public interface ICollectionManager
     {
         public ObservableCollection<Collection> Collections { get; }
-        public Task<ObservableCollection<Collection>> LoadAsync(string osuFolder, IList<Beatmap> beatmaps);
+        public Task<ObservableCollection<Collection>> LoadAsync();
     }
 }

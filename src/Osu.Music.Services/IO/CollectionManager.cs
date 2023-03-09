@@ -1,4 +1,5 @@
-﻿using Osu.Music.Common.Models;
+﻿using DryIoc;
+using Osu.Music.Common.Models;
 using Osu.Music.Services.Interfaces;
 using osu_database_reader.BinaryFiles;
 using System;
@@ -14,26 +15,38 @@ namespace Osu.Music.Services.IO
     {
         public ObservableCollection<Collection> Collections { get; private set; }
 
-        public Task<ObservableCollection<Collection>> LoadAsync(string osuFolder, IList<Beatmap> beatmaps)
+        private ILibraryManager _libraryManager;
+        private Settings _settings;
+
+        public CollectionManager(IContainer container)
         {
-            return Task.Run(() =>
+            _libraryManager = container.Resolve<ILibraryManager>();
+            _settings = container.Resolve<SettingsManager>().Settings;
+        }
+
+        public Task<ObservableCollection<Collection>> LoadAsync()
+        {
+            return Task.Run(async () =>
             {
                 try
                 {
-                    if (!Directory.Exists(osuFolder))
+                    var source = _settings.Source;
+
+                    if (!Directory.Exists(source))
                         throw new ArgumentException("The specified folder does not exist.");
 
-                    ObservableCollection<Collection> collections = new ObservableCollection<Collection>();
+                    var beatmaps = await _libraryManager.LoadAsync();
 
+                    List<Collection> collections = new List<Collection>();
                     CollectionDb db;
 
-                    using (FileStream stream = File.OpenRead($@"{osuFolder}\collection.db"))
+                    using (FileStream stream = File.OpenRead($@"{source}\collection.db"))
                         db = CollectionDb.Read(stream);
 
                     foreach (var record in db.Collections)
                         collections.Add(Convert(record, beatmaps));
 
-                    Collections = collections;
+                    Collections = new ObservableCollection<Collection>(collections);
                 }
                 catch
                 {

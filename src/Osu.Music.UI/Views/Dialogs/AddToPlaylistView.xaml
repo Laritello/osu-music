@@ -54,7 +54,7 @@
                         </Border>
                         <StackPanel Orientation="Vertical" VerticalAlignment="Center" Grid.Column="1">
                             <TextBlock Style="{DynamicResource HighEmphasisListText}" Text="{Binding Path=Name}" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}"/>
-                            <TextBlock Style="{DynamicResource MediumEmphasisListText}" Text="{Binding Path=Beatmaps.Count, Converter={StaticResource PlaylistCountToStringConverter}}" Margin="0 1 0 0" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
+                            <TextBlock Style="{DynamicResource MediumEmphasisListText}" Text="{Binding Path=Beatmaps.Count, Converter={StaticResource CountToStringConverter}}" Margin="0 1 0 0" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
                         </StackPanel>
                     </Grid>
                 </DataTemplate>

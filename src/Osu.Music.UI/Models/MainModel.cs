@@ -22,7 +22,7 @@ namespace Osu.Music.UI.Models
 
         private ObservableCollection<Playlist> _playlists;
         /// <summary>
-        /// Full list of user playlists.
+        /// List of user playlists.
         /// </summary>
         public ObservableCollection<Playlist> Playlists
         {
@@ -30,24 +30,14 @@ namespace Osu.Music.UI.Models
             set => SetProperty(ref _playlists, value);
         }
 
-        private Collection _selectedCollection;
+        private ObservableCollection<Collection> _collections;
         /// <summary>
-        /// Selected osu! collection.
+        /// List of osu! collections.
         /// </summary>
-        public Collection SelectedCollection
+        public ObservableCollection<Collection> Collections
         {
-            get => _selectedCollection;
-            set => SetProperty(ref _selectedCollection, value);
-        }
-
-        private Playlist _selectedPlaylist;
-        /// <summary>
-        /// Selected user-created playlist.
-        /// </summary>
-        public Playlist SelectedPlaylist
-        {
-            get => _selectedPlaylist;
-            set => SetProperty(ref _selectedPlaylist, value);
+            get => _collections;
+            set => SetProperty(ref _collections, value);
         }
 
         private TimeSpan currentTime;

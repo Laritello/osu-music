@@ -90,11 +90,7 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand OpenGitHubCommand { get; private set; }
         public DelegateCommand<TimeSpan?> ScrollBeatmapCommand { get; private set; }
         public DelegateCommand<string> OpenPageCommand { get; private set; }
-        public DelegateCommand<Playlist> SelectPlaylistAndPlayCommand { get; private set; }
         public DelegateCommand CreatePlaylistCommand { get; private set; }
-        public DelegateCommand<Beatmap> RemoveBeatmapFromPlaylistCommand { get; private set; }
-        public DelegateCommand<Collection> SelectCollectionCommand { get; private set; }
-        public DelegateCommand<Collection> SelectCollectionAndPlayCommand { get; private set; }
         public DelegateCommand<string> SearchCommand { get; private set; }
         public DelegateCommand<RoutedEventArgs> OnLoadedCommand { get; private set; }
         public DelegateCommand OnCloseCommand { get; private set; }
@@ -159,11 +155,7 @@ namespace Osu.Music.UI.ViewModels
             OpenGitHubCommand = new DelegateCommand(OpenGitHub);
             ScrollBeatmapCommand = new DelegateCommand<TimeSpan?>(ScrollBeatmap);
             OpenPageCommand = new DelegateCommand<string>(OpenPage);
-            SelectPlaylistAndPlayCommand = new DelegateCommand<Playlist>(SelectPlaylistAndPlay);
             CreatePlaylistCommand = new DelegateCommand(CreatePlaylist);
-            RemoveBeatmapFromPlaylistCommand = new DelegateCommand<Beatmap>(RemoveBeatmapFromPlaylist);
-            SelectCollectionCommand = new DelegateCommand<Collection>(SelectCollection);
-            SelectCollectionAndPlayCommand = new DelegateCommand<Collection>(SelectCollectionAndPlay);
             SearchCommand = new DelegateCommand<string>(Search);
             OnLoadedCommand = new DelegateCommand<RoutedEventArgs>(OnLoaded);
             OnCloseCommand = new DelegateCommand(OnClose);
@@ -220,6 +212,8 @@ namespace Osu.Music.UI.ViewModels
 
                 Model.Beatmaps = await _libraryManager.LoadAsync();
                 Model.Playlists = await _playlistManager.LoadAsync();
+                Model.Collections = await _collectionManager.LoadAsync();
+
                 OpenPage("LibraryView");
 
                 Playback.Queue = Model.Beatmaps;
@@ -291,6 +285,15 @@ namespace Osu.Music.UI.ViewModels
                             { "playlists", Model.Playlists }
                         });
                     break;
+                case "CollectionsView":
+                    _regionManager.RequestNavigate(
+                        RegionNames.ContentRegion,
+                        pageName,
+                        new NavigationParameters()
+                        {
+                            { "collections", Model.Collections }
+                        });
+                    break;
                 case "SettingsView":
                     _regionManager.RequestNavigate(
                         RegionNames.ContentRegion,
@@ -306,28 +309,6 @@ namespace Osu.Music.UI.ViewModels
                     _regionManager.RequestNavigate(RegionNames.ContentRegion, pageName);
                     break;
             }
-        }
-
-        private void SelectPlaylistAndPlay(Playlist playlist)
-        {
-            Model.SelectedPlaylist = playlist;
-
-            if (playlist.Beatmaps == null || playlist.Beatmaps.Count == 0)
-                return;
-
-            PlayBeatmapAndUpdateCollection(new object[2] { playlist.Beatmaps[0], playlist.Beatmaps });
-        }
-
-        private void SelectCollection(Collection collection) => Model.SelectedCollection = collection;
-
-        private void SelectCollectionAndPlay(Collection collection)
-        {
-            Model.SelectedCollection = collection;
-
-            if (collection.Beatmaps == null || collection.Beatmaps.Count == 0)
-                return;
-
-            PlayBeatmapAndUpdateCollection(new object[2] { collection.Beatmaps[0], collection.Beatmaps });
         }
 
         private void CreatePlaylist()
@@ -362,11 +343,6 @@ namespace Osu.Music.UI.ViewModels
                         });
                 }
             });
-        }
-
-        private void RemoveBeatmapFromPlaylist(Beatmap beatmap)
-        {
-            Model.SelectedPlaylist.Beatmaps.Remove(beatmap);
         }
 
         private void Search(string request) => _regionManager.RequestNavigate(RegionNames.ContentRegion, nameof(SearchView));

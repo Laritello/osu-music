@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Osu.Music.UI.Views.PlaylistDetailsView"
+﻿<UserControl x:Class="Osu.Music.UI.Views.CollectionDetailsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -28,30 +28,22 @@
                         <Grid.Clip>
                             <RectangleGeometry Rect="0 0 145 145" RadiusX="10" RadiusY="10"/>
                         </Grid.Clip>
-                        <Image Source="{Binding Model.Playlist, Converter={StaticResource PlaylistToImageConverter}}" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Image Source="{Binding Model.Collection, Converter={StaticResource CollectionToImageConverter}}" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
                 </Grid>
                 <StackPanel Margin="10 10 0 0">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Model.Playlist.Name}" FontSize="24"/>
-                        <Button Style="{DynamicResource MaterialDesignFlatButton}" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}" Width="30" Height="30" 
-                                Padding="0" Margin="5 0 0 0" Command="{Binding EditNameCommand}">
-                            <Button.Content>
-                                <materialDesign:PackIcon Kind="Edit"/>
-                            </Button.Content>
-                        </Button>
+                        <TextBlock Text="{Binding Model.Collection.Name}" FontSize="24"/>
                     </StackPanel>
-                    <TextBlock Text="{Binding Model.Playlist.Beatmaps.Count, Converter={StaticResource CountToStringConverter}}" FontFamily="{DynamicResource Poppins}" FontSize="16" FontWeight="Light" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}" Margin="0 5 0 0"/>
-                    <TextBlock Text="{Binding Model.Playlist.Updated, StringFormat=Updated {0}, ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}" FontFamily="{DynamicResource Poppins}" FontSize="16" FontWeight="Light" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
-                    <StackPanel Orientation="Horizontal" Margin="0 15 0 0">
+                    <TextBlock Text="{Binding Model.Collection.Beatmaps.Count, Converter={StaticResource CountToStringConverter}}" FontFamily="{DynamicResource Poppins}" FontSize="16" FontWeight="Light" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}" Margin="0 5 0 0"/>
+                    <StackPanel Orientation="Horizontal" Margin="0 39 0 0">
                         <Button Style="{DynamicResource MaterialDesignRaisedButton}" Foreground="White" Content="PLAY" Width="80"/>
-                        <Button Style="{DynamicResource MaterialDesignFlatButton}" Content="DELETE" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}" Margin="5 0 0 0" Command="{Binding DeleteCommand}"/>
                     </StackPanel>
                 </StackPanel>
             </DockPanel>
         </Border>
         <ListView x:Name="SongsList" Style="{DynamicResource ListViewBeatmaps}" Grid.Row="1"
-                  ItemsSource="{Binding Model.Playlist.Beatmaps}" 
+                  ItemsSource="{Binding Model.Collection.Beatmaps}" 
                   SelectedItem="{Binding Playback.Beatmap, Mode=OneWay}" 
                   HorizontalContentAlignment="Stretch">
             <ListView.ItemTemplate>
@@ -59,7 +51,7 @@
                     <Grid Name="ItemContainer">
                         <Grid.InputBindings>
                             <MouseBinding Gesture="LeftDoubleClick" 
-                                          Command="{Binding DataContext.PlayBeatmapCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:PlaylistDetailsView}}}"
+                                          Command="{Binding DataContext.PlayBeatmapCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:CollectionDetailsView}}}"
                                           CommandParameter="{Binding .}">
                             </MouseBinding>
                         </Grid.InputBindings>
@@ -91,17 +83,10 @@
 
                         <StackPanel Name="ActionPanel" Visibility="Hidden" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
                             <Button Style="{DynamicResource SongListOpenInBrowser}"
-                                    Command="{Binding DataContext.OpenBeatmapInBrowserCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:PlaylistDetailsView}}}" 
+                                    Command="{Binding DataContext.OpenBeatmapInBrowserCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:CollectionDetailsView}}}" 
                                     CommandParameter="{Binding .}">
                                 <Button.ToolTip>
                                     <TextBlock Style="{DynamicResource TooltipText}" Text="Show on osu! website"/>
-                                </Button.ToolTip>
-                            </Button>
-                            <Button Style="{DynamicResource SongListRemoveFromPlaylist}" Margin="5 0 0 0"
-                                    Command="{Binding DataContext.RemoveFromPlaylistCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:PlaylistDetailsView}}}" 
-                                    CommandParameter="{Binding .}">
-                                <Button.ToolTip>
-                                    <TextBlock Style="{DynamicResource TooltipText}" Text="Remove from this playlist"/>
                                 </Button.ToolTip>
                             </Button>
                         </StackPanel>

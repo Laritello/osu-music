@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace Osu.Music.UI.Resources.Converters
 {
-    public class PlaylistCountToStringConverter : IValueConverter
+    public class CountToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

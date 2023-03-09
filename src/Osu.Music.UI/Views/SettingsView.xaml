@@ -77,7 +77,7 @@
                             <TextBlock Text="DISCORD" Style="{DynamicResource MenuSubHeader}"/>
                             <ToggleButton IsChecked="{Binding Model.Settings.DiscordEnabled}" HorizontalAlignment="Right"/>
                         </Grid>
-                        <TextBlock Text="It's just /np, but for Discord activity. Except, everyone can see it... and judge your taste in music."
+                        <TextBlock Text="It's just like /np, but for Discord activity. Except, everyone can see it... and judge your taste in music."
                                    Style="{DynamicResource MenuDescription}"/>
                     </StackPanel>
                 </ScrollViewer>

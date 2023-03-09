@@ -18,8 +18,7 @@ namespace Osu.Music.Services.IO
 
         public LibraryManager(IContainer container)
         {
-            var _settingsManager = container.Resolve<SettingsManager>();
-            _settings = _settingsManager.Settings;
+            _settings = container.Resolve<SettingsManager>().Settings;
         }
 
         public ObservableCollection<Beatmap> Beatmaps { get; private set; }
