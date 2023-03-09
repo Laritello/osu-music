@@ -14,11 +14,11 @@ using System.Windows.Shapes;
 namespace Osu.Music.UI.Views.Dialogs
 {
     /// <summary>
-    /// Логика взаимодействия для SendToPlaylistView.xaml
+    /// Логика взаимодействия для AddToPlaylistView.xaml
     /// </summary>
-    public partial class SendToPlaylistView : UserControl
+    public partial class AddToPlaylistView : UserControl
     {
-        public SendToPlaylistView()
+        public AddToPlaylistView()
         {
             InitializeComponent();
         }

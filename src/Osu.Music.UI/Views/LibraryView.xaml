@@ -57,8 +57,8 @@
                                     <TextBlock Style="{DynamicResource TooltipText}" Text="Show on osu! website"/>
                                 </Button.ToolTip>
                             </Button>
-                            <Button Style="{DynamicResource SongListSendToPlaylist}" Margin="5 0 0 0"
-                                    Command="{Binding DataContext.SendToPlaylistCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:LibraryView}}}" 
+                            <Button Style="{DynamicResource SongListAddToPlaylist}" Margin="5 0 0 0"
+                                    Command="{Binding DataContext.AddToPlaylistCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:LibraryView}}}" 
                                     CommandParameter="{Binding .}">
                                 <Button.ToolTip>
                                     <TextBlock Style="{DynamicResource TooltipText}" Text="Add to a playlist"/>

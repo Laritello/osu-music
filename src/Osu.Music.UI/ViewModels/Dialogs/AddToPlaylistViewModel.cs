@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Osu.Music.UI.ViewModels.Dialogs
 {
-    public class SendToPlaylistViewModel : BindableBase, IDialogAware
+    public class AddToPlaylistViewModel : BindableBase, IDialogAware
     {
         private string _title;
         public string Title
@@ -41,7 +41,7 @@ namespace Osu.Music.UI.ViewModels.Dialogs
 
         // TODO: If no available -> show message in dialog
         // TODO: Sometimes fails to save. Maybe switch to async saving
-        public SendToPlaylistViewModel(IPlaylistManager playlistManager)
+        public AddToPlaylistViewModel(IPlaylistManager playlistManager)
         {
             _playlistManager = playlistManager;
 

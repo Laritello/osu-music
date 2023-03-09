@@ -12,7 +12,6 @@ using Prism.Regions;
 using Prism.Services.Dialogs;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace Osu.Music.UI.ViewModels
 {
@@ -34,7 +33,7 @@ namespace Osu.Music.UI.ViewModels
 
         public DelegateCommand<Beatmap> PlayBeatmapCommand { get; private set; }
         public DelegateCommand<Beatmap> OpenBeatmapInBrowserCommand { get; private set; }
-        public DelegateCommand<Beatmap> SendToPlaylistCommand { get; private set; }
+        public DelegateCommand<Beatmap> AddToPlaylistCommand { get; private set; }
 
         private IPopupDialogService _dialogService;
         private IPlaylistManager _playlistManager;
@@ -54,7 +53,7 @@ namespace Osu.Music.UI.ViewModels
         {
             PlayBeatmapCommand = new DelegateCommand<Beatmap>(PlayBeatmap);
             OpenBeatmapInBrowserCommand = new DelegateCommand<Beatmap>(OpenBeatmapInBrowser);
-            SendToPlaylistCommand = new DelegateCommand<Beatmap>(SendToPlaylist);
+            AddToPlaylistCommand = new DelegateCommand<Beatmap>(AddToPlaylist);
         }
 
         private void PlayBeatmap(Beatmap beatmap)
@@ -68,14 +67,14 @@ namespace Osu.Music.UI.ViewModels
 
         private void OpenBeatmapInBrowser(Beatmap beatmap) => Process.Start(new ProcessStartInfo("cmd", $"/c start https://osu.ppy.sh/beatmapsets/{beatmap.BeatmapSetId}") { CreateNoWindow = true });
 
-        private void SendToPlaylist(Beatmap beatmap)
+        private void AddToPlaylist(Beatmap beatmap)
         {
             DialogParameters parameters = new DialogParameters()
             {
                 { "beatmap", beatmap }
             };
 
-            _dialogService.ShowPopupDialog<SendToPlaylistView, SendToPlaylistViewModel>(parameters, e =>
+            _dialogService.ShowPopupDialog<AddToPlaylistView, AddToPlaylistViewModel>(parameters, e =>
             {
                 if (e.Result == ButtonResult.OK)
                 {
