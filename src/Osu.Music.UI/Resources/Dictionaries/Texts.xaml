@@ -107,4 +107,18 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+
+    <Style x:Key="HighEmphasisListText" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushTextHighEmphasis}"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
+    </Style>
+
+    <Style x:Key="MediumEmphasisListText" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
+    </Style>
 </ResourceDictionary>

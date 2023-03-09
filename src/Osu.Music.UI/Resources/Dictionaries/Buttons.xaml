@@ -381,6 +381,42 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="DialogCloseButton" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="30"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushTextHighEmphasis}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="0 0 0 0" Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="0" >
+                        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Content">
+            <Setter.Value>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                    <TextBlock x:Name="Logo" FontFamily="{DynamicResource MaterialIcons}" FontSize="22" Text="&#xe5cd;" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushMain}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 
     <Style x:Key="SearchButton" TargetType="{x:Type Button}">
         <Setter Property="Width" Value="30"/>
@@ -990,6 +1026,10 @@
         </Setter>
 
         <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Cursor" Value="Hand"/>
+            </Trigger>
+            
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsMouseOver" Value="True"/>
@@ -1014,13 +1054,8 @@
 
     <Style x:Key="SongListOpenInBrowser" TargetType="Button" BasedOn="{StaticResource SongListButtonBase}">
         <Setter Property="Content" Value="&#xe89d;"/>
-
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Cursor" Value="Hand"/>
-            </Trigger>
-        </Style.Triggers>
     </Style>
+    
     <Style x:Key="SongListSendToPlaylist" TargetType="Button" BasedOn="{StaticResource SongListButtonBase}">
         <Setter Property="Content" Value="&#xe03d;"/>
     </Style>

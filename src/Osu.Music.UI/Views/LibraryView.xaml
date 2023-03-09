@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Osu.Music.UI.Views"
-             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:m="clr-namespace:Osu.Music.Common.Models;assembly=Osu.Music.Common"
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
@@ -21,7 +20,7 @@
                         <Grid.InputBindings>
                             <MouseBinding Gesture="LeftDoubleClick" 
                                           Command="{Binding DataContext.PlayBeatmapCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:LibraryView}}}"
-                                          CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType=ListView}}">
+                                          CommandParameter="{Binding .}">
                             </MouseBinding>
                         </Grid.InputBindings>
                         <Grid.ColumnDefinitions>
@@ -40,12 +39,12 @@
                             </Grid>
                         </Border>
                         <StackPanel Orientation="Vertical" VerticalAlignment="Center" Grid.Column="1">
-                            <TextBlock Style="{DynamicResource TitleStyle}" Text="{Binding Path=Title}" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}"/>
-                            <TextBlock Style="{DynamicResource ArtistStyle}" Text="{Binding Path=Artist}" Margin="0 1 0 0" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
+                            <TextBlock Style="{DynamicResource HighEmphasisListText}" Text="{Binding Path=Title}" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}"/>
+                            <TextBlock Style="{DynamicResource MediumEmphasisListText}" Text="{Binding Path=Artist}" Margin="0 1 0 0" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
                         </StackPanel>
 
                         <StackPanel Name="TimePanel" Grid.Column="2" VerticalAlignment="Center">
-                            <TextBlock Style="{DynamicResource TitleStyle}" HorizontalAlignment="Right" VerticalAlignment="Center"
+                            <TextBlock Style="{DynamicResource HighEmphasisListText}" HorizontalAlignment="Right" VerticalAlignment="Center"
                                    Text="{Binding Path=TotalTime, Converter={StaticResource TimeSpanToStringConverter}, FallbackValue=''}" 
                                    Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
                         </StackPanel>
@@ -59,8 +58,12 @@
                                 </Button.ToolTip>
                             </Button>
                             <Button Style="{DynamicResource SongListSendToPlaylist}" Margin="5 0 0 0"
-                                    Command="{Binding DataContext.OpenBeatmapInBrowserCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:LibraryView}}}" 
-                                    CommandParameter="{Binding .}"/>
+                                    Command="{Binding DataContext.SendToPlaylistCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:LibraryView}}}" 
+                                    CommandParameter="{Binding .}">
+                                <Button.ToolTip>
+                                    <TextBlock Style="{DynamicResource TooltipText}" Text="Add to a playlist"/>
+                                </Button.ToolTip>
+                            </Button>
                         </StackPanel>
                     </Grid>
                     <DataTemplate.Triggers>

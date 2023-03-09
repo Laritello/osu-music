@@ -196,6 +196,7 @@ namespace Osu.Music.UI.ViewModels
             HotkeyManager.HotkeyChanged += HotkeyManager_HotkeyChanged;
         }
 
+        // TODO: Switch to DI
         private void InitializeDiscord()
         {
             DiscordManager = new DiscordManager()
@@ -343,6 +344,14 @@ namespace Osu.Music.UI.ViewModels
                     var playlist = e.Parameters.GetValue<Playlist>("playlist");
                     Model.Playlists.Add(playlist);
                     _playlistManager.Save(playlist);
+
+                    _regionManager.RequestNavigate(
+                        RegionNames.ContentRegion,
+                        "PlaylistDetailsView",
+                        new NavigationParameters()
+                        {
+                            { "playlist", playlist }
+                        });
                 }
             });
         }

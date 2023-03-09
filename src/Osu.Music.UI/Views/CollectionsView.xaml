@@ -101,11 +101,11 @@
                                     <RowDefinition Height="50"/>
                                 </Grid.RowDefinitions>
                                 <StackPanel Orientation="Vertical" VerticalAlignment="Center">
-                                    <TextBlock Style="{DynamicResource TitleStyle}" Text="{Binding Path=Title}" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}"/>
-                                    <TextBlock Style="{DynamicResource ArtistStyle}" Text="{Binding Path=Artist}" Margin="0 5 0 0" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
+                                    <TextBlock Style="{DynamicResource HighEmphasisListText}" Text="{Binding Path=Title}" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}"/>
+                                    <TextBlock Style="{DynamicResource MediumEmphasisListText}" Text="{Binding Path=Artist}" Margin="0 5 0 0" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
                                 </StackPanel>
 
-                                <TextBlock Style="{DynamicResource TitleStyle}" Grid.Column="1" 
+                                <TextBlock Style="{DynamicResource HighEmphasisListText}" Grid.Column="1" 
                                    Text="{Binding Path=TotalTime, Converter={StaticResource TimeSpanToStringConverter}, FallbackValue=''}" 
                                    Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"
                                    HorizontalAlignment="Right" VerticalAlignment="Center"/>

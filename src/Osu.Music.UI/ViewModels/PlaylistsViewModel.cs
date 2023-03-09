@@ -40,12 +40,13 @@ namespace Osu.Music.UI.ViewModels
         {
             if (playlist != null)
             {
-                var parameters = new NavigationParameters()
-                {
-                    { "playlist", playlist }
-                };
-
-                _regionManager.RequestNavigate(RegionNames.ContentRegion, "PlaylistDetailsView", parameters);
+                _regionManager.RequestNavigate(
+                    RegionNames.ContentRegion, 
+                    "PlaylistDetailsView", 
+                    new NavigationParameters()
+                    {
+                        { "playlist", playlist }
+                    });
             }
         }
 

@@ -67,6 +67,7 @@ namespace Osu.Music.Services.IO
         {
             try
             {
+                playlist.Updated = DateTime.Now;
                 var _playlistFile = Path.Combine(AppDataHelper.PlaylistDirectory, $"{playlist.Name}.json");
                 string json = JsonConvert.SerializeObject(playlist);
                 File.WriteAllText(_playlistFile, json);

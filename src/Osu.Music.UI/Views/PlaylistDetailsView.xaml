@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:Osu.Music.UI.Views"
              xmlns:m="clr-namespace:Osu.Music.Common.Models;assembly=Osu.Music.Common"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:gl="clr-namespace:System.Globalization;assembly=mscorlib"
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
@@ -41,7 +42,7 @@
                         </Button>
                     </StackPanel>
                     <TextBlock Text="{Binding Model.Playlist.Beatmaps, Converter={StaticResource PlaylistCountToStringConverter}}" FontFamily="{DynamicResource Poppins}" FontSize="16" FontWeight="Light" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}" Margin="0 5 0 0"/>
-                    <TextBlock Text="{Binding Model.Playlist.Updated, StringFormat=Updated {0}}" FontFamily="{DynamicResource Poppins}" FontSize="16" FontWeight="Light" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
+                    <TextBlock Text="{Binding Model.Playlist.Updated, StringFormat=Updated {0}, ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}" FontFamily="{DynamicResource Poppins}" FontSize="16" FontWeight="Light" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
                     <StackPanel Orientation="Horizontal" Margin="0 15 0 0">
                         <Button Style="{DynamicResource MaterialDesignRaisedButton}" Foreground="White" Content="PLAY" Width="80"/>
                         <Button Style="{DynamicResource MaterialDesignFlatButton}" Content="DELETE" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}" Margin="5 0 0 0" Command="{Binding DeleteCommand}"/>
@@ -82,11 +83,11 @@
                             </Grid>
                         </Border>
                         <StackPanel Orientation="Vertical" VerticalAlignment="Center" Grid.Column="1">
-                            <TextBlock Style="{DynamicResource TitleStyle}" Text="{Binding Path=Title}" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}"/>
-                            <TextBlock Style="{DynamicResource ArtistStyle}" Text="{Binding Path=Artist}" Margin="0 1 0 0" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
+                            <TextBlock Style="{DynamicResource HighEmphasisListText}" Text="{Binding Path=Title}" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}"/>
+                            <TextBlock Style="{DynamicResource MediumEmphasisListText}" Text="{Binding Path=Artist}" Margin="0 1 0 0" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
                         </StackPanel>
 
-                        <TextBlock Style="{DynamicResource TitleStyle}" Grid.Column="2" 
+                        <TextBlock Style="{DynamicResource HighEmphasisListText}" Grid.Column="2" 
                                    Text="{Binding Path=TotalTime, Converter={StaticResource TimeSpanToStringConverter}, FallbackValue=''}" 
                                    Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"
                                    HorizontalAlignment="Right" VerticalAlignment="Center"/>

@@ -43,10 +43,7 @@ namespace Osu.Music.UI.ViewModels.Dialogs
             AcceptCommand = new DelegateCommand(Accept);
         }
 
-        private void Cancel()
-        {
-            RequestClose?.Invoke(new DialogResult(ButtonResult.Cancel));
-        }
+        private void Cancel() => RequestClose?.Invoke(new DialogResult(ButtonResult.Cancel));
 
         private void Accept()
         {

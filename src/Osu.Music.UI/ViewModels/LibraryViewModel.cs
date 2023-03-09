@@ -1,12 +1,18 @@
 ﻿using DryIoc;
 using Osu.Music.Common.Models;
 using Osu.Music.Services.Audio;
+using Osu.Music.Services.Dialog;
+using Osu.Music.Services.Interfaces;
 using Osu.Music.UI.Models;
+using Osu.Music.UI.ViewModels.Dialogs;
+using Osu.Music.UI.Views.Dialogs;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
+using Prism.Services.Dialogs;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace Osu.Music.UI.ViewModels
 {
@@ -28,10 +34,16 @@ namespace Osu.Music.UI.ViewModels
 
         public DelegateCommand<Beatmap> PlayBeatmapCommand { get; private set; }
         public DelegateCommand<Beatmap> OpenBeatmapInBrowserCommand { get; private set; }
+        public DelegateCommand<Beatmap> SendToPlaylistCommand { get; private set; }
+
+        private IPopupDialogService _dialogService;
+        private IPlaylistManager _playlistManager;
 
         public LibraryViewModel(IContainer container)
         {
             _playback = container.Resolve<AudioPlayback>();
+            _dialogService = container.Resolve<IPopupDialogService>();
+            _playlistManager = container.Resolve<IPlaylistManager>();
 
             Model = new LibraryModel();
 
@@ -42,6 +54,7 @@ namespace Osu.Music.UI.ViewModels
         {
             PlayBeatmapCommand = new DelegateCommand<Beatmap>(PlayBeatmap);
             OpenBeatmapInBrowserCommand = new DelegateCommand<Beatmap>(OpenBeatmapInBrowser);
+            SendToPlaylistCommand = new DelegateCommand<Beatmap>(SendToPlaylist);
         }
 
         private void PlayBeatmap(Beatmap beatmap)
@@ -54,6 +67,25 @@ namespace Osu.Music.UI.ViewModels
         }
 
         private void OpenBeatmapInBrowser(Beatmap beatmap) => Process.Start(new ProcessStartInfo("cmd", $"/c start https://osu.ppy.sh/beatmapsets/{beatmap.BeatmapSetId}") { CreateNoWindow = true });
+
+        private void SendToPlaylist(Beatmap beatmap)
+        {
+            DialogParameters parameters = new DialogParameters()
+            {
+                { "beatmap", beatmap }
+            };
+
+            _dialogService.ShowPopupDialog<SendToPlaylistView, SendToPlaylistViewModel>(parameters, e =>
+            {
+                if (e.Result == ButtonResult.OK)
+                {
+                    var playlist = e.Parameters.GetValue<Playlist>("playlist");
+                    var beatmap = e.Parameters.GetValue<Beatmap>("beatmap");
+                    playlist.Beatmaps.Add(beatmap);
+                    _playlistManager.Save(playlist);
+                }
+            });
+        }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
