@@ -1,6 +1,5 @@
 ﻿using DryIoc;
 using Osu.Music.Common;
-using Osu.Music.Common.Enums;
 using Osu.Music.Common.Models;
 using Osu.Music.Common.Structures;
 using Osu.Music.Services.Audio;
@@ -68,7 +67,7 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand<TimeSpan?> ScrollBeatmapCommand { get; private set; }
         public DelegateCommand<string> OpenPageCommand { get; private set; }
         public DelegateCommand CreatePlaylistCommand { get; private set; }
-        public DelegateCommand<string> SearchCommand { get; private set; }
+        public DelegateCommand SearchCommand { get; private set; }
         public DelegateCommand<RoutedEventArgs> OnLoadedCommand { get; private set; }
         public DelegateCommand OnCloseCommand { get; private set; }
         #endregion
@@ -137,7 +136,7 @@ namespace Osu.Music.UI.ViewModels
             ScrollBeatmapCommand = new DelegateCommand<TimeSpan?>(ScrollBeatmap);
             OpenPageCommand = new DelegateCommand<string>(OpenPage);
             CreatePlaylistCommand = new DelegateCommand(CreatePlaylist);
-            SearchCommand = new DelegateCommand<string>(Search);
+            SearchCommand = new DelegateCommand(Search);
             OnLoadedCommand = new DelegateCommand<RoutedEventArgs>(OnLoaded);
             OnCloseCommand = new DelegateCommand(OnClose);
         }
@@ -308,7 +307,10 @@ namespace Osu.Music.UI.ViewModels
             });
         }
 
-        private void Search(string request) => _regionManager.RequestNavigate(RegionNames.ContentRegion, nameof(SearchView));
+        private void Search()
+        {
+
+        }
 
         private void OnLoaded(RoutedEventArgs args)
         {

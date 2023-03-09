@@ -40,7 +40,7 @@
                         <TextBlock Style="{DynamicResource TooltipText}" Text="Update osu.Music"/>
                     </Button.ToolTip>
                 </Button>
-                <Button Style="{StaticResource TitleBarSearch}" Command="{Binding OpenGitHubCommand}">
+                <Button Style="{StaticResource TitleBarSearch}" Command="{Binding SearchCommand}">
                     <Button.ToolTip>
                         <TextBlock Style="{DynamicResource TooltipText}" Text="Search"/>
                     </Button.ToolTip>
