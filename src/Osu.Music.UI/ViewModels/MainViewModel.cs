@@ -343,7 +343,6 @@ namespace Osu.Music.UI.ViewModels
                 {
                     var playlist = e.Parameters.GetValue<Playlist>("playlist");
                     Model.Playlists.Add(playlist);
-                    _playlistManager.Save(playlist);
 
                     _regionManager.RequestNavigate(
                         RegionNames.ContentRegion,
@@ -359,7 +358,6 @@ namespace Osu.Music.UI.ViewModels
         private void RemoveBeatmapFromPlaylist(Beatmap beatmap)
         {
             Model.SelectedPlaylist.Beatmaps.Remove(beatmap);
-            _playlistManager.Save(Model.SelectedPlaylist);
         }
 
         private void Search(string request) => _regionManager.RequestNavigate(RegionNames.ContentRegion, nameof(SearchView));
@@ -395,6 +393,7 @@ namespace Osu.Music.UI.ViewModels
                 };
 
                 _settingsManager.Save(Settings);
+                _playlistManager.Save(Model.Playlists);
             }
             catch { }
         }

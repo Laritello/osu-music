@@ -55,9 +55,11 @@ namespace Osu.Music.Services.IO
 
         public void Save(ICollection<Playlist> playlists)
         {
-            // TODO: More elegant way of tracking removed playlists
-            foreach (var file in Directory.GetFiles(AppDataHelper.PlaylistDirectory))
-                File.Delete(file);
+            var names = playlists.Select(x => x.Name).ToList();
+            var directory = new DirectoryInfo(AppDataHelper.PlaylistDirectory);
+            
+            foreach (var file in directory.EnumerateFiles().Where(x => !names.Contains(x.Name)))
+                File.Delete(file.FullName);
 
             foreach (var playlist in playlists)
                 Save(playlist);

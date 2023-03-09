@@ -36,13 +36,11 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand<Beatmap> AddToPlaylistCommand { get; private set; }
 
         private IPopupDialogService _dialogService;
-        private IPlaylistManager _playlistManager;
 
         public LibraryViewModel(IContainer container)
         {
             _playback = container.Resolve<AudioPlayback>();
             _dialogService = container.Resolve<IPopupDialogService>();
-            _playlistManager = container.Resolve<IPlaylistManager>();
 
             Model = new LibraryModel();
 
@@ -81,7 +79,6 @@ namespace Osu.Music.UI.ViewModels
                     var playlist = e.Parameters.GetValue<Playlist>("playlist");
                     var beatmap = e.Parameters.GetValue<Beatmap>("beatmap");
                     playlist.Beatmaps.Add(beatmap);
-                    _playlistManager.Save(playlist);
                 }
             });
         }
