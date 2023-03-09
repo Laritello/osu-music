@@ -80,7 +80,7 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </TextBlock>
-                <TextBlock Text="{Binding Path=Beatmaps, Converter={StaticResource PlaylistCountToStringConverter}}" FontFamily="{DynamicResource Poppins}" FontSize="12" FontWeight="Light" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
+                <TextBlock Text="{Binding Path=Beatmaps.Count, Converter={StaticResource PlaylistCountToStringConverter}}" FontFamily="{DynamicResource Poppins}" FontSize="12" FontWeight="Light" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
             </StackPanel>
         </Border>
     </DataTemplate>
@@ -157,7 +157,7 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </TextBlock>
-                <TextBlock Text="{Binding Path=Beatmaps, Converter={StaticResource PlaylistCountToStringConverter}}" FontFamily="{DynamicResource Poppins}" FontSize="14" FontWeight="Light" Foreground="Gray" Margin="11 5 11 0"/>
+                <TextBlock Text="{Binding Path=Beatmaps.Count, Converter={StaticResource PlaylistCountToStringConverter}}" FontFamily="{DynamicResource Poppins}" FontSize="14" FontWeight="Light" Foreground="Gray" Margin="11 5 11 0"/>
             </StackPanel>
         </Border>
     </DataTemplate>

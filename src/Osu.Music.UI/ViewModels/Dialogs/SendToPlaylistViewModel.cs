@@ -39,6 +39,8 @@ namespace Osu.Music.UI.ViewModels.Dialogs
 
         private IPlaylistManager _playlistManager;
 
+        // TODO: If no available -> show message in dialog
+        // TODO: Sometimes fails to save. Maybe switch to async saving
         public SendToPlaylistViewModel(IPlaylistManager playlistManager)
         {
             _playlistManager = playlistManager;

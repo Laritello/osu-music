@@ -58,7 +58,10 @@ namespace Osu.Music.UI.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            Model.Playlists = navigationContext.Parameters.GetValue<ObservableCollection<Playlist>>("playlists");
+            var playlists = navigationContext.Parameters.GetValue<ObservableCollection<Playlist>>("playlists");
+            
+            if (Model.Playlists != playlists)
+                Model.Playlists = playlists;
         }
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
