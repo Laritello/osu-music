@@ -36,6 +36,11 @@ namespace Osu.Music.UI.ViewModels.Dialogs
 
         public GenericConfirmationViewModel()
         {
+            InitializeCommands();
+        }
+
+        private void InitializeCommands()
+        {
             AcceptCommand = new DelegateCommand(Accept);
             CancelCommand = new DelegateCommand(Cancel);
         }

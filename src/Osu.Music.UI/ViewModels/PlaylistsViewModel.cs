@@ -26,12 +26,11 @@ namespace Osu.Music.UI.ViewModels
         private IRegionManager _regionManager;
         private AudioPlayback _playback;
 
-        public PlaylistsViewModel(IContainer container)
+        public PlaylistsViewModel(IContainer container, PlaylistsModel model)
         {
             _regionManager = container.Resolve<IRegionManager>();
             _playback = container.Resolve<AudioPlayback>();
-
-            Model = new PlaylistsModel();
+            _model = model;
 
             InitializeCommands();
         }

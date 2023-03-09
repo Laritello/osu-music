@@ -41,7 +41,7 @@ namespace Osu.Music.UI.ViewModels
 
         public SearchViewModel(IContainer container)
         {
-            Beatmaps = container.Resolve<ILibraryManager>().Beatmaps;
+            _beatmaps = container.Resolve<ILibraryManager>().Beatmaps;
 
             InitializeCommands();
             Search();

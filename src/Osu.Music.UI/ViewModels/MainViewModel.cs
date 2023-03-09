@@ -106,7 +106,7 @@ namespace Osu.Music.UI.ViewModels
         private SettingsManager _settingsManager;
         private DispatcherTimer _audioProgressTimer;
 
-        public MainViewModel(IContainer container)
+        public MainViewModel(IContainer container, MainModel model)
         {
             _container = container;
             _dialogService = container.Resolve<IPopupDialogService>();
@@ -116,8 +116,8 @@ namespace Osu.Music.UI.ViewModels
             _playlistManager = container.Resolve<IPlaylistManager>();
             _playback = container.Resolve<AudioPlayback>();
             _settingsManager = container.Resolve<SettingsManager>();
+            _model = model;
 
-            Model = new MainModel();
             Visualization = new DefaultVisualization();
 
             InitializeSettings();

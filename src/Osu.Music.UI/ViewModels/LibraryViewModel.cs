@@ -37,12 +37,11 @@ namespace Osu.Music.UI.ViewModels
 
         private IPopupDialogService _dialogService;
 
-        public LibraryViewModel(IContainer container)
+        public LibraryViewModel(IContainer container, LibraryModel model)
         {
             _playback = container.Resolve<AudioPlayback>();
             _dialogService = container.Resolve<IPopupDialogService>();
-
-            Model = new LibraryModel();
+            _model = model;
 
             InitializeCommands();
         }

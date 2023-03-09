@@ -51,6 +51,11 @@ namespace Osu.Music.UI.ViewModels.Dialogs
 
         public ManagePlaylistNameViewModel()
         {
+            InitializeCommands();
+        }
+
+        private void InitializeCommands()
+        {
             CancelCommand = new DelegateCommand(Cancel);
             AcceptCommand = new DelegateCommand(Accept);
         }

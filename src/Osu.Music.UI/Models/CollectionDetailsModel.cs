@@ -18,5 +18,7 @@ namespace Osu.Music.UI.Models
             get => _selectedBeatmap;
             set => SetProperty(ref _selectedBeatmap, value);
         }
+
+        public CollectionDetailsModel() { }
     }
 }

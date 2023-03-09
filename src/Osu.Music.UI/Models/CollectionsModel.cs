@@ -15,5 +15,7 @@ namespace Osu.Music.UI.Models
             get => _collections;
             set => SetProperty(ref _collections, value);
         }
+
+        public CollectionsModel() { }
     }
 }

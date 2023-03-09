@@ -30,11 +30,10 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand<Beatmap> PlayBeatmapCommand { get; private set; }
         public DelegateCommand<Beatmap> OpenBeatmapInBrowserCommand { get; private set; }
 
-        public CollectionDetailsViewModel(IContainer container)
+        public CollectionDetailsViewModel(IContainer container, CollectionDetailsModel model)
         {
             _playback = container.Resolve<AudioPlayback>();
-
-            Model = new CollectionDetailsModel();
+            _model = model;
 
             InitializeCommands();
         }

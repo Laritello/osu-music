@@ -1,6 +1,5 @@
 ﻿using Osu.Music.Common.Models;
 using Prism.Mvvm;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Osu.Music.UI.Models

@@ -43,6 +43,11 @@ namespace Osu.Music.UI.ViewModels.Dialogs
         {
             _playlistManager = playlistManager;
 
+            InitializeCommands();
+        }
+
+        private void InitializeCommands()
+        {
             SendCommand = new DelegateCommand<Playlist>(Send);
             CancelCommand = new DelegateCommand(Cancel);
         }

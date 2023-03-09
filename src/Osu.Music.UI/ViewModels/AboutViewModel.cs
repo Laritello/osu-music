@@ -34,17 +34,12 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand OpenLicenseCommand { get; private set; }
         public DelegateCommand OpenNoticesCommand { get; private set; }
 
-        public AboutViewModel() 
+        public AboutViewModel(AboutModel model) 
         {
-            Model = new AboutModel
-            {
-                Version = ReadVersion(),
-                Licenses = AppDataHelper.GetLicenses()
-            };
-
-            LicenseContent = new ObservableCollection<LicenseNotice>();
+            _model = model;
 
             InitializeCommands();
+            Load();
         }
 
         private void InitializeCommands()
@@ -53,6 +48,13 @@ namespace Osu.Music.UI.ViewModels
             OpenReleaseNotesCommand = new DelegateCommand(OpenReleaseNotes);
             OpenLicenseCommand = new DelegateCommand(OpenLicense);
             OpenNoticesCommand = new DelegateCommand(OpenNotices);
+        }
+
+        private void Load()
+        {
+            Model.Version = ReadVersion();
+            Model.Licenses = AppDataHelper.GetLicenses();
+            LicenseContent = new ObservableCollection<LicenseNotice>();
         }
 
         private void OpenRepository(string url)

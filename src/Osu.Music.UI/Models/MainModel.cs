@@ -1,8 +1,6 @@
 ﻿using Osu.Music.Common.Models;
-using Osu.Music.Services.Dialog;
 using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Osu.Music.UI.Models
@@ -69,9 +67,6 @@ namespace Osu.Music.UI.Models
         }
         #endregion
 
-        public MainModel()
-        {
-
-        }
+        public MainModel() { }
     }
 }

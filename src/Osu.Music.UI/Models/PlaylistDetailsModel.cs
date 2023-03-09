@@ -3,7 +3,7 @@ using Prism.Mvvm;
 
 namespace Osu.Music.UI.Models
 {
-    public class PaylistDetailsModel : BindableBase
+    public class PlaylistDetailsModel : BindableBase
     {
         private Playlist _playlist;
         public Playlist Playlist
@@ -18,5 +18,7 @@ namespace Osu.Music.UI.Models
             get => _selectedBeatmap;
             set => SetProperty(ref _selectedBeatmap, value);
         }
+
+        public PlaylistDetailsModel() { }
     }
 }

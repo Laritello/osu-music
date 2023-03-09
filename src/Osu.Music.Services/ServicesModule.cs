@@ -17,6 +17,7 @@ namespace Osu.Music.Services
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.Register<IPopupDialogService, PopupDialogService>();
+            containerRegistry.Register<IFileDialogService, FileDialogService>();
             containerRegistry.Register<DiscordManager>();
 
             containerRegistry.RegisterSingleton<ICollectionManager, CollectionManager>();

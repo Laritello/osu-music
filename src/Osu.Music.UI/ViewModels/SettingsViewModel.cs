@@ -25,12 +25,11 @@ namespace Osu.Music.UI.ViewModels
         private IFileDialogService _fileDialogService;
         private SettingsManager _settingsManager;
 
-        public SettingsViewModel(IContainer container) 
+        public SettingsViewModel(IContainer container, SettingsModel model) 
         {
             _settingsManager = container.Resolve<SettingsManager>();
-
-            Model = new SettingsModel();
-            _fileDialogService = new FileDialogService();
+            _fileDialogService = container.Resolve<IFileDialogService>();
+            _model = model;
 
             InitializeCommands();
         }

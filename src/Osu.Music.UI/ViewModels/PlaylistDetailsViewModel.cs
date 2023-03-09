@@ -18,8 +18,8 @@ namespace Osu.Music.UI.ViewModels
 {
     public class PlaylistDetailsViewModel : BindableBase, INavigationAware
     {
-        private PaylistDetailsModel _model;
-        public PaylistDetailsModel Model
+        private PlaylistDetailsModel _model;
+        public PlaylistDetailsModel Model
         {
             get => _model;
             set => SetProperty(ref _model, value);
@@ -43,14 +43,13 @@ namespace Osu.Music.UI.ViewModels
         private IPlaylistManager _playlistManager;
         private IRegionManager _regionManager;
 
-        public PlaylistDetailsViewModel(IContainer container)
+        public PlaylistDetailsViewModel(IContainer container, PlaylistDetailsModel model)
         {
             _dialogService = container.Resolve<IPopupDialogService>();
             _playlistManager = container.Resolve<IPlaylistManager>();
             _regionManager = container.Resolve<IRegionManager>();
             _playback = container.Resolve<AudioPlayback>();
-
-            Model = new PaylistDetailsModel();
+            _model = model;
 
             InitializeCommands();
         }
