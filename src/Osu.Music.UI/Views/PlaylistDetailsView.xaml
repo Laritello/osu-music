@@ -52,7 +52,7 @@
         </Border>
         <ListView x:Name="SongsList" Style="{DynamicResource ListViewBeatmaps}" Grid.Row="1"
                   ItemsSource="{Binding Model.Playlist.Beatmaps}" 
-                  SelectedItem="{Binding Model.SelectedBeatmap}"
+                  SelectedItem="{Binding Playback.Beatmap, Mode=OneWay}" 
                   HorizontalContentAlignment="Stretch">
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type m:Beatmap}">

@@ -26,6 +26,13 @@ namespace Osu.Music.UI.ViewModels
             set => SetProperty(ref _model, value);
         }
 
+        private AudioPlayback _playback;
+        public AudioPlayback Playback
+        {
+            get => _playback;
+            set => SetProperty(ref _playback, value);
+        }
+
         public DelegateCommand DeleteCommand { get; private set; }
         public DelegateCommand EditNameCommand { get; private set; }
         public DelegateCommand<Beatmap> PlayBeatmapCommand { get; private set; }
@@ -35,7 +42,6 @@ namespace Osu.Music.UI.ViewModels
         private IPopupDialogService _dialogService;
         private IPlaylistManager _playlistManager;
         private IRegionManager _regionManager;
-        private AudioPlayback _playback;
 
         public PlaylistDetailsViewModel(IContainer container)
         {

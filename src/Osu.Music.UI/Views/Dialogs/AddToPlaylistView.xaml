@@ -41,9 +41,15 @@
                         </Grid.RowDefinitions>
                         <Border CornerRadius="5" Margin="4 0 0 0" Background="#20000000" Width="40" Height="40" HorizontalAlignment="Left">
                             <Grid>
-                                <TextBlock FontFamily="{DynamicResource MaterialIcons}" FontSize="28" Text="&#xe405;" 
+                                <TextBlock FontFamily="{DynamicResource MaterialIcons}" FontSize="28" Text="&#xe03d;" 
                                            Foreground="#50000000"
                                            HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <Grid Width="40" Height="40">
+                                    <Grid.Clip>
+                                        <RectangleGeometry Rect="0 0 40 40" RadiusX="5" RadiusY="5"/>
+                                    </Grid.Clip>
+                                    <Image Source="{Binding Path=., Converter={StaticResource PlaylistToImageConverter}}" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Grid>
                             </Grid>
                         </Border>
                         <StackPanel Orientation="Vertical" VerticalAlignment="Center" Grid.Column="1">
