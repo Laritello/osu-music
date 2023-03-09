@@ -6,6 +6,7 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Osu.Music.UI.ViewModels
 {
@@ -25,6 +26,7 @@ namespace Osu.Music.UI.ViewModels
             set => SetProperty(ref _playback, value);
         }
 
+        public DelegateCommand LaunchCollectionCommand { get; private set; }
         public DelegateCommand<Beatmap> PlayBeatmapCommand { get; private set; }
         public DelegateCommand<Beatmap> OpenBeatmapInBrowserCommand { get; private set; }
 
@@ -39,8 +41,19 @@ namespace Osu.Music.UI.ViewModels
 
         private void InitializeCommands()
         {
+            LaunchCollectionCommand = new DelegateCommand(LaunchCollection);
             PlayBeatmapCommand = new DelegateCommand<Beatmap>(PlayBeatmap);
             OpenBeatmapInBrowserCommand = new DelegateCommand<Beatmap>(OpenBeatmapInBrowser);
+        }
+
+        private void LaunchCollection()
+        {
+            if (Model.Collection != null && Model.Collection.Beatmaps.Count > 0)
+            {
+                _playback.Queue = Model.Collection.Beatmaps;
+                _playback.Beatmap = Model.Collection.Beatmaps.FirstOrDefault();
+                _playback.Play();
+            }
         }
 
         private void PlayBeatmap(Beatmap beatmap)

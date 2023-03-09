@@ -32,6 +32,7 @@ namespace Osu.Music.UI.ViewModels
             set => SetProperty(ref _playback, value);
         }
 
+        public DelegateCommand LaunchPlaylistCommand { get; private set; }
         public DelegateCommand DeleteCommand { get; private set; }
         public DelegateCommand EditNameCommand { get; private set; }
         public DelegateCommand<Beatmap> PlayBeatmapCommand { get; private set; }
@@ -56,11 +57,22 @@ namespace Osu.Music.UI.ViewModels
 
         private void InitializeCommands()
         {
+            LaunchPlaylistCommand = new DelegateCommand(LaunchPlaylist);
             DeleteCommand = new DelegateCommand(Delete);
             EditNameCommand = new DelegateCommand(EditName);
             PlayBeatmapCommand = new DelegateCommand<Beatmap>(PlayBeatmap);
             OpenBeatmapInBrowserCommand = new DelegateCommand<Beatmap>(OpenBeatmapInBrowser);
             RemoveFromPlaylistCommand = new DelegateCommand<Beatmap>(RemoveFromPlaylist);
+        }
+
+        private void LaunchPlaylist()
+        {
+            if (Model.Playlist != null && Model.Playlist.Beatmaps.Count > 0)
+            {
+                _playback.Queue = Model.Playlist.Beatmaps;
+                _playback.Beatmap = Model.Playlist.Beatmaps.FirstOrDefault();
+                _playback.Play();
+            }
         }
 
         private void Delete()
