@@ -1,0 +1,64 @@
+﻿<UserControl x:Class="Osu.Music.UI.Views.Dialogs.AddToPlaylistView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:m="clr-namespace:Osu.Music.Common.Models;assembly=Osu.Music.Common"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:local="clr-namespace:Osu.Music.UI.Views.Dialogs"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="350">
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid HorizontalAlignment="Stretch">
+            <TextBlock Style="{DynamicResource HighEmphasisListText}" FontSize="16" VerticalAlignment="Center" Text="Add to..."/>
+            <Button HorizontalAlignment="Right" Style="{DynamicResource DialogCloseButton}" IsCancel="True"
+                    Command="{Binding CancelCommand}"/>
+        </Grid>
+        <TextBlock Style="{DynamicResource MediumEmphasisListText}" FontSize="14" Text="No playlists available for this song" Grid.Row="1" MinWidth="420" Margin="0 10 0 10"
+                   Visibility="{Binding Path=Visibility, ElementName=PlaylistList, Converter={StaticResource ReverseVisibilityConverter}}"/>
+        <ListView x:Name="PlaylistList" Grid.Row="1" Margin="0 6 0 0" FontSize="18" ItemsSource="{Binding Playlists}" MaxHeight="400"
+                  Visibility="{Binding Playlists.Count, Converter={StaticResource NotZeroToVisibilityConverter}}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding SendCommand}" CommandParameter="{Binding ElementName=PlaylistList, Path=SelectedItem}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <ListView.ItemTemplate>
+                <DataTemplate DataType="{x:Type m:Playlist}">
+                    <Grid Name="ItemContainer">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="70"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+                        <Border CornerRadius="5" Margin="4 0 0 0" Background="#20000000" Width="40" Height="40" HorizontalAlignment="Left">
+                            <Grid>
+                                <TextBlock FontFamily="{DynamicResource MaterialIcons}" FontSize="28" Text="&#xe03d;" 
+                                           Foreground="#50000000"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <Grid Width="40" Height="40">
+                                    <Grid.Clip>
+                                        <RectangleGeometry Rect="0 0 40 40" RadiusX="5" RadiusY="5"/>
+                                    </Grid.Clip>
+                                    <Image Source="{Binding Path=., Converter={StaticResource PlaylistToImageConverter}}" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" Grid.Column="1">
+                            <TextBlock Style="{DynamicResource HighEmphasisListText}" Text="{Binding Path=Name}" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}"/>
+                            <TextBlock Style="{DynamicResource MediumEmphasisListText}" Text="{Binding Path=Beatmaps.Count, Converter={StaticResource CountToStringConverter}}" Margin="0 1 0 0" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</UserControl>

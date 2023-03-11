@@ -11,8 +11,8 @@
         <WindowChrome CaptionHeight="30" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
     </WindowChrome.WindowChrome>
     <Grid>
-        <md:DialogHost DialogTheme="Inherit">
-            <ContentControl prism:RegionManager.RegionName="ContentRegion"/>
+        <md:DialogHost DialogTheme="Inherit" CloseOnClickAway="True">
+            <ContentControl prism:RegionManager.RegionName="GlobalRegion"/>
         </md:DialogHost>
     </Grid>
 </Window>

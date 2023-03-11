@@ -9,22 +9,26 @@ namespace Osu.Music.Common.Models
     public class Settings : BindableBase
     {
         #region Properties
-        private string _osuFolder;
-        public string OsuFolder
+        private string _source;
+        public string Source
         {
-            get => _osuFolder;
+            get => _source;
             set
             {
-                SetProperty(ref _osuFolder, value);
-                OsuFolderChanged?.Invoke(_osuFolder);
+                SetProperty(ref _source, value);
+                SourceChanged?.Invoke(_source);
             }
         }
 
-        private string _mainColor;
-        public string MainColor
+        private string _color;
+        public string Color
         {
-            get => _mainColor;
-            set => SetProperty(ref _mainColor, value);
+            get => _color;
+            set
+            {
+                SetProperty(ref _color, value);
+                ColorChanged?.Invoke(_color);
+            }
         }
 
         private bool _hotkeysEnabled;
@@ -41,11 +45,15 @@ namespace Osu.Music.Common.Models
             set => SetProperty(ref _hotkeys, value);
         }
 
-        private bool _discordRpcEnabled;
-        public bool DiscordRpcEnabled
+        private bool _discordEnabled;
+        public bool DiscordEnabled
         {
-            get => _discordRpcEnabled;
-            set => SetProperty(ref _discordRpcEnabled, value);
+            get => _discordEnabled;
+            set
+            {
+                SetProperty(ref _discordEnabled, value);
+                DiscordEnabledChanged?.Invoke(_discordEnabled);
+            }
         }
 
         private PlayerState _state;
@@ -57,15 +65,21 @@ namespace Osu.Music.Common.Models
         #endregion
 
         #region Events
-        public delegate void OsuFolderChangedEventHander(string path);
-        public event OsuFolderChangedEventHander OsuFolderChanged;
+        public delegate void ApplicationSourceChangedEventHander(string path);
+        public event ApplicationSourceChangedEventHander SourceChanged;
+
+        public delegate void ApplicationColorChangedEventHandler(string color);
+        public event ApplicationColorChangedEventHandler ColorChanged;
+
+        public delegate void ApplicationDiscordEnabledEventHandler(bool enabled);
+        public event ApplicationDiscordEnabledEventHandler DiscordEnabledChanged;
         #endregion
 
         public Settings()
         {
-            MainColor = "#FF800080";
+            Color = "#FF800080";
             HotkeysEnabled = true;
-            DiscordRpcEnabled = true;
+            DiscordEnabled = true;
             State = new PlayerState()
             {
                 Volume = 0.3f,

@@ -1,4 +1,5 @@
-﻿using MaterialDesignThemes.Wpf;
+﻿using DryIoc;
+using MaterialDesignThemes.Wpf;
 using Prism.Ioc;
 using Prism.Services.Dialogs;
 using System;
@@ -8,9 +9,9 @@ namespace Osu.Music.Services.Dialog
 {
     public class PopupDialogService : IPopupDialogService
     {
-        private readonly IContainerExtension _container;
+        private readonly IContainer _container;
 
-        public PopupDialogService(IContainerExtension container)
+        public PopupDialogService(IContainer container)
         {
             _container = container;
         }

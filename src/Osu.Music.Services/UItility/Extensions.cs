@@ -40,23 +40,14 @@ namespace Osu.Music.Services.UItility
                 G = (byte)Math.Floor(0.75 * mainColor.G),
                 B = (byte)Math.Floor(0.75 * mainColor.B)
             };
-            Color borderColor = new Color()
-            {
-                A = 64,
-                R = mainColor.R,
-                G = mainColor.G,
-                B = mainColor.B
-            };
 
             dictionary["ColorMain"] = mainColor;
             dictionary["ColorMainLight"] = lightColor;
             dictionary["ColorMainDark"] = darkColor;
-            dictionary["ColorMainBorder"] = borderColor;
 
             dictionary["SolidColorBrushMain"] = new SolidColorBrush(mainColor);
             dictionary["SolidColorBrushMainLight"] = new SolidColorBrush(lightColor);
             dictionary["SolidColorBrushMainDark"] = new SolidColorBrush(darkColor);
-            dictionary["SolidColorBrushMainBorder"] = new SolidColorBrush(borderColor);
 
             CustomColorTheme theme = collection[1] as CustomColorTheme;
             theme.PrimaryColor = mainColor;
@@ -107,5 +98,17 @@ namespace Osu.Music.Services.UItility
         }
 
         public static bool ContainsLower(this string source, string value) => source.ToLower().Contains(value.ToLower());
+
+        public static IEnumerable<TSource> DistinctBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
+        {
+            HashSet<TKey> seenKeys = new HashSet<TKey>();
+            foreach (TSource element in source)
+            {
+                if (seenKeys.Add(keySelector(element)))
+                {
+                    yield return element;
+                }
+            }
+        }
     }
 }

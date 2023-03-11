@@ -13,25 +13,33 @@
     <None Remove="Resources\Fonts\MaterialIconsOutlined-Regular.otf" />
     <None Remove="Resources\Fonts\MaterialIconsRound-Regular.otf" />
     <None Remove="Resources\Fonts\MaterialIconsSharp-Regular.otf" />
-    <None Remove="Resources\Fonts\Roboto\Roboto-Black.ttf" />
-    <None Remove="Resources\Fonts\Roboto\Roboto-BlackItalic.ttf" />
-    <None Remove="Resources\Fonts\Roboto\Roboto-Bold.ttf" />
-    <None Remove="Resources\Fonts\Roboto\Roboto-BoldItalic.ttf" />
-    <None Remove="Resources\Fonts\Roboto\Roboto-Italic.ttf" />
-    <None Remove="Resources\Fonts\Roboto\Roboto-Light.ttf" />
-    <None Remove="Resources\Fonts\Roboto\Roboto-LightItalic.ttf" />
-    <None Remove="Resources\Fonts\Roboto\Roboto-Medium.ttf" />
-    <None Remove="Resources\Fonts\Roboto\Roboto-MediumItalic.ttf" />
-    <None Remove="Resources\Fonts\Roboto\Roboto-Regular.ttf" />
-    <None Remove="Resources\Fonts\Roboto\Roboto-Thin.ttf" />
-    <None Remove="Resources\Fonts\Roboto\Roboto-ThinItalic.ttf" />
+    <None Remove="Resources\Fonts\Poppins\OFL.txt" />
+    <None Remove="Resources\Fonts\Poppins\Poppins-Black.ttf" />
+    <None Remove="Resources\Fonts\Poppins\Poppins-BlackItalic.ttf" />
+    <None Remove="Resources\Fonts\Poppins\Poppins-Bold.ttf" />
+    <None Remove="Resources\Fonts\Poppins\Poppins-BoldItalic.ttf" />
+    <None Remove="Resources\Fonts\Poppins\Poppins-ExtraBold.ttf" />
+    <None Remove="Resources\Fonts\Poppins\Poppins-ExtraBoldItalic.ttf" />
+    <None Remove="Resources\Fonts\Poppins\Poppins-ExtraLight.ttf" />
+    <None Remove="Resources\Fonts\Poppins\Poppins-ExtraLightItalic.ttf" />
+    <None Remove="Resources\Fonts\Poppins\Poppins-Italic.ttf" />
+    <None Remove="Resources\Fonts\Poppins\Poppins-Light.ttf" />
+    <None Remove="Resources\Fonts\Poppins\Poppins-LightItalic.ttf" />
+    <None Remove="Resources\Fonts\Poppins\Poppins-Medium.ttf" />
+    <None Remove="Resources\Fonts\Poppins\Poppins-MediumItalic.ttf" />
+    <None Remove="Resources\Fonts\Poppins\Poppins-Regular.ttf" />
+    <None Remove="Resources\Fonts\Poppins\Poppins-SemiBold.ttf" />
+    <None Remove="Resources\Fonts\Poppins\Poppins-SemiBoldItalic.ttf" />
+    <None Remove="Resources\Fonts\Poppins\Poppins-Thin.ttf" />
+    <None Remove="Resources\Fonts\Poppins\Poppins-ThinItalic.ttf" />
     <None Remove="Resources\Images\Logo\Logo.png" />
     <None Remove="Resources\Images\osu-logo.png" />
     <None Remove="Resources\Images\sidebar-background.png" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MaterialDesignThemes" Version="4.5.0" />
-    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.37" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.8.0" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+    <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
     <PackageReference Include="Prism.Wpf" Version="8.1.97" />
   </ItemGroup>
   <ItemGroup>
@@ -43,18 +51,25 @@
     <Resource Include="Resources\Fonts\Material Icons\MaterialIconsOutlined-Regular.otf" />
     <Resource Include="Resources\Fonts\Material Icons\MaterialIconsRound-Regular.otf" />
     <Resource Include="Resources\Fonts\Material Icons\MaterialIconsSharp-Regular.otf" />
-    <Resource Include="Resources\Fonts\Roboto\Roboto-Black.ttf" />
-    <Resource Include="Resources\Fonts\Roboto\Roboto-BlackItalic.ttf" />
-    <Resource Include="Resources\Fonts\Roboto\Roboto-Bold.ttf" />
-    <Resource Include="Resources\Fonts\Roboto\Roboto-BoldItalic.ttf" />
-    <Resource Include="Resources\Fonts\Roboto\Roboto-Italic.ttf" />
-    <Resource Include="Resources\Fonts\Roboto\Roboto-Light.ttf" />
-    <Resource Include="Resources\Fonts\Roboto\Roboto-LightItalic.ttf" />
-    <Resource Include="Resources\Fonts\Roboto\Roboto-Medium.ttf" />
-    <Resource Include="Resources\Fonts\Roboto\Roboto-MediumItalic.ttf" />
-    <Resource Include="Resources\Fonts\Roboto\Roboto-Regular.ttf" />
-    <Resource Include="Resources\Fonts\Roboto\Roboto-Thin.ttf" />
-    <Resource Include="Resources\Fonts\Roboto\Roboto-ThinItalic.ttf" />
+    <Resource Include="Resources\Fonts\Poppins\OFL.txt" />
+    <Resource Include="Resources\Fonts\Poppins\Poppins-Black.ttf" />
+    <Resource Include="Resources\Fonts\Poppins\Poppins-BlackItalic.ttf" />
+    <Resource Include="Resources\Fonts\Poppins\Poppins-Bold.ttf" />
+    <Resource Include="Resources\Fonts\Poppins\Poppins-BoldItalic.ttf" />
+    <Resource Include="Resources\Fonts\Poppins\Poppins-ExtraBold.ttf" />
+    <Resource Include="Resources\Fonts\Poppins\Poppins-ExtraBoldItalic.ttf" />
+    <Resource Include="Resources\Fonts\Poppins\Poppins-ExtraLight.ttf" />
+    <Resource Include="Resources\Fonts\Poppins\Poppins-ExtraLightItalic.ttf" />
+    <Resource Include="Resources\Fonts\Poppins\Poppins-Italic.ttf" />
+    <Resource Include="Resources\Fonts\Poppins\Poppins-Light.ttf" />
+    <Resource Include="Resources\Fonts\Poppins\Poppins-LightItalic.ttf" />
+    <Resource Include="Resources\Fonts\Poppins\Poppins-Medium.ttf" />
+    <Resource Include="Resources\Fonts\Poppins\Poppins-MediumItalic.ttf" />
+    <Resource Include="Resources\Fonts\Poppins\Poppins-Regular.ttf" />
+    <Resource Include="Resources\Fonts\Poppins\Poppins-SemiBold.ttf" />
+    <Resource Include="Resources\Fonts\Poppins\Poppins-SemiBoldItalic.ttf" />
+    <Resource Include="Resources\Fonts\Poppins\Poppins-Thin.ttf" />
+    <Resource Include="Resources\Fonts\Poppins\Poppins-ThinItalic.ttf" />
     <Resource Include="Resources\Images\Logo\Logo.png" />
     <Resource Include="Resources\Images\sidebar-background.png" />
   </ItemGroup>

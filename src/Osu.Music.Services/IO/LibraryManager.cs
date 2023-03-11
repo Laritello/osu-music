@@ -1,4 +1,6 @@
-﻿using Osu.Music.Common.Models;
+﻿using DryIoc;
+using Osu.Music.Common.Models;
+using Osu.Music.Services.Interfaces;
 using osu_database_reader.BinaryFiles;
 using osu_database_reader.Components.Beatmaps;
 using System;
@@ -10,40 +12,53 @@ using System.Threading.Tasks;
 
 namespace Osu.Music.Services.IO
 {
-    public static class LibraryManager
+    public class LibraryManager : ILibraryManager
     {
-        public static async Task<ObservableCollection<Beatmap>> LoadAsync(string osuFolder)
+        private Settings _settings;
+
+        public LibraryManager(IContainer container)
         {
-            return await Task.Run(() =>
+            _settings = container.Resolve<SettingsManager>().Settings;
+        }
+
+        public ObservableCollection<Beatmap> Beatmaps { get; private set; }
+
+        public Task<ObservableCollection<Beatmap>> LoadAsync()
+        {
+            return Task.Run(() =>
             {
                 try
                 {
-                    if (!Directory.Exists(osuFolder))
+                    var source = _settings.Source;
+
+                    if (!Directory.Exists(source))
                         throw new ArgumentException("The specified folder does not exist.");
 
-                    ObservableCollection<Beatmap> beatmaps = new ObservableCollection<Beatmap>();
+                    List<Beatmap> beatmaps = new List<Beatmap>();
 
                     OsuDb db;
 
-                    using (FileStream stream = File.OpenRead($@"{osuFolder}\osu!.db"))
+                    using (FileStream stream = File.OpenRead($@"{source}\osu!.db"))
                         db = OsuDb.Read(stream);
 
                     foreach (var beatmapSet in db.Beatmaps.GroupBy(x => x.BeatmapSetId))
                     {
                         if (beatmapSet.Count() > 0)
-                            beatmaps.Add(Convert(osuFolder, beatmapSet));
+                            beatmaps.Add(Convert(source, beatmapSet));
                     }
 
-                    return beatmaps;
+                    Beatmaps = new ObservableCollection<Beatmap>(beatmaps.OrderBy(x => x.Title));
                 }
                 catch
                 {
-                    return new ObservableCollection<Beatmap>();
+                    Beatmaps = new ObservableCollection<Beatmap>();
                 }
+
+                return Beatmaps;
             });
         }
 
-        private static Beatmap Convert(string osuFolder, IGrouping<int, BeatmapEntry> set)
+        private Beatmap Convert(string osuFolder, IGrouping<int, BeatmapEntry> set)
         {
             var entry = set.First();
 
@@ -64,18 +79,6 @@ namespace Osu.Music.Services.IO
             };
         }
 
-        private static List<string> GetSetHashes(IGrouping<int, BeatmapEntry> set) => set.Select(x => x.BeatmapChecksum).ToList();
-
-        public static IEnumerable<TSource> DistinctBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
-        {
-            HashSet<TKey> seenKeys = new HashSet<TKey>();
-            foreach (TSource element in source)
-            {
-                if (seenKeys.Add(keySelector(element)))
-                {
-                    yield return element;
-                }
-            }
-        }
+        private List<string> GetSetHashes(IGrouping<int, BeatmapEntry> set) => set.Select(x => x.BeatmapChecksum).ToList();
     }
 }

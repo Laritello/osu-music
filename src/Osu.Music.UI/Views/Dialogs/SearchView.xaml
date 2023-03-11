@@ -1,0 +1,140 @@
+﻿<UserControl x:Class="Osu.Music.UI.Views.Dialogs.SearchView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800" MinWidth="650">
+    <UserControl.Resources>
+        <Style x:Key="ResultAmountText" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
+            <Setter Property="Padding" Value="5 1 5 1"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid x:Name="ContentView" MinHeight="60" MaxHeight="60">
+        <Grid.Style>
+            <Style>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Request, Converter={StaticResource StringEmptyConverter}}" Value="False">
+                        <DataTrigger.EnterActions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation From="60" To="450" Duration="0:0:0.5" Storyboard.TargetProperty="MinHeight"/>
+                                    <DoubleAnimation From="60" To="450" Duration="0:0:0.5" Storyboard.TargetProperty="MaxHeight"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </DataTrigger.EnterActions>
+                        <DataTrigger.ExitActions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation From="450" To="60" Duration="0:0:0.5" Storyboard.TargetProperty="MinHeight"/>
+                                    <DoubleAnimation From="450" To="60" Duration="0:0:0.5" Storyboard.TargetProperty="MaxHeight"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </DataTrigger.ExitActions>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Style>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel VerticalAlignment="Stretch">
+            <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="16">
+                <md:PackIcon Kind="Search" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}" Height="25" Width="25" VerticalAlignment="Center" DockPanel.Dock="Left"/>
+                <TextBox x:Name="SearchBox" Text="{Binding Request, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource SearchTextBox}" VerticalAlignment="Center">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="KeyUp">
+                            <i:InvokeCommandAction Command="{Binding SearchCommand}" CommandParameter="{Binding ElementName=SearchBox, Path=Text}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+            </DockPanel>
+            <TabControl x:Name="SearchResultTabControl" Style="{DynamicResource MaterialDesignTabControl}" Margin="0 0 0 16" MinHeight="380" MaxHeight="380">
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock Text="All" FontSize="14" VerticalAlignment="Center"/>
+                            <Border Background="{DynamicResource SolidColorBrushMainBorder}" CornerRadius="5" Margin="5 0 0 0" VerticalAlignment="Center">
+                                <TextBlock Style="{DynamicResource ResultAmountText}" Text="{Binding CombinedResult.Count}"/>
+                            </Border>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <ListView x:Name="CombinedList" Background="Transparent"
+                              Style="{DynamicResource SearchListView}" ItemsSource="{Binding CombinedResult}"
+                              BorderBrush="Transparent" BorderThickness="0">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding JumpCommand}" CommandParameter="{Binding ElementName=CombinedList, Path=SelectedItem}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ListView>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock FontFamily="{DynamicResource MaterialIconsOutlined}" FontSize="20" Text="&#xe3a1;" Margin="0 0 5 0" VerticalAlignment="Center"/>
+                            <TextBlock Text="Songs" FontSize="14" VerticalAlignment="Center"/>
+                            <Border Background="{DynamicResource SolidColorBrushMainBorder}" CornerRadius="5" Margin="5 0 0 0" VerticalAlignment="Center">
+                                <TextBlock Style="{DynamicResource ResultAmountText}" Text="{Binding BeatmapResult.Count}"/>
+                            </Border>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <ListView x:Name="BeatmapList" Background="Transparent"
+                              Style="{DynamicResource SearchListView}" ItemsSource="{Binding BeatmapResult}" 
+                              BorderBrush="Transparent" BorderThickness="0">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding JumpCommand}" CommandParameter="{Binding ElementName=BeatmapList, Path=SelectedItem}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ListView>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock FontFamily="{DynamicResource MaterialIconsOutlined}" FontSize="20" Text="&#xe03d;" Margin="0 0 5 0" VerticalAlignment="Center"/>
+                            <TextBlock Text="Playlists" FontSize="14" VerticalAlignment="Center"/>
+                            <Border Background="{DynamicResource SolidColorBrushMainBorder}" CornerRadius="5" Margin="5 0 0 0" VerticalAlignment="Center">
+                                <TextBlock Style="{DynamicResource ResultAmountText}" Text="{Binding PlaylistResult.Count}"/>
+                            </Border>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <ListView x:Name="PlaylistList" Background="Transparent"
+                              Style="{DynamicResource SearchListView}" ItemsSource="{Binding PlaylistResult}" 
+                              BorderBrush="Transparent" BorderThickness="0">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding JumpCommand}" CommandParameter="{Binding ElementName=PlaylistList, Path=SelectedItem}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ListView>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock FontFamily="{DynamicResource MaterialIconsOutlined}" FontSize="20" Text="&#xe030;" Margin="0 0 5 0" VerticalAlignment="Center"/>
+                            <TextBlock Text="Collections" FontSize="14" VerticalAlignment="Center"/>
+                            <Border Background="{DynamicResource SolidColorBrushMainBorder}" CornerRadius="5" Margin="5 0 0 0" VerticalAlignment="Center">
+                                <TextBlock Style="{DynamicResource ResultAmountText}" Text="{Binding CollectionResult.Count}"/>
+                            </Border>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <ListView x:Name="CollectionList" Background="Transparent"
+                              Style="{DynamicResource SearchListView}" ItemsSource="{Binding CollectionResult}" 
+                              BorderBrush="Transparent" BorderThickness="0">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding JumpCommand}" CommandParameter="{Binding ElementName=CollectionList, Path=SelectedItem}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ListView>
+                </TabItem>
+            </TabControl>
+        </StackPanel>
+    </Grid>
+</UserControl>

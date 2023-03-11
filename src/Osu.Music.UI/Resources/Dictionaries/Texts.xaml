@@ -1,33 +1,53 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Style x:Key="PlayerBeatmapTitle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontSize" Value="14"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
     </Style>
 
     <Style x:Key="PlayerBeatmapArtist" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontSize" Value="12"/>
         <Setter Property="FontWeight" Value="Regular"/>
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Foreground" Value="#77FFFFFF"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
     </Style>
 
     <Style x:Key="MenuHeader" TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="18"/>
+        <Setter Property="FontWeight" Value="DemiBold"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
+        <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushTextHighEmphasis}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+    <Style x:Key="MenuSubHeader" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="14"/>
         <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="Foreground" Value="#424242"/>
-        <Setter Property="Margin" Value="0 0 0 20"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
+        <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+    <Style x:Key="MenuDescription" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
+        <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="Margin" Value="0 5 0 0 "/>
     </Style>
 
     <Style x:Key="MenuDefault" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="16"/>
-        <Setter Property="FontFamily" Value="Roboto"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
     </Style>
 
     <Style x:Key="LinkText" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontSize" Value="12"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
-
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
         <Setter Property="Foreground" Value="#0366d6"/>
 
         <Style.Triggers>
@@ -38,39 +58,67 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="LicenseText" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontFamily" Value="Monospace"/>
-        <Setter Property="FontSize" Value="16"/>
+    <Style x:Key="LinkRun" TargetType="{x:Type Run}">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
+        <Setter Property="Foreground" Value="#0366d6"/>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="TextDecorations" Value="Underline"/>
+                <Setter Property="Cursor" Value="Hand"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
-    <Style x:Key="SearchText" TargetType="{x:Type TextBox}">
-        <Setter Property="FontFamily" Value="{DynamicResource Roboto}"/>
-        <Setter Property="FontSize" Value="16"/>
-        <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushMain}"/>
-        <Setter Property="HorizontalAlignment" Value="Right"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="BorderThickness" Value="0 0 0 1"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource SolidColorBrushMainBorder}"/>
+    <Style x:Key="TooltipText" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="12"/>
+    </Style>
 
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
-                        <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Opacity" TargetName="border" Value="0.56"/>
-                        </Trigger>
-                        <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource SolidColorBrushMainLight}"/>
-                        </Trigger>
-                        <Trigger Property="IsFocused" Value="true">
-                            <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource SolidColorBrushMain}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+    <Style x:Key="LicenseText" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="Monospace"/>
+        <Setter Property="FontSize" Value="14"/>
+    </Style>
+
+    <Style x:Key="SearchTextBox" TargetType="{x:Type TextBox}">
+        <Style.Resources>
+            <VisualBrush x:Key="SearchHint" TileMode="None" Stretch="None" AlignmentX="Left">
+                <VisualBrush.Transform>
+                    <TranslateTransform X="2" Y="0" />
+                </VisualBrush.Transform>
+                <VisualBrush.Visual>
+                    <Grid>
+                        <TextBlock FontSize="18" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}" Text="Search"/>
+                    </Grid>
+                </VisualBrush.Visual>
+            </VisualBrush>
+        </Style.Resources>
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Background" Value="Transparent"/>
+        
+        <Style.Triggers>
+            <Trigger Property="Text" Value="">
+                <Setter Property="Background" Value="{StaticResource SearchHint}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="HighEmphasisListText" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushTextHighEmphasis}"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
+    </Style>
+
+    <Style x:Key="MediumEmphasisListText" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
     </Style>
 </ResourceDictionary>

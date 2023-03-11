@@ -1,18 +1,28 @@
-﻿using Prism.Mvvm;
+﻿using Newtonsoft.Json;
+using Osu.Music.Common.Interfaces;
+using Prism.Mvvm;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Osu.Music.Common.Models
 {
-    public class Playlist : BindableBase, IEditableObject
+    public class Playlist : BindableBase, ISearchable
     {
         private string _name;
         public string Name
         {
             get => _name;
             set => SetProperty(ref _name, value);
+        }
+
+        private DateTime _updated;
+        public DateTime Updated
+        {
+            get => _updated;
+            set => SetProperty(ref _updated, value);
         }
 
         private ObservableCollection<Beatmap> _beatmaps;
@@ -22,17 +32,20 @@ namespace Osu.Music.Common.Models
             set => SetProperty(ref _beatmaps, value);
         }
 
-        private PlaylistCover _cover;
-        public PlaylistCover Cover
+        private int _matches;
+        /// <summary>
+        /// The amount of found matches during search.
+        /// </summary>
+        [JsonIgnore]
+        public int Matches
         {
-            get => _cover;
-            set => SetProperty(ref _cover, value);
+            get => _matches;
+            private set => SetProperty(ref _matches, value);
         }
 
         public Playlist()
         {
             Beatmaps = new ObservableCollection<Beatmap>();
-            Cover = new PlaylistCover();
         }
 
         public void UpdateMaps(ICollection<Beatmap> beatmaps)
@@ -44,61 +57,12 @@ namespace Osu.Music.Common.Models
                 Beatmaps[i] = playlistBeatmaps.Where(x => x.BeatmapSetId == Beatmaps[i].BeatmapSetId).FirstOrDefault() ?? Beatmaps[i];
         }
 
-        #region IEditableObject Implemantation
-        private Playlist _backup;
-        private bool inTxn;
-
-        public void BeginEdit()
+        public bool Match(Regex query)
         {
-            if (!inTxn)
-            {
-                _backup = DeepCopy();
-                inTxn = true;
-            }
+            Matches = query.Matches(Name).Count;
+            return Matches > 0;
         }
 
-        public void CancelEdit()
-        {
-            if (inTxn)
-            {
-                Restrore();
-                inTxn = false;
-            }
-        }
-
-        public void EndEdit()
-        {
-            if (inTxn)
-            {
-                _backup = new Playlist();
-                inTxn = false;
-            }
-        }
-
-        private Playlist DeepCopy()
-        {
-            return new Playlist()
-            {
-                Name = Name,
-                Cover = new PlaylistCover()
-                {
-                    Icon = Cover.Icon,
-                    IconColor = Cover.IconColor,
-                    BackgroundColor = Cover.BackgroundColor,
-                },
-            };
-        }
-
-        private void Restrore()
-        {
-            if (_backup != null)
-            {
-                Name = _backup.Name;
-                Cover.Icon = _backup.Cover.Icon;
-                Cover.IconColor = _backup.Cover.IconColor;
-                Cover.BackgroundColor = _backup.Cover.BackgroundColor;
-            }
-        }
-        #endregion
+        public string GetNavigationView() => "PlaylistDetailsView";
     }
 }

@@ -1,91 +1,84 @@
-﻿using Osu.Music.Common.Models;
-using Osu.Music.Services.Dialog;
-using Osu.Music.Services.IO;
-using Osu.Music.UI.Views;
+﻿using DryIoc;
+using Osu.Music.Common;
+using Osu.Music.Common.Models;
+using Osu.Music.Services.Audio;
+using Osu.Music.UI.Models;
 using Prism.Commands;
 using Prism.Mvvm;
-using Prism.Services.Dialogs;
-using System.Collections.Generic;
+using Prism.Regions;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Osu.Music.UI.ViewModels
 {
-    public class PlaylistsViewModel : BindableBase
+    public class PlaylistsViewModel : BindableBase, INavigationAware
     {
-        private IPopupDialogService _dialogService;
-        public IPopupDialogService DialogService
+        private PlaylistsModel _model;
+        public PlaylistsModel Model
         {
-            get => _dialogService;
-            set => SetProperty(ref _dialogService, value);
+            get => _model;
+            set => SetProperty(ref _model, value);
         }
 
-        private ICollection<Playlist> _playlists;
-        /// <summary>
-        /// Collection of user-created playlists.
-        /// </summary>
-        public ICollection<Playlist> Playlists
-        {
-            get => _playlists;
-            set => SetProperty(ref _playlists, value);
-        }
+        public DelegateCommand<Playlist> SelectPlaylistCommand { get; private set; }
+        public DelegateCommand<Playlist> LaunchPlaylistCommand { get; private set; }
 
-        public DelegateCommand ShowCreatePlaylistDialogCommand { get; private set; }
-        public DelegateCommand<Playlist> ShowEditPlaylistDialogCommand { get; private set; }
+        private IRegionManager _regionManager;
+        private AudioPlayback _playback;
 
-        public PlaylistsViewModel(ICollection<Playlist> playlists, IPopupDialogService dialogService)
+        public PlaylistsViewModel(IContainer container, PlaylistsModel model)
         {
-            Playlists = playlists;
-            DialogService = dialogService;
+            _regionManager = container.Resolve<IRegionManager>();
+            _playback = container.Resolve<AudioPlayback>();
+            _model = model;
 
             InitializeCommands();
         }
 
         private void InitializeCommands()
         {
-            ShowCreatePlaylistDialogCommand = new DelegateCommand(ShowCreatePlaylistDialog);
-            ShowEditPlaylistDialogCommand = new DelegateCommand<Playlist>(ShowEditPlaylistDialog);
+            SelectPlaylistCommand = new DelegateCommand<Playlist>(SelectPlaylist);
+            LaunchPlaylistCommand = new DelegateCommand<Playlist>(LaunchPlaylist);
         }
 
-        private void ShowCreatePlaylistDialog()
+        private void SelectPlaylist(Playlist playlist)
         {
-            DialogParameters parameters = new DialogParameters()
+            if (playlist != null)
             {
-                { "playlists", Playlists }
-            };
-
-            DialogService.ShowPopupDialog<DialogCreatePlaylistView, DialogCreatePlaylistViewModel>(parameters, e =>
-            {
-                if (e.Result == ButtonResult.OK)
-                {
-                    var playlist = e.Parameters.GetValue<Playlist>("playlist");
-                    Playlists.Add(playlist);
-                    PlaylistManager.Save(playlist);
-                }
-            });
+                _regionManager.RequestNavigate(
+                    RegionNames.ContentRegion, 
+                    "PlaylistDetailsView", 
+                    new NavigationParameters()
+                    {
+                        { "playlist", playlist }
+                    });
+            }
         }
 
-        private void ShowEditPlaylistDialog(Playlist playlist)
+        private void LaunchPlaylist(Playlist playlist)
         {
-            if (playlist == null)
-                return;
-
-            DialogParameters parameters = new DialogParameters()
+            if (playlist != null && playlist.Beatmaps.Count > 0)
             {
-                { "playlist", playlist },
-                { "playlists", Playlists }
-            };
-
-            DialogService.ShowPopupDialog<DialogEditPlaylistView, DialogEditPlaylistViewModel>(parameters, e =>
-            {
-                if (e.Result == ButtonResult.OK)
-                {
-                    var originalName = e.Parameters.GetValue<string>("originalName");
-
-                    if (!playlist.Name.Equals(originalName))
-                        PlaylistManager.RemoveByName(originalName);
-
-                    PlaylistManager.Save(playlist);
-                }
-            });
+                _playback.Queue = playlist.Beatmaps;
+                _playback.Beatmap = playlist.Beatmaps.FirstOrDefault();
+                _playback.Play();
+            }
         }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            var playlists = navigationContext.Parameters.GetValue<ObservableCollection<Playlist>>("playlists");
+
+            if (Model.Playlists != playlists)
+                Model.Playlists = playlists;
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            var playlists = navigationContext.Parameters.GetValue<ObservableCollection<Playlist>>("playlists");
+            return playlists.Equals(Model.Playlists);
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext) { }
     }
 }

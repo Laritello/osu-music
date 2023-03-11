@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
     <Style x:Key="PlayerButtonBase" TargetType="{x:Type Button}">
         <Setter Property="Width" Value="30"/>
         <Setter Property="Height" Value="30"/>
@@ -181,7 +182,6 @@
                 </MultiTrigger.Setters>
             </MultiTrigger>
 
-
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsMouseOver" Value="True"/>
@@ -210,83 +210,30 @@
         <Setter Property="Content" Value="&#xe028;"/>
     </Style>
 
-    <Style x:Key="SidebarButtonBase" TargetType="{x:Type Button}">
-        <Setter Property="Width" Value="30"/>
-        <Setter Property="Height" Value="30"/>
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushMain}"/>
-        <Setter Property="FontFamily" Value="{DynamicResource MaterialIcons}"/>
-        <Setter Property="FontSize" Value="22"/>
-        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border CornerRadius="15" Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="0" >
-                        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-
-        <Style.Triggers>
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="IsMouseOver" Value="True"/>
-                    <Condition Property="IsPressed" Value="False"/>
-                </MultiTrigger.Conditions>
-                <MultiTrigger.Setters>
-                    <Setter Property="Background">
-                        <Setter.Value>
-                            <SolidColorBrush Color="Black" Opacity="0.1"/>
-                        </Setter.Value>
-                    </Setter>
-                </MultiTrigger.Setters>
-            </MultiTrigger>
-
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="IsMouseOver" Value="True"/>
-                    <Condition Property="IsPressed" Value="True"/>
-                </MultiTrigger.Conditions>
-                <MultiTrigger.Setters>
-                    <Setter Property="Background">
-                        <Setter.Value>
-                            <SolidColorBrush Color="Black" Opacity="0.2"/>
-                        </Setter.Value>
-                    </Setter>
-                </MultiTrigger.Setters>
-            </MultiTrigger>
-        </Style.Triggers>
-    </Style>
-
-    <Style x:Key="SidebarToggleButtonBase" TargetType="{x:Type ToggleButton}">
+    <Style x:Key="SidebarToggleButtonBase" TargetType="{x:Type RadioButton}">
         <Setter Property="Height" Value="40"/>
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushMain}"/>
-        <Setter Property="FontFamily" Value="{DynamicResource Roboto}"/>
-        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
+        <Setter Property="FontWeight" Value="DemiBold"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="ToggleButton">
+                <ControlTemplate TargetType="RadioButton">
                     <StackPanel Orientation="Horizontal" Background="{TemplateBinding Background}">
-                        <Border x:Name="Bd" Width="5" BorderThickness="0 0 5 0" CornerRadius="0 5 5 0"/>
                         <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </StackPanel>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsChecked" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushMain}"/>
-                            <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource SolidColorBrushMain}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
 
         <Style.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushMain}"/>
+            </Trigger>
+            
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsMouseOver" Value="True"/>
@@ -318,15 +265,15 @@
     </Style>
 
     <Style x:Key="SidebarButtonOsu" TargetType="{x:Type Button}">
-        <Setter Property="Width" Value="85"/>
         <Setter Property="Height" Value="30"/>
+        <Setter Property="Padding" Value="10 0 0 0"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Top"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Foreground" Value="Black"/>
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="FontFamily" Value="Roboto"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
         <Setter Property="FontWeight" Value="Normal"/>
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
         <Setter Property="Template">
@@ -342,8 +289,10 @@
         <Setter Property="Content">
             <Setter.Value>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
-                    <!--<TextBlock x:Name="Logo" FontFamily="{DynamicResource MaterialIconsOutlined}" FontSize="19" Text="&#xe039;" Margin="0 0 3 0" VerticalAlignment="Center"/>-->
-                    <TextBlock Text="osu.Music" VerticalAlignment="Center"/>
+                    <TextBlock VerticalAlignment="Center" FontFamily="{Binding Path=FontFamily, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                               FontWeight="Medium">
+                        <Run Text="osu."/><Run Text="Music" Foreground="{DynamicResource SolidColorBrushMain}"/>
+                    </TextBlock>
                 </StackPanel>
             </Setter.Value>
         </Setter>
@@ -361,9 +310,9 @@
         <Setter Property="VerticalAlignment" Value="Top"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushMain}"/>
+        <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushTextHighEmphasis}"/>
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="FontFamily" Value="Roboto"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
         <Setter Property="FontWeight" Value="Normal"/>
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
         <Setter Property="Template">
@@ -386,10 +335,88 @@
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushMain}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="GithubButton" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="30"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushTextHighEmphasis}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="0 0 0 0" Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="0" >
+                        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Content">
+            <Setter.Value>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                    <Path Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" StrokeThickness="0.184376">
+                        <Path.Data>
+                            <PathGeometry Figures="m 9.0074425 1.1499749 c -4.980884 0 -9.0074441239807 4.0562446 -9.0074441239807 9.0743721 0 4.011257 2.5799558239807 7.406703 6.1590385239807 8.608457 0.4474776 0.09035 0.6113868 -0.195253 0.6113868 -0.435493 0 -0.210371 -0.014749 -0.931462 -0.014749 -1.682788 C 4.2500209 17.255479 3.7282405 15.632795 3.7282405 15.632795 3.325566 14.581123 2.7289293 14.310829 2.7289293 14.310829 c -0.8200989 -0.55589 0.059737 -0.55589 0.059737 -0.55589 0.909705 0.06011 1.3870513 0.931462 1.3870513 0.931462 0.8051646 1.382072 2.1026097 0.991567 2.6245745 0.751143 0.074487 -0.585944 0.313253 -0.991569 0.5667683 -1.216875 -1.9984376 -0.21037 -4.1010472 -0.991567 -4.1010472 -4.4771713 0 -0.9915674 0.3576871 -1.8028163 0.9244551 -2.4337467 -0.089421 -0.2253059 -0.4026745 -1.1569516 0.089606 -2.403878 0 0 0.7605458 -0.2404247 2.4754155 0.9314612 A 8.6600821 8.6600821 0 0 1 9.0074425 5.5368034 c 0.7605462 0 1.5358415 0.105278 2.2517675 0.3005308 1.715054 -1.1718859 2.475601 -0.9314612 2.475601 -0.9314612 0.492281 1.2469264 0.178842 2.1785721 0.08943 2.403878 0.581703 0.6309304 0.924639 1.4421793 0.924639 2.4337467 0 3.4856043 -2.10261 4.2516823 -4.115981 4.4771713 0.328186 0.285413 0.611387 0.826184 0.611387 1.682604 0 1.216875 -0.01475 2.193508 -0.01475 2.493854 0 0.240424 0.164092 0.526021 0.611385 0.435862 3.579083 -1.202124 6.15904 -4.597385 6.15904 -8.608642 0.01475 -5.0181275 -4.026564 -9.0743721 -8.9925134 -9.0743721 z" FillRule="EvenOdd"/>
+                        </Path.Data>
+                    </Path>
+                </StackPanel>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushMain}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="DialogCloseButton" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="30"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushTextHighEmphasis}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="0 0 0 0" Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="0" >
+                        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Content">
+            <Setter.Value>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                    <TextBlock x:Name="Logo" FontFamily="{DynamicResource MaterialIcons}" FontSize="22" Text="&#xe5cd;" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushMain}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 
     <Style x:Key="SearchButton" TargetType="{x:Type Button}">
         <Setter Property="Width" Value="30"/>
@@ -400,7 +427,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushMain}"/>
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="FontFamily" Value="Roboto"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
         <Setter Property="FontWeight" Value="Normal"/>
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
         <Setter Property="Template">
@@ -436,7 +463,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Background" Value="{DynamicResource SolidColorBrushMain}"/>
         <Setter Property="Foreground" Value="White"/>
-        <Setter Property="FontFamily" Value="Roboto"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
         <Setter Property="FontWeight" Value="Normal"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -479,50 +506,98 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="SidebarButtonAllSongs" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource SidebarToggleButtonBase}">
+    <Style x:Key="SidebarButtonAllSongs" TargetType="{x:Type RadioButton}" BasedOn="{StaticResource SidebarToggleButtonBase}">
         <Setter Property="Content">
             <Setter.Value>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
                     <TextBlock FontFamily="{DynamicResource MaterialIconsOutlined}" FontSize="24" Text="&#xe3a1;" Margin="5 0 10 0" VerticalAlignment="Center"/>
-                    <TextBlock Text="ALL SONGS" VerticalAlignment="Center"/>
+                    <TextBlock FontFamily="{Binding Path=FontFamily, RelativeSource={RelativeSource AncestorType={x:Type RadioButton}}}" 
+                               Text="Library" VerticalAlignment="Center"/>
                 </StackPanel>
             </Setter.Value>
         </Setter>
     </Style>
-    
-    <Style x:Key="SidebarButtonCollection" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource SidebarToggleButtonBase}">
+
+    <Style x:Key="SidebarButtonCollection" TargetType="{x:Type RadioButton}" BasedOn="{StaticResource SidebarToggleButtonBase}">
         <Setter Property="Content">
             <Setter.Value>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
                     <TextBlock FontFamily="{DynamicResource MaterialIconsOutlined}" FontSize="24" Text="&#xe030;" Margin="5 0 10 0" VerticalAlignment="Center"/>
-                    <TextBlock Text="COLLECTIONS" VerticalAlignment="Center"/>
+                    <TextBlock FontFamily="{Binding Path=FontFamily, RelativeSource={RelativeSource AncestorType={x:Type RadioButton}}}"
+                               Text="Collections" VerticalAlignment="Center"/>
                 </StackPanel>
             </Setter.Value>
         </Setter>
     </Style>
 
-    <Style x:Key="SidebarButtonPlaylists" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource SidebarToggleButtonBase}">
+    <Style x:Key="SidebarButtonPlaylists" TargetType="{x:Type RadioButton}" BasedOn="{StaticResource SidebarToggleButtonBase}">
         <Setter Property="Content">
             <Setter.Value>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
                     <TextBlock FontFamily="{DynamicResource MaterialIconsOutlined}" FontSize="24" Text="&#xe03d;" Margin="5 0 10 0" VerticalAlignment="Center"/>
-                    <TextBlock Text="PLAYLISTS" VerticalAlignment="Center"/>
+                    <TextBlock FontFamily="{Binding Path=FontFamily, RelativeSource={RelativeSource AncestorType={x:Type RadioButton}}}"
+                               Text="Playlists" VerticalAlignment="Center"/>
                 </StackPanel>
             </Setter.Value>
         </Setter>
     </Style>
 
-    <Style x:Key="SidebarButtonSearch" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource SidebarToggleButtonBase}">
+    <Style x:Key="SidebarButtonBase" TargetType="{x:Type Button}">
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
+        <Setter Property="FontWeight" Value="DemiBold"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <StackPanel Orientation="Horizontal" Background="{TemplateBinding Background}">
+                        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Cursor" Value="Hand"/>
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True"/>
+                    <Condition Property="IsPressed" Value="False"/>
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushMain}"/>
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True"/>
+                    <Condition Property="IsPressed" Value="True"/>
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushMainDark}"/>
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="SidebarButtonNewPlaylist" TargetType="{x:Type Button}" BasedOn="{StaticResource SidebarButtonBase}">
         <Setter Property="Content">
             <Setter.Value>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
-                    <TextBlock FontFamily="{DynamicResource MaterialIconsOutlined}" FontSize="24" Text="&#xe8b6;" Margin="5 0 10 0" VerticalAlignment="Center"/>
-                    <TextBlock Text="SEARCH" VerticalAlignment="Center"/>
+                    <TextBlock FontFamily="{DynamicResource MaterialIconsOutlined}" FontSize="24" Text="&#xe03b;" Margin="5 0 10 0" VerticalAlignment="Center"/>
+                    <TextBlock FontFamily="{Binding Path=FontFamily, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                               Text="New playlist" VerticalAlignment="Center"/>
                 </StackPanel>
             </Setter.Value>
         </Setter>
     </Style>
-
 
     <Style x:Key="TitleBarButtonStyle" TargetType="Button">
         <Setter Property="Foreground" Value="{DynamicResource WindowTextBrush}" />
@@ -594,15 +669,11 @@
         </Setter>
     </Style>
 
-    <Style x:Key="TitleBarGitHub" TargetType="Button" BasedOn="{StaticResource TitleBarButtonStyle}">
+    <Style x:Key="TitleBarSearch" TargetType="Button" BasedOn="{StaticResource TitleBarButtonStyle}">
+        <Setter Property="Width" Value="46"/>
         <Setter Property="Content">
             <Setter.Value>
-                <Path Width="46" Height="32" StrokeThickness="0.629426" Fill="{Binding Path=Foreground,
-							 RelativeSource={RelativeSource AncestorType={x:Type Button}}}">
-                    <Path.Data>
-                        <PathGeometry Figures="M 22.999128 5 C 17.337421 5 12.747 9.5904199 12.747 15.253387 c 0 4.529994 2.937543 8.372656 7.01183 9.729073 0.512984 0.09378 0.699925 -0.222816 0.699925 -0.494729 0 -0.242962 -0.0088 -0.888125 -0.01393 -1.743518 -2.851927 0.619357 -3.453661 -1.374672 -3.453661 -1.374672 -0.466406 -1.183955 -1.138636 -1.499297 -1.138636 -1.499297 -0.930924 -0.636353 0.0705 -0.623764 0.0705 -0.623764 1.029116 0.07301 1.570424 1.056811 1.570424 1.056811 0.91456 1.566647 2.40001 1.114088 2.984119 0.852245 0.09315 -0.662788 0.357516 -1.114717 0.650829 -1.370895 -2.276642 -0.258696 -4.670358 -1.138636 -4.670358 -5.067527 0 -1.119123 0.399687 -2.034313 1.055553 -2.75123 -0.105751 -0.259326 -0.457595 -1.301659 0.100076 -2.7134651 0 0 0.861058 -0.2756909 2.81984 1.0511431 0.817626 -0.227222 1.695049 -0.3411491 2.566809 -0.3449261 0.870497 0.0037 1.747921 0.1177021 2.566806 0.3449261 1.957523 -1.326834 2.816692 -1.0511431 2.816692 -1.0511431 0.559563 1.4118061 0.207713 2.4541391 0.101967 2.7134651 0.657125 0.716917 1.054293 1.632107 1.054293 2.75123 0 3.938961 -2.397493 4.805685 -4.681687 5.059345 0.368215 0.316602 0.696147 0.942252 0.696147 1.898984 0 1.370267 -0.01266 2.476172 -0.01266 2.812288 0 0.274429 0.184425 0.593549 0.70496 0.49347 C 30.317975 23.622265 33.253 19.782124 33.253 15.253387 33.252995 9.5904199 28.661945 5 22.998978 5" FillRule="EvenOdd"/>
-                    </Path.Data>
-                </Path>
+                <materialDesign:PackIcon Kind="Search"/>
             </Setter.Value>
         </Setter>
     </Style>
@@ -742,7 +813,7 @@
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="Gray"/>
 
-        <Setter Property="FontFamily" Value="{DynamicResource Roboto}"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
         <Setter Property="FontWeight" Value="DemiBold"/>
         <Setter Property="FontSize" Value="16"/>
 
@@ -933,5 +1004,62 @@
                 </Trigger.ExitActions>
             </Trigger>
         </Style.Triggers>
+    </Style>
+
+    <Style x:Key="SongListButtonBase" TargetType="{x:Type Button}">
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
+        <Setter Property="FontFamily" Value="{DynamicResource MaterialIcons}"/>
+        <Setter Property="FontWeight" Value="DemiBold"/>
+        <Setter Property="FontSize" Value="22"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <TextBlock x:Name="contentPresenter" Text="{TemplateBinding Content}" FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}"
+                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" 
+                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Cursor" Value="Hand"/>
+            </Trigger>
+            
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True"/>
+                    <Condition Property="IsPressed" Value="False"/>
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushTextHighEmphasis}"/>
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True"/>
+                    <Condition Property="IsPressed" Value="True"/>
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushTextHighEmphasis}"/>
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="SongListOpenInBrowser" TargetType="Button" BasedOn="{StaticResource SongListButtonBase}">
+        <Setter Property="Content" Value="&#xe89d;"/>
+    </Style>
+    
+    <Style x:Key="SongListAddToPlaylist" TargetType="Button" BasedOn="{StaticResource SongListButtonBase}">
+        <Setter Property="Content" Value="&#xe03d;"/>
+    </Style>
+    <Style x:Key="SongListRemoveFromPlaylist" TargetType="Button" BasedOn="{StaticResource SongListButtonBase}">
+        <Setter Property="Content" Value="&#xeb80;"/>
     </Style>
 </ResourceDictionary>

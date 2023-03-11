@@ -1,9 +1,12 @@
-﻿using Prism.Mvvm;
+﻿using Newtonsoft.Json;
+using Osu.Music.Common.Interfaces;
+using Prism.Mvvm;
 using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 
 namespace Osu.Music.Common.Models
 {
-    public class Collection : BindableBase
+    public class Collection : BindableBase, ISearchable
     {
         private string _name;
         public string Name
@@ -18,5 +21,24 @@ namespace Osu.Music.Common.Models
             get => _beatmaps;
             set => SetProperty(ref _beatmaps, value);
         }
+
+        private int _matches;
+        /// <summary>
+        /// The amount of found matches during search.
+        /// </summary>
+        [JsonIgnore]
+        public int Matches
+        {
+            get => _matches;
+            private set => SetProperty(ref _matches, value);
+        }
+
+        public bool Match(Regex query)
+        {
+            Matches = query.Matches(Name).Count;
+            return Matches > 0;
+        }
+
+        public string GetNavigationView() => "CollectionDetailsView";
     }
 }

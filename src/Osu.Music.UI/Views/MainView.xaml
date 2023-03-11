@@ -1,12 +1,10 @@
 ﻿<UserControl x:Class="Osu.Music.UI.Views.MainView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Osu.Music.UI.Views"
              xmlns:controls="clr-namespace:Osu.Music.UI.UserControls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:utility="clr-namespace:Osu.Music.UI.Utility"
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
@@ -32,32 +30,19 @@
         <Grid Grid.ColumnSpan="2" Panel.ZIndex="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="300"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-
-            <Border Margin="13 0 0 0" Padding="5 0 5 0" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                    Background="{DynamicResource SolidColorBrushMain}" CornerRadius="0 0 10 10">
-                <Button Style="{DynamicResource SidebarButtonOsu}" Command="{Binding OpenAboutCommand}">
-                    <Button.ToolTip>
-                        <TextBlock Text="About"/>
-                    </Button.ToolTip>
-                </Button>
-            </Border>
-            <Button Style="{DynamicResource SettingsButton}" Command="{Binding OpenSettingsCommand}" HorizontalAlignment="Right">
-                <Button.ToolTip>
-                    <TextBlock Text="Settings"/> 
-                </Button.ToolTip>
-            </Button>
-            <StackPanel Grid.Column="1"  HorizontalAlignment="Right" Orientation="Horizontal">
+            <StackPanel Grid.Column="2"  HorizontalAlignment="Right" Orientation="Horizontal">
                 <Button Style="{StaticResource TitleBarUpdates}" Visibility="{Binding DataContext.Updater.State, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Converter={StaticResource UpdateStateToVisibilityConverter}, FallbackValue=Collapsed}"
                         Command="{Binding DataContext.UpdateAppCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
                     <Button.ToolTip>
-                        <TextBlock Text="Update osu.Music"/>
+                        <TextBlock Style="{DynamicResource TooltipText}" Text="Update osu.Music"/>
                     </Button.ToolTip>
                 </Button>
-                <Button Style="{StaticResource TitleBarGitHub}" Command="{Binding OpenGitHubCommand}">
+                <Button Style="{StaticResource TitleBarSearch}" Command="{Binding SearchCommand}">
                     <Button.ToolTip>
-                        <TextBlock Text="Go to GitHub"/>
+                        <TextBlock Style="{DynamicResource TooltipText}" Text="Search"/>
                     </Button.ToolTip>
                 </Button>
                 <Button Style="{StaticResource TitleBarMinimize}" Command="{Binding MinimizeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
@@ -68,26 +53,45 @@
             </StackPanel>
         </Grid>
 
-        <Grid Grid.RowSpan="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="250"/>
-            </Grid.RowDefinitions>
-            <Image Source="pack://application:,,,/Osu.Music.UI;component/Resources/Images/sidebar-background.png" 
-                   Grid.RowSpan="2"  Stretch="UniformToFill" HorizontalAlignment="Center"/>
-            <Rectangle Fill="{DynamicResource SolidColorBrushMain}" Opacity="0.2" Grid.RowSpan="2"/>
+        <Border Grid.RowSpan="2" BorderThickness="0 0 1 0" BorderBrush="{DynamicResource SolidColorBrushMainBorder}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="250"/>
+                </Grid.RowDefinitions>
 
-            <StackPanel Orientation="Vertical" Margin="0 50 0 0">
-                <ToggleButton Style="{DynamicResource SidebarButtonAllSongs}" IsChecked="{Binding SelectedPage, Converter={StaticResource SelectedPageToToggleCheckCovnerter}, ConverterParameter=SongsViewModel, Mode=OneWay}" Command="{Binding OpenPageCommand}" CommandParameter="Songs"/>
-                <ToggleButton Style="{DynamicResource SidebarButtonPlaylists}" IsChecked="{Binding SelectedPage, Converter={StaticResource SelectedPageToToggleCheckCovnerter}, ConverterParameter=PlaylistsViewModel, Mode=OneWay}" Command="{Binding OpenPageCommand}" CommandParameter="Playlists"/>
-                <ToggleButton Style="{DynamicResource SidebarButtonCollection}" IsChecked="{Binding SelectedPage, Converter={StaticResource SelectedPageToToggleCheckCovnerter}, ConverterParameter=CollectionsViewModel, Mode=OneWay}" Command="{Binding OpenPageCommand}" CommandParameter="Collections"/>
-                <ToggleButton Style="{DynamicResource SidebarButtonSearch}" IsChecked="{Binding SelectedPage, Converter={StaticResource SelectedPageToToggleCheckCovnerter}, ConverterParameter=SearchViewModel, Mode=OneWay}" Command="{Binding OpenPageCommand}" CommandParameter="Search"/>
-            </StackPanel>
+                <Button Style="{DynamicResource SidebarButtonOsu}" Command="{Binding OpenPageCommand}" CommandParameter="AboutView">
+                    <Button.ToolTip>
+                        <TextBlock Style="{DynamicResource TooltipText}" Text="About"/>
+                    </Button.ToolTip>
+                </Button>
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <Button Style="{StaticResource GithubButton}" Command="{Binding OpenGitHubCommand}">
+                        <Button.ToolTip>
+                            <TextBlock Style="{DynamicResource TooltipText}" Text="Go to GitHub"/>
+                        </Button.ToolTip>
+                    </Button>
 
-            <ContentPresenter x:Name="contentPresenter" Grid.Row="1" Content="{Binding Visualization.Content}"/>
-        </Grid>
+                    <Button Style="{DynamicResource SettingsButton}" Margin="3 0 0 0"  Command="{Binding OpenPageCommand}" CommandParameter="SettingsView">
+                        <Button.ToolTip>
+                            <TextBlock Style="{DynamicResource TooltipText}" Text="Settings"/>
+                        </Button.ToolTip>
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Margin="0 35 0 0">
+                    <RadioButton Style="{DynamicResource SidebarButtonAllSongs}" Command="{Binding OpenPageCommand}" CommandParameter="LibraryView" IsChecked="True"/>
+                    <RadioButton Style="{DynamicResource SidebarButtonPlaylists}" Command="{Binding OpenPageCommand}" CommandParameter="PlaylistsView"/>
+                    <RadioButton Style="{DynamicResource SidebarButtonCollection}" Command="{Binding OpenPageCommand}" CommandParameter="CollectionsView"/>
+                    <Separator Background="{DynamicResource SolidColorBrushMainBorder}"/>
+                    <Button Style="{DynamicResource SidebarButtonNewPlaylist}" Command="{Binding CreatePlaylistCommand}"/>
+                </StackPanel>
 
-        <ContentControl Content="{Binding SelectedPage}" Grid.Column="1" Grid.Row="1"/>
+                <ContentPresenter x:Name="contentPresenter" Grid.Row="1" Content="{Binding Visualization.Content}"/>
+            </Grid>
+        </Border>
+        
+        <ContentControl prism:RegionManager.RegionName="ContentRegion" Grid.Column="1" Grid.Row="1"/>
+        
         <controls:BeatmapProgressBar Grid.Row="2" Grid.ColumnSpan="2" Total="{Binding Model.TotalTime}" Current="{Binding Model.CurrentTime}" Progress="{Binding Model.Progress}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="ProgressChanged">
@@ -103,16 +107,16 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" VerticalAlignment="Center" Orientation="Horizontal" Margin="5 0 0 0">
                 <StackPanel Orientation="Vertical">
-                    <TextBlock Style="{DynamicResource PlayerBeatmapTitle}" Text="{Binding Model.PlayingBeatmap.Title}"/>
-                    <TextBlock Style="{DynamicResource PlayerBeatmapArtist}" Text="{Binding Model.PlayingBeatmap.Artist}"/>
+                    <TextBlock Style="{DynamicResource PlayerBeatmapTitle}" Text="{Binding Playback.Beatmap.Title}"/>
+                    <TextBlock Style="{DynamicResource PlayerBeatmapArtist}" Text="{Binding Playback.Beatmap.Artist}"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel Grid.Column="1" VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Style="{DynamicResource PlayerButtonPrevious}" Command="{Binding PreviousBeatmapCommand}" CommandParameter="{Binding Model.PlayingBeatmap}"/>
-                <Button Style="{DynamicResource PlayerButtonStop}" Command="{Binding StopBeatmapCommand}" CommandParameter="{Binding Model.PlayingBeatmap}"/>
-                <Button Style="{DynamicResource PlayerButtonPlay}" Command="{Binding PlayBeatmapCommand}" CommandParameter="{Binding Model.SelectedBeatmap}"/>
-                <Button Style="{DynamicResource PlayerButtonPause}" Command="{Binding PauseBeatmapCommand}" CommandParameter="{Binding Model.PlayingBeatmap}"/>
-                <Button Style="{DynamicResource PlayerButtonNext}" Command="{Binding NextBeatmapCommand}" CommandParameter="{Binding Model.PlayingBeatmap}"/>
+                <Button Style="{DynamicResource PlayerButtonPrevious}" Command="{Binding PreviousBeatmapCommand}"/>
+                <Button Style="{DynamicResource PlayerButtonStop}" Command="{Binding StopBeatmapCommand}"/>
+                <Button Style="{DynamicResource PlayerButtonPlay}" Command="{Binding PlayBeatmapCommand}"/>
+                <Button Style="{DynamicResource PlayerButtonPause}" Command="{Binding PauseBeatmapCommand}"/>
+                <Button Style="{DynamicResource PlayerButtonNext}" Command="{Binding NextBeatmapCommand}"/>
             </StackPanel>
             <StackPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0 0 5 0">
                 <ToggleButton Style="{DynamicResource PlayerToggleButtonVolume}" Command="{Binding MuteCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}"

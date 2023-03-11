@@ -6,6 +6,7 @@ using System;
 
 namespace Osu.Music.Services.IO
 {
+    // TODO: Extract interface for possible similar integrations
     public class DiscordManager : BindableBase, IDisposable
     {
         private static readonly string APPLICATION_ID = "910311809179848745";
@@ -31,8 +32,7 @@ namespace Osu.Music.Services.IO
 
         public void Initialize()
         {
-            if (Client == null)
-                Client = new DiscordRpcClient(APPLICATION_ID);
+            Client ??= new DiscordRpcClient(APPLICATION_ID);
 
             if (!Client.IsInitialized)
                 Client.Initialize();
@@ -95,14 +95,12 @@ namespace Osu.Music.Services.IO
 
         public void Pause()
         {
-            if (Client != null)
-                Client.UpdateClearTime();
+            Client?.UpdateClearTime();
         }
 
         public void Resume(TimeSpan resumeFrom)
         {
-            if (Client != null)
-                Client.UpdateStartTime(DateTime.Now.Subtract(resumeFrom).ToUniversalTime());
+            Client?.UpdateStartTime(DateTime.Now.Subtract(resumeFrom).ToUniversalTime());
         }
 
         public void Dispose()

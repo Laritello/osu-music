@@ -3,10 +3,17 @@
     <Color x:Key="ColorMain">#FF800080</Color>
     <Color x:Key="ColorMainLight">#FFb200b3</Color>
     <Color x:Key="ColorMainDark">#FF4c004d</Color>
-    <Color x:Key="ColorMainBorder">#40800080</Color>
-    
+    <Color x:Key="ColorMainBorder">#20000000</Color>
+    <Color x:Key="ColorTextDisabled">#61000000</Color>
+    <Color x:Key="ColorTextMediumEmphasis">#99000000</Color>
+    <Color x:Key="ColorTextHighEmphasis">#DE000000</Color>
+
+    <SolidColorBrush x:Key="SolidColorBrushHover" Color="#10000000"/>
     <SolidColorBrush x:Key="SolidColorBrushMain" Color="{DynamicResource ColorMain}"/>
     <SolidColorBrush x:Key="SolidColorBrushMainLight" Color="{DynamicResource ColorMainLight}"/>
     <SolidColorBrush x:Key="SolidColorBrushMainDark" Color="{DynamicResource ColorMainDark}"/>
     <SolidColorBrush x:Key="SolidColorBrushMainBorder" Color="{DynamicResource ColorMainBorder}"/>
+    <SolidColorBrush x:Key="SolidColorBrushTextDisabled" Color="{DynamicResource ColorTextDisabled}"/>
+    <SolidColorBrush x:Key="SolidColorBrushTextMediumEmphasis" Color="{DynamicResource ColorTextMediumEmphasis}"/>
+    <SolidColorBrush x:Key="SolidColorBrushTextHighEmphasis" Color="{DynamicResource ColorTextHighEmphasis}"/>
 </ResourceDictionary>

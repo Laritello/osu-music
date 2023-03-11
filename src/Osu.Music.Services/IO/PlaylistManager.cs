@@ -1,5 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using DryIoc;
+using Newtonsoft.Json;
 using Osu.Music.Common.Models;
+using Osu.Music.Services.Interfaces;
 using Osu.Music.Services.UItility;
 using System;
 using System.Collections.Generic;
@@ -10,42 +12,64 @@ using System.Threading.Tasks;
 
 namespace Osu.Music.Services.IO
 {
-    public static class PlaylistManager
+    public class PlaylistManager : IPlaylistManager
     {
-        public static async Task<ObservableCollection<Playlist>> LoadAsync(IList<Beatmap> beatmaps)
+        public ObservableCollection<Playlist> Playlists { get; private set; }
+
+        private ILibraryManager _libraryManager;
+
+        public PlaylistManager(IContainer container) 
         {
-            return await Task.Run(() =>
+            _libraryManager = container.Resolve<ILibraryManager>();
+        }
+
+        public Task<ObservableCollection<Playlist>> LoadAsync()
+        {
+            return Task.Run(async() =>
             {
-                var playlistDirectory = AppDataHelper.PlaylistDirectory;
+                try
+                {
+                    var playlistDirectory = AppDataHelper.PlaylistDirectory;
+                    var beatmaps = await _libraryManager.LoadAsync();
 
-                if (!Directory.Exists(playlistDirectory))
-                    throw new ArgumentException("The specified folder does not exist.");
+                    if (!Directory.Exists(playlistDirectory))
+                        throw new ArgumentException("The specified folder does not exist.");
 
-                var s = Directory.GetFiles(playlistDirectory);
-                var playlists = Directory.GetFiles(playlistDirectory)
-                .Where(x => x.Contains("json"))
-                .Select(file => ConvertPlaylistFromJson(file, beatmaps))
-                .Where(x => x != null)
-                .ToList();
+                    var s = Directory.GetFiles(playlistDirectory);
+                    var playlists = Directory.GetFiles(playlistDirectory)
+                    .Where(x => x.Contains("json"))
+                    .Select(file => ConvertPlaylistFromJson(file, beatmaps))
+                    .Where(x => x != null)
+                    .ToList();
 
-                return new ObservableCollection<Playlist>(playlists);
+                    Playlists = new ObservableCollection<Playlist>(playlists);
+                }
+                catch
+                {
+                    Playlists = new ObservableCollection<Playlist>();
+                }
+
+                return Playlists;
             });
         }
 
-        public static void Save(ICollection<Playlist> playlists)
+        public void Save(ICollection<Playlist> playlists)
         {
-            // TODO: More elegant way of tracking removed playlists
-            foreach (var file in Directory.GetFiles(AppDataHelper.PlaylistDirectory))
-                File.Delete(file);
+            var names = playlists.Select(x => x.Name).ToList();
+            var directory = new DirectoryInfo(AppDataHelper.PlaylistDirectory);
+            
+            foreach (var file in directory.EnumerateFiles().Where(x => !names.Contains(x.Name)))
+                File.Delete(file.FullName);
 
             foreach (var playlist in playlists)
                 Save(playlist);
         }
 
-        public static void Save(Playlist playlist)
+        public void Save(Playlist playlist)
         {
             try
             {
+                playlist.Updated = DateTime.Now;
                 var _playlistFile = Path.Combine(AppDataHelper.PlaylistDirectory, $"{playlist.Name}.json");
                 string json = JsonConvert.SerializeObject(playlist);
                 File.WriteAllText(_playlistFile, json);
@@ -53,7 +77,7 @@ namespace Osu.Music.Services.IO
             catch { }
         }
 
-        public static void Remove(Playlist playlist)
+        public void Remove(Playlist playlist)
         {
             if (playlist == null)
                 return;
@@ -61,7 +85,7 @@ namespace Osu.Music.Services.IO
             RemoveByName(playlist.Name);
         }
 
-        public static void RemoveByName(string name)
+        public void RemoveByName(string name)
         {
             if (string.IsNullOrEmpty(name))
                 return;
@@ -74,7 +98,7 @@ namespace Osu.Music.Services.IO
             catch { }
         }
 
-        private static Playlist ConvertPlaylistFromJson(string filePath, IList<Beatmap> beatmaps)
+        private Playlist ConvertPlaylistFromJson(string filePath, ObservableCollection<Beatmap> beatmaps)
         {
             try
             {

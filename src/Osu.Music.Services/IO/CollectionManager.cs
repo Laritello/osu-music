@@ -1,4 +1,6 @@
-﻿using Osu.Music.Common.Models;
+﻿using DryIoc;
+using Osu.Music.Common.Models;
+using Osu.Music.Services.Interfaces;
 using osu_database_reader.BinaryFiles;
 using System;
 using System.Collections.Generic;
@@ -9,30 +11,53 @@ using System.Threading.Tasks;
 
 namespace Osu.Music.Services.IO
 {
-    public static class CollectionManager
+    public class CollectionManager : ICollectionManager
     {
-        public static async Task<ObservableCollection<Collection>> LoadAsync(string osuFolder, IList<Beatmap> beatmaps)
+        public ObservableCollection<Collection> Collections { get; private set; }
+
+        private ILibraryManager _libraryManager;
+        private Settings _settings;
+
+        public CollectionManager(IContainer container)
         {
-            return await Task.Run(() =>
+            _libraryManager = container.Resolve<ILibraryManager>();
+            _settings = container.Resolve<SettingsManager>().Settings;
+        }
+
+        public Task<ObservableCollection<Collection>> LoadAsync()
+        {
+            return Task.Run(async () =>
             {
-                if (!Directory.Exists(osuFolder))
-                    throw new ArgumentException("The specified folder does not exist.");
+                try
+                {
+                    var source = _settings.Source;
 
-                ObservableCollection<Collection> collections = new ObservableCollection<Collection>();
+                    if (!Directory.Exists(source))
+                        throw new ArgumentException("The specified folder does not exist.");
 
-                CollectionDb db;
+                    var beatmaps = await _libraryManager.LoadAsync();
 
-                using (FileStream stream = File.OpenRead($@"{osuFolder}\collection.db"))
-                    db = CollectionDb.Read(stream);
+                    List<Collection> collections = new List<Collection>();
+                    CollectionDb db;
 
-                foreach (var record in db.Collections)
-                    collections.Add(Convert(record, beatmaps));
+                    using (FileStream stream = File.OpenRead($@"{source}\collection.db"))
+                        db = CollectionDb.Read(stream);
 
-                return new ObservableCollection<Collection>(collections);
+                    foreach (var record in db.Collections)
+                        collections.Add(Convert(record, beatmaps));
+
+                    Collections = new ObservableCollection<Collection>(collections);
+                }
+                catch
+                {
+                    Collections = new ObservableCollection<Collection>();
+                }
+
+                return Collections;
             });
         }
 
-        private static Collection Convert(osu_database_reader.Components.Beatmaps.Collection collection, IList<Beatmap> beatmaps)
+        private Collection Convert(osu_database_reader.Components.Beatmaps.Collection collection, IList<Beatmap> beatmaps)
         {
             return new Collection()
             {
@@ -41,7 +66,7 @@ namespace Osu.Music.Services.IO
             };
         }
 
-        private static ObservableCollection<Beatmap> GetCollectionBeatmaps(IList<Beatmap> beatmaps, List<string> hashes)
+        private ObservableCollection<Beatmap> GetCollectionBeatmaps(IList<Beatmap> beatmaps, List<string> hashes)
         {
             return new ObservableCollection<Beatmap>(beatmaps.Where(x => hashes.Any(y => x.Hashes.Contains(y))));
         }

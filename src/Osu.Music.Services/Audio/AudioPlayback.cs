@@ -1,8 +1,12 @@
-﻿using NAudio.Wave;
+﻿using DryIoc;
+using NAudio.Wave;
 using Osu.Music.Common.Models;
 using Osu.Music.Services.Events;
+using Osu.Music.Services.IO;
 using Prism.Mvvm;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Osu.Music.Services.Audio
 {
@@ -10,7 +14,29 @@ namespace Osu.Music.Services.Audio
     public class AudioPlayback : BindableBase, IDisposable
     {
         #region Properties
-        public Beatmap Beatmap { get; set; }
+        private Beatmap _beatmap;
+        public Beatmap Beatmap
+        {
+            get => _beatmap;
+            set => SetProperty(ref _beatmap, value);
+        }
+
+        private Stack<Beatmap> _history;
+        /// <summary>
+        /// Previously played beatmaps
+        /// </summary>
+        public Stack<Beatmap> History
+        {
+            get => _history;
+            set => SetProperty(ref _history, value);
+        }
+
+        private ObservableCollection<Beatmap> _queue;
+        public ObservableCollection<Beatmap> Queue
+        {
+            get => _queue;
+            set => SetProperty(ref _queue, value);
+        }
 
         private bool _mute = false;
         public bool Mute
@@ -82,6 +108,17 @@ namespace Osu.Music.Services.Audio
         #region Private variables
         private IWavePlayer playbackDevice;
         private WaveStream fileStream;
+        private DiscordManager _discordManager;
+        #endregion
+
+        #region Constructor
+        public AudioPlayback(IContainer container)
+        {
+            _discordManager = container.Resolve<DiscordManager>();
+            _discordManager.Initialize();
+
+            _history = new Stack<Beatmap>();
+        }
         #endregion
 
         public void Load()
@@ -142,7 +179,14 @@ namespace Osu.Music.Services.Audio
                 // next song. But it should occur extremly rarely. If someone will suggest better way to detect when song ended by itself
                 // I'll fix this semi hack.
                 if (a.Exception == null && fileStream != null && (fileStream.TotalTime - fileStream.CurrentTime).TotalMilliseconds < 100)
+                {
                     BeatmapEnded?.Invoke(this, new BeatmapEventArgs(Beatmap));
+
+                    if (Repeat)
+                        Play();
+                    else
+                        Next();
+                }
             };
         }
 
@@ -158,13 +202,68 @@ namespace Osu.Music.Services.Audio
                 playbackDevice.Volume = _volume;
         }
 
+        private int GetNextMapIndex()
+        {
+            int index;
+            if (Shuffle)
+            {
+                Random rnd = new Random();
+                index = rnd.Next(0, Queue.Count);
+            }
+            else
+            {
+                index = Queue.IndexOf(Beatmap) + 1;
+            }
+
+            return index >= Queue.Count ? 0 : index;
+        }
+
+        private void CheckBeatmap(ref Beatmap beatmap)
+        {
+            if (Queue == null || Queue.Count == 0)
+                return;
+
+            beatmap ??= Queue[0];
+        }
+
+        private void PlayBeatmap(Beatmap beatmap)
+        {
+            // If user tried to start playback without selected song
+            // Select first song if possible
+            CheckBeatmap(ref beatmap);
+
+            // If new song was selected
+            // Update playback
+            if (Beatmap != beatmap)
+            {
+                Beatmap = beatmap;
+                Load();
+
+                _discordManager.Update(Beatmap);
+            }
+
+            Load();
+            Resume();
+        }
+
+        #region Public Methods
         public void Play()
+        {
+            Load();
+            Resume();
+        }
+
+        public void Resume()
         {
             if (playbackDevice != null && fileStream != null && playbackDevice.PlaybackState != PlaybackState.Playing)
                 playbackDevice.Play();
         }
 
-        public void Pause() => playbackDevice?.Pause();
+        public void Pause()
+        {
+            playbackDevice?.Pause();
+            _discordManager.Pause();
+        }
 
         public void Stop()
         {
@@ -172,6 +271,44 @@ namespace Osu.Music.Services.Audio
 
             if (fileStream != null)
                 fileStream.Position = 0;
+
+            _discordManager.Pause();
+        }
+
+        public void Next()
+        {
+            int index = GetNextMapIndex();
+
+            if (Beatmap != null)
+                History.Push(Beatmap);
+
+            Beatmap = Queue[index];
+            PlayBeatmap(Beatmap);
+        }
+
+        public void Previous()
+        {
+            Beatmap beatmap;
+
+            if (History.Count == 0 && Queue.Contains(Beatmap))
+            {
+                int index = Queue.IndexOf(Beatmap) - 1;
+                index = index < 0 ? Queue.Count - 1 : index;
+                beatmap = Queue[index];
+            }
+            else
+            {
+                beatmap = History.Pop();
+            }
+
+            if (Beatmap != beatmap)
+            {
+                Beatmap = beatmap;
+                Load();
+            }
+
+            _discordManager.Update(Beatmap);
+            Resume();
         }
 
         public void Dispose()
@@ -181,5 +318,6 @@ namespace Osu.Music.Services.Audio
             playbackDevice?.Dispose();
             playbackDevice = null;
         }
+        #endregion
     }
 }

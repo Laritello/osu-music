@@ -38,6 +38,27 @@ namespace Osu.Music.Common.Utility
             });
         }
 
+        public static string GetImagePath(Beatmap beatmap)
+        {
+            var osuFileCheck = GetFilePath(beatmap, out string osu);
+
+            if (!osuFileCheck)
+                return string.Empty;
+
+            using var fs = File.OpenRead(osu);
+            var bm = BeatmapFileReader.Read(fs);
+
+            foreach (var ev in bm.Events)
+            {
+                if (!(ev is BackgroundEvent))
+                    continue;
+
+                return Path.Combine(beatmap.Directory, ((BackgroundEvent)ev).Path);
+            }
+
+            return string.Empty;
+        }
+
         private static bool GetFilePath(Beatmap beatmap, out string path)
         {
             path = string.Empty;

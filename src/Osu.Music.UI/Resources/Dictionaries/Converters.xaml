@@ -11,13 +11,15 @@
     <convert:SelectedHotkeyToBooleanConverter x:Key="SelectedHotkeyToBooleanConverter"/>
     <convert:KeyCombinationToStringConverter x:Key="KeyCombinationToStringConverter"/>
     <convert:UpdateStateToVisibilityConverter x:Key="UpdateStateToVisibilityConverter"/>
-    <convert:PlaylistCountToStringConverter x:Key="PlaylistCountToStringConverter"/>
+    <convert:CountToStringConverter x:Key="CountToStringConverter"/>
     <convert:BeatmapToAvailablePlaylistsConverter x:Key="BeatmapToAvailablePlaylistsConverter"/>
     <convert:MultipleParametersConverter x:Key="MultipleParametersConverter"/>
     <convert:PackIconKindToStringConverter x:Key="PackIconKindToStringConverter"/>
     <convert:BrushStringConverter x:Key="BrushStringConverter"/>
-    <convert:PlayerObjectToStringConverter x:Key="PlayerObjectToStringConverter"/>
-    <convert:SelectedPageToToggleCheckCovnerter x:Key="SelectedPageToToggleCheckCovnerter"/>
     <convert:SongTitleColumnConverter x:Key="SongTitleColumnConverter"/>
     <convert:BeatmapToImageConverter x:Key="BeatmapToImageConverter"/>
+    <convert:PlaylistToImageConverter x:Key="PlaylistToImageConverter"/>
+    <convert:CollectionToImageConverter x:Key="CollectionToImageConverter"/>
+    <convert:WidthToHorizontalOffsetConverter x:Key="WidthToHorizontalOffsetConverter"/>
+    <convert:StringEmptyConverter x:Key="StringEmptyConverter"/>
 </ResourceDictionary>

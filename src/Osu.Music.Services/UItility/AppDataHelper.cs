@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
+using Osu.Music.Common.Models;
 using System;
+using System.Collections.ObjectModel;
 using System.IO;
 
 namespace Osu.Music.Services.UItility
@@ -20,12 +22,12 @@ namespace Osu.Music.Services.UItility
             return path;
         }
 
-        public static dynamic GetLicenses()
+        public static ObservableCollection<LicenseNotice> GetLicenses()
         {
             string file = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Resources\Static\licenses.json");
 
             string json = File.Exists(file) ? File.ReadAllText(file) : null;
-            return json != null ? JsonConvert.DeserializeObject(json) : null;
+            return json != null ? JsonConvert.DeserializeObject<ObservableCollection<LicenseNotice>>(json) : null;
         }
 
         public static string GetPlaylistsDirectory()
