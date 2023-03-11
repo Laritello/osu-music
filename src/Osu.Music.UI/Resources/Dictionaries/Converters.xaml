@@ -21,4 +21,5 @@
     <convert:PlaylistToImageConverter x:Key="PlaylistToImageConverter"/>
     <convert:CollectionToImageConverter x:Key="CollectionToImageConverter"/>
     <convert:WidthToHorizontalOffsetConverter x:Key="WidthToHorizontalOffsetConverter"/>
+    <convert:StringEmptyConverter x:Key="StringEmptyConverter"/>
 </ResourceDictionary>

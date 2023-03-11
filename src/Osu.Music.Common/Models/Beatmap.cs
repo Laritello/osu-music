@@ -1,13 +1,15 @@
 ﻿using Newtonsoft.Json;
+using Osu.Music.Common.Interfaces;
 using Osu.Music.Common.Utility;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Osu.Music.Common.Models
 {
-    public class Beatmap : BindableBase
+    public class Beatmap : BindableBase, ISearchable
     {
         private int _beatmapSetId;
         /// <summary>
@@ -161,6 +163,17 @@ namespace Osu.Music.Common.Models
         [JsonIgnore]
         public string AudioFilePath { get => Path.Combine(Directory, AudioFileName); }
 
+        private int _matches;
+        /// <summary>
+        /// The amount of found matches during search.
+        /// </summary>
+        [JsonIgnore]
+        public int Matches
+        {
+            get => _matches;
+            private set => SetProperty(ref _matches, value);
+        }
+
         public override bool Equals(object obj)
         {
             if ((obj == null) || !GetType().Equals(obj.GetType()))
@@ -179,12 +192,17 @@ namespace Osu.Music.Common.Models
             return base.GetHashCode();
         }
 
-        //public NotifyTaskCompletion<Bitmap> Image { get; private set; }
+        public bool Match(Regex query)
+        {
+            Matches = query.Matches(Title).Count + query.Matches(Artist).Count;
+            return Matches > 0;
+        }
+
+        public string GetNavigationView() => "LibraryView";
 
         public Beatmap()
         {
             Hashes = new List<string>();
-            //Image = new NotifyTaskCompletion<Bitmap>(BackgroundRepository.GetImageAsync(this));
         }
     }
 }

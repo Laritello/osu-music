@@ -91,7 +91,7 @@
                 <Grid>
                     <Grid>
                         <Rectangle Width="145" Height="145" RadiusX="10" RadiusY="10" Fill="#20000000"/>
-                        <materialDesign:PackIcon HorizontalAlignment="Center" VerticalAlignment="Center" Width="80" Height="80" Margin="0 10 0 0" Foreground="#50000000" Kind="PlaylistNote"/>
+                        <materialDesign:PackIcon HorizontalAlignment="Center" VerticalAlignment="Center" Width="80" Height="80" Margin="0 10 0 0" Foreground="#50000000" Kind="LibraryMusic"/>
                         <Grid Width="145" Height="145">
                             <Grid.Clip>
                                 <RectangleGeometry Rect="0 0 145 145" RadiusX="10" RadiusY="10"/>

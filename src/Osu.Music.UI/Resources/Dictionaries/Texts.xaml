@@ -89,13 +89,13 @@
                 </VisualBrush.Transform>
                 <VisualBrush.Visual>
                     <Grid>
-                        <TextBlock FontSize="14" Opacity="0.3" Text="Search"/>
+                        <TextBlock FontSize="18" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}" Text="Search"/>
                     </Grid>
                 </VisualBrush.Visual>
             </VisualBrush>
         </Style.Resources>
         <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
-        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontSize" Value="18"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="BorderThickness" Value="0"/>

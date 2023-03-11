@@ -1,5 +1,6 @@
 ﻿using DryIoc;
 using Osu.Music.Common;
+using Osu.Music.Common.Interfaces;
 using Osu.Music.Common.Models;
 using Osu.Music.Common.Structures;
 using Osu.Music.Services.Audio;
@@ -13,7 +14,6 @@ using Osu.Music.UI.Interfaces;
 using Osu.Music.UI.Models;
 using Osu.Music.UI.Utility;
 using Osu.Music.UI.ViewModels.Dialogs;
-using Osu.Music.UI.Views;
 using Osu.Music.UI.Views.Dialogs;
 using Osu.Music.UI.Visualization;
 using Prism.Commands;
@@ -72,8 +72,6 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand OnCloseCommand { get; private set; }
         #endregion
 
-        private IContainer _container;
-
         private IPopupDialogService _dialogService;
         private IRegionManager _regionManager;
         private ILibraryManager _libraryManager;
@@ -87,7 +85,6 @@ namespace Osu.Music.UI.ViewModels
 
         public MainViewModel(IContainer container, MainModel model)
         {
-            _container = container;
             _dialogService = container.Resolve<IPopupDialogService>();
             _regionManager = container.Resolve<IRegionManager>();
             _libraryManager = container.Resolve<ILibraryManager>();
@@ -309,7 +306,52 @@ namespace Osu.Music.UI.ViewModels
 
         private void Search()
         {
+            DialogParameters parameters = new DialogParameters()
+            {
+                { "beatmaps", Model.Beatmaps },
+                { "playlists", Model.Playlists },
+                { "collections", Model.Collections }
+            };
 
+            _dialogService.ShowPopupDialog<SearchView, SearchViewModel>(parameters, e =>
+            {
+                if (e.Result == ButtonResult.OK)
+                {
+                    var target = e.Parameters.GetValue<ISearchable>("target");
+
+                    switch (target.GetNavigationView())
+                    {
+                        case "LibraryView":
+                            _regionManager.RequestNavigate(
+                                RegionNames.ContentRegion,
+                                "LibraryView",
+                                new NavigationParameters()
+                                {
+                                    { "beatmaps", Model.Beatmaps },
+                                    { "target", target }
+                                });
+                            break;
+                        case "PlaylistDetailsView":
+                            _regionManager.RequestNavigate(
+                                RegionNames.ContentRegion,
+                                "PlaylistDetailsView",
+                                new NavigationParameters()
+                                {
+                                    { "playlist", target }
+                                });
+                            break;
+                        case "CollectionDetailsView":
+                            _regionManager.RequestNavigate(
+                                RegionNames.ContentRegion,
+                                "CollectionDetailsView",
+                                new NavigationParameters()
+                                {
+                                    { "collection", target }
+                                });
+                            break;
+                    }
+                }
+            });
         }
 
         private void OnLoaded(RoutedEventArgs args)

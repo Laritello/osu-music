@@ -96,6 +96,7 @@ namespace Osu.Music.UI.ViewModels
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             Model.Beatmaps = navigationContext.Parameters.GetValue<ObservableCollection<Beatmap>>("beatmaps");
+            Model.Target = navigationContext.Parameters.ContainsKey("target") ? navigationContext.Parameters.GetValue<Beatmap>("target") : null;
         }
     }
 }

@@ -25,7 +25,7 @@
                   Visibility="{Binding Playlists.Count, Converter={StaticResource NotZeroToVisibilityConverter}}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
-                    <i:InvokeCommandAction Command="{Binding SendCommand}"  CommandParameter="{Binding ElementName=PlaylistList, Path=SelectedItem}"/>
+                    <i:InvokeCommandAction Command="{Binding SendCommand}" CommandParameter="{Binding ElementName=PlaylistList, Path=SelectedItem}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
             <ListView.ItemTemplate>

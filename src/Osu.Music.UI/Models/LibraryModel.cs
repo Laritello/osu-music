@@ -15,6 +15,17 @@ namespace Osu.Music.UI.Models
             get => _beatmaps;
             set => SetProperty(ref _beatmaps, value);
         }
+
+        private Beatmap _target;
+        /// <summary>
+        /// Used for navigation purposes
+        /// </summary>
+        public Beatmap Target
+        {
+            get => _target;
+            set => SetProperty(ref _target, value);
+        }
+
         public LibraryModel() { }
     }
 }
