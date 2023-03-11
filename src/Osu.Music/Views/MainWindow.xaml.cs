@@ -1,12 +1,15 @@
-﻿using Osu.Music.Services.Updates;
-using Osu.Music.ViewModels;
-using Prism.Commands;
-using Squirrel;
+﻿using Prism.Commands;
 using System;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interop;
+
+#if (!DEBUG)
+using Osu.Music.Services.Updates;
+using Osu.Music.ViewModels;
+using Squirrel;
+#endif
 
 namespace Osu.Music.Views
 {
