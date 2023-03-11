@@ -6,6 +6,7 @@ using System;
 
 namespace Osu.Music.Services.IO
 {
+    // TODO: Extract interface for possible similar integrations
     public class DiscordManager : BindableBase, IDisposable
     {
         private static readonly string APPLICATION_ID = "910311809179848745";

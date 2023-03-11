@@ -133,20 +133,17 @@ namespace Osu.Music.UI.ViewModels
 
         private void RemoveFromPlaylist(Beatmap beatmap) => Model.Playlist.Beatmaps.Remove(beatmap);
 
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            Model.Playlist = navigationContext.Parameters.GetValue<Playlist>("playlist");
+        }
+
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
             var playlist = navigationContext.Parameters.GetValue<Playlist>("playlist");
             return Model.Playlist == playlist;
         }
 
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-            
-        }
-
-        public void OnNavigatedTo(NavigationContext navigationContext)
-        {
-            Model.Playlist = navigationContext.Parameters.GetValue<Playlist>("playlist");
-        }
+        public void OnNavigatedFrom(NavigationContext navigationContext) { }
     }
 }

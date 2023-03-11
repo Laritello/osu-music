@@ -79,9 +79,6 @@ namespace Osu.Music.UI.ViewModels
             return playlists.Equals(Model.Playlists);
         }
 
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-            
-        }
+        public void OnNavigatedFrom(NavigationContext navigationContext) { }
     }
 }

@@ -8,7 +8,6 @@ using Prism.Mvvm;
 using Prism.Regions;
 using System.Collections.ObjectModel;
 using System.Linq;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace Osu.Music.UI.ViewModels
 {
@@ -80,9 +79,6 @@ namespace Osu.Music.UI.ViewModels
             return collections.Equals(Model.Collections);
         }
 
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-            
-        }
+        public void OnNavigatedFrom(NavigationContext navigationContext) { }
     }
 }

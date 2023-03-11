@@ -66,20 +66,17 @@ namespace Osu.Music.UI.ViewModels
 
         private void OpenBeatmapInBrowser(Beatmap beatmap) => Process.Start(new ProcessStartInfo("cmd", $"/c start https://osu.ppy.sh/beatmapsets/{beatmap.BeatmapSetId}") { CreateNoWindow = true });
 
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            Model.Collection = navigationContext.Parameters.GetValue<Collection>("collection");
+        }
+
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
             var collection = navigationContext.Parameters.GetValue<Collection>("collection");
             return Model.Collection == collection;
         }
 
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-            
-        }
-
-        public void OnNavigatedTo(NavigationContext navigationContext)
-        {
-            Model.Collection = navigationContext.Parameters.GetValue<Collection>("collection");
-        }
+        public void OnNavigatedFrom(NavigationContext navigationContext) { }
     }
 }

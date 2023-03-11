@@ -1,5 +1,4 @@
-﻿using NuGet;
-using Osu.Music.Common.Models;
+﻿using Osu.Music.Common.Models;
 using System;
 using System.Globalization;
 using System.Windows.Data;

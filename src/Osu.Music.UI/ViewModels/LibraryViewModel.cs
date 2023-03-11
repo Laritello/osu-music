@@ -2,7 +2,6 @@
 using Osu.Music.Common.Models;
 using Osu.Music.Services.Audio;
 using Osu.Music.Services.Dialog;
-using Osu.Music.Services.Interfaces;
 using Osu.Music.UI.Models;
 using Osu.Music.UI.ViewModels.Dialogs;
 using Osu.Music.UI.Views.Dialogs;
@@ -82,21 +81,18 @@ namespace Osu.Music.UI.ViewModels
             });
         }
 
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            Model.Beatmaps = navigationContext.Parameters.GetValue<ObservableCollection<Beatmap>>("beatmaps");
+            Model.Target = navigationContext.Parameters.ContainsKey("target") ? navigationContext.Parameters.GetValue<Beatmap>("target") : null;
+        }
+
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
             var collection = navigationContext.Parameters.GetValue<ObservableCollection<Beatmap>>("beatmaps");
             return collection.Equals(Model.Beatmaps);
         }
 
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-
-        }
-
-        public void OnNavigatedTo(NavigationContext navigationContext)
-        {
-            Model.Beatmaps = navigationContext.Parameters.GetValue<ObservableCollection<Beatmap>>("beatmaps");
-            Model.Target = navigationContext.Parameters.ContainsKey("target") ? navigationContext.Parameters.GetValue<Beatmap>("target") : null;
-        }
+        public void OnNavigatedFrom(NavigationContext navigationContext) { }
     }
 }

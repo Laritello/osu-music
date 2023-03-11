@@ -60,21 +60,15 @@ namespace Osu.Music.UI.ViewModels
                 Model.DiscordManager.ClearPresence();
         }
 
-        public bool IsNavigationTarget(NavigationContext navigationContext)
-        {
-            return true;
-        }
-
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-            
-        }
-
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             Model.Settings = navigationContext.Parameters.GetValue<Settings>("settings");
             Model.DiscordManager = navigationContext.Parameters.GetValue<DiscordManager>("discord");
             Model.HotkeyManager = navigationContext.Parameters.GetValue<HotkeyManager>("hotkey");
         }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext) => true;
+
+        public void OnNavigatedFrom(NavigationContext navigationContext) { }
     }
 }

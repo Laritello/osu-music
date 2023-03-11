@@ -130,10 +130,7 @@ namespace Osu.Music.UI.ViewModels.Dialogs
 
         public bool CanCloseDialog() => true;
 
-        public void OnDialogClosed()
-        {
-            
-        }
+        public void OnDialogClosed() { }
 
         public void OnDialogOpened(IDialogParameters parameters)
         {

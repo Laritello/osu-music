@@ -5,8 +5,6 @@ using Prism.Mvvm;
 using Prism.Regions;
 using System.Diagnostics;
 using System.Reflection;
-using Osu.Music.Services.Dialog;
-using DryIoc;
 using System.Collections.ObjectModel;
 using Osu.Music.Common.Models;
 using System.Linq;
@@ -57,15 +55,9 @@ namespace Osu.Music.UI.ViewModels
             LicenseContent = new ObservableCollection<LicenseNotice>();
         }
 
-        private void OpenRepository(string url)
-        {
-            Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
-        }
+        private void OpenRepository(string url) => Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
 
-        private void OpenReleaseNotes()
-        {
-            Process.Start(new ProcessStartInfo("cmd", $"/c start {$"https://github.com/Laritello/osu-music/releases/tag/{Model.Version}"}") { CreateNoWindow = true });
-        }
+        private void OpenReleaseNotes() => Process.Start(new ProcessStartInfo("cmd", $"/c start {$"https://github.com/Laritello/osu-music/releases/tag/{Model.Version}"}") { CreateNoWindow = true });
 
         private void OpenLicense()
         {
@@ -91,19 +83,10 @@ namespace Osu.Music.UI.ViewModels
             return $"{version.Major}.{version.Minor}.{version.Build}";
         }
 
-        public bool IsNavigationTarget(NavigationContext navigationContext)
-        {
-            return true;
-        }
+        public void OnNavigatedTo(NavigationContext navigationContext) { }
 
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-            
-        }
+        public bool IsNavigationTarget(NavigationContext navigationContext) => true;
 
-        public void OnNavigatedTo(NavigationContext navigationContext)
-        {
-            
-        }
+        public void OnNavigatedFrom(NavigationContext navigationContext) { }
     }
 }
