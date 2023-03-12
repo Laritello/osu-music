@@ -41,10 +41,17 @@ header .logo
 }
 header .text
 {
+    color: #333;
+    font-weight: 700;
+    font-size: 2em;
+    letter-spacing: 2px;
+    display: inline-block;
+}
+header .text-colored
+{
     color: #800077;
     font-weight: 700;
     font-size: 2em;
-    text-transform: uppercase;
     letter-spacing: 2px;
     display: inline-block;
 }
@@ -76,6 +83,7 @@ header ul li a
 .content .textBox
 {
     position: relative;
+    width: 40%;
     max-width: 600px;
 }
 .content .textBox h2
@@ -87,7 +95,7 @@ header ul li a
 }
 .content .textBox h2 span
 {
-    color: #800077;
+    color: #800080;
     font-size: 1em;
     font-weight: 900;
 }
@@ -96,63 +104,57 @@ header ul li a
     display: inline-block;
     margin-top: 20px;
     padding: 8px 20px;
-    background: #800077;
+    width: 130px;
+    background: #800080;
     color: #fff;
     border-radius: 40px;
     font-weight: 500;
     letter-spacing: 1px;
     text-decoration: none;
 }
-.content .imgBox
+.content .demo
 {
-    width: 800px;
+    width: 50%;
     display: flex;
     justify-content: flex-end;
-    padding-right: 50px;
-    margin-top: 50px;
+    padding-right: 0px;
+    margin-top: 0px;
+    margin-left: 30px;
 }
-.content .imgBox video
+.content .demo video
 {
     max-width: 100%;
-    filter: drop-shadow(0 0 1.2rem black);
+    filter: drop-shadow(0 0 1.5rem #000000BB);
 }
-.thumb
+.content .demo .navigation 
 {
-    position: absolute;
-    top: 50%;
-    right: 30px;
-    transform: translateY(-50%);
+    display: flex;
+    position: relative;
+    justify-content: center; 
+    margin-left: 40px;
+}
+.content .demo .navigation .thumb
+{
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
-.thumb li
+.content .demo .navigation .thumb li
 {
     list-style: none;
     display: inline-block;
-    margin: 0 20px;
     cursor: pointer;
     transition: 0.5s;
 }
-.thumb li:hover
+.content .demo .navigation .thumb li:hover
 {
     transform: translateX(-15%);
 }
-.thumb li img
+.content .demo .navigation .thumb li img
 {
     max-width: 60px;
     transform: scale(0.6);
-}
-.circle
-{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #800077;
-    clip-path: circle(600px at right 800px);
 }
 .credits
 {
@@ -162,9 +164,53 @@ header ul li a
 }
 .credits a
 {
-    color: #800077;
+    color: #800080;
     border-radius: 40px;
     font-weight: 500;
     letter-spacing: 1px;
     text-decoration: none;
+}
+@media (orientation: portrait), only screen and (max-width: 1300px) {
+    section 
+    {
+        align-items: baseline;
+    }
+    .content 
+    {
+        height: 100%;
+        position: relative;
+        display: inline-block;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .content .textBox
+    {
+        position: relative;
+        max-width: 600px;
+        width: 100%;
+    }
+    .content .demo {
+        width: 100%;
+        display: inline-block;
+        justify-content: center;
+        padding-right: 0px;
+        margin-top: 30px;
+        margin-left: 0px;
+    }
+    .content .demo .navigation 
+    {
+        width: 100%;
+        margin-top: 30px;
+    }
+    .content .demo .navigation .thumb
+    {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+    }
+    .content .demo .navigation .thumb li:hover
+    {
+        transform: translateY(-15%);
+    }
 }

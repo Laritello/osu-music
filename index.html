@@ -4,22 +4,21 @@
 		<meta charset="UTF-8">
 		<title>osu.Music | Simple music player for your osu! library</title>
 		<meta name="description" content="A simple and easy to use music player for osu! The perfect choice for those who love listening to their osu! library but does not want to suffer with importing music into regular player.">
-		<meta name="keywords" content="osu!, osu, music player">
+		<meta name="keywords" content="osu!, osu, music player, github, laritello">
 		<link rel="stylesheet" href="style.css">
 		<link rel="shortcut icon" type="image/x-icon" href="assets/favicon.svg"/>
 	</head>
 	<body>
 		<section>
-			<div class="circle"></div>
 			<div class="credits">
 				<p>Developed by <a href="https://github.com/Laritello">Laritello</a></p>
 				<p>Site template by <a href="https://www.youtube.com/c/OnlineTutorials4Designers">Online Tutorials</a></p>
 			</div>
 			<header>
-				<a href="#" class="link"><img src="assets\headphones.svg" class="logo"><span class="text">OSU.MUSIC</span></a>
+				<a href="#" class="link"><span class="text">osu.</span><span class="text-colored">Music</span></a>
 				<ul>
-					<li><a href="#">Home</a></li>
-					<li><a href="#">What's New?</a></li>
+					<li><a href="https://github.com/Laritello/osu-music#readme">About</a></li>
+					<li><a href="https://github.com/Laritello/osu-music#readme">What's New?</a></li>
 					<li><a href="https://github.com/Laritello/osu-music">Github</a></li>
 				</ul>
 			</header>
@@ -27,19 +26,21 @@
 				<div class="textBox">
 					<h2>Simple player<br>for <span>osu!</span></h2>
 					<p>A simple and easy to use music player for osu! The perfect choice for those who love listening to their osu! library but does not want to suffer with importing music into regular player. This project is still under development.</p>
-					<a href="https://github.com/Laritello/osu-music/releases/download/0.2.7/Setup.exe">Download</a>
+					<a href="https://github.com/Laritello/osu-music/releases/download/0.3.0/Setup.exe">Download</a>
 				</div>
-				<div class="imgBox">
+				<div class="demo">
 					<video id="preview" autoplay muted loop>
-						<source id="previewSource" src="assets\previews\general.mp4" type="video/mp4">
+						<source id="previewSource" src="assets\previews\general.webm" type="video/mp4">
 					</video>
+					<div class="navigation">
+						<ul class="thumb">
+							<li><img src="assets\icons\headphones.svg" onclick="imgSlider('assets\\previews\\general.webm')"></li>
+							<li><img src="assets\icons\palette.svg" onclick="imgSlider('assets\\previews\\palette.webm')"></li>
+							<li><img src="assets\icons\playlist.svg" onclick="imgSlider('assets\\previews\\playlists.webm')"></li>
+						</ul>
+					</div>
 				</div>
 			</div>
-			<ul class="thumb">
-				<li><img src="assets\icons\headphones.svg" onclick="imgSlider('assets\\previews\\general.mp4')"></li>
-				<li><img src="assets\icons\palette.svg" onclick="imgSlider('assets\\previews\\palette.mp4')"></li>
-				<li><img src="assets\icons\playlist.svg" onclick="imgSlider('assets\\previews\\playlists.mp4')"></li>
-			</ul>
 		</section>
 		
 		<script type="text/javascript">
