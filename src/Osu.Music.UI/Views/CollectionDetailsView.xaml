@@ -36,7 +36,7 @@
                     </StackPanel>
                     <TextBlock Text="{Binding Model.Collection.Beatmaps.Count, Converter={StaticResource CountToStringConverter}}" FontFamily="{DynamicResource Poppins}" FontSize="16" FontWeight="Light" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}" Margin="0 5 0 0"/>
                     <StackPanel Orientation="Horizontal" Margin="0 39 0 0">
-                        <Button Style="{DynamicResource MaterialDesignRaisedButton}" Command="{Binding LaunchCollectionCommand}" Foreground="White" Content="{DynamicResource Strings.CollectionDetailsView.Play}" Width="80"/>
+                        <Button Style="{DynamicResource MaterialDesignRaisedButton}" Command="{Binding LaunchCollectionCommand}" Foreground="White" Content="{DynamicResource Strings.CollectionDetailsView.Play}" MinWidth="80"/>
                     </StackPanel>
                 </StackPanel>
             </DockPanel>

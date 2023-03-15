@@ -44,7 +44,7 @@
                     <TextBlock Text="{Binding Model.Playlist.Beatmaps.Count, Converter={StaticResource CountToStringConverter}}" FontFamily="{DynamicResource Poppins}" FontSize="16" FontWeight="Light" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}" Margin="0 5 0 0"/>
                     <TextBlock Text="{Binding Model.Playlist.Updated, StringFormat=Updated {0}, ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}" FontFamily="{DynamicResource Poppins}" FontSize="16" FontWeight="Light" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
                     <StackPanel Orientation="Horizontal" Margin="0 15 0 0">
-                        <Button Style="{DynamicResource MaterialDesignRaisedButton}" Command="{Binding LaunchPlaylistCommand}" Foreground="White" Content="{DynamicResource Strings.PlaylistDetailsView.Play}" Width="80"/>
+                        <Button Style="{DynamicResource MaterialDesignRaisedButton}" Command="{Binding LaunchPlaylistCommand}" Foreground="White" Content="{DynamicResource Strings.PlaylistDetailsView.Play}" MinWidth="80"/>
                         <Button Style="{DynamicResource MaterialDesignFlatButton}" Content="{DynamicResource Strings.PlaylistDetailsView.Delete}" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}" Margin="5 0 0 0" Command="{Binding DeleteCommand}" Cursor="Hand"/>
                     </StackPanel>
                 </StackPanel>

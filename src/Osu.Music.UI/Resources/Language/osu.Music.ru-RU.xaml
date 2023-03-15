@@ -4,7 +4,7 @@
     <s:String x:Key="Strings.AboutView.License">Лицензия</s:String>
     <s:String x:Key="Strings.AboutView.License.Header">Лицензия:</s:String>
     <s:String x:Key="Strings.AboutView.Notices">Использованные библиотеки</s:String>
-    <s:String x:Key="Strings.AboutView.ReleaseNotes">список изменения</s:String>
+    <s:String x:Key="Strings.AboutView.ReleaseNotes">список изменений</s:String>
     <s:String x:Key="Strings.AddToPlaylistView.Header">Добавить в...</s:String>
     <s:String x:Key="Strings.AddToPlaylistView.NoAvailable">Нет доступных плейлистов для этой песни</s:String>
     <s:String x:Key="Strings.CollectionDetailsView.Play">ИГРАТЬ</s:String>
@@ -56,15 +56,15 @@
     <s:String x:Key="Strings.SettingsView.Headers.Keybinds">Горячие клавиши</s:String>
     <s:String x:Key="Strings.SettingsView.Headers.Social">Интеграции</s:String>
     <s:String x:Key="Strings.SettingsView.Keybinds.Keybinds">ГОРЯЧИЕ КЛАВИШИ</s:String>
-    <s:String x:Key="Strings.SettingsView.Keybinds.Mute">Вкл./Выкл. звук</s:String>
+    <s:String x:Key="Strings.SettingsView.Keybinds.Mute">Звук: вкл/выкл</s:String>
     <s:String x:Key="Strings.SettingsView.Keybinds.NextTrack">Следующая песня</s:String>
     <s:String x:Key="Strings.SettingsView.Keybinds.PlayPause">Воспроизводить/Поставить на паузу</s:String>
     <s:String x:Key="Strings.SettingsView.Keybinds.PreviousTrack">Предыдущая песня</s:String>
-    <s:String x:Key="Strings.SettingsView.Keybinds.Repeat">Повторять</s:String>
-    <s:String x:Key="Strings.SettingsView.Keybinds.Shuffle">Случайный порядок</s:String>
+    <s:String x:Key="Strings.SettingsView.Keybinds.Repeat">Повтор песни</s:String>
+    <s:String x:Key="Strings.SettingsView.Keybinds.Shuffle">Случайная песня</s:String>
     <s:String x:Key="Strings.SettingsView.Keybinds.Unknown">Неизвестная</s:String>
-    <s:String x:Key="Strings.SettingsView.Keybinds.VolumeDown">Уменьшить громкость</s:String>
-    <s:String x:Key="Strings.SettingsView.Keybinds.VolumeUp">Увеличить громкость</s:String>
+    <s:String x:Key="Strings.SettingsView.Keybinds.VolumeDown">Громкость: уменьшить</s:String>
+    <s:String x:Key="Strings.SettingsView.Keybinds.VolumeUp">Громкость: увеличить</s:String>
     <s:String x:Key="Strings.SettingsView.Social.Discord">DISCORD</s:String>
     <s:String x:Key="Strings.SettingsView.Social.Discord.Description">Это похоже на /np, но для активности Discord. За исключением того, что все это видят... и судят о ваших музыкальных вкусах.</s:String>
 </ResourceDictionary>
