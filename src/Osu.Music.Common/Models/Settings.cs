@@ -20,6 +20,17 @@ namespace Osu.Music.Common.Models
             }
         }
 
+        private string _culture;
+        public string Culture
+        {
+            get => _culture;
+            set
+            {
+                SetProperty(ref _culture, value);
+                CultureChanged?.Invoke(_culture);
+            }
+        }
+
         private string _color;
         public string Color
         {
@@ -68,6 +79,9 @@ namespace Osu.Music.Common.Models
         public delegate void ApplicationSourceChangedEventHander(string path);
         public event ApplicationSourceChangedEventHander SourceChanged;
 
+        public delegate void ApplicationCultureChangedEventHandler(string culture);
+        public event ApplicationCultureChangedEventHandler CultureChanged;
+
         public delegate void ApplicationColorChangedEventHandler(string color);
         public event ApplicationColorChangedEventHandler ColorChanged;
 
@@ -77,6 +91,7 @@ namespace Osu.Music.Common.Models
 
         public Settings()
         {
+            Culture = "en-US";
             Color = "#FF800080";
             HotkeysEnabled = true;
             DiscordEnabled = true;
