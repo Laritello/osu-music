@@ -9,6 +9,7 @@ using Osu.Music.Services.Events;
 using Osu.Music.Services.Hotkeys;
 using Osu.Music.Services.Interfaces;
 using Osu.Music.Services.IO;
+using Osu.Music.Services.Localization;
 using Osu.Music.Services.UItility;
 using Osu.Music.UI.Interfaces;
 using Osu.Music.UI.Models;
@@ -81,6 +82,7 @@ namespace Osu.Music.UI.ViewModels
         private DispatcherTimer _audioProgressTimer;
         private DiscordManager _discordManager;
         private HotkeyManager _hotkeyManager;
+        private LocalizationManager _localizationManager;
         private Settings _settings;
 
         public MainViewModel(IContainer container, MainModel model)
@@ -94,6 +96,7 @@ namespace Osu.Music.UI.ViewModels
             _settingsManager = container.Resolve<SettingsManager>();
             _discordManager = container.Resolve<DiscordManager>();
             _hotkeyManager = container.Resolve<HotkeyManager>();
+            _localizationManager = container.Resolve<LocalizationManager>();
             _model = model;
 
             Visualization = new DefaultVisualization();
@@ -116,6 +119,7 @@ namespace Osu.Music.UI.ViewModels
             _settings.SourceChanged += Settings_SourceChanged;
             _settings.ColorChanged += Settings_ColorChanged;
             _settings.DiscordEnabledChanged += Settings_DiscordEnabledChanged;
+            _settings.CultureChanged += _settings_CultureChanged;
 
             ResourceDictionary resource = Application.Current.Resources;
             resource.MergedDictionaries.SetMainColor(_settings.Color);
@@ -419,6 +423,11 @@ namespace Osu.Music.UI.ViewModels
 
             if (!enabled)
                 _discordManager.ClearPresence();
+        }
+
+        private void _settings_CultureChanged(string culture)
+        {
+            _localizationManager.Culture = LocalizationFactory.GetCulture(culture);
         }
         #endregion
 
