@@ -23,6 +23,7 @@
                 <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Toggles.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/DataTemplates.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Menus.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Language/osu.Music.en-UK.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

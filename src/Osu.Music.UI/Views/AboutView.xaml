@@ -20,7 +20,7 @@
                     </TextBlock.InputBindings>
                 </TextBlock>
                 <TextBlock Style="{DynamicResource MenuDefault}" Margin="15 10 0 10">
-                    <Run Text="License: "/>
+                    <Run Text="{DynamicResource Strings.AboutView.License.Header}"/>
                     <Run Text="{Binding License}"/>
                 </TextBlock>
                 <TextBlock Style="{DynamicResource LicenseText}" Margin="15 0 0 30" Text="{Binding Text}" TextWrapping="Wrap"/>
@@ -40,19 +40,19 @@
                     <TextBlock Style="{DynamicResource MenuDefault}" FontSize="12" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}"
                            Text="{Binding Model.Version, StringFormat={}Version {0}}"/>
                     <TextBlock Style="{DynamicResource MenuDefault}" Margin="3 0 0 0">
-                        <Run Text="(" FontSize="12" FontFamily="{DynamicResource Poppins}" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}"/><Run Style="{DynamicResource LinkRun}" FontSize="12" Text="release notes">
+                        <Run Text="(" FontSize="12" FontFamily="{DynamicResource Poppins}" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}"/><Run Style="{DynamicResource LinkRun}" FontSize="12" Text="{DynamicResource Strings.AboutView.ReleaseNotes}">
                             <Run.InputBindings>
                                 <MouseBinding MouseAction="LeftClick" Command="{Binding OpenReleaseNotesCommand}"/>
                             </Run.InputBindings>
                         </Run><Run Text=")" FontSize="12" FontFamily="{DynamicResource Poppins}" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}"/>
                     </TextBlock>
                 </StackPanel>
-                <TextBlock Style="{DynamicResource LinkText}" Text="License" HorizontalAlignment="Center">
+                <TextBlock Style="{DynamicResource LinkText}" Text="{DynamicResource Strings.AboutView.License}" HorizontalAlignment="Center">
                     <TextBlock.InputBindings>
                         <MouseBinding MouseAction="LeftClick" Command="{Binding OpenLicenseCommand}"/>
                     </TextBlock.InputBindings>
                 </TextBlock>
-                <TextBlock Style="{DynamicResource LinkText}" Text="Open Source Notices" HorizontalAlignment="Center">
+                <TextBlock Style="{DynamicResource LinkText}" Text="{DynamicResource Strings.AboutView.Notices}" HorizontalAlignment="Center">
                     <TextBlock.InputBindings>
                         <MouseBinding MouseAction="LeftClick" Command="{Binding OpenNoticesCommand}"/>
                     </TextBlock.InputBindings>

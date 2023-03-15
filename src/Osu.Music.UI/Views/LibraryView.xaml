@@ -56,14 +56,14 @@
                                     Command="{Binding DataContext.OpenBeatmapInBrowserCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:LibraryView}}}" 
                                     CommandParameter="{Binding .}">
                                 <Button.ToolTip>
-                                    <TextBlock Style="{DynamicResource TooltipText}" Text="Show on osu! website"/>
+                                    <TextBlock Style="{DynamicResource TooltipText}" Text="{DynamicResource Strings.LibraryView.Tooltips.ShowOnOsuWebsite}"/>
                                 </Button.ToolTip>
                             </Button>
                             <Button Style="{DynamicResource SongListAddToPlaylist}" Margin="5 0 0 0"
                                     Command="{Binding DataContext.AddToPlaylistCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:LibraryView}}}" 
                                     CommandParameter="{Binding .}">
                                 <Button.ToolTip>
-                                    <TextBlock Style="{DynamicResource TooltipText}" Text="Add to a playlist"/>
+                                    <TextBlock Style="{DynamicResource TooltipText}" Text="{DynamicResource Strings.LibraryView.Tooltips.AddToPlaylist}"/>
                                 </Button.ToolTip>
                             </Button>
                         </StackPanel>

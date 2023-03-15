@@ -89,7 +89,7 @@
                 </VisualBrush.Transform>
                 <VisualBrush.Visual>
                     <Grid>
-                        <TextBlock FontSize="18" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}" Text="Search"/>
+                        <TextBlock FontSize="18" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}" Text="{DynamicResource Strings.SearchView.TextHint}"/>
                     </Grid>
                 </VisualBrush.Visual>
             </VisualBrush>

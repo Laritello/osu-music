@@ -49,7 +49,7 @@
                 <TextBox x:Name="SearchBox" Text="{Binding Request, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource SearchTextBox}" VerticalAlignment="Center">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="KeyUp">
-                            <i:InvokeCommandAction Command="{Binding SearchCommand}" CommandParameter="{Binding ElementName=SearchBox, Path=Text}" />
+                            <i:InvokeCommandAction Command="{Binding SearchCommand}" CommandParameter="{Binding ElementName=SearchBox, Path=Text}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </TextBox>
@@ -58,7 +58,7 @@
                 <TabItem>
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <TextBlock Text="All" FontSize="14" VerticalAlignment="Center"/>
+                            <TextBlock Text="{DynamicResource Strings.SearchView.Headers.All}" FontSize="14" VerticalAlignment="Center"/>
                             <Border Background="{DynamicResource SolidColorBrushMainBorder}" CornerRadius="5" Margin="5 0 0 0" VerticalAlignment="Center">
                                 <TextBlock Style="{DynamicResource ResultAmountText}" Text="{Binding CombinedResult.Count}"/>
                             </Border>
@@ -78,7 +78,7 @@
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <TextBlock FontFamily="{DynamicResource MaterialIconsOutlined}" FontSize="20" Text="&#xe3a1;" Margin="0 0 5 0" VerticalAlignment="Center"/>
-                            <TextBlock Text="Songs" FontSize="14" VerticalAlignment="Center"/>
+                            <TextBlock Text="{DynamicResource Strings.SearchView.Headers.Songs}" FontSize="14" VerticalAlignment="Center"/>
                             <Border Background="{DynamicResource SolidColorBrushMainBorder}" CornerRadius="5" Margin="5 0 0 0" VerticalAlignment="Center">
                                 <TextBlock Style="{DynamicResource ResultAmountText}" Text="{Binding BeatmapResult.Count}"/>
                             </Border>
@@ -98,7 +98,7 @@
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <TextBlock FontFamily="{DynamicResource MaterialIconsOutlined}" FontSize="20" Text="&#xe03d;" Margin="0 0 5 0" VerticalAlignment="Center"/>
-                            <TextBlock Text="Playlists" FontSize="14" VerticalAlignment="Center"/>
+                            <TextBlock Text="{DynamicResource Strings.SearchView.Headers.Playlists}" FontSize="14" VerticalAlignment="Center"/>
                             <Border Background="{DynamicResource SolidColorBrushMainBorder}" CornerRadius="5" Margin="5 0 0 0" VerticalAlignment="Center">
                                 <TextBlock Style="{DynamicResource ResultAmountText}" Text="{Binding PlaylistResult.Count}"/>
                             </Border>
@@ -118,7 +118,7 @@
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <TextBlock FontFamily="{DynamicResource MaterialIconsOutlined}" FontSize="20" Text="&#xe030;" Margin="0 0 5 0" VerticalAlignment="Center"/>
-                            <TextBlock Text="Collections" FontSize="14" VerticalAlignment="Center"/>
+                            <TextBlock Text="{DynamicResource Strings.SearchView.Headers.Collections}" FontSize="14" VerticalAlignment="Center"/>
                             <Border Background="{DynamicResource SolidColorBrushMainBorder}" CornerRadius="5" Margin="5 0 0 0" VerticalAlignment="Center">
                                 <TextBlock Style="{DynamicResource ResultAmountText}" Text="{Binding CollectionResult.Count}"/>
                             </Border>

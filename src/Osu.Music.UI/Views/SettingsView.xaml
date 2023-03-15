@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:Osu.Music.UI.Views"
@@ -16,16 +15,16 @@
     <UserControl.Resources>
         <DataTemplate x:Key="HotkeyTemplate" DataType="{x:Type models:Hotkey}">
             <uc:HotkeyListItem Margin="0 5 0 5" Combination="{Binding Path=Combination}" Type="{Binding Path=Type}" HorizontalAlignment="Stretch"
-                               SelectedHotkey="{Binding DataContext.Model.HotkeyManager.EditedHotkey, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SettingsView}}}"/>
+                               SelectedHotkey= "{Binding DataContext.Model.HotkeyManager.EditedHotkey, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SettingsView}}}"/>
         </DataTemplate>
     </UserControl.Resources>
     <Grid>
         <TabControl Style="{DynamicResource MaterialDesignTabControl}">
-            <TabItem Header="General">
+            <TabItem Header="{DynamicResource Strings.SettingsView.Headers.General}">
                 <ScrollViewer MaxWidth="700">
                     <StackPanel Orientation="Vertical" Margin="5">
                         <Grid Height="35" HorizontalAlignment="Stretch">
-                            <TextBlock Text="LANGUAGE" Style="{DynamicResource MenuSubHeader}"/>
+                            <TextBlock Text="{DynamicResource Strings.SettingsView.General.Language}" Style="{DynamicResource MenuSubHeader}"/>
                         </Grid>
                         <ComboBox Style="{DynamicResource MaterialDesignComboBox}" 
                                   SelectedValue="{Binding Model.Settings.Culture, Converter={StaticResource StringToLocalizationCulture}}"
@@ -34,7 +33,8 @@
                             <ComboBox.ItemTemplate>
                                 <DataTemplate DataType="{x:Type loc:LocalizationCulture}">
                                     <StackPanel Orientation="Horizontal">
-                                        <Image Source="{Binding Path=Code, Converter={StaticResource CountryIdToFlagImageSourceConverter}}" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                        <Image Source="{Binding Path=Code, Converter={StaticResource CountryIdToFlagImageSourceConverter}}" 
+                                               RenderOptions.BitmapScalingMode="HighQuality"/>
                                         <TextBlock Text="{Binding Path=Name}" Margin="10 0 0 0"/>
                                     </StackPanel>
                                 </DataTemplate>
@@ -42,32 +42,34 @@
                         </ComboBox>
 
                         <Grid Height="35" HorizontalAlignment="Stretch">
-                            <TextBlock Text="PATH TO OSU!" Style="{DynamicResource MenuSubHeader}"/>
-                            <Button Content="CHANGE" Style="{DynamicResource MaterialDesignFlatButton}" Command="{Binding UpdateSourceCommand}" HorizontalAlignment="Right"/>
+                            <TextBlock Text="{DynamicResource Strings.SettingsView.General.Path}" Style="{DynamicResource MenuSubHeader}"/>
+                            <Button Content="{DynamicResource Strings.SettingsView.General.Path.Change}" 
+                                    Style="{DynamicResource MaterialDesignFlatButton}" Command="{Binding UpdateSourceCommand}" HorizontalAlignment="Right"/>
                         </Grid>
                         <TextBlock Text="{Binding Model.Settings.Source}" Margin="0 0 10 0"/>
-                        <TextBlock Text="osu.Music automatically scans your system for osu! folder. However, in some cases (i.e. multiple versions of osu! installed) it may be useful to be able to change this setting manually."
+                        <TextBlock Text="{DynamicResource Strings.SettingsView.General.Path.Description}"
                                    Style="{DynamicResource MenuDescription}"/>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="Appearance">
+            <TabItem Header="{DynamicResource Strings.SettingsView.Headers.Appearance}">
                 <ScrollViewer MaxWidth="700">
                     <StackPanel Orientation="Vertical" Margin="5">
                         <Grid Height="35">
-                            <TextBlock Text="COLOR" Style="{DynamicResource MenuSubHeader}"/>
+                            <TextBlock Text="{DynamicResource Strings.SettingsView.Appearance.Color}" Style="{DynamicResource MenuSubHeader}"/>
                         </Grid>
-                        <materialDesign:ColorPicker Name="ColorPicker" Height="200" Color="{Binding Model.Settings.Color, Converter={StaticResource ColorStringConverter}}"/>
-                        <TextBlock Text="Why limit yourself to one boring color? Change the color of osu!Music to suit your mood! My personal advice is a refreshing lime green :)"
+                        <materialDesign:ColorPicker Name="ColorPicker" Height="200" 
+                                                    Color="{Binding Model.Settings.Color, Converter={StaticResource ColorStringConverter}}"/>
+                        <TextBlock Text="{DynamicResource Strings.SettingsView.Appearance.Color.Description}"
                                    Style="{DynamicResource MenuDescription}"/>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="Keybinds">
+            <TabItem Header="{DynamicResource Strings.SettingsView.Headers.Keybinds}">
                 <ScrollViewer MaxWidth="700">
                     <StackPanel Orientation="Vertical" Margin="5">
                         <Grid Height="35" HorizontalAlignment="Stretch">
-                            <TextBlock Text="KEYBINDS" Style="{DynamicResource MenuSubHeader}"/>
+                            <TextBlock Text="{DynamicResource Strings.SettingsView.Keybinds.Keybinds}" Style="{DynamicResource MenuSubHeader}"/>
                             <ToggleButton IsChecked="{Binding Model.Settings.HotkeysEnabled}" HorizontalAlignment="Right"/>
                         </Grid>
                         <ItemsControl ItemsSource="{Binding Model.HotkeyManager.Hotkeys}" ItemTemplate="{StaticResource HotkeyTemplate}"
@@ -88,14 +90,14 @@
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="Social">
+            <TabItem Header="{DynamicResource Strings.SettingsView.Headers.Social}">
                 <ScrollViewer MaxWidth="700">
                     <StackPanel Orientation="Vertical" Margin="5">
                         <Grid Height="35" HorizontalAlignment="Stretch">
-                            <TextBlock Text="DISCORD" Style="{DynamicResource MenuSubHeader}"/>
+                            <TextBlock Text="{DynamicResource Strings.SettingsView.Social.Discord}" Style="{DynamicResource MenuSubHeader}"/>
                             <ToggleButton IsChecked="{Binding Model.Settings.DiscordEnabled}" HorizontalAlignment="Right"/>
                         </Grid>
-                        <TextBlock Text="It's just like /np, but for Discord activity. Except, everyone can see it... and judge your taste in music."
+                        <TextBlock Text="{DynamicResource Strings.SettingsView.Social.Discord.Description}"
                                    Style="{DynamicResource MenuDescription}"/>
                     </StackPanel>
                 </ScrollViewer>
