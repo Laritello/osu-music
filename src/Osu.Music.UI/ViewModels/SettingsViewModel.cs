@@ -3,6 +3,7 @@ using Osu.Music.Common.Models;
 using Osu.Music.Services.Dialog;
 using Osu.Music.Services.Hotkeys;
 using Osu.Music.Services.IO;
+using Osu.Music.Services.Localization;
 using Osu.Music.UI.Models;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -19,6 +20,13 @@ namespace Osu.Music.UI.ViewModels
             set => SetProperty(ref _model, value);
         }
 
+        private LocalizationManager _localizationManager;
+        public LocalizationManager LocalizationManager
+        {
+            get => _localizationManager;
+            set => SetProperty(ref _localizationManager, value);
+        }
+
         public DelegateCommand UpdateSourceCommand { get; private set; }
         public DelegateCommand UpdateDiscordCommand { get; private set; }
 
@@ -29,6 +37,8 @@ namespace Osu.Music.UI.ViewModels
         {
             _settingsManager = container.Resolve<SettingsManager>();
             _fileDialogService = container.Resolve<IFileDialogService>();
+            _localizationManager = container.Resolve<LocalizationManager>();
+
             _model = model;
 
             InitializeCommands();
