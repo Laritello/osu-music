@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Media;
 
@@ -109,6 +110,12 @@ namespace Osu.Music.Services.UItility
                     yield return element;
                 }
             }
+        }
+
+        public static ResourceDictionary GetLocalizationDictionary(this ResourceDictionary dictionary)
+        {
+            var regex = new Regex("osu.Music.([a-z]{2})-([A-Z]{2}).xaml");
+            return dictionary.MergedDictionaries.FirstOrDefault(x => regex.IsMatch(string.IsNullOrEmpty(x.Source?.OriginalString) ? string.Empty : x.Source?.OriginalString));
         }
     }
 }
