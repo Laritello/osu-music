@@ -4,6 +4,7 @@ using Osu.Music.Common.Models;
 using Osu.Music.Services.Audio;
 using Osu.Music.Services.Dialog;
 using Osu.Music.Services.Interfaces;
+using Osu.Music.Services.Localization;
 using Osu.Music.UI.Models;
 using Osu.Music.UI.ViewModels.Dialogs;
 using Osu.Music.UI.Views.Dialogs;
@@ -42,12 +43,14 @@ namespace Osu.Music.UI.ViewModels
         private IPopupDialogService _dialogService;
         private IPlaylistManager _playlistManager;
         private IRegionManager _regionManager;
+        private LocalizationManager _localizationManager;
 
         public PlaylistDetailsViewModel(IContainer container, PlaylistDetailsModel model)
         {
             _dialogService = container.Resolve<IPopupDialogService>();
             _playlistManager = container.Resolve<IPlaylistManager>();
             _regionManager = container.Resolve<IRegionManager>();
+            _localizationManager = container.Resolve<LocalizationManager>();
             _playback = container.Resolve<AudioPlayback>();
             _model = model;
 
@@ -78,9 +81,9 @@ namespace Osu.Music.UI.ViewModels
         {
             DialogParameters parameters = new DialogParameters()
             {
-                { "title", "Delete playlist" },
-                { "message", $"Are you sure you want to delete {Model.Playlist.Name}?\r\nThis action cannot be undone." },
-                { "caption", "DELETE" }
+                { "title", _localizationManager.GetLocalizedString("Strings.PlaylistDetailsView.DeleteDialog.Title") },
+                { "message", string.Format(_localizationManager.GetLocalizedString("Strings.PlaylistDetailsView.DeleteDialog.Message"), Model.Playlist.Name) },
+                { "caption", _localizationManager.GetLocalizedString("Strings.PlaylistDetailsView.DeleteDialog.Caption") }
             };
 
             _dialogService.ShowPopupDialog<GenericConfirmationView, GenericConfirmationViewModel>(parameters, e =>
@@ -104,8 +107,8 @@ namespace Osu.Music.UI.ViewModels
         {
             DialogParameters parameters = new DialogParameters()
             {
-                { "title", "Edit playlist" },
-                { "caption", "EDIT" },
+                { "title", _localizationManager.GetLocalizedString("Strings.PlaylistDetailsView.EditDialog.Title") },
+                { "caption", _localizationManager.GetLocalizedString("Strings.PlaylistDetailsView.EditDialog.Caption") },
                 { "name", Model.Playlist.Name },
                 { "names", _playlistManager.Playlists.Where(x => x != Model.Playlist).Select(x => x.Name) }
             };

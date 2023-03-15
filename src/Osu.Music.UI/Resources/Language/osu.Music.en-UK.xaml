@@ -5,6 +5,8 @@
     <s:String x:Key="Strings.MainView.Sections.Playlists">Playlists</s:String>
     <s:String x:Key="Strings.MainView.Sections.Collections">Collections</s:String>
     <s:String x:Key="Strings.MainView.Sections.NewPlaylist">New playlist</s:String>
+    <s:String x:Key="Strings.MainView.NewPlaylistDialog.Title">New playlist</s:String>
+    <s:String x:Key="Strings.MainView.NewPlaylistDialog.Create">CREATE</s:String>
     <s:String x:Key="Strings.MainView.Tooltips.Update">Update osu.Music</s:String>
     <s:String x:Key="Strings.MainView.Tooltips.About">About</s:String>
     <s:String x:Key="Strings.MainView.Tooltips.Search">Search</s:String>
@@ -20,6 +22,11 @@
     <s:String x:Key="Strings.LibraryView.Tooltips.AddToPlaylist">Add to a playlist</s:String>
     <s:String x:Key="Strings.PlaylistDetailsView.Play">PLAY</s:String>
     <s:String x:Key="Strings.PlaylistDetailsView.Delete">DELETE</s:String>
+    <s:String x:Key="Strings.PlaylistDetailsView.DeleteDialog.Title">Delete playlist</s:String>
+    <s:String x:Key="Strings.PlaylistDetailsView.DeleteDialog.Message">Are you sure you want to delete {0}?\r\nThis action cannot be undone.</s:String>
+    <s:String x:Key="Strings.PlaylistDetailsView.DeleteDialog.Caption">DELETE</s:String>
+    <s:String x:Key="Strings.PlaylistDetailsView.EditDialog.Title">Edit playlist</s:String>
+    <s:String x:Key="Strings.PlaylistDetailsView.EditDialog.Caption">EDIT</s:String>
     <s:String x:Key="Strings.PlaylistDetailsView.Tooltips.ShowOnOsuWebsite">Show on osu! website</s:String>
     <s:String x:Key="Strings.PlaylistDetailsView.Tooltips.RemoveFromPlaylist">Remove from this playlist</s:String>
     <s:String x:Key="Strings.SettingsView.Headers.General">General</s:String>

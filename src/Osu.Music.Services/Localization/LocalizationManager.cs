@@ -28,11 +28,18 @@ namespace Osu.Music.Services.Localization
             }
         }
 
+        private ResourceDictionary _localizationResource;
+
         public LocalizationManager(SettingsManager settingsManager)
         {
             Cultures = LocalizationFactory.GetAvailableCultures();
             Culture = LocalizationFactory.GetCulture(settingsManager.Settings.Culture);
             UpdateCulture(Culture);
+        }
+
+        public string GetLocalizedString(string key)
+        {
+            return _localizationResource[key] as string;
         }
 
         private void UpdateCulture(LocalizationCulture culture)
@@ -53,6 +60,7 @@ namespace Osu.Music.Services.Localization
             };
 
             dictionaries.Add(currentLocale);
+            _localizationResource = currentLocale; // Save reference to the current locale so we can access it from ViewModel
         }
     }
 }

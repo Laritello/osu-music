@@ -119,7 +119,7 @@ namespace Osu.Music.UI.ViewModels
             _settings.SourceChanged += Settings_SourceChanged;
             _settings.ColorChanged += Settings_ColorChanged;
             _settings.DiscordEnabledChanged += Settings_DiscordEnabledChanged;
-            _settings.CultureChanged += _settings_CultureChanged;
+            _settings.CultureChanged += Settings_CultureChanged;
 
             ResourceDictionary resource = Application.Current.Resources;
             resource.MergedDictionaries.SetMainColor(_settings.Color);
@@ -278,8 +278,8 @@ namespace Osu.Music.UI.ViewModels
         {
             DialogParameters parameters = new DialogParameters()
             {
-                { "title", "New playlist" },
-                { "caption", "CREATE" },
+                { "title", _localizationManager.GetLocalizedString("Strings.MainView.NewPlaylistDialog.Title") },
+                { "caption", _localizationManager.GetLocalizedString("Strings.MainView.NewPlaylistDialog.Create") },
                 { "names", Model.Playlists.Select(x => x.Name) }
             };
 
@@ -425,7 +425,7 @@ namespace Osu.Music.UI.ViewModels
                 _discordManager.ClearPresence();
         }
 
-        private void _settings_CultureChanged(string culture)
+        private void Settings_CultureChanged(string culture)
         {
             _localizationManager.Culture = LocalizationFactory.GetCulture(culture);
         }
