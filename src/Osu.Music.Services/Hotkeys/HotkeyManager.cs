@@ -20,14 +20,14 @@ namespace Osu.Music.Services.Hotkeys
         public delegate void HotkeyChangedEventHandler();
         public event HotkeyChangedEventHandler HotkeyChanged;
 
-        private HotkeyType? _editedHotkey;
-        public HotkeyType? EditedHotkey
+        private HotkeyType? _selectedHotkey;
+        public HotkeyType? SelectedHotkey
         {
-            get => _editedHotkey;
-            set => SetProperty(ref _editedHotkey, value);
+            get => _selectedHotkey;
+            set => SetProperty(ref _selectedHotkey, value);
         }
 
-        public DelegateCommand<HotkeyType?> SetEditedHotkeyCommand { get; set; }
+        public DelegateCommand<HotkeyType?> ToggleEditedKeyCommand { get; set; }
 
         private KeyboardStateManager Keyboard { get; set; }
         private GlobalKeyboardHook Hook { get; set; }
@@ -45,15 +45,15 @@ namespace Osu.Music.Services.Hotkeys
             Hotkeys = _settings.Hotkeys;
 
             Keyboard = new KeyboardStateManager();
-            SetEditedHotkeyCommand = new DelegateCommand<HotkeyType?>(SetEditedCommand);
+            ToggleEditedKeyCommand = new DelegateCommand<HotkeyType?>(ToggleEditedKey);
 
             Hook = new GlobalKeyboardHook();
             Hook.KeyboardPressed += Hook_KeyboardPressed;
         }
 
-        private void SetEditedCommand(HotkeyType? hotkey)
+        private void ToggleEditedKey(HotkeyType? hotkey)
         {
-            EditedHotkey = EditedHotkey == hotkey ? null : hotkey;
+            SelectedHotkey = hotkey;
         }
 
         private void Hook_KeyboardPressed(object sender, GlobalKeyboardHookEventArgs e)
@@ -62,7 +62,7 @@ namespace Osu.Music.Services.Hotkeys
 
             if (!isModifier && e.KeyboardState == KeyboardState.KeyDown)
             {
-                if (EditedHotkey == null)
+                if (SelectedHotkey == null)
                     CheckHotkeys(e);
                 else
                     SaveHotkey(e);
@@ -118,7 +118,7 @@ namespace Osu.Music.Services.Hotkeys
 
         private void SaveHotkey(GlobalKeyboardHookEventArgs e)
         {
-            var hotkey = Hotkeys.Where(x => x.Type == EditedHotkey).FirstOrDefault();
+            var hotkey = Hotkeys.Where(x => x.Type == SelectedHotkey).FirstOrDefault();
 
             Keyboard.Key = e.KeyboardData.Key;
             var currentCombination = Keyboard.Combination;
@@ -140,7 +140,7 @@ namespace Osu.Music.Services.Hotkeys
                 };
             }
             HotkeyChanged?.Invoke();
-            EditedHotkey = null;
+            SelectedHotkey = null;
         }
 
         private void TriggerEvent(HotkeyType type)

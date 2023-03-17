@@ -27,6 +27,20 @@ namespace Osu.Music.UI.ViewModels
             set => SetProperty(ref _localizationManager, value);
         }
 
+        private HotkeyManager _hotkeyManager;
+        public HotkeyManager HotkeyManager
+        {
+            get => _hotkeyManager;
+            set => SetProperty(ref _hotkeyManager, value);
+        }
+
+        private DiscordManager _discordManager;
+        public DiscordManager DiscordManager
+        {
+            get => _discordManager;
+            set => SetProperty(ref _discordManager, value);
+        }
+
         public DelegateCommand UpdateSourceCommand { get; private set; }
         public DelegateCommand UpdateDiscordCommand { get; private set; }
 
@@ -64,17 +78,17 @@ namespace Osu.Music.UI.ViewModels
         private void UpdateDiscord()
         {
             _settingsManager.Save(Model.Settings);
-            Model.DiscordManager.Enabled = Model.Settings.DiscordEnabled;
+            DiscordManager.Enabled = Model.Settings.DiscordEnabled;
 
-            if (!Model.DiscordManager.Enabled)
-                Model.DiscordManager.ClearPresence();
+            if (!DiscordManager.Enabled)
+                DiscordManager.ClearPresence();
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             Model.Settings = navigationContext.Parameters.GetValue<Settings>("settings");
-            Model.DiscordManager = navigationContext.Parameters.GetValue<DiscordManager>("discord");
-            Model.HotkeyManager = navigationContext.Parameters.GetValue<HotkeyManager>("hotkey");
+            DiscordManager = navigationContext.Parameters.GetValue<DiscordManager>("discord");
+            HotkeyManager = navigationContext.Parameters.GetValue<HotkeyManager>("hotkey");
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext) => true;

@@ -163,4 +163,27 @@
             </StackPanel>
         </Border>
     </DataTemplate>
+
+    <DataTemplate x:Key="HotkeyListItem" DataType="{x:Type cm:Hotkey}">
+        <Grid>
+            <TextBlock Padding="0 6 0 0" HorizontalAlignment="Left"
+                       Text="{Binding Path=Type, Converter={StaticResource HotkeyTypeToStringConverter}}"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBlock FontWeight="Bold" FontSize="16" Width="150" Height="30" Padding="0 6 0 0"
+                           Text="{Binding Path=Combination, Converter={StaticResource KeyCombinationToStringConverter}}"/>
+                <ToggleButton Name="ButtonEdit" Width="30" Height="30" Style="{DynamicResource HotkeyEditButton}" 
+                              Command="{Binding DataContext.HotkeyManager.ToggleEditedKeyCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type v:SettingsView}}}"
+                              CommandParameter="{Binding Path=Type}">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{StaticResource SelectedHotkeyToBooleanConverter}" Mode="OneWay">
+                            <MultiBinding.Bindings>
+                                <Binding Path="Type"/>
+                                <Binding Path="DataContext.HotkeyManager.SelectedHotkey" RelativeSource="{RelativeSource AncestorType={x:Type v:SettingsView}}"/>
+                            </MultiBinding.Bindings>
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
+                </ToggleButton>
+            </StackPanel>
+        </Grid>
+    </DataTemplate>
 </ResourceDictionary>

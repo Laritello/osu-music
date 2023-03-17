@@ -12,12 +12,6 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.Resources>
-        <DataTemplate x:Key="HotkeyTemplate" DataType="{x:Type models:Hotkey}">
-            <uc:HotkeyListItem Margin="0 5 0 5" Combination="{Binding Path=Combination}" Type="{Binding Path=Type}" HorizontalAlignment="Stretch"
-                               SelectedHotkey= "{Binding DataContext.Model.HotkeyManager.EditedHotkey, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SettingsView}}}"/>
-        </DataTemplate>
-    </UserControl.Resources>
     <Grid>
         <TabControl Style="{DynamicResource MaterialDesignTabControl}">
             <TabItem Header="{DynamicResource Strings.SettingsView.Headers.General}">
@@ -72,7 +66,7 @@
                             <TextBlock Text="{DynamicResource Strings.SettingsView.Keybinds.Keybinds}" Style="{DynamicResource MenuSubHeader}"/>
                             <ToggleButton IsChecked="{Binding Model.Settings.HotkeysEnabled}" HorizontalAlignment="Right"/>
                         </Grid>
-                        <ItemsControl ItemsSource="{Binding Model.HotkeyManager.Hotkeys}" ItemTemplate="{StaticResource HotkeyTemplate}"
+                        <ItemsControl ItemsSource="{Binding HotkeyManager.Hotkeys}" ItemTemplate="{DynamicResource HotkeyListItem}"
                                       ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
                                       Cursor="">
                             <ItemsControl.ItemsPanel>

@@ -15,20 +15,6 @@ namespace Osu.Music.UI.Models
             set => SetProperty(ref _settings, value);
         }
 
-        private HotkeyManager _hotkeyManager;
-        public HotkeyManager HotkeyManager
-        {
-            get => _hotkeyManager;
-            set => SetProperty(ref _hotkeyManager, value);
-        }
-
-        private DiscordManager _discordManager;
-        public DiscordManager DiscordManager
-        {
-            get => _discordManager;
-            set => SetProperty(ref _discordManager, value);
-        }
-
         public SettingsModel() { }
     }
 }
