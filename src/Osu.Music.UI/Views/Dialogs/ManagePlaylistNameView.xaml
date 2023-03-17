@@ -6,6 +6,7 @@
              xmlns:validators="clr-namespace:Osu.Music.UI.Resources.Validators"
              xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
              xmlns:utility="clr-namespace:Osu.Music.UI.Utility"
+             xmlns:behaviors="clr-namespace:Osu.Music.UI.Behaviors"
              xmlns:proxy="clr-namespace:Osu.Music.UI.Utility.Proxies"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="350">
@@ -21,7 +22,7 @@
         <TextBlock Style="{DynamicResource HighEmphasisListText}" FontSize="16" Text="{Binding Title}"/>
         <TextBox Grid.Row="1" Margin="0 6 0 0" wpf:HintAssist.Hint="{DynamicResource Strings.ManagePlaylistNameView.TextHint}" FontSize="14" MinWidth="300"
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                 utility:ValidationBehaviour.HasError="{Binding NameHasError}">
+                 behaviors:ValidationBehaviour.HasError="{Binding NameHasError}">
             <TextBox.Text>
                 <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>

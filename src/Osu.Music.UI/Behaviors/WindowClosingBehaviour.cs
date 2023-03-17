@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Windows;
 
-namespace Osu.Music.UI.Utility
+namespace Osu.Music.UI.Behaviors
 {
     public static class WindowClosingBehavior
     {

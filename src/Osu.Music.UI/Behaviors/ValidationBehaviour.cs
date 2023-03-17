@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Osu.Music.UI.Utility
+namespace Osu.Music.UI.Behaviors
 {
     public static class ValidationBehaviour
     {
