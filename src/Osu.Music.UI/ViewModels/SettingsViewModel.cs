@@ -3,6 +3,7 @@ using Osu.Music.Common.Models;
 using Osu.Music.Services.Dialog;
 using Osu.Music.Services.Hotkeys;
 using Osu.Music.Services.IO;
+using Osu.Music.Services.Localization;
 using Osu.Music.UI.Models;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -19,16 +20,39 @@ namespace Osu.Music.UI.ViewModels
             set => SetProperty(ref _model, value);
         }
 
+        private LocalizationManager _localizationManager;
+        public LocalizationManager LocalizationManager
+        {
+            get => _localizationManager;
+            set => SetProperty(ref _localizationManager, value);
+        }
+
+        private HotkeyManager _hotkeyManager;
+        public HotkeyManager HotkeyManager
+        {
+            get => _hotkeyManager;
+            set => SetProperty(ref _hotkeyManager, value);
+        }
+
+        private DiscordManager _discordManager;
+        public DiscordManager DiscordManager
+        {
+            get => _discordManager;
+            set => SetProperty(ref _discordManager, value);
+        }
+
         public DelegateCommand UpdateSourceCommand { get; private set; }
         public DelegateCommand UpdateDiscordCommand { get; private set; }
 
-        private IFileDialogService _fileDialogService;
-        private SettingsManager _settingsManager;
+        private readonly IFileDialogService _fileDialogService;
+        private readonly SettingsManager _settingsManager;
 
         public SettingsViewModel(IContainer container, SettingsModel model) 
         {
             _settingsManager = container.Resolve<SettingsManager>();
             _fileDialogService = container.Resolve<IFileDialogService>();
+            _localizationManager = LocalizationManager.Instance;
+
             _model = model;
 
             InitializeCommands();
@@ -54,17 +78,17 @@ namespace Osu.Music.UI.ViewModels
         private void UpdateDiscord()
         {
             _settingsManager.Save(Model.Settings);
-            Model.DiscordManager.Enabled = Model.Settings.DiscordEnabled;
+            DiscordManager.Enabled = Model.Settings.DiscordEnabled;
 
-            if (!Model.DiscordManager.Enabled)
-                Model.DiscordManager.ClearPresence();
+            if (!DiscordManager.Enabled)
+                DiscordManager.ClearPresence();
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             Model.Settings = navigationContext.Parameters.GetValue<Settings>("settings");
-            Model.DiscordManager = navigationContext.Parameters.GetValue<DiscordManager>("discord");
-            Model.HotkeyManager = navigationContext.Parameters.GetValue<HotkeyManager>("hotkey");
+            DiscordManager = navigationContext.Parameters.GetValue<DiscordManager>("discord");
+            HotkeyManager = navigationContext.Parameters.GetValue<HotkeyManager>("hotkey");
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext) => true;

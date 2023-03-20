@@ -2,7 +2,6 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:local="clr-namespace:Osu.Music"
              xmlns:prism="http://prismlibrary.com/">
     <Application.Resources>
         <ResourceDictionary>
@@ -24,6 +23,7 @@
                 <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Toggles.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/DataTemplates.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Dictionaries/Menus.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Osu.Music.UI;component/Resources/Language/osu.Music.en-UK.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

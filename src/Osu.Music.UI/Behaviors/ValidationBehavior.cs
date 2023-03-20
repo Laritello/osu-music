@@ -3,21 +3,21 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Osu.Music.UI.Utility
+namespace Osu.Music.UI.Behaviors
 {
-    public static class ValidationBehaviour
+    public static class ValidationBehavior
     {
         #region Attached Properties
         public static readonly DependencyProperty HasErrorProperty = DependencyProperty.RegisterAttached(
             "HasError",
             typeof(bool),
-            typeof(ValidationBehaviour),
+            typeof(ValidationBehavior),
             new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CoerceHasError));
 
         private static readonly DependencyProperty HasErrorDescriptorProperty = DependencyProperty.RegisterAttached(
             "HasErrorDescriptor",
             typeof(DependencyPropertyDescriptor),
-            typeof(ValidationBehaviour));
+            typeof(ValidationBehavior));
         #endregion
 
         private static DependencyPropertyDescriptor GetHasErrorDescriptor(DependencyObject d)
@@ -69,8 +69,7 @@ namespace Osu.Music.UI.Utility
         }
         private static void OnHasErrorChanged(object sender, EventArgs e)
         {
-            var d = sender as DependencyObject;
-            if (d != null)
+            if (sender is DependencyObject d)
             {
                 d.SetValue(HasErrorProperty, d.GetValue(System.Windows.Controls.Validation.HasErrorProperty));
             }

@@ -512,7 +512,7 @@
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
                     <TextBlock FontFamily="{DynamicResource MaterialIconsOutlined}" FontSize="24" Text="&#xe3a1;" Margin="5 0 10 0" VerticalAlignment="Center"/>
                     <TextBlock FontFamily="{Binding Path=FontFamily, RelativeSource={RelativeSource AncestorType={x:Type RadioButton}}}" 
-                               Text="Library" VerticalAlignment="Center"/>
+                               Text="{DynamicResource Strings.MainView.Sections.Library}" VerticalAlignment="Center"/>
                 </StackPanel>
             </Setter.Value>
         </Setter>
@@ -524,7 +524,7 @@
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
                     <TextBlock FontFamily="{DynamicResource MaterialIconsOutlined}" FontSize="24" Text="&#xe030;" Margin="5 0 10 0" VerticalAlignment="Center"/>
                     <TextBlock FontFamily="{Binding Path=FontFamily, RelativeSource={RelativeSource AncestorType={x:Type RadioButton}}}"
-                               Text="Collections" VerticalAlignment="Center"/>
+                               Text="{DynamicResource Strings.MainView.Sections.Collections}" VerticalAlignment="Center"/>
                 </StackPanel>
             </Setter.Value>
         </Setter>
@@ -536,7 +536,7 @@
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
                     <TextBlock FontFamily="{DynamicResource MaterialIconsOutlined}" FontSize="24" Text="&#xe03d;" Margin="5 0 10 0" VerticalAlignment="Center"/>
                     <TextBlock FontFamily="{Binding Path=FontFamily, RelativeSource={RelativeSource AncestorType={x:Type RadioButton}}}"
-                               Text="Playlists" VerticalAlignment="Center"/>
+                               Text="{DynamicResource Strings.MainView.Sections.Playlists}" VerticalAlignment="Center"/>
                 </StackPanel>
             </Setter.Value>
         </Setter>
@@ -593,7 +593,7 @@
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
                     <TextBlock FontFamily="{DynamicResource MaterialIconsOutlined}" FontSize="24" Text="&#xe03b;" Margin="5 0 10 0" VerticalAlignment="Center"/>
                     <TextBlock FontFamily="{Binding Path=FontFamily, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                               Text="New playlist" VerticalAlignment="Center"/>
+                               Text="{DynamicResource Strings.MainView.Sections.NewPlaylist}" VerticalAlignment="Center"/>
                 </StackPanel>
             </Setter.Value>
         </Setter>

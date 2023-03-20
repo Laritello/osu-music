@@ -80,7 +80,7 @@
 
                     <StackPanel Name="CommandPanel" Grid.Column="2" VerticalAlignment="Center" Visibility="Hidden">
                         <TextBlock Style="{DynamicResource HighEmphasisListText}" HorizontalAlignment="Right" VerticalAlignment="Center"
-                                   Text="Jump to" 
+                                   Text="{DynamicResource Strings.SearchView.JumpTo}" 
                                    Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
                     </StackPanel>
                 </Grid>
@@ -118,7 +118,7 @@
                     <StackPanel Orientation="Vertical" VerticalAlignment="Center" Grid.Column="1">
                         <TextBlock Style="{DynamicResource HighEmphasisListText}" Text="{Binding Path=Name}" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}"/>
                         <StackPanel Margin="0 1 0 0" Orientation="Horizontal">
-                            <TextBlock Style="{DynamicResource MediumEmphasisListText}" Text="Playlist" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
+                            <TextBlock Style="{DynamicResource MediumEmphasisListText}" Text="{DynamicResource Strings.SearchView.Item.Description.Playlist}" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
                             <TextBlock Style="{DynamicResource MediumEmphasisListText}" Text="•" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}" Margin="3 0 3 0"/>
                             <TextBlock Style="{DynamicResource MediumEmphasisListText}" Text="{Binding Beatmaps.Count, Converter={StaticResource CountToStringConverter}}" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
                         </StackPanel>
@@ -126,7 +126,7 @@
 
                     <StackPanel Name="CommandPanel" Grid.Column="2" VerticalAlignment="Center" Visibility="Hidden">
                         <TextBlock Style="{DynamicResource HighEmphasisListText}" HorizontalAlignment="Right" VerticalAlignment="Center"
-                                   Text="Jump to" 
+                                   Text="{DynamicResource Strings.SearchView.JumpTo}" 
                                    Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
                     </StackPanel>
                 </Grid>
@@ -164,7 +164,7 @@
                     <StackPanel Orientation="Vertical" VerticalAlignment="Center" Grid.Column="1">
                         <TextBlock Style="{DynamicResource HighEmphasisListText}" Text="{Binding Path=Name}" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}"/>
                         <StackPanel Margin="0 1 0 0" Orientation="Horizontal">
-                            <TextBlock Style="{DynamicResource MediumEmphasisListText}" Text="Collection" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
+                            <TextBlock Style="{DynamicResource MediumEmphasisListText}" Text="{DynamicResource Strings.SearchView.Item.Description.Collection}" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
                             <TextBlock Style="{DynamicResource MediumEmphasisListText}" Text="•" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}" Margin="3 0 3 0"/>
                             <TextBlock Style="{DynamicResource MediumEmphasisListText}" Text="{Binding Beatmaps.Count, Converter={StaticResource CountToStringConverter}}" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
                         </StackPanel>
@@ -172,7 +172,7 @@
 
                     <StackPanel Name="CommandPanel" Grid.Column="2" VerticalAlignment="Center" Visibility="Hidden">
                         <TextBlock Style="{DynamicResource HighEmphasisListText}" HorizontalAlignment="Right" VerticalAlignment="Center"
-                                   Text="Jump to" 
+                                   Text="{DynamicResource Strings.SearchView.JumpTo}" 
                                    Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
                     </StackPanel>
                 </Grid>

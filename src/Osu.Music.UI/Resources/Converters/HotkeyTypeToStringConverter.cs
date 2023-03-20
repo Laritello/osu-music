@@ -1,4 +1,5 @@
 ﻿using Osu.Music.Common.Enums;
+using Osu.Music.Services.Localization;
 using System;
 using System.Globalization;
 using System.Windows.Data;
@@ -13,18 +14,19 @@ namespace Osu.Music.UI.Resources.Converters
                 return "Unknown hotkey";
 
             HotkeyType type = (HotkeyType)value;
+            var localization = LocalizationManager.Instance;
 
             return type switch
             {
-                HotkeyType.PlayPause => "Play/Pause",
-                HotkeyType.NextTrack => "Next Beatmap",
-                HotkeyType.PreviousTrack => "Previous Beatmap",
-                HotkeyType.Mute => "Mute",
-                HotkeyType.Repeat => "Repeat",
-                HotkeyType.Shuffle => "Shuffle",
-                HotkeyType.VolumeUp => "Volume Up",
-                HotkeyType.VolumeDown => "Volume Down",
-                _ => "Unknown hotkey",
+                HotkeyType.PlayPause => localization.GetLocalizedString("Strings.SettingsView.Keybinds.PlayPause"),
+                HotkeyType.NextTrack => localization.GetLocalizedString("Strings.SettingsView.Keybinds.NextTrack"),
+                HotkeyType.PreviousTrack => localization.GetLocalizedString("Strings.SettingsView.Keybinds.PreviousTrack"),
+                HotkeyType.Mute => localization.GetLocalizedString("Strings.SettingsView.Keybinds.Mute"),
+                HotkeyType.Repeat => localization.GetLocalizedString("Strings.SettingsView.Keybinds.Repeat"),
+                HotkeyType.Shuffle => localization.GetLocalizedString("Strings.SettingsView.Keybinds.Shuffle"),
+                HotkeyType.VolumeUp => localization.GetLocalizedString("Strings.SettingsView.Keybinds.VolumeUp"),
+                HotkeyType.VolumeDown => localization.GetLocalizedString("Strings.SettingsView.Keybinds.VolumeDown"),
+                _ => localization.GetLocalizedString("Strings.SettingsView.Keybinds.Unknown"),
             };
         }
 

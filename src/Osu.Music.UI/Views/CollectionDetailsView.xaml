@@ -3,11 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:Osu.Music.UI.Views"
              xmlns:m="clr-namespace:Osu.Music.Common.Models;assembly=Osu.Music.Common"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:gl="clr-namespace:System.Globalization;assembly=mscorlib"
              xmlns:prism="http://prismlibrary.com/"
+             xmlns:behaviors="clr-namespace:Osu.Music.UI.Behaviors"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -35,9 +36,13 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding Model.Collection.Name}" FontSize="24"/>
                     </StackPanel>
-                    <TextBlock Text="{Binding Model.Collection.Beatmaps.Count, Converter={StaticResource CountToStringConverter}}" FontFamily="{DynamicResource Poppins}" FontSize="16" FontWeight="Light" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}" Margin="0 5 0 0"/>
-                    <StackPanel Orientation="Horizontal" Margin="0 39 0 0">
-                        <Button Style="{DynamicResource MaterialDesignRaisedButton}" Command="{Binding LaunchCollectionCommand}" Foreground="White" Content="PLAY" Width="80"/>
+                    <TextBlock Text="{Binding Model.Collection.Beatmaps.Count, Converter={StaticResource CountToStringConverter}}" FontFamily="{DynamicResource Poppins}" FontSize="16" FontWeight="Light" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}" Margin="0 0 0 0">
+                        <i:Interaction.Behaviors>
+                            <behaviors:CultureBehavior/>
+                        </i:Interaction.Behaviors>
+                    </TextBlock>
+                    <StackPanel Orientation="Horizontal" Margin="0 45 0 0">
+                        <Button Style="{DynamicResource MaterialDesignRaisedButton}" Command="{Binding LaunchCollectionCommand}" Foreground="White" Content="{DynamicResource Strings.CollectionDetailsView.Play}" MinWidth="80"/>
                     </StackPanel>
                 </StackPanel>
             </DockPanel>
@@ -86,7 +91,7 @@
                                     Command="{Binding DataContext.OpenBeatmapInBrowserCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:CollectionDetailsView}}}" 
                                     CommandParameter="{Binding .}">
                                 <Button.ToolTip>
-                                    <TextBlock Style="{DynamicResource TooltipText}" Text="Show on osu! website"/>
+                                    <TextBlock Style="{DynamicResource TooltipText}" Text="{DynamicResource Strings.CollectionDetailsView.Tooltips.ShowOnOsuWebsite}"/>
                                 </Button.ToolTip>
                             </Button>
                         </StackPanel>

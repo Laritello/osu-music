@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Windows;
 
-namespace Osu.Music.UI.Utility
+namespace Osu.Music.UI.Behaviors
 {
     public static class WindowClosingBehavior
     {
@@ -38,9 +38,7 @@ namespace Osu.Music.UI.Utility
 
         private static void Window_Closing(object sender, CancelEventArgs e)
         {
-            var window = sender as Window;
-
-            if (window != null)
+            if (sender is Window window)
             {
                 var closing = GetClosing(window);
 

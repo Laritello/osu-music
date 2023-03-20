@@ -37,12 +37,12 @@
                 <Button Style="{StaticResource TitleBarUpdates}" Visibility="{Binding DataContext.Updater.State, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Converter={StaticResource UpdateStateToVisibilityConverter}, FallbackValue=Collapsed}"
                         Command="{Binding DataContext.UpdateAppCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
                     <Button.ToolTip>
-                        <TextBlock Style="{DynamicResource TooltipText}" Text="Update osu.Music"/>
+                        <TextBlock Style="{DynamicResource TooltipText}" Text="{DynamicResource Strings.MainView.Tooltips.Update}"/>
                     </Button.ToolTip>
                 </Button>
                 <Button Style="{StaticResource TitleBarSearch}" Command="{Binding SearchCommand}">
                     <Button.ToolTip>
-                        <TextBlock Style="{DynamicResource TooltipText}" Text="Search"/>
+                        <TextBlock Style="{DynamicResource TooltipText}" Text="{DynamicResource Strings.MainView.Tooltips.Search}"/>
                     </Button.ToolTip>
                 </Button>
                 <Button Style="{StaticResource TitleBarMinimize}" Command="{Binding MinimizeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
@@ -62,19 +62,19 @@
 
                 <Button Style="{DynamicResource SidebarButtonOsu}" Command="{Binding OpenPageCommand}" CommandParameter="AboutView">
                     <Button.ToolTip>
-                        <TextBlock Style="{DynamicResource TooltipText}" Text="About"/>
+                        <TextBlock Style="{DynamicResource TooltipText}" Text="{DynamicResource Strings.MainView.Tooltips.About}"/>
                     </Button.ToolTip>
                 </Button>
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                     <Button Style="{StaticResource GithubButton}" Command="{Binding OpenGitHubCommand}">
                         <Button.ToolTip>
-                            <TextBlock Style="{DynamicResource TooltipText}" Text="Go to GitHub"/>
+                            <TextBlock Style="{DynamicResource TooltipText}" Text="{DynamicResource Strings.MainView.Tooltips.Github}"/>
                         </Button.ToolTip>
                     </Button>
 
                     <Button Style="{DynamicResource SettingsButton}" Margin="3 0 0 0"  Command="{Binding OpenPageCommand}" CommandParameter="SettingsView">
                         <Button.ToolTip>
-                            <TextBlock Style="{DynamicResource TooltipText}" Text="Settings"/>
+                            <TextBlock Style="{DynamicResource TooltipText}" Text="{DynamicResource Strings.MainView.Tooltips.Settings}"/>
                         </Button.ToolTip>
                     </Button>
                 </StackPanel>

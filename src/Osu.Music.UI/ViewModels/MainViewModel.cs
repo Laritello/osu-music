@@ -9,10 +9,11 @@ using Osu.Music.Services.Events;
 using Osu.Music.Services.Hotkeys;
 using Osu.Music.Services.Interfaces;
 using Osu.Music.Services.IO;
+using Osu.Music.Services.Localization;
 using Osu.Music.Services.UItility;
+using Osu.Music.UI.Behaviors;
 using Osu.Music.UI.Interfaces;
 using Osu.Music.UI.Models;
-using Osu.Music.UI.Utility;
 using Osu.Music.UI.ViewModels.Dialogs;
 using Osu.Music.UI.Views.Dialogs;
 using Osu.Music.UI.Visualization;
@@ -72,15 +73,16 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand OnCloseCommand { get; private set; }
         #endregion
 
-        private IPopupDialogService _dialogService;
-        private IRegionManager _regionManager;
-        private ILibraryManager _libraryManager;
-        private ICollectionManager _collectionManager;
-        private IPlaylistManager _playlistManager;
-        private SettingsManager _settingsManager;
+        private readonly IPopupDialogService _dialogService;
+        private readonly IRegionManager _regionManager;
+        private readonly ILibraryManager _libraryManager;
+        private readonly ICollectionManager _collectionManager;
+        private readonly IPlaylistManager _playlistManager;
+        private readonly SettingsManager _settingsManager;
+        private readonly DiscordManager _discordManager;
+        private readonly HotkeyManager _hotkeyManager;
+        private readonly LocalizationManager _localizationManager;
         private DispatcherTimer _audioProgressTimer;
-        private DiscordManager _discordManager;
-        private HotkeyManager _hotkeyManager;
         private Settings _settings;
 
         public MainViewModel(IContainer container, MainModel model)
@@ -94,6 +96,8 @@ namespace Osu.Music.UI.ViewModels
             _settingsManager = container.Resolve<SettingsManager>();
             _discordManager = container.Resolve<DiscordManager>();
             _hotkeyManager = container.Resolve<HotkeyManager>();
+            _localizationManager = LocalizationManager.Instance;
+
             _model = model;
 
             Visualization = new DefaultVisualization();
@@ -116,9 +120,12 @@ namespace Osu.Music.UI.ViewModels
             _settings.SourceChanged += Settings_SourceChanged;
             _settings.ColorChanged += Settings_ColorChanged;
             _settings.DiscordEnabledChanged += Settings_DiscordEnabledChanged;
+            _settings.CultureChanged += Settings_CultureChanged;
 
             ResourceDictionary resource = Application.Current.Resources;
             resource.MergedDictionaries.SetMainColor(_settings.Color);
+
+            _localizationManager.Culture = LocalizationFactory.GetCulture(_settings.Culture);
         }
 
         private void InitializeCommands()
@@ -274,8 +281,8 @@ namespace Osu.Music.UI.ViewModels
         {
             DialogParameters parameters = new DialogParameters()
             {
-                { "title", "New playlist" },
-                { "caption", "CREATE" },
+                { "title", _localizationManager.GetLocalizedString("Strings.MainView.NewPlaylistDialog.Title") },
+                { "caption", _localizationManager.GetLocalizedString("Strings.MainView.NewPlaylistDialog.Create") },
                 { "names", Model.Playlists.Select(x => x.Name) }
             };
 
@@ -419,6 +426,11 @@ namespace Osu.Music.UI.ViewModels
 
             if (!enabled)
                 _discordManager.ClearPresence();
+        }
+
+        private void Settings_CultureChanged(string culture)
+        {
+            _localizationManager.Culture = LocalizationFactory.GetCulture(culture);
         }
         #endregion
 

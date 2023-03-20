@@ -4,9 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:validators="clr-namespace:Osu.Music.UI.Resources.Validators"
-             xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
              xmlns:utility="clr-namespace:Osu.Music.UI.Utility"
+             xmlns:behaviors="clr-namespace:Osu.Music.UI.Behaviors"
              xmlns:proxy="clr-namespace:Osu.Music.UI.Utility.Proxies"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="350">
@@ -20,9 +20,9 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <TextBlock Style="{DynamicResource HighEmphasisListText}" FontSize="16" Text="{Binding Title}"/>
-        <TextBox Grid.Row="1" Margin="0 6 0 0" wpf:HintAssist.Hint="Name" FontSize="14" MinWidth="300"
+        <TextBox Grid.Row="1" Margin="0 6 0 0" wpf:HintAssist.Hint="{DynamicResource Strings.ManagePlaylistNameView.TextHint}" FontSize="14" MinWidth="300"
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                 utility:ValidationBehaviour.HasError="{Binding NameHasError}">
+                 behaviors:ValidationBehavior.HasError="{Binding NameHasError}">
             <TextBox.Text>
                 <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -38,7 +38,7 @@
         </TextBox>
         <StackPanel Grid.Row="2" Margin="0 20 0 0" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Command="{Binding AcceptCommand}" IsDefault="True" Style="{StaticResource MaterialDesignFlatButton}" Content="{Binding Caption}" VerticalContentAlignment="Center"/>
-            <Button Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource MaterialDesignFlatButton}" Content="CANCEL" Margin="8 0 0 0"/>
+            <Button Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource MaterialDesignFlatButton}" Content="{DynamicResource Strings.ManagePlaylistNameView.Cancel}" Margin="8 0 0 0"/>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -3,6 +3,7 @@ using Osu.Music.Services.Dialog;
 using Osu.Music.Services.Hotkeys;
 using Osu.Music.Services.Interfaces;
 using Osu.Music.Services.IO;
+using Osu.Music.Services.Localization;
 using Prism.Ioc;
 using Prism.Modularity;
 
