@@ -34,8 +34,8 @@ namespace Osu.Music.Services.Hotkeys
 
         public ICollection<Hotkey> Hotkeys { get; set; }
 
-        private AudioPlayback _playback;
-        private Settings _settings;
+        private readonly AudioPlayback _playback;
+        private readonly Settings _settings;
 
         public HotkeyManager(AudioPlayback playback, SettingsManager settingsManager)
         {

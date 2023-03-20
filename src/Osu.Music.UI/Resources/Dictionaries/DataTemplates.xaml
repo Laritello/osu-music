@@ -4,7 +4,7 @@
                     xmlns:prism="http://prismlibrary.com/"
                     xmlns:cm="clr-namespace:Osu.Music.Common.Models;assembly=Osu.Music.Common"
                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-                    xmlns:vm="clr-namespace:Osu.Music.UI.ViewModels"
+                    xmlns:behaviors="clr-namespace:Osu.Music.UI.Behaviors"
                     xmlns:v="clr-namespace:Osu.Music.UI.Views">
     <DataTemplate x:Key="PlaylistTile" DataType="{x:Type cm:Playlist}">
         <Border Margin="5">
@@ -80,7 +80,11 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </TextBlock>
-                <TextBlock Text="{Binding Path=Beatmaps.Count, Converter={StaticResource CountToStringConverter}}" FontFamily="{DynamicResource Poppins}" FontSize="12" FontWeight="Light" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
+                <TextBlock Text="{Binding Path=Beatmaps.Count, Converter={StaticResource CountToStringConverter}}" FontFamily="{DynamicResource Poppins}" FontSize="12" FontWeight="Light" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}">
+                    <i:Interaction.Behaviors>
+                        <behaviors:CultureBehavior/>
+                    </i:Interaction.Behaviors>
+                </TextBlock>
             </StackPanel>
         </Border>
     </DataTemplate>
@@ -159,7 +163,12 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </TextBlock>
-                <TextBlock Text="{Binding Path=Beatmaps.Count, Converter={StaticResource CountToStringConverter}}" FontFamily="{DynamicResource Poppins}" FontSize="12" FontWeight="Light" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"/>
+                <TextBlock FontFamily="{DynamicResource Poppins}" FontSize="12" FontWeight="Light" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}"
+                           Text="{Binding Path=Beatmaps.Count, Converter={StaticResource CountToStringConverter}}">
+                    <i:Interaction.Behaviors>
+                        <behaviors:CultureBehavior/>
+                    </i:Interaction.Behaviors>
+                </TextBlock>
             </StackPanel>
         </Border>
     </DataTemplate>
@@ -167,7 +176,11 @@
     <DataTemplate x:Key="HotkeyListItem" DataType="{x:Type cm:Hotkey}">
         <Grid>
             <TextBlock Padding="0 6 0 0" HorizontalAlignment="Left"
-                       Text="{Binding Path=Type, Converter={StaticResource HotkeyTypeToStringConverter}}"/>
+                       Text="{Binding Path=Type, Converter={StaticResource HotkeyTypeToStringConverter}}">
+                <i:Interaction.Behaviors>
+                    <behaviors:CultureBehavior/>
+                </i:Interaction.Behaviors>
+            </TextBlock>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <TextBlock FontWeight="Bold" FontSize="16" Width="150" Height="30" Padding="0 6 0 0"
                            Text="{Binding Path=Combination, Converter={StaticResource KeyCombinationToStringConverter}}"/>

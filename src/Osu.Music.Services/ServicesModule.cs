@@ -28,7 +28,6 @@ namespace Osu.Music.Services
             containerRegistry.RegisterSingleton<SettingsManager>();
             containerRegistry.RegisterSingleton<HotkeyManager>();
             containerRegistry.RegisterSingleton<DiscordManager>();
-            containerRegistry.RegisterSingleton<LocalizationManager>();
         }
     }
 }

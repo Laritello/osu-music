@@ -40,18 +40,19 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand<Beatmap> OpenBeatmapInBrowserCommand { get; private set; }
         public DelegateCommand<Beatmap> RemoveFromPlaylistCommand { get; private set; }
 
-        private IPopupDialogService _dialogService;
-        private IPlaylistManager _playlistManager;
-        private IRegionManager _regionManager;
-        private LocalizationManager _localizationManager;
+        private readonly IPopupDialogService _dialogService;
+        private readonly IPlaylistManager _playlistManager;
+        private readonly IRegionManager _regionManager;
+        private readonly LocalizationManager _localizationManager;
 
         public PlaylistDetailsViewModel(IContainer container, PlaylistDetailsModel model)
         {
             _dialogService = container.Resolve<IPopupDialogService>();
             _playlistManager = container.Resolve<IPlaylistManager>();
             _regionManager = container.Resolve<IRegionManager>();
-            _localizationManager = container.Resolve<LocalizationManager>();
             _playback = container.Resolve<AudioPlayback>();
+            _localizationManager = LocalizationManager.Instance;
+
             _model = model;
 
             InitializeCommands();

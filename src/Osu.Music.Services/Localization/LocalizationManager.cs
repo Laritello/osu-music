@@ -1,5 +1,4 @@
-﻿using Osu.Music.Services.IO;
-using Prism.Mvvm;
+﻿using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +9,9 @@ namespace Osu.Music.Services.Localization
 {
     public class LocalizationManager : BindableBase
     {
+        private static LocalizationManager _instance;
+        public static LocalizationManager Instance => _instance ??= new LocalizationManager();
+
         private ICollection<LocalizationCulture> _cultures;
         public ICollection<LocalizationCulture> Cultures
         {
@@ -28,13 +30,14 @@ namespace Osu.Music.Services.Localization
             }
         }
 
+        public delegate void CultureChangedEventHandler(LocalizationCulture culture);
+        public event CultureChangedEventHandler CultureChanged;
+
         private ResourceDictionary _localizationResource;
 
-        public LocalizationManager(SettingsManager settingsManager)
+        private LocalizationManager()
         {
             Cultures = LocalizationFactory.GetAvailableCultures();
-            Culture = LocalizationFactory.GetCulture(settingsManager.Settings.Culture);
-            UpdateCulture(Culture);
         }
 
         public string GetLocalizedString(string key)
@@ -61,6 +64,8 @@ namespace Osu.Music.Services.Localization
 
             dictionaries.Add(currentLocale);
             _localizationResource = currentLocale; // Save reference to the current locale so we can access it from ViewModel
+
+            CultureChanged?.Invoke(_culture);
         }
     }
 }

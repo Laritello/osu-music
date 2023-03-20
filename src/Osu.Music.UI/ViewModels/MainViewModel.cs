@@ -73,16 +73,16 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand OnCloseCommand { get; private set; }
         #endregion
 
-        private IPopupDialogService _dialogService;
-        private IRegionManager _regionManager;
-        private ILibraryManager _libraryManager;
-        private ICollectionManager _collectionManager;
-        private IPlaylistManager _playlistManager;
-        private SettingsManager _settingsManager;
+        private readonly IPopupDialogService _dialogService;
+        private readonly IRegionManager _regionManager;
+        private readonly ILibraryManager _libraryManager;
+        private readonly ICollectionManager _collectionManager;
+        private readonly IPlaylistManager _playlistManager;
+        private readonly SettingsManager _settingsManager;
+        private readonly DiscordManager _discordManager;
+        private readonly HotkeyManager _hotkeyManager;
+        private readonly LocalizationManager _localizationManager;
         private DispatcherTimer _audioProgressTimer;
-        private DiscordManager _discordManager;
-        private HotkeyManager _hotkeyManager;
-        private LocalizationManager _localizationManager;
         private Settings _settings;
 
         public MainViewModel(IContainer container, MainModel model)
@@ -96,7 +96,8 @@ namespace Osu.Music.UI.ViewModels
             _settingsManager = container.Resolve<SettingsManager>();
             _discordManager = container.Resolve<DiscordManager>();
             _hotkeyManager = container.Resolve<HotkeyManager>();
-            _localizationManager = container.Resolve<LocalizationManager>();
+            _localizationManager = LocalizationManager.Instance;
+
             _model = model;
 
             Visualization = new DefaultVisualization();
@@ -123,6 +124,8 @@ namespace Osu.Music.UI.ViewModels
 
             ResourceDictionary resource = Application.Current.Resources;
             resource.MergedDictionaries.SetMainColor(_settings.Color);
+
+            _localizationManager.Culture = LocalizationFactory.GetCulture(_settings.Culture);
         }
 
         private void InitializeCommands()

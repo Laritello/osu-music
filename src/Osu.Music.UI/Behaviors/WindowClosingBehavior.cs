@@ -38,9 +38,7 @@ namespace Osu.Music.UI.Behaviors
 
         private static void Window_Closing(object sender, CancelEventArgs e)
         {
-            var window = sender as Window;
-
-            if (window != null)
+            if (sender is Window window)
             {
                 var closing = GetClosing(window);
 

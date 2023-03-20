@@ -44,14 +44,14 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand UpdateSourceCommand { get; private set; }
         public DelegateCommand UpdateDiscordCommand { get; private set; }
 
-        private IFileDialogService _fileDialogService;
-        private SettingsManager _settingsManager;
+        private readonly IFileDialogService _fileDialogService;
+        private readonly SettingsManager _settingsManager;
 
         public SettingsViewModel(IContainer container, SettingsModel model) 
         {
             _settingsManager = container.Resolve<SettingsManager>();
             _fileDialogService = container.Resolve<IFileDialogService>();
-            _localizationManager = container.Resolve<LocalizationManager>();
+            _localizationManager = LocalizationManager.Instance;
 
             _model = model;
 
