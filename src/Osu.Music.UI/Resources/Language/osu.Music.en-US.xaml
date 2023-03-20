@@ -30,7 +30,7 @@
     <s:String x:Key="Strings.ManagePlaylistNameView.TextHint">Name</s:String>
     <s:String x:Key="Strings.PlaylistDetailsView.Delete">DELETE</s:String>
     <s:String x:Key="Strings.PlaylistDetailsView.DeleteDialog.Caption">DELETE</s:String>
-    <s:String x:Key="Strings.PlaylistDetailsView.DeleteDialog.Message">Are you sure you want to delete {0}?\r\nThis action cannot be undone.</s:String>
+    <s:String x:Key="Strings.PlaylistDetailsView.DeleteDialog.Message" xml:space="preserve">Are you sure you want to delete {0}?&#13;&#13;This action cannot be undone.</s:String>
     <s:String x:Key="Strings.PlaylistDetailsView.DeleteDialog.Title">Delete playlist</s:String>
     <s:String x:Key="Strings.PlaylistDetailsView.EditDialog.Caption">EDIT</s:String>
     <s:String x:Key="Strings.PlaylistDetailsView.EditDialog.Title">Edit playlist</s:String>

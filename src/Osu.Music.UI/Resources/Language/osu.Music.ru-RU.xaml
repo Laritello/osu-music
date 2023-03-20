@@ -30,7 +30,7 @@
     <s:String x:Key="Strings.ManagePlaylistNameView.TextHint">Имя</s:String>
     <s:String x:Key="Strings.PlaylistDetailsView.Delete">УДАЛИТЬ</s:String>
     <s:String x:Key="Strings.PlaylistDetailsView.DeleteDialog.Caption">УДАЛИТЬ</s:String>
-    <s:String x:Key="Strings.PlaylistDetailsView.DeleteDialog.Message">Вы уверены, что хотите удалить {0}?\r\nЭто действие нельзя отменить.</s:String>
+    <s:String x:Key="Strings.PlaylistDetailsView.DeleteDialog.Message" xml:space="preserve">Вы уверены, что хотите удалить {0}?&#13;&#13;Это действие нельзя отменить.</s:String>
     <s:String x:Key="Strings.PlaylistDetailsView.DeleteDialog.Title">Удалить плейлист</s:String>
     <s:String x:Key="Strings.PlaylistDetailsView.EditDialog.Caption">РЕДАКТИРОВАТЬ</s:String>
     <s:String x:Key="Strings.PlaylistDetailsView.EditDialog.Title">Редактировать плейлист</s:String>
