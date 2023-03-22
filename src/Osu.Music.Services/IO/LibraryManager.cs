@@ -1,5 +1,4 @@
-﻿using DryIoc;
-using Osu.Music.Common.Models;
+﻿using Osu.Music.Common.Models;
 using Osu.Music.Services.Interfaces;
 using osu_database_reader.BinaryFiles;
 using osu_database_reader.Components.Beatmaps;
@@ -14,11 +13,11 @@ namespace Osu.Music.Services.IO
 {
     public class LibraryManager : ILibraryManager
     {
-        private Settings _settings;
+        private readonly Settings _settings;
 
-        public LibraryManager(IContainer container)
+        public LibraryManager(SettingsManager settingsManager)
         {
-            _settings = container.Resolve<SettingsManager>().Settings;
+            _settings = settingsManager.Settings;
         }
 
         public ObservableCollection<Beatmap> Beatmaps { get; private set; }

@@ -1,5 +1,4 @@
-﻿using DryIoc;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Osu.Music.Common.Models;
 using Osu.Music.Services.Interfaces;
 using Osu.Music.Services.UItility;
@@ -16,11 +15,11 @@ namespace Osu.Music.Services.IO
     {
         public ObservableCollection<Playlist> Playlists { get; private set; }
 
-        private ILibraryManager _libraryManager;
+        private readonly ILibraryManager _libraryManager;
 
-        public PlaylistManager(IContainer container) 
+        public PlaylistManager(ILibraryManager libraryManager) 
         {
-            _libraryManager = container.Resolve<ILibraryManager>();
+            _libraryManager = libraryManager;
         }
 
         public Task<ObservableCollection<Playlist>> LoadAsync()

@@ -1,5 +1,4 @@
-﻿using DryIoc;
-using Osu.Music.Common.Models;
+﻿using Osu.Music.Common.Models;
 using Osu.Music.Services.Interfaces;
 using osu_database_reader.BinaryFiles;
 using System;
@@ -15,13 +14,13 @@ namespace Osu.Music.Services.IO
     {
         public ObservableCollection<Collection> Collections { get; private set; }
 
-        private ILibraryManager _libraryManager;
-        private Settings _settings;
+        private readonly ILibraryManager _libraryManager;
+        private readonly Settings _settings;
 
-        public CollectionManager(IContainer container)
+        public CollectionManager(ILibraryManager libraryManager, SettingsManager settingsManager)
         {
-            _libraryManager = container.Resolve<ILibraryManager>();
-            _settings = container.Resolve<SettingsManager>().Settings;
+            _libraryManager = libraryManager;
+            _settings = settingsManager.Settings;
         }
 
         public Task<ObservableCollection<Collection>> LoadAsync()
