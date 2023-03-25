@@ -37,10 +37,10 @@ namespace Osu.Music.Services.Hotkeys
         private readonly AudioPlayback _playback;
         private readonly Settings _settings;
 
-        public HotkeyManager(AudioPlayback playback, SettingsManager settingsManager)
+        public HotkeyManager(AudioPlayback playback, SettingsProvider settingsProvider)
         {
             _playback = playback;
-            _settings = settingsManager.Settings;
+            _settings = settingsProvider.Settings;
 
             Hotkeys = _settings.Hotkeys;
 

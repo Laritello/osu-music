@@ -1,5 +1,4 @@
-﻿using DryIoc;
-using Osu.Music.Common.Models;
+﻿using Osu.Music.Common.Models;
 using Osu.Music.Services.Interfaces;
 using osu_database_reader.BinaryFiles;
 using osu_database_reader.Components.Beatmaps;
@@ -12,50 +11,49 @@ using System.Threading.Tasks;
 
 namespace Osu.Music.Services.IO
 {
-    public class LibraryManager : ILibraryManager
+    public class LibraryProvider : ILibraryProvider
     {
-        private Settings _settings;
+        private readonly Settings _settings;
 
-        public LibraryManager(IContainer container)
+        public LibraryProvider(SettingsProvider settingsProvider)
         {
-            _settings = container.Resolve<SettingsManager>().Settings;
+            _settings = settingsProvider.Settings;
         }
 
         public ObservableCollection<Beatmap> Beatmaps { get; private set; }
 
-        public Task<ObservableCollection<Beatmap>> LoadAsync()
+        public Task<ObservableCollection<Beatmap>> LoadAsync() => Task.Run(() => Load());
+
+        public ObservableCollection<Beatmap> Load()
         {
-            return Task.Run(() =>
+            try
             {
-                try
+                var source = _settings.Source;
+
+                if (!Directory.Exists(source))
+                    throw new ArgumentException("The specified folder does not exist.");
+
+                List<Beatmap> beatmaps = new List<Beatmap>();
+
+                OsuDb db;
+
+                using (FileStream stream = File.OpenRead($@"{source}\osu!.db"))
+                    db = OsuDb.Read(stream);
+
+                foreach (var beatmapSet in db.Beatmaps.GroupBy(x => x.BeatmapSetId))
                 {
-                    var source = _settings.Source;
-
-                    if (!Directory.Exists(source))
-                        throw new ArgumentException("The specified folder does not exist.");
-
-                    List<Beatmap> beatmaps = new List<Beatmap>();
-
-                    OsuDb db;
-
-                    using (FileStream stream = File.OpenRead($@"{source}\osu!.db"))
-                        db = OsuDb.Read(stream);
-
-                    foreach (var beatmapSet in db.Beatmaps.GroupBy(x => x.BeatmapSetId))
-                    {
-                        if (beatmapSet.Count() > 0)
-                            beatmaps.Add(Convert(source, beatmapSet));
-                    }
-
-                    Beatmaps = new ObservableCollection<Beatmap>(beatmaps.OrderBy(x => x.Title));
-                }
-                catch
-                {
-                    Beatmaps = new ObservableCollection<Beatmap>();
+                    if (beatmapSet.Count() > 0)
+                        beatmaps.Add(Convert(source, beatmapSet));
                 }
 
-                return Beatmaps;
-            });
+                Beatmaps = new ObservableCollection<Beatmap>(beatmaps.OrderBy(x => x.Title));
+            }
+            catch
+            {
+                Beatmaps = new ObservableCollection<Beatmap>();
+            }
+
+            return Beatmaps;
         }
 
         private Beatmap Convert(string osuFolder, IGrouping<int, BeatmapEntry> set)

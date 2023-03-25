@@ -4,9 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:m="clr-namespace:Osu.Music.Common.Models;assembly=Osu.Music.Common"
-             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:local="clr-namespace:Osu.Music.UI.Views.Dialogs"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="350">
     <Grid Margin="16">

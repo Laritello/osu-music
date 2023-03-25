@@ -10,6 +10,7 @@ using Osu.Music.Services.Hotkeys;
 using Osu.Music.Services.Interfaces;
 using Osu.Music.Services.IO;
 using Osu.Music.Services.Localization;
+using Osu.Music.Services.Social;
 using Osu.Music.Services.UItility;
 using Osu.Music.UI.Behaviors;
 using Osu.Music.UI.Interfaces;
@@ -75,10 +76,10 @@ namespace Osu.Music.UI.ViewModels
 
         private readonly IPopupDialogService _dialogService;
         private readonly IRegionManager _regionManager;
-        private readonly ILibraryManager _libraryManager;
-        private readonly ICollectionManager _collectionManager;
-        private readonly IPlaylistManager _playlistManager;
-        private readonly SettingsManager _settingsManager;
+        private readonly ILibraryProvider _libraryManager;
+        private readonly ICollectionProvider _collectionProvider;
+        private readonly IPlaylistProvider _playlistProvider;
+        private readonly SettingsProvider _settingsManager;
         private readonly DiscordManager _discordManager;
         private readonly HotkeyManager _hotkeyManager;
         private readonly LocalizationManager _localizationManager;
@@ -89,11 +90,11 @@ namespace Osu.Music.UI.ViewModels
         {
             _dialogService = container.Resolve<IPopupDialogService>();
             _regionManager = container.Resolve<IRegionManager>();
-            _libraryManager = container.Resolve<ILibraryManager>();
-            _collectionManager = container.Resolve<ICollectionManager>();
-            _playlistManager = container.Resolve<IPlaylistManager>();
+            _libraryManager = container.Resolve<ILibraryProvider>();
+            _collectionProvider = container.Resolve<ICollectionProvider>();
+            _playlistProvider = container.Resolve<IPlaylistProvider>();
             _playback = container.Resolve<AudioPlayback>();
-            _settingsManager = container.Resolve<SettingsManager>();
+            _settingsManager = container.Resolve<SettingsProvider>();
             _discordManager = container.Resolve<DiscordManager>();
             _hotkeyManager = container.Resolve<HotkeyManager>();
             _localizationManager = LocalizationManager.Instance;
@@ -110,7 +111,6 @@ namespace Osu.Music.UI.ViewModels
             InitializeDiscord();
 
             LoadState();
-            Load();
         }
 
         #region Initialization
@@ -173,7 +173,7 @@ namespace Osu.Music.UI.ViewModels
         }
         #endregion
 
-        private async void Load()
+        private void Load()
         {
             try
             {
@@ -183,13 +183,12 @@ namespace Osu.Music.UI.ViewModels
                     _settingsManager.Save(_settings);
                 }
 
-                Model.Beatmaps = await _libraryManager.LoadAsync();
-                Model.Playlists = await _playlistManager.LoadAsync();
-                Model.Collections = await _collectionManager.LoadAsync();
+                Model.Beatmaps = _libraryManager.Beatmaps;
+                Model.Playlists = _playlistProvider.Playlists;
+                Model.Collections = _collectionProvider.Collections;
+                Playback.Queue = _libraryManager.Beatmaps;
 
                 OpenPage("LibraryView");
-
-                Playback.Queue = Model.Beatmaps;
 
                 if (Model.PlaybackInitializationRequired)
                 {
@@ -375,6 +374,8 @@ namespace Osu.Music.UI.ViewModels
                 var window = Window.GetWindow(view);
                 window.SetBinding(WindowClosingBehavior.ClosingProperty, b);
             }
+
+            Load();
         }
 
         private void OnClose()
@@ -392,7 +393,7 @@ namespace Osu.Music.UI.ViewModels
                 };
 
                 _settingsManager.Save(_settings);
-                _playlistManager.Save(Model.Playlists);
+                _playlistProvider.Save(Model.Playlists);
             }
             catch { }
         }
@@ -441,6 +442,7 @@ namespace Osu.Music.UI.ViewModels
             Playback.Repeat = _settings.State.Repeat;
             Playback.Volume = _settings.State.Volume;
 
+            // TODO: Find a better solution
             Model.PlaybackInitializationRequired = _settings.State.SelectedBeatmapId.HasValue;
         }
 

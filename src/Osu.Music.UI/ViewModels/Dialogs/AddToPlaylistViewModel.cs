@@ -37,11 +37,11 @@ namespace Osu.Music.UI.ViewModels.Dialogs
 
         public event Action<IDialogResult> RequestClose;
 
-        private IPlaylistManager _playlistManager;
+        private IPlaylistProvider _playlistProvider;
 
-        public AddToPlaylistViewModel(IPlaylistManager playlistManager)
+        public AddToPlaylistViewModel(IPlaylistProvider playlistProvider)
         {
-            _playlistManager = playlistManager;
+            _playlistProvider = playlistProvider;
 
             InitializeCommands();
         }
@@ -71,7 +71,7 @@ namespace Osu.Music.UI.ViewModels.Dialogs
         public void OnDialogOpened(IDialogParameters parameters)
         {
             Beatmap = parameters.GetValue<Beatmap>("beatmap");
-            Playlists = new ObservableCollection<Playlist>(_playlistManager.Playlists.Where(x => !x.Beatmaps.Contains(Beatmap)));
+            Playlists = new ObservableCollection<Playlist>(_playlistProvider.Playlists.Where(x => !x.Beatmaps.Contains(Beatmap)));
         }
     }
 }

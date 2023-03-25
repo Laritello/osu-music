@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Osu.Music.Services.IO
 {
-    public class SettingsManager : BindableBase
+    public class SettingsProvider : BindableBase
     {
         private readonly string _settingsFile = Path.Combine(AppDataHelper.Path, "settings.json");
 

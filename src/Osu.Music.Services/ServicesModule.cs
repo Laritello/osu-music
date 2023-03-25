@@ -4,6 +4,7 @@ using Osu.Music.Services.Hotkeys;
 using Osu.Music.Services.Interfaces;
 using Osu.Music.Services.IO;
 using Osu.Music.Services.Localization;
+using Osu.Music.Services.Social;
 using Prism.Ioc;
 using Prism.Modularity;
 
@@ -21,11 +22,11 @@ namespace Osu.Music.Services
             containerRegistry.Register<IPopupDialogService, PopupDialogService>();
             containerRegistry.Register<IFileDialogService, FileDialogService>();
 
-            containerRegistry.RegisterSingleton<ICollectionManager, CollectionManager>();
-            containerRegistry.RegisterSingleton<ILibraryManager, LibraryManager>();
-            containerRegistry.RegisterSingleton<IPlaylistManager, PlaylistManager>();
+            containerRegistry.RegisterSingleton<ICollectionProvider, CollectionProvider>();
+            containerRegistry.RegisterSingleton<ILibraryProvider, LibraryProvider>();
+            containerRegistry.RegisterSingleton<IPlaylistProvider, PlaylistProvider>();
             containerRegistry.RegisterSingleton<AudioPlayback>();
-            containerRegistry.RegisterSingleton<SettingsManager>();
+            containerRegistry.RegisterSingleton<SettingsProvider>();
             containerRegistry.RegisterSingleton<HotkeyManager>();
             containerRegistry.RegisterSingleton<DiscordManager>();
         }

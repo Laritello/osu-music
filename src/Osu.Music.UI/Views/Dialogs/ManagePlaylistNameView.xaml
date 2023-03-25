@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:validators="clr-namespace:Osu.Music.UI.Resources.Validators"
              xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
-             xmlns:utility="clr-namespace:Osu.Music.UI.Utility"
              xmlns:behaviors="clr-namespace:Osu.Music.UI.Behaviors"
              xmlns:proxy="clr-namespace:Osu.Music.UI.Utility.Proxies"
              mc:Ignorable="d" 

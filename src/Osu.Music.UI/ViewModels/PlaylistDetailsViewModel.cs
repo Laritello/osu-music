@@ -41,14 +41,14 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand<Beatmap> RemoveFromPlaylistCommand { get; private set; }
 
         private readonly IPopupDialogService _dialogService;
-        private readonly IPlaylistManager _playlistManager;
+        private readonly IPlaylistProvider _playlistProvider;
         private readonly IRegionManager _regionManager;
         private readonly LocalizationManager _localizationManager;
 
         public PlaylistDetailsViewModel(IContainer container, PlaylistDetailsModel model)
         {
             _dialogService = container.Resolve<IPopupDialogService>();
-            _playlistManager = container.Resolve<IPlaylistManager>();
+            _playlistProvider = container.Resolve<IPlaylistProvider>();
             _regionManager = container.Resolve<IRegionManager>();
             _playback = container.Resolve<AudioPlayback>();
             _localizationManager = LocalizationManager.Instance;
@@ -91,14 +91,14 @@ namespace Osu.Music.UI.ViewModels
             {
                 if (e.Result == ButtonResult.OK)
                 {
-                    _playlistManager.Playlists.Remove(Model.Playlist);
-                    _playlistManager.Remove(Model.Playlist);
+                    _playlistProvider.Playlists.Remove(Model.Playlist);
+                    _playlistProvider.Remove(Model.Playlist);
                     _regionManager.RequestNavigate(
                         RegionNames.ContentRegion, 
                         "PlaylistsView", 
                         new NavigationParameters()
                         {
-                            { "playlists", _playlistManager.Playlists }
+                            { "playlists", _playlistProvider.Playlists }
                         });
                 }
             });
@@ -111,7 +111,7 @@ namespace Osu.Music.UI.ViewModels
                 { "title", _localizationManager.GetLocalizedString("Strings.PlaylistDetailsView.EditDialog.Title") },
                 { "caption", _localizationManager.GetLocalizedString("Strings.PlaylistDetailsView.EditDialog.Caption") },
                 { "name", Model.Playlist.Name },
-                { "names", _playlistManager.Playlists.Where(x => x != Model.Playlist).Select(x => x.Name) }
+                { "names", _playlistProvider.Playlists.Where(x => x != Model.Playlist).Select(x => x.Name) }
             };
 
             _dialogService.ShowPopupDialog<ManagePlaylistNameView, ManagePlaylistNameViewModel>(parameters, e =>

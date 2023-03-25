@@ -1,5 +1,4 @@
-﻿using DryIoc;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Osu.Music.Common.Models;
 using Osu.Music.Services.Interfaces;
 using Osu.Music.Services.UItility;
@@ -12,45 +11,44 @@ using System.Threading.Tasks;
 
 namespace Osu.Music.Services.IO
 {
-    public class PlaylistManager : IPlaylistManager
+    public class PlaylistProvider : IPlaylistProvider
     {
         public ObservableCollection<Playlist> Playlists { get; private set; }
 
-        private ILibraryManager _libraryManager;
+        private readonly ILibraryProvider _libraryProvider;
 
-        public PlaylistManager(IContainer container) 
+        public PlaylistProvider(ILibraryProvider libraryProvider) 
         {
-            _libraryManager = container.Resolve<ILibraryManager>();
+            _libraryProvider = libraryProvider;
         }
 
-        public Task<ObservableCollection<Playlist>> LoadAsync()
+        public Task<ObservableCollection<Playlist>> LoadAsync() => Task.Run(() => Load());
+
+        public ObservableCollection<Playlist> Load()
         {
-            return Task.Run(async() =>
+            try
             {
-                try
-                {
-                    var playlistDirectory = AppDataHelper.PlaylistDirectory;
-                    var beatmaps = await _libraryManager.LoadAsync();
+                var playlistDirectory = AppDataHelper.PlaylistDirectory;
+                var beatmaps = _libraryProvider.Load();
 
-                    if (!Directory.Exists(playlistDirectory))
-                        throw new ArgumentException("The specified folder does not exist.");
+                if (!Directory.Exists(playlistDirectory))
+                    throw new ArgumentException("The specified folder does not exist.");
 
-                    var s = Directory.GetFiles(playlistDirectory);
-                    var playlists = Directory.GetFiles(playlistDirectory)
-                    .Where(x => x.Contains("json"))
-                    .Select(file => ConvertPlaylistFromJson(file, beatmaps))
-                    .Where(x => x != null)
-                    .ToList();
+                var s = Directory.GetFiles(playlistDirectory);
+                var playlists = Directory.GetFiles(playlistDirectory)
+                .Where(x => x.Contains("json"))
+                .Select(file => ConvertPlaylistFromJson(file, beatmaps))
+                .Where(x => x != null)
+                .ToList();
 
-                    Playlists = new ObservableCollection<Playlist>(playlists);
-                }
-                catch
-                {
-                    Playlists = new ObservableCollection<Playlist>();
-                }
+                Playlists = new ObservableCollection<Playlist>(playlists);
+            }
+            catch
+            {
+                Playlists = new ObservableCollection<Playlist>();
+            }
 
-                return Playlists;
-            });
+            return Playlists;
         }
 
         public void Save(ICollection<Playlist> playlists)
