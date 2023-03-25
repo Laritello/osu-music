@@ -4,6 +4,7 @@ using Osu.Music.Services.Dialog;
 using Osu.Music.Services.Hotkeys;
 using Osu.Music.Services.IO;
 using Osu.Music.Services.Localization;
+using Osu.Music.Services.Social;
 using Osu.Music.UI.Models;
 using Prism.Commands;
 using Prism.Mvvm;

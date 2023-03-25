@@ -2,7 +2,7 @@
 using NAudio.Wave;
 using Osu.Music.Common.Models;
 using Osu.Music.Services.Events;
-using Osu.Music.Services.IO;
+using Osu.Music.Services.Social;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;

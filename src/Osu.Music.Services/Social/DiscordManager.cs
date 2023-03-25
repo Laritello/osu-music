@@ -4,7 +4,7 @@ using Osu.Music.Services.UItility;
 using Prism.Mvvm;
 using System;
 
-namespace Osu.Music.Services.IO
+namespace Osu.Music.Services.Social
 {
     // TODO: Extract interface for possible similar integrations
     public class DiscordManager : BindableBase, IDisposable

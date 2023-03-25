@@ -10,6 +10,7 @@ using Osu.Music.Services.Hotkeys;
 using Osu.Music.Services.Interfaces;
 using Osu.Music.Services.IO;
 using Osu.Music.Services.Localization;
+using Osu.Music.Services.Social;
 using Osu.Music.Services.UItility;
 using Osu.Music.UI.Behaviors;
 using Osu.Music.UI.Interfaces;
