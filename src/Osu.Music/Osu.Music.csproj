@@ -24,10 +24,10 @@
 	<ProjectReference Include="..\Osu.Music.UI\Osu.Music.UI.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-	<None Include="..\Osu.Music.UI\Resources\Images\Logo\Logo.png">
+	<Resource Include="..\Osu.Music.UI\Resources\Images\Logo\Logo.png">
 		<Pack>True</Pack>
 		<PackagePath></PackagePath>
-	</None>
+	</Resource>
 	</ItemGroup>
 
     <PropertyGroup>

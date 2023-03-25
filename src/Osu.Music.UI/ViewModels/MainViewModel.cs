@@ -110,7 +110,6 @@ namespace Osu.Music.UI.ViewModels
             InitializeDiscord();
 
             LoadState();
-            Load();
         }
 
         #region Initialization
@@ -173,7 +172,7 @@ namespace Osu.Music.UI.ViewModels
         }
         #endregion
 
-        private async void Load()
+        private void Load()
         {
             try
             {
@@ -183,13 +182,12 @@ namespace Osu.Music.UI.ViewModels
                     _settingsManager.Save(_settings);
                 }
 
-                Model.Beatmaps = await _libraryManager.LoadAsync();
-                Model.Playlists = await _playlistManager.LoadAsync();
-                Model.Collections = await _collectionManager.LoadAsync();
+                Model.Beatmaps = _libraryManager.Beatmaps;
+                Model.Playlists = _playlistManager.Playlists;
+                Model.Collections = _collectionManager.Collections;
+                Playback.Queue = _libraryManager.Beatmaps;
 
                 OpenPage("LibraryView");
-
-                Playback.Queue = Model.Beatmaps;
 
                 if (Model.PlaybackInitializationRequired)
                 {
@@ -375,6 +373,8 @@ namespace Osu.Music.UI.ViewModels
                 var window = Window.GetWindow(view);
                 window.SetBinding(WindowClosingBehavior.ClosingProperty, b);
             }
+
+            Load();
         }
 
         private void OnClose()
@@ -441,6 +441,7 @@ namespace Osu.Music.UI.ViewModels
             Playback.Repeat = _settings.State.Repeat;
             Playback.Volume = _settings.State.Volume;
 
+            // TODO: Find a better solution
             Model.PlaybackInitializationRequired = _settings.State.SelectedBeatmapId.HasValue;
         }
 
