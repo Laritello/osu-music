@@ -22,34 +22,33 @@ namespace Osu.Music.Services.IO
             _libraryManager = libraryManager;
         }
 
-        public Task<ObservableCollection<Playlist>> LoadAsync()
+        public Task<ObservableCollection<Playlist>> LoadAsync() => Task.Run(() => Load());
+
+        public ObservableCollection<Playlist> Load()
         {
-            return Task.Run(async() =>
+            try
             {
-                try
-                {
-                    var playlistDirectory = AppDataHelper.PlaylistDirectory;
-                    var beatmaps = await _libraryManager.LoadAsync();
+                var playlistDirectory = AppDataHelper.PlaylistDirectory;
+                var beatmaps = _libraryManager.Load();
 
-                    if (!Directory.Exists(playlistDirectory))
-                        throw new ArgumentException("The specified folder does not exist.");
+                if (!Directory.Exists(playlistDirectory))
+                    throw new ArgumentException("The specified folder does not exist.");
 
-                    var s = Directory.GetFiles(playlistDirectory);
-                    var playlists = Directory.GetFiles(playlistDirectory)
-                    .Where(x => x.Contains("json"))
-                    .Select(file => ConvertPlaylistFromJson(file, beatmaps))
-                    .Where(x => x != null)
-                    .ToList();
+                var s = Directory.GetFiles(playlistDirectory);
+                var playlists = Directory.GetFiles(playlistDirectory)
+                .Where(x => x.Contains("json"))
+                .Select(file => ConvertPlaylistFromJson(file, beatmaps))
+                .Where(x => x != null)
+                .ToList();
 
-                    Playlists = new ObservableCollection<Playlist>(playlists);
-                }
-                catch
-                {
-                    Playlists = new ObservableCollection<Playlist>();
-                }
+                Playlists = new ObservableCollection<Playlist>(playlists);
+            }
+            catch
+            {
+                Playlists = new ObservableCollection<Playlist>();
+            }
 
-                return Playlists;
-            });
+            return Playlists;
         }
 
         public void Save(ICollection<Playlist> playlists)

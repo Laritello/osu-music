@@ -23,37 +23,36 @@ namespace Osu.Music.Services.IO
             _settings = settingsManager.Settings;
         }
 
-        public Task<ObservableCollection<Collection>> LoadAsync()
+        public Task<ObservableCollection<Collection>> LoadAsync() => Task.Run(() => Load());
+
+        public ObservableCollection<Collection> Load()
         {
-            return Task.Run(async () =>
+            try
             {
-                try
-                {
-                    var source = _settings.Source;
+                var source = _settings.Source;
 
-                    if (!Directory.Exists(source))
-                        throw new ArgumentException("The specified folder does not exist.");
+                if (!Directory.Exists(source))
+                    throw new ArgumentException("The specified folder does not exist.");
 
-                    var beatmaps = await _libraryManager.LoadAsync();
+                var beatmaps = _libraryManager.Load();
 
-                    List<Collection> collections = new List<Collection>();
-                    CollectionDb db;
+                List<Collection> collections = new List<Collection>();
+                CollectionDb db;
 
-                    using (FileStream stream = File.OpenRead($@"{source}\collection.db"))
-                        db = CollectionDb.Read(stream);
+                using (FileStream stream = File.OpenRead($@"{source}\collection.db"))
+                    db = CollectionDb.Read(stream);
 
-                    foreach (var record in db.Collections)
-                        collections.Add(Convert(record, beatmaps));
+                foreach (var record in db.Collections)
+                    collections.Add(Convert(record, beatmaps));
 
-                    Collections = new ObservableCollection<Collection>(collections);
-                }
-                catch
-                {
-                    Collections = new ObservableCollection<Collection>();
-                }
+                Collections = new ObservableCollection<Collection>(collections);
+            }
+            catch
+            {
+                Collections = new ObservableCollection<Collection>();
+            }
 
-                return Collections;
-            });
+            return Collections;
         }
 
         private Collection Convert(osu_database_reader.Components.Beatmaps.Collection collection, IList<Beatmap> beatmaps)

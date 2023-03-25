@@ -8,5 +8,6 @@ namespace Osu.Music.Services.Interfaces
     {
         public ObservableCollection<Beatmap> Beatmaps { get; }
         public Task<ObservableCollection<Beatmap>> LoadAsync();
+        public ObservableCollection<Beatmap> Load();
     }
 }

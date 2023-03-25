@@ -10,6 +10,7 @@ namespace Osu.Music.Services.Interfaces
         public ObservableCollection<Playlist> Playlists { get; }
 
         public Task<ObservableCollection<Playlist>> LoadAsync();
+        public ObservableCollection<Playlist> Load();
         public void Save(Playlist playlist);
         public void Save(ICollection<Playlist> playlists);
         public void Remove(Playlist playlist);
