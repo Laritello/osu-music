@@ -1,5 +1,6 @@
 ﻿using Osu.Music.Services;
 using Osu.Music.Services.Interfaces;
+using Osu.Music.Services.Localization;
 using Osu.Music.UI;
 using Osu.Music.UI.ViewModels;
 using Osu.Music.UI.Views;
@@ -35,19 +36,25 @@ namespace Osu.Music
 
         protected override void OnInitialized()
         {
-            SplashScreen screen = new SplashScreen("Logo.png");
-            screen.Show(false);
             LoadData();
-            screen.Close(TimeSpan.Zero);
-
             base.OnInitialized();
         }
 
         private void LoadData()
         {
-            Container.Resolve<ILibraryProvider>().Load();
-            Container.Resolve<IPlaylistProvider>().Load();
-            Container.Resolve<ICollectionProvider>().Load();
+            SplashWindow screen = new SplashWindow();
+            screen.Show();
+
+            try
+            {
+                Container.Resolve<ILibraryProvider>().Load();
+                Container.Resolve<IPlaylistProvider>().Load();
+                Container.Resolve<ICollectionProvider>().Load();
+            }
+            finally
+            {
+                screen.Close();
+            }
         }
     }
 }
