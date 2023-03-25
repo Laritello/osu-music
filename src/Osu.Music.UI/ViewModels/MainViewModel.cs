@@ -75,10 +75,10 @@ namespace Osu.Music.UI.ViewModels
 
         private readonly IPopupDialogService _dialogService;
         private readonly IRegionManager _regionManager;
-        private readonly ILibraryManager _libraryManager;
-        private readonly ICollectionManager _collectionManager;
-        private readonly IPlaylistManager _playlistManager;
-        private readonly SettingsManager _settingsManager;
+        private readonly ILibraryProvider _libraryManager;
+        private readonly ICollectionProvider _collectionProvider;
+        private readonly IPlaylistProvider _playlistProvider;
+        private readonly SettingsProvider _settingsManager;
         private readonly DiscordManager _discordManager;
         private readonly HotkeyManager _hotkeyManager;
         private readonly LocalizationManager _localizationManager;
@@ -89,11 +89,11 @@ namespace Osu.Music.UI.ViewModels
         {
             _dialogService = container.Resolve<IPopupDialogService>();
             _regionManager = container.Resolve<IRegionManager>();
-            _libraryManager = container.Resolve<ILibraryManager>();
-            _collectionManager = container.Resolve<ICollectionManager>();
-            _playlistManager = container.Resolve<IPlaylistManager>();
+            _libraryManager = container.Resolve<ILibraryProvider>();
+            _collectionProvider = container.Resolve<ICollectionProvider>();
+            _playlistProvider = container.Resolve<IPlaylistProvider>();
             _playback = container.Resolve<AudioPlayback>();
-            _settingsManager = container.Resolve<SettingsManager>();
+            _settingsManager = container.Resolve<SettingsProvider>();
             _discordManager = container.Resolve<DiscordManager>();
             _hotkeyManager = container.Resolve<HotkeyManager>();
             _localizationManager = LocalizationManager.Instance;
@@ -183,8 +183,8 @@ namespace Osu.Music.UI.ViewModels
                 }
 
                 Model.Beatmaps = _libraryManager.Beatmaps;
-                Model.Playlists = _playlistManager.Playlists;
-                Model.Collections = _collectionManager.Collections;
+                Model.Playlists = _playlistProvider.Playlists;
+                Model.Collections = _collectionProvider.Collections;
                 Playback.Queue = _libraryManager.Beatmaps;
 
                 OpenPage("LibraryView");
@@ -392,7 +392,7 @@ namespace Osu.Music.UI.ViewModels
                 };
 
                 _settingsManager.Save(_settings);
-                _playlistManager.Save(Model.Playlists);
+                _playlistProvider.Save(Model.Playlists);
             }
             catch { }
         }

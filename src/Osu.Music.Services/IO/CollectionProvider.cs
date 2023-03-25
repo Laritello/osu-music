@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 
 namespace Osu.Music.Services.IO
 {
-    public class CollectionManager : ICollectionManager
+    public class CollectionProvider : ICollectionProvider
     {
         public ObservableCollection<Collection> Collections { get; private set; }
 
-        private readonly ILibraryManager _libraryManager;
+        private readonly ILibraryProvider _libraryProvider;
         private readonly Settings _settings;
 
-        public CollectionManager(ILibraryManager libraryManager, SettingsManager settingsManager)
+        public CollectionProvider(ILibraryProvider libraryProvider, SettingsProvider settingsProvider)
         {
-            _libraryManager = libraryManager;
-            _settings = settingsManager.Settings;
+            _libraryProvider = libraryProvider;
+            _settings = settingsProvider.Settings;
         }
 
         public Task<ObservableCollection<Collection>> LoadAsync() => Task.Run(() => Load());
@@ -34,7 +34,7 @@ namespace Osu.Music.Services.IO
                 if (!Directory.Exists(source))
                     throw new ArgumentException("The specified folder does not exist.");
 
-                var beatmaps = _libraryManager.Load();
+                var beatmaps = _libraryProvider.Load();
 
                 List<Collection> collections = new List<Collection>();
                 CollectionDb db;

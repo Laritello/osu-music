@@ -11,15 +11,15 @@ using System.Threading.Tasks;
 
 namespace Osu.Music.Services.IO
 {
-    public class PlaylistManager : IPlaylistManager
+    public class PlaylistProvider : IPlaylistProvider
     {
         public ObservableCollection<Playlist> Playlists { get; private set; }
 
-        private readonly ILibraryManager _libraryManager;
+        private readonly ILibraryProvider _libraryProvider;
 
-        public PlaylistManager(ILibraryManager libraryManager) 
+        public PlaylistProvider(ILibraryProvider libraryProvider) 
         {
-            _libraryManager = libraryManager;
+            _libraryProvider = libraryProvider;
         }
 
         public Task<ObservableCollection<Playlist>> LoadAsync() => Task.Run(() => Load());
@@ -29,7 +29,7 @@ namespace Osu.Music.Services.IO
             try
             {
                 var playlistDirectory = AppDataHelper.PlaylistDirectory;
-                var beatmaps = _libraryManager.Load();
+                var beatmaps = _libraryProvider.Load();
 
                 if (!Directory.Exists(playlistDirectory))
                     throw new ArgumentException("The specified folder does not exist.");

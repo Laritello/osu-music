@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Osu.Music.Services.Interfaces
 {
-    public interface IPlaylistManager
+    public interface IPlaylistProvider
     {
         public ObservableCollection<Playlist> Playlists { get; }
 

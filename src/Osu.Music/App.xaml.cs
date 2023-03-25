@@ -45,9 +45,9 @@ namespace Osu.Music
 
         private void LoadData()
         {
-            Container.Resolve<ILibraryManager>().Load();
-            Container.Resolve<IPlaylistManager>().Load();
-            Container.Resolve<ICollectionManager>().Load();
+            Container.Resolve<ILibraryProvider>().Load();
+            Container.Resolve<IPlaylistProvider>().Load();
+            Container.Resolve<ICollectionProvider>().Load();
         }
     }
 }

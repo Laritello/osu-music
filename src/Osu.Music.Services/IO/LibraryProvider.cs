@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace Osu.Music.Services.IO
 {
-    public class LibraryManager : ILibraryManager
+    public class LibraryProvider : ILibraryProvider
     {
         private readonly Settings _settings;
 
-        public LibraryManager(SettingsManager settingsManager)
+        public LibraryProvider(SettingsProvider settingsProvider)
         {
-            _settings = settingsManager.Settings;
+            _settings = settingsProvider.Settings;
         }
 
         public ObservableCollection<Beatmap> Beatmaps { get; private set; }

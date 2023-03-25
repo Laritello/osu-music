@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Osu.Music.Services.Interfaces
 {
-    public interface ILibraryManager
+    public interface ILibraryProvider
     {
         public ObservableCollection<Beatmap> Beatmaps { get; }
         public Task<ObservableCollection<Beatmap>> LoadAsync();
