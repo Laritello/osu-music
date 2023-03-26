@@ -1,8 +1,9 @@
-﻿using Osu.Music.Common.Models;
-using Osu.Music.Services.Hotkeys;
-using Osu.Music.Services.IO;
-using Osu.Music.Services.Localization;
+﻿using Osu.Music.Common.Enums;
+using Osu.Music.Common.Models;
 using Prism.Mvvm;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Osu.Music.UI.Models
 {
@@ -15,6 +16,15 @@ namespace Osu.Music.UI.Models
             set => SetProperty(ref _settings, value);
         }
 
-        public SettingsModel() { }
+        private IEnumerable<ApplicationTheme> _themes;
+        public IEnumerable<ApplicationTheme> Themes
+        {
+            get => _themes;
+        }
+
+        public SettingsModel() 
+        {
+            _themes = Enum.GetValues(typeof(ApplicationTheme)).Cast<ApplicationTheme>();
+        }
     }
 }

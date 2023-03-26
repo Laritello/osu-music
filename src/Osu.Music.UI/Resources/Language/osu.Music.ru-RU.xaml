@@ -47,6 +47,7 @@
     <s:String x:Key="Strings.SearchView.TextHint">Поиск</s:String>
     <s:String x:Key="Strings.SettingsView.Appearance.Color">ЦВЕТ</s:String>
     <s:String x:Key="Strings.SettingsView.Appearance.Color.Description">Зачем ограничивать себя одним скучным цветом? Меняй цвет osu!Music под настроение! Мой личный совет - освежающий зеленый лайм :)</s:String>
+    <s:String x:Key="Strings.SettingsView.Appearance.Theme">ТЕМА</s:String>
     <s:String x:Key="Strings.SettingsView.General.Language">ЯЗЫК</s:String>
     <s:String x:Key="Strings.SettingsView.General.Path">ПУТЬ К OSU!</s:String>
     <s:String x:Key="Strings.SettingsView.General.Path.Change">ИЗМЕНИТЬ</s:String>

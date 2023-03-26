@@ -18,7 +18,7 @@
                         <ComboBox Style="{DynamicResource MaterialDesignComboBox}" 
                                   SelectedValue="{Binding Model.Settings.Culture, Converter={StaticResource StringToLocalizationCulture}}"
                                   ItemsSource="{Binding LocalizationManager.Cultures}" 
-                                  MaxWidth="400" Margin="0 0 10 30" HorizontalAlignment="Left">
+                                  Width="200" Margin="0 0 10 30" HorizontalAlignment="Left">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate DataType="{x:Type loc:LocalizationCulture}">
                                     <StackPanel Orientation="Horizontal">
@@ -44,6 +44,13 @@
             <TabItem Header="{DynamicResource Strings.SettingsView.Headers.Appearance}">
                 <ScrollViewer MaxWidth="700">
                     <StackPanel Orientation="Vertical" Margin="5">
+                        <Grid Height="35">
+                            <TextBlock Text="{DynamicResource Strings.SettingsView.Appearance.Theme}" Style="{DynamicResource MenuSubHeader}"/>
+                        </Grid>
+                        <ComboBox ItemsSource="{Binding Model.Themes}" SelectedItem="{Binding Model.Settings.Theme}"
+                                  Width="100" Margin="0 0 10 30" HorizontalAlignment="Left">
+                            
+                        </ComboBox>
                         <Grid Height="35">
                             <TextBlock Text="{DynamicResource Strings.SettingsView.Appearance.Color}" Style="{DynamicResource MenuSubHeader}"/>
                         </Grid>

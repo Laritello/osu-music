@@ -31,6 +31,17 @@ namespace Osu.Music.Common.Models
             }
         }
 
+        private ApplicationTheme _theme;
+        public ApplicationTheme Theme
+        {
+            get => _theme;
+            set
+            {
+                SetProperty(ref _theme, value);
+                ThemeChanged?.Invoke(_theme);
+            }
+        }
+
         private string _color;
         public string Color
         {
@@ -82,6 +93,9 @@ namespace Osu.Music.Common.Models
         public delegate void ApplicationCultureChangedEventHandler(string culture);
         public event ApplicationCultureChangedEventHandler CultureChanged;
 
+        public delegate void ApplicationThemeChangedEventHandler(ApplicationTheme theme);
+        public event ApplicationThemeChangedEventHandler ThemeChanged;
+
         public delegate void ApplicationColorChangedEventHandler(string color);
         public event ApplicationColorChangedEventHandler ColorChanged;
 
@@ -92,6 +106,7 @@ namespace Osu.Music.Common.Models
         public Settings()
         {
             Culture = "en-US";
+            Theme = ApplicationTheme.Light;
             Color = "#FF800080";
             HotkeysEnabled = true;
             DiscordEnabled = true;
