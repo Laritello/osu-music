@@ -24,5 +24,7 @@
     <convert:WidthToHorizontalOffsetConverter x:Key="WidthToHorizontalOffsetConverter"/>
     <convert:StringEmptyConverter x:Key="StringEmptyConverter"/>
     <convert:StringToLocalizationCulture x:Key="StringToLocalizationCulture"/>
-    <flags:CountryIdToFlagImageSourceConverter x:Key="CountryIdToFlagImageSourceConverter" />
+    <convert:ColorWithOpacityConverter x:Key="ColorWithOpacityConverter"/>
+
+    <flags:CountryIdToFlagImageSourceConverter x:Key="CountryIdToFlagImageSourceConverter"/>
 </ResourceDictionary>
