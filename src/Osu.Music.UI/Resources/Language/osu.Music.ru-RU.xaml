@@ -7,11 +7,11 @@
     <s:String x:Key="Strings.AboutView.ReleaseNotes">список изменений</s:String>
     <s:String x:Key="Strings.AddToPlaylistView.Header">Добавить в...</s:String>
     <s:String x:Key="Strings.AddToPlaylistView.NoAvailable">Нет доступных плейлистов для этой песни</s:String>
-    <s:String x:Key="Strings.CollectionDetailsView.Play">ИГРАТЬ</s:String>
+    <s:String x:Key="Strings.CollectionDetailsView.Play">ВОСПРОИЗВЕСТИ</s:String>
     <s:String x:Key="Strings.CollectionDetailsView.Tooltips.ShowOnOsuWebsite">Открыть на сайте osu!</s:String>
     <s:String x:Key="Strings.DataTemplate.SongsCount.Empty">Пустой</s:String>
-    <s:String x:Key="Strings.DataTemplate.SongsCount.Multiple">{0} аудиозаписей</s:String>
-    <s:String x:Key="Strings.DataTemplate.SongsCount.Single">1 аудиозапись</s:String>
+    <s:String x:Key="Strings.DataTemplate.SongsCount.Multiple">{0} аудиозаписей</s:String> <!--Switch to Regex -->
+    <s:String x:Key="Strings.DataTemplate.SongsCount.Single">1 аудиозапись</s:String> 
     <s:String x:Key="Strings.GenericConfirmationView.Cancel">ОТМЕНА</s:String>
     <s:String x:Key="Strings.LibraryView.Tooltips.AddToPlaylist">Добавить в плейлист</s:String>
     <s:String x:Key="Strings.LibraryView.Tooltips.ShowOnOsuWebsite">Открыть на сайте osu!</s:String>
@@ -34,7 +34,7 @@
     <s:String x:Key="Strings.PlaylistDetailsView.DeleteDialog.Title">Удалить плейлист</s:String>
     <s:String x:Key="Strings.PlaylistDetailsView.EditDialog.Caption">РЕДАКТИРОВАТЬ</s:String>
     <s:String x:Key="Strings.PlaylistDetailsView.EditDialog.Title">Редактировать плейлист</s:String>
-    <s:String x:Key="Strings.PlaylistDetailsView.Play">ИГРАТЬ</s:String>
+    <s:String x:Key="Strings.PlaylistDetailsView.Play">ВОСПРОИЗВЕСТИ</s:String>
     <s:String x:Key="Strings.PlaylistDetailsView.Tooltips.RemoveFromPlaylist">Убрать из этого плейлиста</s:String>
     <s:String x:Key="Strings.PlaylistDetailsView.Tooltips.ShowOnOsuWebsite">Открыть на сайте osu!</s:String>
     <s:String x:Key="Strings.SearchView.Headers.All">Всё</s:String>
@@ -48,6 +48,8 @@
     <s:String x:Key="Strings.SettingsView.Appearance.Color">ЦВЕТ</s:String>
     <s:String x:Key="Strings.SettingsView.Appearance.Color.Description">Зачем ограничивать себя одним скучным цветом? Меняй цвет osu!Music под настроение! Мой личный совет - освежающий зеленый лайм :)</s:String>
     <s:String x:Key="Strings.SettingsView.Appearance.Theme">ТЕМА</s:String>
+    <s:String x:Key="Strings.SettingsView.Appearance.Theme.Dark">Темная</s:String>
+    <s:String x:Key="Strings.SettingsView.Appearance.Theme.Light">Светлая</s:String>
     <s:String x:Key="Strings.SettingsView.General.Language">ЯЗЫК</s:String>
     <s:String x:Key="Strings.SettingsView.General.Path">ПУТЬ К OSU!</s:String>
     <s:String x:Key="Strings.SettingsView.General.Path.Change">ИЗМЕНИТЬ</s:String>

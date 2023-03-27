@@ -25,6 +25,7 @@
     <convert:StringEmptyConverter x:Key="StringEmptyConverter"/>
     <convert:StringToLocalizationCulture x:Key="StringToLocalizationCulture"/>
     <convert:ColorWithOpacityConverter x:Key="ColorWithOpacityConverter"/>
+    <convert:ApplicationThemeToNameConverter x:Key="ApplicationThemeToNameConverter"/>
 
     <flags:CountryIdToFlagImageSourceConverter x:Key="CountryIdToFlagImageSourceConverter"/>
 </ResourceDictionary>

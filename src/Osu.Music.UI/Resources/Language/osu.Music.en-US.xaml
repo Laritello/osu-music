@@ -48,6 +48,8 @@
     <s:String x:Key="Strings.SettingsView.Appearance.Color">COLOR</s:String>
     <s:String x:Key="Strings.SettingsView.Appearance.Color.Description">Why limit yourself to one boring color? Change the color of osu!Music to suit your mood! My personal advice is a refreshing lime green :)</s:String>
     <s:String x:Key="Strings.SettingsView.Appearance.Theme">THEME</s:String>
+    <s:String x:Key="Strings.SettingsView.Appearance.Theme.Dark">Dark</s:String>
+    <s:String x:Key="Strings.SettingsView.Appearance.Theme.Light">Light</s:String>
     <s:String x:Key="Strings.SettingsView.General.Language">LANGUAGE</s:String>
     <s:String x:Key="Strings.SettingsView.General.Path">PATH TO OSU!</s:String>
     <s:String x:Key="Strings.SettingsView.General.Path.Change">CHANGE</s:String>

@@ -1,4 +1,5 @@
-﻿using Osu.Music.Services.UItility;
+﻿using Osu.Music.Common.Enums;
+using Osu.Music.Services.UItility;
 using System;
 using System.Globalization;
 using System.Windows;
@@ -6,20 +7,20 @@ using System.Windows.Data;
 
 namespace Osu.Music.UI.Resources.Converters
 {
-    public class CountToStringConverter : IValueConverter
+    public class ApplicationThemeToNameConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is int count))
+            if (!(value is ApplicationTheme theme))
                 return "Unknown";
 
             var localization = Application.Current.Resources.GetLocalizationDictionary();
 
-            return count switch
+            return theme switch
             {
-                0 => localization["Strings.DataTemplate.SongsCount.Empty"],
-                1 => localization["Strings.DataTemplate.SongsCount.Single"],
-                _ => string.Format((string)localization["Strings.DataTemplate.SongsCount.Multiple"], count)
+                ApplicationTheme.Light => localization["Strings.SettingsView.Appearance.Theme.Light"],
+                ApplicationTheme.Dark => localization["Strings.SettingsView.Appearance.Theme.Dark"],
+                _ => "Unknown"
             };
         }
 
