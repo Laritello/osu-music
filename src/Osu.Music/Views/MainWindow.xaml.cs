@@ -19,6 +19,7 @@ namespace Osu.Music.Views
     public partial class MainWindow : Window
     {
         public DelegateCommand MinimizeCommand { get; private set; }
+        public DelegateCommand RestoreFromTrayCommand { get; private set; }
         public DelegateCommand<Button> MaximizeOrRestoreCommand { get; private set; }
         public DelegateCommand CloseCommand { get; private set; }
 
@@ -31,16 +32,31 @@ namespace Osu.Music.Views
         private void InitializeCommands()
         {
             MinimizeCommand = new DelegateCommand(Minimize);
+            RestoreFromTrayCommand = new DelegateCommand(RestoreFromTray);
             MaximizeOrRestoreCommand = new DelegateCommand<Button>(MaximizeOrRestore);
             CloseCommand = new DelegateCommand(Close);
         }
 
         private void Minimize() => WindowState = WindowState.Minimized;
 
+        private void RestoreFromTray()
+        {
+            Show();
+            WindowState = WindowState.Normal;
+        }
+
         private void MaximizeOrRestore(Button maximize)
         {
             WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
             maximize.Visibility = WindowState == WindowState.Maximized ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        protected override void OnStateChanged(EventArgs e)
+        {
+            if (WindowState == WindowState.Minimized)
+                Hide();
+
+            base.OnStateChanged(e);
         }
 
 #if (!DEBUG)

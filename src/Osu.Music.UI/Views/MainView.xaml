@@ -27,7 +27,9 @@
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
         <!--NotifyIcon-->
-        <tb:TaskbarIcon x:Name="MyNotifyIcon" IconSource="pack://application:,,,/Osu.Music.UI;component/Resources/Images/Logo/Logo.ico" ToolTipText="osu.Music" Visibility="Visible"/>
+        <tb:TaskbarIcon x:Name="MyNotifyIcon" IconSource="pack://application:,,,/Osu.Music.UI;component/Resources/Images/Logo/Logo.ico" ToolTipText="osu.Music" 
+                        Visibility="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=WindowState, Converter={StaticResource WindowStateToTrayVisibility}}"
+                        DoubleClickCommand="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=RestoreFromTrayCommand}"/>
         
         <!--TitleBar-->
         <Grid Grid.ColumnSpan="2" Panel.ZIndex="1">
