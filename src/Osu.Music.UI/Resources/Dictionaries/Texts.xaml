@@ -79,6 +79,7 @@
     <Style x:Key="LicenseText" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="Monospace"/>
         <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontWeight" Value="Light"/>
     </Style>
 
     <Style x:Key="SearchTextBox" TargetType="{x:Type TextBox}">

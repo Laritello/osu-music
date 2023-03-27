@@ -17,9 +17,9 @@
                                       CommandParameter="{Binding Repository}"/>
                     </TextBlock.InputBindings>
                 </TextBlock>
-                <TextBlock Style="{DynamicResource MenuDefault}" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}" Margin="15 10 0 10">
+                <TextBlock Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}" Margin="15 10 0 10" FontSize="14">
                     <Run Text="{DynamicResource Strings.AboutView.License.Header}"/>
-                    <Run Text="{Binding License}"/>
+                    <Run Text="{Binding License}" FontWeight="Bold"/>
                 </TextBlock>
                 <TextBlock Style="{DynamicResource LicenseText}" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}" Margin="15 0 0 30" Text="{Binding Text}" TextWrapping="Wrap"/>
             </StackPanel>
