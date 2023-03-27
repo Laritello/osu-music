@@ -14,7 +14,7 @@
             <prism:InvokeCommandAction Command="{Binding OnLoadedCommand}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    <Grid Background="White">
+    <Grid Background="{DynamicResource SolidColorBrushBackground}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250"/>
             <ColumnDefinition Width="1*"/>
@@ -52,7 +52,7 @@
             </StackPanel>
         </Grid>
 
-        <Border Grid.RowSpan="2" BorderThickness="0 0 1 0" BorderBrush="{DynamicResource SolidColorBrushMainBorder}">
+        <Border Grid.RowSpan="2" BorderThickness="0 0 1 0" BorderBrush="{DynamicResource SolidColorBrushBorder}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -81,7 +81,7 @@
                     <RadioButton Style="{DynamicResource SidebarButtonAllSongs}" Command="{Binding OpenPageCommand}" CommandParameter="LibraryView" IsChecked="True"/>
                     <RadioButton Style="{DynamicResource SidebarButtonPlaylists}" Command="{Binding OpenPageCommand}" CommandParameter="PlaylistsView"/>
                     <RadioButton Style="{DynamicResource SidebarButtonCollection}" Command="{Binding OpenPageCommand}" CommandParameter="CollectionsView"/>
-                    <Separator Background="{DynamicResource SolidColorBrushMainBorder}"/>
+                    <Separator Background="{DynamicResource SolidColorBrushBorder}"/>
                     <Button Style="{DynamicResource SidebarButtonNewPlaylist}" Command="{Binding CreatePlaylistCommand}"/>
                 </StackPanel>
 

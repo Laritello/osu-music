@@ -59,7 +59,7 @@
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <TextBlock Text="{DynamicResource Strings.SearchView.Headers.All}" FontSize="14" VerticalAlignment="Center"/>
-                            <Border Background="{DynamicResource SolidColorBrushMainBorder}" CornerRadius="5" Margin="5 0 0 0" VerticalAlignment="Center">
+                            <Border Background="{DynamicResource SolidColorBrushBorder}" CornerRadius="5" Margin="5 0 0 0" VerticalAlignment="Center">
                                 <TextBlock Style="{DynamicResource ResultAmountText}" Text="{Binding CombinedResult.Count}"/>
                             </Border>
                         </StackPanel>
@@ -79,7 +79,7 @@
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <TextBlock FontFamily="{DynamicResource MaterialIconsOutlined}" FontSize="20" Text="&#xe3a1;" Margin="0 0 5 0" VerticalAlignment="Center"/>
                             <TextBlock Text="{DynamicResource Strings.SearchView.Headers.Songs}" FontSize="14" VerticalAlignment="Center"/>
-                            <Border Background="{DynamicResource SolidColorBrushMainBorder}" CornerRadius="5" Margin="5 0 0 0" VerticalAlignment="Center">
+                            <Border Background="{DynamicResource SolidColorBrushBorder}" CornerRadius="5" Margin="5 0 0 0" VerticalAlignment="Center">
                                 <TextBlock Style="{DynamicResource ResultAmountText}" Text="{Binding BeatmapResult.Count}"/>
                             </Border>
                         </StackPanel>
@@ -99,7 +99,7 @@
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <TextBlock FontFamily="{DynamicResource MaterialIconsOutlined}" FontSize="20" Text="&#xe03d;" Margin="0 0 5 0" VerticalAlignment="Center"/>
                             <TextBlock Text="{DynamicResource Strings.SearchView.Headers.Playlists}" FontSize="14" VerticalAlignment="Center"/>
-                            <Border Background="{DynamicResource SolidColorBrushMainBorder}" CornerRadius="5" Margin="5 0 0 0" VerticalAlignment="Center">
+                            <Border Background="{DynamicResource SolidColorBrushBorder}" CornerRadius="5" Margin="5 0 0 0" VerticalAlignment="Center">
                                 <TextBlock Style="{DynamicResource ResultAmountText}" Text="{Binding PlaylistResult.Count}"/>
                             </Border>
                         </StackPanel>
@@ -119,7 +119,7 @@
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <TextBlock FontFamily="{DynamicResource MaterialIconsOutlined}" FontSize="20" Text="&#xe030;" Margin="0 0 5 0" VerticalAlignment="Center"/>
                             <TextBlock Text="{DynamicResource Strings.SearchView.Headers.Collections}" FontSize="14" VerticalAlignment="Center"/>
-                            <Border Background="{DynamicResource SolidColorBrushMainBorder}" CornerRadius="5" Margin="5 0 0 0" VerticalAlignment="Center">
+                            <Border Background="{DynamicResource SolidColorBrushBorder}" CornerRadius="5" Margin="5 0 0 0" VerticalAlignment="Center">
                                 <TextBlock Style="{DynamicResource ResultAmountText}" Text="{Binding CollectionResult.Count}"/>
                             </Border>
                         </StackPanel>

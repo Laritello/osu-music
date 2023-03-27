@@ -17,11 +17,11 @@
                                       CommandParameter="{Binding Repository}"/>
                     </TextBlock.InputBindings>
                 </TextBlock>
-                <TextBlock Style="{DynamicResource MenuDefault}" Margin="15 10 0 10">
+                <TextBlock Style="{DynamicResource MenuDefault}" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}" Margin="15 10 0 10">
                     <Run Text="{DynamicResource Strings.AboutView.License.Header}"/>
                     <Run Text="{Binding License}"/>
                 </TextBlock>
-                <TextBlock Style="{DynamicResource LicenseText}" Margin="15 0 0 30" Text="{Binding Text}" TextWrapping="Wrap"/>
+                <TextBlock Style="{DynamicResource LicenseText}" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}" Margin="15 0 0 30" Text="{Binding Text}" TextWrapping="Wrap"/>
             </StackPanel>
         </DataTemplate>
     </UserControl.Resources>
@@ -30,7 +30,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <Border BorderBrush="{DynamicResource SolidColorBrushMainBorder}" BorderThickness="0 0 0 1">
+        <Border BorderBrush="{DynamicResource SolidColorBrushBorder}" BorderThickness="0 0 0 1">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0 0 0 5">
                 <TextBlock FontFamily="{DynamicResource MaterialIcons}" Text="&#xf01f;" FontSize="100" Foreground="{DynamicResource SolidColorBrushMain}" HorizontalAlignment="Center"/>
                 <TextBlock Text="osu.Music" Style="{DynamicResource MenuHeader}" HorizontalAlignment="Center" Margin="0" FontSize="16" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}"/>

@@ -2,7 +2,5 @@
 
 namespace Osu.Music.UI.Utility.Proxies
 {
-    public sealed class ManagePlaylistNameViewModelProxy : BindingProxy<ManagePlaylistNameViewModel>
-    {
-    }
+    public sealed class ManagePlaylistNameViewModelProxy : BindingProxy<ManagePlaylistNameViewModel> { }
 }

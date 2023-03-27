@@ -24,7 +24,7 @@
                                     <StackPanel Orientation="Horizontal">
                                         <Image Source="{Binding Path=Code, Converter={StaticResource CountryIdToFlagImageSourceConverter}}" 
                                                RenderOptions.BitmapScalingMode="HighQuality"/>
-                                        <TextBlock Text="{Binding Path=Name}" Margin="10 0 0 0"/>
+                                        <TextBlock Text="{Binding Path=Name}" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}" Margin="10 0 0 0"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
@@ -35,7 +35,9 @@
                             <Button Content="{DynamicResource Strings.SettingsView.General.Path.Change}" 
                                     Style="{DynamicResource MaterialDesignFlatButton}" Command="{Binding UpdateSourceCommand}" HorizontalAlignment="Right"/>
                         </Grid>
-                        <TextBlock Text="{Binding Model.Settings.Source}" Margin="0 0 10 0"/>
+                        <TextBlock Text="{Binding Model.Settings.Source}" 
+                                   Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}"
+                                   Margin="0 0 10 0"/>
                         <TextBlock Text="{DynamicResource Strings.SettingsView.General.Path.Description}"
                                    Style="{DynamicResource MenuDescription}"/>
                     </StackPanel>
@@ -49,7 +51,13 @@
                         </Grid>
                         <ComboBox ItemsSource="{Binding Model.Themes}" SelectedItem="{Binding Model.Settings.Theme}"
                                   Width="100" Margin="0 0 10 30" HorizontalAlignment="Left">
-                            
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate DataType="{x:Type loc:LocalizationCulture}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Path=.}" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}" Margin="10 0 0 0"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
                         </ComboBox>
                         <Grid Height="35">
                             <TextBlock Text="{DynamicResource Strings.SettingsView.Appearance.Color}" Style="{DynamicResource MenuSubHeader}"/>

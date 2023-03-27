@@ -95,6 +95,7 @@
             </VisualBrush>
         </Style.Resources>
         <Setter Property="FontFamily" Value="{DynamicResource Poppins}"/>
+        <Setter Property="Foreground" Value="{DynamicResource SolidColorBrushTextHighEmphasis}"/>
         <Setter Property="FontSize" Value="18"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="VerticalAlignment" Value="Center"/>

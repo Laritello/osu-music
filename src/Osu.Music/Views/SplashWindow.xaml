@@ -3,12 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         WindowStyle="None" WindowStartupLocation="CenterScreen" ShowInTaskbar="False" Topmost="True"
         AllowsTransparency="True" SizeToContent="Manual" Width="460" Height="200">
-    <Grid>
+    <Grid Background="{DynamicResource SolidColorBrushBackground}">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock FontWeight="Medium" FontSize="64">
-                <Run Text="osu."/><Run Text="Music" Foreground="{DynamicResource SolidColorBrushMain}"/>
+                <Run Text="osu." Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}"/><Run Text="Music" Foreground="{DynamicResource SolidColorBrushMain}"/>
             </TextBlock>
-            <TextBlock x:Name="Message" Text="Loading..." HorizontalAlignment="Center"/>
+            <TextBlock x:Name="Message" Text="Loading..." HorizontalAlignment="Center" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}"/>
         </StackPanel>
     </Grid>
 </Window>
