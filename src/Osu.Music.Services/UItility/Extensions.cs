@@ -1,4 +1,5 @@
 ﻿using MaterialDesignThemes.Wpf;
+using Osu.Music.Common.Enums;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,11 +21,53 @@ namespace Osu.Music.Services.UItility
             return collection[0]["ColorMain"] != null ? (Color)collection[0]["ColorMain"] : Colors.Transparent;
         }
 
-        public static void SetMainColor(this Collection<ResourceDictionary> collection, string hex)
+        public static void UpdateColorScheme(this Collection<ResourceDictionary> collection, string hex, ApplicationTheme theme)
         {
-            // Using index is cool, but if I change order of dictionaries in App.xaml
-            // it won't be that cool anymore. Maybe switch to naming or someting.
-            ResourceDictionary dictionary = collection[0];
+            var regex = new Regex("Colors.xaml");
+            var dictionary = collection.FirstOrDefault(x => regex.IsMatch(string.IsNullOrEmpty(x.Source?.OriginalString) ? string.Empty : x.Source?.OriginalString));
+
+            var colors = CreateColors(hex, theme);
+
+            dictionary["ColorMain"] = colors["ColorMain"];
+            dictionary["ColorMainLight"] = colors["ColorMainLight"];
+            dictionary["ColorMainDark"] = colors["ColorMainDark"];
+
+            dictionary["ColorHover"] = colors["ColorHover"];
+            dictionary["ColorBackground"] = colors["ColorBackground"];
+            dictionary["ColorForeground"] = colors["ColorForeground"];
+            dictionary["ColorBorder"] = colors["ColorBorder"];
+
+            dictionary["ColorTitleBarHover"] = colors["ColorTitleBarHover"];
+            dictionary["ColorTitleBarPressed"] = colors["ColorTitleBarPressed"];
+
+            dictionary["ColorTextDisabled"] = colors["ColorTextDisabled"];
+            dictionary["ColorTextMediumEmphasis"] = colors["ColorTextMediumEmphasis"];
+            dictionary["ColorTextHighEmphasis"] = colors["ColorTextHighEmphasis"];
+
+            dictionary["SolidColorBrushMain"] = new SolidColorBrush(colors["ColorMain"]);
+            dictionary["SolidColorBrushMainLight"] = new SolidColorBrush(colors["ColorMainLight"]);
+            dictionary["SolidColorBrushMainDark"] = new SolidColorBrush(colors["ColorMainDark"]);
+
+            dictionary["SolidColorBrushHover"] = new SolidColorBrush(colors["ColorHover"]);
+            dictionary["SolidColorBrushBackground"] = new SolidColorBrush(colors["ColorBackground"]);
+            dictionary["SolidColorBrushForeground"] = new SolidColorBrush(colors["ColorForeground"]);
+            dictionary["SolidColorBrushBorder"] = new SolidColorBrush(colors["ColorBorder"]);
+
+            dictionary["SolidColorBrushTitleBarHover"] = new SolidColorBrush(colors["ColorTitleBarHover"]);
+            dictionary["SolidColorBrushTitleBarPressed"] = new SolidColorBrush(colors["ColorTitleBarPressed"]);
+
+            dictionary["SolidColorBrushTextDisabled"] = new SolidColorBrush(colors["ColorTextDisabled"]);
+            dictionary["SolidColorBrushTextMediumEmphasis"] = new SolidColorBrush(colors["ColorTextMediumEmphasis"]);
+            dictionary["SolidColorBrushTextHighEmphasis"] = new SolidColorBrush(colors["ColorTextHighEmphasis"]);
+
+            CustomColorTheme material = collection[1] as CustomColorTheme;
+            material.PrimaryColor = colors["ColorMain"];
+            material.BaseTheme = theme == ApplicationTheme.Light ? BaseTheme.Light : BaseTheme.Dark;
+        }
+
+        private static Dictionary<string, Color> CreateColors(string hex, ApplicationTheme theme)
+        {
+            var dictionary = new Dictionary<string, Color>();
 
             Color mainColor = hex.FromHex();
             Color lightColor = new Color()
@@ -46,12 +89,38 @@ namespace Osu.Music.Services.UItility
             dictionary["ColorMainLight"] = lightColor;
             dictionary["ColorMainDark"] = darkColor;
 
-            dictionary["SolidColorBrushMain"] = new SolidColorBrush(mainColor);
-            dictionary["SolidColorBrushMainLight"] = new SolidColorBrush(lightColor);
-            dictionary["SolidColorBrushMainDark"] = new SolidColorBrush(darkColor);
+            switch (theme)
+            {
+                case ApplicationTheme.Light:
+                    dictionary["ColorHover"] = "#10000000".FromHex();
+                    dictionary["ColorBackground"] = "#FFFFFFFF".FromHex();
+                    dictionary["ColorForeground"] = "#FF000000".FromHex();
+                    dictionary["ColorBorder"] = "#20000000".FromHex();
 
-            CustomColorTheme theme = collection[1] as CustomColorTheme;
-            theme.PrimaryColor = mainColor;
+                    dictionary["ColorTitleBarHover"] = "#19000000".FromHex();
+                    dictionary["ColorTitleBarPressed"] = "#35000000".FromHex();
+
+                    dictionary["ColorTextDisabled"] = "#61000000".FromHex();
+                    dictionary["ColorTextMediumEmphasis"] = "#99000000".FromHex();
+                    dictionary["ColorTextHighEmphasis"] = "#DE000000".FromHex();
+                    break;
+
+                case ApplicationTheme.Dark:
+                    dictionary["ColorHover"] = "#10FFFFFF".FromHex();
+                    dictionary["ColorBackground"] = "#FF121212".FromHex();
+                    dictionary["ColorForeground"] = "#FFFFFFFF".FromHex();
+                    dictionary["ColorBorder"] = "#20FFFFFF".FromHex();
+
+                    dictionary["ColorTitleBarHover"] = "#19FFFFFF".FromHex();
+                    dictionary["ColorTitleBarPressed"] = "#35FFFFFF".FromHex();
+
+                    dictionary["ColorTextDisabled"] = "#61FFFFFF".FromHex();
+                    dictionary["ColorTextMediumEmphasis"] = "#99FFFFFF".FromHex();
+                    dictionary["ColorTextHighEmphasis"] = "#DEFFFFFF".FromHex(); 
+                    break;
+            }
+
+            return dictionary;
         }
 
         public static ulong ToUnix(this DateTime dt)
