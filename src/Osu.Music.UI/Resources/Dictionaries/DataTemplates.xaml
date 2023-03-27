@@ -5,22 +5,29 @@
                     xmlns:cm="clr-namespace:Osu.Music.Common.Models;assembly=Osu.Music.Common"
                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                     xmlns:behaviors="clr-namespace:Osu.Music.UI.Behaviors"
+                    xmlns:proxies="clr-namespace:Osu.Music.UI.Utility.Proxies"
                     xmlns:v="clr-namespace:Osu.Music.UI.Views">
     <DataTemplate x:Key="PlaylistTile" DataType="{x:Type cm:Playlist}">
         <Border Margin="5">
+            <Border.Resources>
+                <proxies:ColorProxy x:Key="ForegroundBrushProxy" Data="{DynamicResource ColorForeground}"/>
+            </Border.Resources>
             <StackPanel>
                 <Grid>
                     <Grid>
-                        <Rectangle Width="145" Height="145" RadiusX="10" RadiusY="10" Fill="#20000000"/>
-                        <materialDesign:PackIcon HorizontalAlignment="Center" VerticalAlignment="Center" Width="80" Height="80" Margin="0 10 0 0" Foreground="#50000000" Kind="PlaylistNote"/>
+                        <Rectangle Width="145" Height="145" RadiusX="10" RadiusY="10" 
+                                   Fill="{Binding Source={StaticResource ForegroundBrushProxy}, Path=Data, Converter={StaticResource ColorWithOpacityConverter}, ConverterParameter=20}"/>
+                        <materialDesign:PackIcon HorizontalAlignment="Center" VerticalAlignment="Center" Width="80" Height="80" Margin="0 10 0 0" 
+                                                 Foreground="{Binding Source={StaticResource ForegroundBrushProxy}, Path=Data, Converter={StaticResource ColorWithOpacityConverter}, ConverterParameter=50}" Kind="PlaylistNote"/>
                         <Grid Width="145" Height="145">
                             <Grid.Clip>
                                 <RectangleGeometry Rect="0 0 145 145" RadiusX="10" RadiusY="10"/>
                             </Grid.Clip>
-                            <Image Source="{Binding Path=., Converter={StaticResource PlaylistToImageConverter}}" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Image Source="{Binding Path=., Converter={StaticResource PlaylistToImageConverter}}" 
+                                   Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Grid>
                     </Grid>
-                    <Border x:Name="PlaylistControls" Width="145" Height="145" Background="#70000000" Opacity="0.0" CornerRadius="15">
+                    <Border x:Name="PlaylistControls" Width="145" Height="145" Background="#70000000" Opacity="0.0" CornerRadius="10">
                         <Border.Style>
                             <Style TargetType="{x:Type Border}">
                                 <Style.Triggers>
@@ -28,16 +35,14 @@
                                         <Trigger.EnterActions>
                                             <BeginStoryboard>
                                                 <Storyboard>
-                                                    <DoubleAnimation Duration="0:0:0.250" To="1.0"
-                                                         Storyboard.TargetProperty="Opacity"/>
+                                                    <DoubleAnimation Duration="0:0:0.250" To="1.0" Storyboard.TargetProperty="Opacity"/>
                                                 </Storyboard>
                                             </BeginStoryboard>
                                         </Trigger.EnterActions>
                                         <Trigger.ExitActions>
                                             <BeginStoryboard>
                                                 <Storyboard>
-                                                    <DoubleAnimation Duration="0:0:0.250" To="0.0"
-                                                         Storyboard.TargetProperty="Opacity"/>
+                                                    <DoubleAnimation Duration="0:0:0.250" To="0.0" Storyboard.TargetProperty="Opacity"/>
                                                 </Storyboard>
                                             </BeginStoryboard>
                                         </Trigger.ExitActions>
@@ -53,7 +58,8 @@
                         </StackPanel>
                     </Border>
                 </Grid>
-                <TextBlock Text="{Binding Path=Name}" FontFamily="{DynamicResource Poppins}" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}" Background="White" FontSize="12" FontWeight="DemiBold" MaxWidth="145">
+                <TextBlock Text="{Binding Path=Name}" FontFamily="{DynamicResource Poppins}" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}" 
+                           Background="Transparent" FontSize="12" FontWeight="DemiBold" MaxWidth="145" Margin="0 3 0 0">
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}">
                             <Style.Triggers>
@@ -67,7 +73,7 @@
                         <LinearGradientBrush StartPoint="0.0,0.5" EndPoint="1.0,0.5">
                             <LinearGradientBrush.GradientStops>
                                 <GradientStop Offset="0" Color="Black"/>
-                                <GradientStop Offset="0.7" Color="Black"/>
+                                <GradientStop Offset="0.9" Color="Black"/>
                                 <GradientStop Offset="1" Color="Transparent"/>
                             </LinearGradientBrush.GradientStops>
                         </LinearGradientBrush>
@@ -80,7 +86,8 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </TextBlock>
-                <TextBlock Text="{Binding Path=Beatmaps.Count, Converter={StaticResource CountToStringConverter}}" FontFamily="{DynamicResource Poppins}" FontSize="12" FontWeight="Light" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}">
+                <TextBlock Text="{Binding Path=Beatmaps.Count, Converter={StaticResource CountToStringConverter}}" FontFamily="{DynamicResource Poppins}" FontSize="12" 
+                           Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}" FontWeight="Light">
                     <i:Interaction.Behaviors>
                         <behaviors:CultureBehavior/>
                     </i:Interaction.Behaviors>
@@ -91,11 +98,16 @@
 
     <DataTemplate x:Key="CollectionTile" DataType="{x:Type cm:Collection}">
         <Border Margin="5">
+            <Border.Resources>
+                <proxies:ColorProxy x:Key="ForegroundBrushProxy" Data="{DynamicResource ColorForeground}"/>
+            </Border.Resources>
             <StackPanel>
                 <Grid>
                     <Grid>
-                        <Rectangle Width="145" Height="145" RadiusX="10" RadiusY="10" Fill="#20000000"/>
-                        <materialDesign:PackIcon HorizontalAlignment="Center" VerticalAlignment="Center" Width="80" Height="80" Margin="0 10 0 0" Foreground="#50000000" Kind="LibraryMusic"/>
+                        <Rectangle Width="145" Height="145" RadiusX="10" RadiusY="10" 
+                                   Fill="{Binding Source={StaticResource ForegroundBrushProxy}, Path=Data, Converter={StaticResource ColorWithOpacityConverter}, ConverterParameter=20}"/>
+                        <materialDesign:PackIcon HorizontalAlignment="Center" VerticalAlignment="Center" Width="80" Height="80" Margin="0 10 0 0" 
+                                                 Foreground="{Binding Source={StaticResource ForegroundBrushProxy}, Path=Data, Converter={StaticResource ColorWithOpacityConverter}, ConverterParameter=50}" Kind="LibraryMusic"/>
                         <Grid Width="145" Height="145">
                             <Grid.Clip>
                                 <RectangleGeometry Rect="0 0 145 145" RadiusX="10" RadiusY="10"/>
@@ -103,7 +115,7 @@
                             <Image Source="{Binding Path=., Converter={StaticResource CollectionToImageConverter}}" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Grid>
                     </Grid>
-                    <Border x:Name="PlaylistControls" Width="145" Height="145" Background="#70000000" Opacity="0.0" CornerRadius="15">
+                    <Border x:Name="PlaylistControls" Width="145" Height="145" Background="#70000000" Opacity="0.0" CornerRadius="10">
                         <Border.Style>
                             <Style TargetType="{x:Type Border}">
                                 <Style.Triggers>
@@ -111,16 +123,14 @@
                                         <Trigger.EnterActions>
                                             <BeginStoryboard>
                                                 <Storyboard>
-                                                    <DoubleAnimation Duration="0:0:0.250" To="1.0"
-                                                         Storyboard.TargetProperty="Opacity"/>
+                                                    <DoubleAnimation Duration="0:0:0.250" To="1.0" Storyboard.TargetProperty="Opacity"/>
                                                 </Storyboard>
                                             </BeginStoryboard>
                                         </Trigger.EnterActions>
                                         <Trigger.ExitActions>
                                             <BeginStoryboard>
                                                 <Storyboard>
-                                                    <DoubleAnimation Duration="0:0:0.250" To="0.0"
-                                                         Storyboard.TargetProperty="Opacity"/>
+                                                    <DoubleAnimation Duration="0:0:0.250" To="0.0" Storyboard.TargetProperty="Opacity"/>
                                                 </Storyboard>
                                             </BeginStoryboard>
                                         </Trigger.ExitActions>
@@ -136,7 +146,9 @@
                         </StackPanel>
                     </Border>
                 </Grid>
-                <TextBlock Text="{Binding Path=Name}" FontFamily="{DynamicResource Poppins}" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}" Background="White" FontSize="12" FontWeight="DemiBold" MaxWidth="145">
+                <TextBlock Text="{Binding Path=Name}" FontFamily="{DynamicResource Poppins}" Margin="0 3 0 0"
+                           Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}" 
+                           Background="Transparent" FontSize="12" FontWeight="DemiBold" MaxWidth="145">
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}">
                             <Style.Triggers>
@@ -150,7 +162,7 @@
                         <LinearGradientBrush StartPoint="0.0,0.5" EndPoint="1.0,0.5">
                             <LinearGradientBrush.GradientStops>
                                 <GradientStop Offset="0" Color="Black"/>
-                                <GradientStop Offset="0.7" Color="Black"/>
+                                <GradientStop Offset="0.9" Color="Black"/>
                                 <GradientStop Offset="1" Color="Transparent"/>
                             </LinearGradientBrush.GradientStops>
                         </LinearGradientBrush>
@@ -175,7 +187,7 @@
 
     <DataTemplate x:Key="HotkeyListItem" DataType="{x:Type cm:Hotkey}">
         <Grid>
-            <TextBlock Padding="0 6 0 0" HorizontalAlignment="Left"
+            <TextBlock Padding="0 6 0 0" HorizontalAlignment="Left" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}"
                        Text="{Binding Path=Type, Converter={StaticResource HotkeyTypeToStringConverter}}">
                 <i:Interaction.Behaviors>
                     <behaviors:CultureBehavior/>
@@ -183,6 +195,7 @@
             </TextBlock>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <TextBlock FontWeight="Bold" FontSize="16" Width="150" Height="30" Padding="0 6 0 0"
+                           Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}"
                            Text="{Binding Path=Combination, Converter={StaticResource KeyCombinationToStringConverter}}"/>
                 <ToggleButton Name="ButtonEdit" Width="30" Height="30" Style="{DynamicResource HotkeyEditButton}" 
                               Command="{Binding DataContext.HotkeyManager.ToggleEditedKeyCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type v:SettingsView}}}"

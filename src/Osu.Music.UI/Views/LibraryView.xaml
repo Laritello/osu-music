@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:Osu.Music.UI.Views"
              xmlns:m="clr-namespace:Osu.Music.Common.Models;assembly=Osu.Music.Common"
              xmlns:behaviors="clr-namespace:Osu.Music.UI.Behaviors"
+             xmlns:proxies="clr-namespace:Osu.Music.UI.Utility.Proxies"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -17,6 +18,9 @@
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type m:Beatmap}">
                     <Grid Name="ItemContainer">
+                        <Grid.Resources>
+                            <proxies:ColorProxy x:Key="ForegroundBrushProxy" Data="{DynamicResource ColorForeground}"/>
+                        </Grid.Resources>
                         <Grid.InputBindings>
                             <MouseBinding Gesture="LeftDoubleClick" 
                                           Command="{Binding DataContext.PlayBeatmapCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:LibraryView}}}"
@@ -31,10 +35,10 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="50"/>
                         </Grid.RowDefinitions>
-                        <Border CornerRadius="5" Margin="4 0 0 0" Background="#20000000" Width="40" Height="40" HorizontalAlignment="Left">
+                        <Border CornerRadius="5" Margin="4 0 0 0" Background="{Binding Source={StaticResource ForegroundBrushProxy}, Path=Data, Converter={StaticResource ColorWithOpacityConverter}, ConverterParameter=20}" Width="40" Height="40" HorizontalAlignment="Left">
                             <Grid>
                                 <TextBlock FontFamily="{DynamicResource MaterialIcons}" FontSize="28" Text="&#xe405;" 
-                                           Foreground="#50000000"
+                                           Foreground="{Binding Source={StaticResource ForegroundBrushProxy}, Path=Data, Converter={StaticResource ColorWithOpacityConverter}, ConverterParameter=50}"
                                            HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Grid>
                         </Border>

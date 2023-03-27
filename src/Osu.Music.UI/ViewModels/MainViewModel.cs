@@ -1,5 +1,6 @@
 ﻿using DryIoc;
 using Osu.Music.Common;
+using Osu.Music.Common.Enums;
 using Osu.Music.Common.Interfaces;
 using Osu.Music.Common.Models;
 using Osu.Music.Common.Structures;
@@ -119,11 +120,12 @@ namespace Osu.Music.UI.ViewModels
             _settings = _settingsManager.Settings;
             _settings.SourceChanged += Settings_SourceChanged;
             _settings.ColorChanged += Settings_ColorChanged;
+            _settings.ThemeChanged += Settings_ThemeChanged;
             _settings.DiscordEnabledChanged += Settings_DiscordEnabledChanged;
             _settings.CultureChanged += Settings_CultureChanged;
 
             ResourceDictionary resource = Application.Current.Resources;
-            resource.MergedDictionaries.SetMainColor(_settings.Color);
+            resource.MergedDictionaries.UpdateColorScheme(_settings.Color, _settings.Theme);
 
             _localizationManager.Culture = LocalizationFactory.GetCulture(_settings.Culture);
         }
@@ -418,7 +420,13 @@ namespace Osu.Music.UI.ViewModels
                 return;
 
             ResourceDictionary resource = Application.Current.Resources;
-            resource.MergedDictionaries.SetMainColor(hex);
+            resource.MergedDictionaries.UpdateColorScheme(hex, _settings.Theme);
+        }
+
+        private void Settings_ThemeChanged(ApplicationTheme theme)
+        {
+            ResourceDictionary resource = Application.Current.Resources;
+            resource.MergedDictionaries.UpdateColorScheme(_settings.Color, theme);
         }
 
         private void Settings_DiscordEnabledChanged(bool enabled)
