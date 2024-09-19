@@ -1,10 +1,11 @@
-﻿using Osu.Music.Services.Audio;
+﻿using Osu.Music.Services.Abstractions;
+using Osu.Music.Services.Audio;
 using Osu.Music.Services.Dialog;
 using Osu.Music.Services.Hotkeys;
 using Osu.Music.Services.Interfaces;
 using Osu.Music.Services.IO;
-using Osu.Music.Services.Localization;
 using Osu.Music.Services.Social;
+using Osu.Music.Services.Updates;
 using Prism.Ioc;
 using Prism.Modularity;
 
@@ -19,10 +20,10 @@ namespace Osu.Music.Services
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.Register<IPopupDialogService, PopupDialogService>();
             containerRegistry.Register<IFileDialogService, FileDialogService>();
 
-            containerRegistry.RegisterSingleton<ICollectionProvider, CollectionProvider>();
+			containerRegistry.RegisterSingleton<IUpdateService, UpdateService>();
+			containerRegistry.RegisterSingleton<ICollectionProvider, CollectionProvider>();
             containerRegistry.RegisterSingleton<ILibraryProvider, LibraryProvider>();
             containerRegistry.RegisterSingleton<IPlaylistProvider, PlaylistProvider>();
             containerRegistry.RegisterSingleton<AudioPlayback>();

@@ -1,8 +1,8 @@
 ﻿using Osu.Music.Common.Models;
 using Osu.Music.Services.Interfaces;
 using Prism.Commands;
+using Prism.Dialogs;
 using Prism.Mvvm;
-using Prism.Services.Dialogs;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -35,7 +35,9 @@ namespace Osu.Music.UI.ViewModels.Dialogs
         public DelegateCommand<Playlist> SendCommand { get; private set; }
         public DelegateCommand CancelCommand { get; private set; }
 
-        public event Action<IDialogResult> RequestClose;
+		DialogCloseListener IDialogAware.RequestClose => throw new NotImplementedException();
+
+		public event Action<IDialogResult> RequestClose;
 
         private IPlaylistProvider _playlistProvider;
 
@@ -54,11 +56,15 @@ namespace Osu.Music.UI.ViewModels.Dialogs
 
         private void Send(Playlist playlist)
         {
-            var result = new DialogResult(ButtonResult.OK, new DialogParameters()
+            var result = new DialogResult
             {
-                { "playlist", playlist },
-                { "beatmap", Beatmap }
-            });
+                Result = ButtonResult.OK,
+                Parameters =
+                {
+				    { "playlist", playlist },
+				    { "beatmap", Beatmap }
+				}
+            };
             RequestClose?.Invoke(result);
         }
 

@@ -5,12 +5,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interop;
 
-#if (!DEBUG)
-using Osu.Music.Services.Updates;
-using Osu.Music.ViewModels;
-using Squirrel;
-#endif
-
 namespace Osu.Music.Views
 {
     /// <summary>
@@ -43,33 +37,6 @@ namespace Osu.Music.Views
             maximize.Visibility = WindowState == WindowState.Maximized ? Visibility.Collapsed : Visibility.Visible;
         }
 
-#if (!DEBUG)
-        private async void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-			try
-			{
-				var dc = (MainWindowViewModel)DataContext;
-				dc.Updater = new GitHubUpdater();
-
-				if (dc != null)
-				{
-					var manager = await UpdateManager.GitHubUpdateManager("https://github.com/Laritello/osu-music");
-					dc.Updater.Manager = manager;
-					dc.Updater.CheckForUpdates();
-				}
-			}
-			catch
-			{
-				// Ignore updater fail
-			}
-        }
-#else
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-#endif
-
         protected override void OnSourceInitialized(EventArgs e)
         {
             base.OnSourceInitialized(e);
@@ -89,8 +56,8 @@ namespace Osu.Music.Views
 
                 if (monitor != IntPtr.Zero)
                 {
-                    MONITORINFO monitorInfo = new MONITORINFO
-                    {
+                    MONITORINFO monitorInfo = new()
+					{
                         cbSize = Marshal.SizeOf(typeof(MONITORINFO))
                     };
                     GetMonitorInfo(monitor, ref monitorInfo);
@@ -121,23 +88,15 @@ namespace Osu.Music.Views
 
         [Serializable]
         [StructLayout(LayoutKind.Sequential)]
-        public struct RECT
-        {
-            public int Left;
-            public int Top;
-            public int Right;
-            public int Bottom;
+        public struct RECT(int left, int top, int right, int bottom)
+		{
+            public int Left = left;
+            public int Top = top;
+            public int Right = right;
+            public int Bottom = bottom;
+		}
 
-            public RECT(int left, int top, int right, int bottom)
-            {
-                this.Left = left;
-                this.Top = top;
-                this.Right = right;
-                this.Bottom = bottom;
-            }
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
+		[StructLayout(LayoutKind.Sequential)]
         public struct MONITORINFO
         {
             public int cbSize;
@@ -148,19 +107,13 @@ namespace Osu.Music.Views
 
         [Serializable]
         [StructLayout(LayoutKind.Sequential)]
-        public struct POINT
-        {
-            public int X;
-            public int Y;
+        public struct POINT(int x, int y)
+		{
+            public int X = x;
+            public int Y = y;
+		}
 
-            public POINT(int x, int y)
-            {
-                this.X = x;
-                this.Y = y;
-            }
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
+		[StructLayout(LayoutKind.Sequential)]
         public struct MINMAXINFO
         {
             public POINT ptReserved;

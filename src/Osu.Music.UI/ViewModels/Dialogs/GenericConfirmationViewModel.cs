@@ -1,8 +1,7 @@
 ﻿using Prism.Commands;
+using Prism.Dialogs;
 using Prism.Mvvm;
-using Prism.Services.Dialogs;
 using System;
-using System.Collections.Generic;
 
 namespace Osu.Music.UI.ViewModels.Dialogs
 {
@@ -34,7 +33,9 @@ namespace Osu.Music.UI.ViewModels.Dialogs
         public DelegateCommand AcceptCommand { get; private set; }
         public DelegateCommand CancelCommand { get; private set; }
 
-        public GenericConfirmationViewModel()
+		DialogCloseListener IDialogAware.RequestClose => throw new NotImplementedException();
+
+		public GenericConfirmationViewModel()
         {
             InitializeCommands();
         }

@@ -2,7 +2,7 @@
 using Osu.Music.UI.Models;
 using Prism.Commands;
 using Prism.Mvvm;
-using Prism.Regions;
+using Prism.Navigation.Regions;
 using System.Diagnostics;
 using System.Reflection;
 using System.Collections.ObjectModel;

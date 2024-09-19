@@ -1,7 +1,6 @@
-﻿using Osu.Music.Common.Models;
-using Prism.Commands;
+﻿using Prism.Commands;
+using Prism.Dialogs;
 using Prism.Mvvm;
-using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
 
@@ -47,7 +46,9 @@ namespace Osu.Music.UI.ViewModels.Dialogs
         public DelegateCommand CancelCommand { get; private set; }
         public DelegateCommand AcceptCommand { get; private set; }
 
-        public event Action<IDialogResult> RequestClose;
+		DialogCloseListener IDialogAware.RequestClose => throw new NotImplementedException();
+
+		public event Action<IDialogResult> RequestClose;
 
         public ManagePlaylistNameViewModel()
         {
@@ -67,10 +68,15 @@ namespace Osu.Music.UI.ViewModels.Dialogs
             if (NameHasError)
                 return;
 
-            var result = new DialogResult(ButtonResult.OK, new DialogParameters()
+            var result = new DialogResult 
             {
-                { "name", Name }
-            });
+                Result = ButtonResult.OK,
+                Parameters = 
+                {
+				    { "name", Name }
+			    }
+			};
+
             RequestClose?.Invoke(result);
         }
 

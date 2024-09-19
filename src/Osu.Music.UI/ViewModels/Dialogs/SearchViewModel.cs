@@ -2,9 +2,8 @@
 using Osu.Music.Common.Interfaces;
 using Osu.Music.Common.Models;
 using Prism.Commands;
+using Prism.Dialogs;
 using Prism.Mvvm;
-using Prism.Regions;
-using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -81,7 +80,9 @@ namespace Osu.Music.UI.ViewModels.Dialogs
         public DelegateCommand<string> SearchCommand { get; private set; }
         public DelegateCommand<ISearchable> JumpCommand { get; private set; }
 
-        public event Action<IDialogResult> RequestClose;
+		DialogCloseListener IDialogAware.RequestClose => throw new NotImplementedException();
+
+		public event Action<IDialogResult> RequestClose;
 
         public SearchViewModel()
         {
@@ -119,14 +120,19 @@ namespace Osu.Music.UI.ViewModels.Dialogs
 
         private void Jump(ISearchable target)
         {
-            var result = new DialogResult(ButtonResult.OK, new DialogParameters()
+            var result = new DialogResult
             {
-                { "target", target }
-            });
+                Result = ButtonResult.OK,
+                Parameters =
+                {
+					{ "target", target }
+				}
+            };
+
             RequestClose?.Invoke(result);
         }
 
-        private Regex BuildQuery(string text) => new Regex($"(.*({Regex.Escape(text)}).*)", RegexOptions.IgnoreCase);
+		private static Regex BuildQuery(string text) => new($"(.*({Regex.Escape(text)}).*)", RegexOptions.IgnoreCase);
 
         public bool CanCloseDialog() => true;
 

@@ -20,10 +20,11 @@ using Osu.Music.UI.ViewModels.Dialogs;
 using Osu.Music.UI.Views.Dialogs;
 using Osu.Music.UI.Visualization;
 using Prism.Commands;
+using Prism.Dialogs;
 using Prism.Ioc;
 using Prism.Mvvm;
-using Prism.Regions;
-using Prism.Services.Dialogs;
+using Prism.Navigation;
+using Prism.Navigation.Regions;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -75,7 +76,6 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand OnCloseCommand { get; private set; }
         #endregion
 
-        private readonly IPopupDialogService _dialogService;
         private readonly IRegionManager _regionManager;
         private readonly ILibraryProvider _libraryManager;
         private readonly ICollectionProvider _collectionProvider;
@@ -89,7 +89,6 @@ namespace Osu.Music.UI.ViewModels
 
         public MainViewModel(IContainer container, MainModel model)
         {
-            _dialogService = container.Resolve<IPopupDialogService>();
             _regionManager = container.Resolve<IRegionManager>();
             _libraryManager = container.Resolve<ILibraryProvider>();
             _collectionProvider = container.Resolve<ICollectionProvider>();
@@ -280,93 +279,95 @@ namespace Osu.Music.UI.ViewModels
 
         private void CreatePlaylist()
         {
-            DialogParameters parameters = new DialogParameters()
+			DialogParameters parameters = new()
             {
                 { "title", _localizationManager.GetLocalizedString("Strings.MainView.NewPlaylistDialog.Title") },
                 { "caption", _localizationManager.GetLocalizedString("Strings.MainView.NewPlaylistDialog.Create") },
                 { "names", Model.Playlists.Select(x => x.Name) }
             };
 
-            _dialogService.ShowPopupDialog<ManagePlaylistNameView, ManagePlaylistNameViewModel>(parameters, e =>
-            {
-                if (e.Result == ButtonResult.OK)
-                {
-                    var name = e.Parameters.GetValue<string>("name");
+            // TODO: Reimplement dialogs
+            //_dialogService.ShowPopupDialog<ManagePlaylistNameView, ManagePlaylistNameViewModel>(parameters, e =>
+            //{
+            //    if (e.Result == ButtonResult.OK)
+            //    {
+            //        var name = e.Parameters.GetValue<string>("name");
 
-                    Playlist playlist = new Playlist()
-                    {
-                        Name = name,
-                        Updated = DateTime.Now
-                    };
+            //        Playlist playlist = new Playlist()
+            //        {
+            //            Name = name,
+            //            Updated = DateTime.Now
+            //        };
 
-                    Model.Playlists.Add(playlist);
+            //        Model.Playlists.Add(playlist);
 
-                    _regionManager.RequestNavigate(
-                        RegionNames.ContentRegion,
-                        "PlaylistDetailsView",
-                        new NavigationParameters()
-                        {
-                            { "playlist", playlist }
-                        });
-                }
-            });
+            //        _regionManager.RequestNavigate(
+            //            RegionNames.ContentRegion,
+            //            "PlaylistDetailsView",
+            //            new NavigationParameters()
+            //            {
+            //                { "playlist", playlist }
+            //            });
+            //    }
+            //});
         }
 
         private void Search()
         {
-            DialogParameters parameters = new DialogParameters()
+            DialogParameters parameters = new()
             {
                 { "beatmaps", Model.Beatmaps },
                 { "playlists", Model.Playlists },
                 { "collections", Model.Collections }
             };
 
-            _dialogService.ShowPopupDialog<SearchView, SearchViewModel>(parameters, e =>
-            {
-                if (e.Result == ButtonResult.OK)
-                {
-                    var target = e.Parameters.GetValue<ISearchable>("target");
+			// TODO: Reimplement dialogs
+			//_dialogService.ShowPopupDialog<SearchView, SearchViewModel>(parameters, e =>
+			//{
+			//    if (e.Result == ButtonResult.OK)
+			//    {
+			//        var target = e.Parameters.GetValue<ISearchable>("target");
 
-                    switch (target.GetNavigationView())
-                    {
-                        case "LibraryView":
-                            _regionManager.RequestNavigate(
-                                RegionNames.ContentRegion,
-                                "LibraryView",
-                                new NavigationParameters()
-                                {
-                                    { "beatmaps", Model.Beatmaps },
-                                    { "target", target }
-                                });
-                            break;
-                        case "PlaylistDetailsView":
-                            _regionManager.RequestNavigate(
-                                RegionNames.ContentRegion,
-                                "PlaylistDetailsView",
-                                new NavigationParameters()
-                                {
-                                    { "playlist", target }
-                                });
-                            break;
-                        case "CollectionDetailsView":
-                            _regionManager.RequestNavigate(
-                                RegionNames.ContentRegion,
-                                "CollectionDetailsView",
-                                new NavigationParameters()
-                                {
-                                    { "collection", target }
-                                });
-                            break;
-                    }
-                }
-            });
-        }
+			//        switch (target.GetNavigationView())
+			//        {
+			//            case "LibraryView":
+			//                _regionManager.RequestNavigate(
+			//                    RegionNames.ContentRegion,
+			//                    "LibraryView",
+			//                    new NavigationParameters()
+			//                    {
+			//                        { "beatmaps", Model.Beatmaps },
+			//                        { "target", target }
+			//                    });
+			//                break;
+			//            case "PlaylistDetailsView":
+			//                _regionManager.RequestNavigate(
+			//                    RegionNames.ContentRegion,
+			//                    "PlaylistDetailsView",
+			//                    new NavigationParameters()
+			//                    {
+			//                        { "playlist", target }
+			//                    });
+			//                break;
+			//            case "CollectionDetailsView":
+			//                _regionManager.RequestNavigate(
+			//                    RegionNames.ContentRegion,
+			//                    "CollectionDetailsView",
+			//                    new NavigationParameters()
+			//                    {
+			//                        { "collection", target }
+			//                    });
+			//                break;
+			//        }
+			//    }
+			//});
+		}
 
-        private void OnLoaded(RoutedEventArgs args)
+		private void OnLoaded(RoutedEventArgs args)
         {
             if (args.Source is UserControl view)
             {
-                Binding b = new Binding()
+                Binding b = new()
                 {
                     Source = view.DataContext,
                     Path = new PropertyPath("OnCloseCommand"),

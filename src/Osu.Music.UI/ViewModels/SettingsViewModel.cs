@@ -8,7 +8,7 @@ using Osu.Music.Services.Social;
 using Osu.Music.UI.Models;
 using Prism.Commands;
 using Prism.Mvvm;
-using Prism.Regions;
+using Prism.Navigation.Regions;
 
 namespace Osu.Music.UI.ViewModels
 {

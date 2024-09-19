@@ -4,7 +4,7 @@
         xmlns:prism="http://prismlibrary.com/"
         xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
         WindowStyle="None" Title="{Binding Title}"
-        Height="550" Width="900" MinHeight="550" MinWidth="900" Loaded="Window_Loaded">
+        Height="550" Width="900" MinHeight="550" MinWidth="900">
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="30" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
     </WindowChrome.WindowChrome>

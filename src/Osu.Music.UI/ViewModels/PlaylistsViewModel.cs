@@ -5,7 +5,8 @@ using Osu.Music.Services.Audio;
 using Osu.Music.UI.Models;
 using Prism.Commands;
 using Prism.Mvvm;
-using Prism.Regions;
+using Prism.Navigation;
+using Prism.Navigation.Regions;
 using System.Collections.ObjectModel;
 using System.Linq;
 

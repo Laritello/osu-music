@@ -1,22 +1,23 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 	<PropertyGroup>
 	<OutputType>WinExe</OutputType>
-	<TargetFramework>netcoreapp3.1</TargetFramework>
+	<TargetFramework>net8.0-windows</TargetFramework>
 	<UseWPF>true</UseWPF>
 	<AssemblyName>Osu.Music</AssemblyName>
 	<ApplicationIcon>Logo.ico</ApplicationIcon>
 	<Authors>Laritello</Authors>
 	<Description>Simple player for your osu! library.</Description>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
-	<StartupObject>Osu.Music.App</StartupObject>
+	<StartupObject>Osu.Music.Program</StartupObject>
 	</PropertyGroup>
 	<ItemGroup>
-	<PackageReference Include="MaterialDesignThemes" Version="4.8.0" />
-	<PackageReference Include="NuGet.CommandLine" Version="6.0.6">
+	<PackageReference Include="MaterialDesignThemes" Version="5.1.0" />
+	<PackageReference Include="NuGet.CommandLine" Version="6.11.0">
 		<PrivateAssets>all</PrivateAssets>
 		<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	</PackageReference>
-	<PackageReference Include="Prism.DryIoc" Version="8.1.97" />
+	<PackageReference Include="Prism.DryIoc" Version="9.0.537" />
+	<PackageReference Include="Velopack" Version="0.0.594" />
 	</ItemGroup>
 	<ItemGroup>
 	<ProjectReference Include="..\Osu.Music.Common\Osu.Music.Common.csproj" />

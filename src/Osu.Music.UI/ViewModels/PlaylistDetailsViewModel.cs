@@ -9,9 +9,9 @@ using Osu.Music.UI.Models;
 using Osu.Music.UI.ViewModels.Dialogs;
 using Osu.Music.UI.Views.Dialogs;
 using Prism.Commands;
+using Prism.Dialogs;
 using Prism.Mvvm;
-using Prism.Regions;
-using Prism.Services.Dialogs;
+using Prism.Navigation.Regions;
 using System.Diagnostics;
 using System.Linq;
 
@@ -40,14 +40,12 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand<Beatmap> OpenBeatmapInBrowserCommand { get; private set; }
         public DelegateCommand<Beatmap> RemoveFromPlaylistCommand { get; private set; }
 
-        private readonly IPopupDialogService _dialogService;
         private readonly IPlaylistProvider _playlistProvider;
         private readonly IRegionManager _regionManager;
         private readonly LocalizationManager _localizationManager;
 
         public PlaylistDetailsViewModel(IContainer container, PlaylistDetailsModel model)
         {
-            _dialogService = container.Resolve<IPopupDialogService>();
             _playlistProvider = container.Resolve<IPlaylistProvider>();
             _regionManager = container.Resolve<IRegionManager>();
             _playback = container.Resolve<AudioPlayback>();
@@ -80,33 +78,34 @@ namespace Osu.Music.UI.ViewModels
 
         private void Delete()
         {
-            DialogParameters parameters = new DialogParameters()
+            DialogParameters parameters = new()
             {
                 { "title", _localizationManager.GetLocalizedString("Strings.PlaylistDetailsView.DeleteDialog.Title") },
                 { "message", string.Format(_localizationManager.GetLocalizedString("Strings.PlaylistDetailsView.DeleteDialog.Message"), Model.Playlist.Name) },
                 { "caption", _localizationManager.GetLocalizedString("Strings.PlaylistDetailsView.DeleteDialog.Caption") }
             };
 
-            _dialogService.ShowPopupDialog<GenericConfirmationView, GenericConfirmationViewModel>(parameters, e =>
-            {
-                if (e.Result == ButtonResult.OK)
-                {
-                    _playlistProvider.Playlists.Remove(Model.Playlist);
-                    _playlistProvider.Remove(Model.Playlist);
-                    _regionManager.RequestNavigate(
-                        RegionNames.ContentRegion, 
-                        "PlaylistsView", 
-                        new NavigationParameters()
-                        {
-                            { "playlists", _playlistProvider.Playlists }
-                        });
-                }
-            });
+			// TODO: Reimplement dialogs
+			//_dialogService.ShowPopupDialog<GenericConfirmationView, GenericConfirmationViewModel>(parameters, e =>
+   //         {
+   //             if (e.Result == ButtonResult.OK)
+   //             {
+   //                 _playlistProvider.Playlists.Remove(Model.Playlist);
+   //                 _playlistProvider.Remove(Model.Playlist);
+   //                 _regionManager.RequestNavigate(
+   //                     RegionNames.ContentRegion, 
+   //                     "PlaylistsView", 
+   //                     new NavigationParameters()
+   //                     {
+   //                         { "playlists", _playlistProvider.Playlists }
+   //                     });
+   //             }
+   //         });
         }
 
         private void EditName()
         {
-            DialogParameters parameters = new DialogParameters()
+            DialogParameters parameters = new()
             {
                 { "title", _localizationManager.GetLocalizedString("Strings.PlaylistDetailsView.EditDialog.Title") },
                 { "caption", _localizationManager.GetLocalizedString("Strings.PlaylistDetailsView.EditDialog.Caption") },
@@ -114,14 +113,15 @@ namespace Osu.Music.UI.ViewModels
                 { "names", _playlistProvider.Playlists.Where(x => x != Model.Playlist).Select(x => x.Name) }
             };
 
-            _dialogService.ShowPopupDialog<ManagePlaylistNameView, ManagePlaylistNameViewModel>(parameters, e =>
-            {
-                if (e.Result == ButtonResult.OK)
-                {
-                    var name = e.Parameters.GetValue<string>("name");
-                    Model.Playlist.Name = name;
-                }
-            });
+			// TODO: Reimplement dialogs
+			//_dialogService.ShowPopupDialog<ManagePlaylistNameView, ManagePlaylistNameViewModel>(parameters, e =>
+   //         {
+   //             if (e.Result == ButtonResult.OK)
+   //             {
+   //                 var name = e.Parameters.GetValue<string>("name");
+   //                 Model.Playlist.Name = name;
+   //             }
+   //         });
         }
 
         private void PlayBeatmap(Beatmap beatmap)

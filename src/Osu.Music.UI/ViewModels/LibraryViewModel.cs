@@ -1,14 +1,11 @@
 ﻿using DryIoc;
 using Osu.Music.Common.Models;
 using Osu.Music.Services.Audio;
-using Osu.Music.Services.Dialog;
 using Osu.Music.UI.Models;
-using Osu.Music.UI.ViewModels.Dialogs;
-using Osu.Music.UI.Views.Dialogs;
 using Prism.Commands;
+using Prism.Dialogs;
 using Prism.Mvvm;
-using Prism.Regions;
-using Prism.Services.Dialogs;
+using Prism.Navigation.Regions;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
@@ -34,12 +31,9 @@ namespace Osu.Music.UI.ViewModels
         public DelegateCommand<Beatmap> OpenBeatmapInBrowserCommand { get; private set; }
         public DelegateCommand<Beatmap> AddToPlaylistCommand { get; private set; }
 
-        private IPopupDialogService _dialogService;
-
         public LibraryViewModel(IContainer container, LibraryModel model)
         {
             _playback = container.Resolve<AudioPlayback>();
-            _dialogService = container.Resolve<IPopupDialogService>();
             _model = model;
 
             InitializeCommands();
@@ -65,20 +59,21 @@ namespace Osu.Music.UI.ViewModels
 
         private void AddToPlaylist(Beatmap beatmap)
         {
-            DialogParameters parameters = new DialogParameters()
+            DialogParameters parameters = new()
             {
                 { "beatmap", beatmap }
             };
 
-            _dialogService.ShowPopupDialog<AddToPlaylistView, AddToPlaylistViewModel>(parameters, e =>
-            {
-                if (e.Result == ButtonResult.OK)
-                {
-                    var playlist = e.Parameters.GetValue<Playlist>("playlist");
-                    var beatmap = e.Parameters.GetValue<Beatmap>("beatmap");
-                    playlist.Beatmaps.Add(beatmap);
-                }
-            });
+            // TODO: Reimplement popup dialogs
+            //_dialogService.ShowPopupDialog<AddToPlaylistView, AddToPlaylistViewModel>(parameters, e =>
+            //{
+            //    if (e.Result == ButtonResult.OK)
+            //    {
+            //        var playlist = e.Parameters.GetValue<Playlist>("playlist");
+            //        var beatmap = e.Parameters.GetValue<Beatmap>("beatmap");
+            //        playlist.Beatmaps.Add(beatmap);
+            //    }
+            //});
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)

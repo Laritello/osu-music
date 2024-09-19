@@ -1,24 +1,20 @@
 ﻿using Osu.Music.Services;
 using Osu.Music.Services.Interfaces;
-using Osu.Music.Services.Localization;
 using Osu.Music.UI;
-using Osu.Music.UI.ViewModels;
-using Osu.Music.UI.Views;
 using Osu.Music.Views;
 using Prism.DryIoc;
 using Prism.Ioc;
 using Prism.Modularity;
-using System;
 using System.Windows;
 
 namespace Osu.Music
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
-    public partial class App : PrismApplication
+	/// <summary>
+	/// Interaction logic for App.xaml
+	/// </summary>
+	public partial class App : PrismApplication
     {
-        protected override Window CreateShell()
+		protected override Window CreateShell()
         {
             return Container.Resolve<MainWindow>();
         }
@@ -42,7 +38,7 @@ namespace Osu.Music
 
         private void LoadData()
         {
-            SplashWindow screen = new SplashWindow();
+            SplashWindow screen = new();
             screen.Show();
 
             try
