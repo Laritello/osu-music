@@ -4,17 +4,17 @@ using System.Windows.Data;
 
 namespace Osu.Music.UI.Resources.Converters
 {
-    // I'm not very fond of this solution
-    public class SongTitleColumnConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return Math.Max((double)value - 155.0, 0);
-        }
+	// I'm not very fond of this solution
+	public class SongTitleColumnConverter : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			return Math.Max((double)value - 155.0, 0);
+		}
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotSupportedException();
-        }
-    }
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			throw new NotSupportedException();
+		}
+	}
 }

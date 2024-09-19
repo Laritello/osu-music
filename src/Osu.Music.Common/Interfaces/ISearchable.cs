@@ -2,10 +2,10 @@
 
 namespace Osu.Music.Common.Interfaces
 {
-    public interface ISearchable
-    {
-        public bool Match(Regex query);
-        public string GetNavigationView();
-        public int Matches { get; }
-    }
+	public interface ISearchable
+	{
+		public bool Match(Regex query);
+		public string GetNavigationView();
+		public int Matches { get; }
+	}
 }

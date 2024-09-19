@@ -5,60 +5,60 @@ using System;
 
 namespace Osu.Music.UI.ViewModels.Dialogs
 {
-    public class GenericConfirmationViewModel : BindableBase, IDialogAware
-    {
-        private string _title;
-        public string Title
-        {
-            get => _title;
-            set => SetProperty(ref _title, value);
-        }
+	public class GenericConfirmationViewModel : BindableBase, IDialogAware
+	{
+		private string _title;
+		public string Title
+		{
+			get => _title;
+			set => SetProperty(ref _title, value);
+		}
 
-        private string _message;
-        public string Message
-        {
-            get => _message;
-            set => SetProperty(ref _message, value);
-        }
+		private string _message;
+		public string Message
+		{
+			get => _message;
+			set => SetProperty(ref _message, value);
+		}
 
-        private string _caption;
-        public string Caption
-        {
-            get => _caption;
-            set => SetProperty(ref _caption, value);
-        }
+		private string _caption;
+		public string Caption
+		{
+			get => _caption;
+			set => SetProperty(ref _caption, value);
+		}
 
-        public event Action<IDialogResult> RequestClose;
+		public event Action<IDialogResult> RequestClose;
 
-        public DelegateCommand AcceptCommand { get; private set; }
-        public DelegateCommand CancelCommand { get; private set; }
+		public DelegateCommand AcceptCommand { get; private set; }
+		public DelegateCommand CancelCommand { get; private set; }
 
 		DialogCloseListener IDialogAware.RequestClose => throw new NotImplementedException();
 
 		public GenericConfirmationViewModel()
-        {
-            InitializeCommands();
-        }
+		{
+			InitializeCommands();
+		}
 
-        private void InitializeCommands()
-        {
-            AcceptCommand = new DelegateCommand(Accept);
-            CancelCommand = new DelegateCommand(Cancel);
-        }
+		private void InitializeCommands()
+		{
+			AcceptCommand = new DelegateCommand(Accept);
+			CancelCommand = new DelegateCommand(Cancel);
+		}
 
-        private void Accept() => RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
+		private void Accept() => RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
 
-        private void Cancel() => RequestClose?.Invoke(new DialogResult(ButtonResult.Cancel));
+		private void Cancel() => RequestClose?.Invoke(new DialogResult(ButtonResult.Cancel));
 
-        public bool CanCloseDialog() => true;
+		public bool CanCloseDialog() => true;
 
-        public void OnDialogClosed() { }
+		public void OnDialogClosed() { }
 
-        public void OnDialogOpened(IDialogParameters parameters)
-        {
-            Title = parameters.GetValue<string>("title");
-            Message = parameters.GetValue<string>("message");
-            Caption = parameters.GetValue<string>("caption");
-        }
-    }
+		public void OnDialogOpened(IDialogParameters parameters)
+		{
+			Title = parameters.GetValue<string>("title");
+			Message = parameters.GetValue<string>("message");
+			Caption = parameters.GetValue<string>("caption");
+		}
+	}
 }

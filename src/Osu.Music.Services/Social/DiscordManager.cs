@@ -6,106 +6,106 @@ using System;
 
 namespace Osu.Music.Services.Social
 {
-    // TODO: Extract interface for possible similar integrations
-    public class DiscordManager : BindableBase, IDisposable
-    {
-        private static readonly string APPLICATION_ID = "910311809179848745";
+	// TODO: Extract interface for possible similar integrations
+	public class DiscordManager : BindableBase, IDisposable
+	{
+		private static readonly string APPLICATION_ID = "910311809179848745";
 
-        private DiscordRpcClient _client;
-        public DiscordRpcClient Client
-        {
-            get => _client;
-            set => SetProperty(ref _client, value);
-        }
+		private DiscordRpcClient _client;
+		public DiscordRpcClient Client
+		{
+			get => _client;
+			set => SetProperty(ref _client, value);
+		}
 
-        private bool _enabled;
-        public bool Enabled
-        {
-            get => _enabled;
-            set => SetProperty(ref _enabled, value);
-        }
+		private bool _enabled;
+		public bool Enabled
+		{
+			get => _enabled;
+			set => SetProperty(ref _enabled, value);
+		}
 
-        public DiscordManager()
-        {
-            Client = new DiscordRpcClient(APPLICATION_ID);
-        }
+		public DiscordManager()
+		{
+			Client = new DiscordRpcClient(APPLICATION_ID);
+		}
 
-        public void Initialize()
-        {
-            Client ??= new DiscordRpcClient(APPLICATION_ID);
+		public void Initialize()
+		{
+			Client ??= new DiscordRpcClient(APPLICATION_ID);
 
-            if (!Client.IsInitialized)
-                Client.Initialize();
-        }
+			if (!Client.IsInitialized)
+				Client.Initialize();
+		}
 
-        public void Deinitialize()
-        {
-            if (Client == null)
-                return;
+		public void Deinitialize()
+		{
+			if (Client == null)
+				return;
 
-            Client.ClearPresence();
+			Client.ClearPresence();
 
-            if (Client.IsInitialized)
-                Client.Deinitialize();
-        }
+			if (Client.IsInitialized)
+				Client.Deinitialize();
+		}
 
-        public void ClearPresence()
-        {
-            if (Client == null || !Client.IsInitialized)
-                return;
+		public void ClearPresence()
+		{
+			if (Client == null || !Client.IsInitialized)
+				return;
 
-            try
-            {
-                Client.ClearPresence();
-            }
-            catch
-            {
-                // For some reasons ClearPresence throws NullException
-            }
-        }
+			try
+			{
+				Client.ClearPresence();
+			}
+			catch
+			{
+				// For some reasons ClearPresence throws NullException
+			}
+		}
 
-        public void Update(Beatmap beatmap)
-        {
-            if (!Enabled || Client == null || !Client.IsInitialized)
-                return;
+		public void Update(Beatmap beatmap)
+		{
+			if (!Enabled || Client == null || !Client.IsInitialized)
+				return;
 
-            if (beatmap != null)
-            {
-                // TODO: Imaplement some fun stuff like status with small image
-                Client.SetPresence(new RichPresence()
-                {
-                    State = beatmap.Artist,
-                    Details = beatmap.Title,
-                    Timestamps = new Timestamps()
-                    {
-                        StartUnixMilliseconds = DateTime.Now.ToUniversalTime().ToUnix()
-                    },
-                    Assets = new Assets()
-                    {
-                        LargeImageKey = "logo",
-                        LargeImageText = $"{beatmap.Title} - {beatmap.Artist}"
-                    }
-                });
-            }
-            else
-            {
-                Client.ClearPresence();
-            }
-        }
+			if (beatmap != null)
+			{
+				// TODO: Imaplement some fun stuff like status with small image
+				Client.SetPresence(new RichPresence()
+				{
+					State = beatmap.Artist,
+					Details = beatmap.Title,
+					Timestamps = new Timestamps()
+					{
+						StartUnixMilliseconds = DateTime.Now.ToUniversalTime().ToUnix()
+					},
+					Assets = new Assets()
+					{
+						LargeImageKey = "logo",
+						LargeImageText = $"{beatmap.Title} - {beatmap.Artist}"
+					}
+				});
+			}
+			else
+			{
+				Client.ClearPresence();
+			}
+		}
 
-        public void Pause()
-        {
-            Client?.UpdateClearTime();
-        }
+		public void Pause()
+		{
+			Client?.UpdateClearTime();
+		}
 
-        public void Resume(TimeSpan resumeFrom)
-        {
-            Client?.UpdateStartTime(DateTime.Now.Subtract(resumeFrom).ToUniversalTime());
-        }
+		public void Resume(TimeSpan resumeFrom)
+		{
+			Client?.UpdateStartTime(DateTime.Now.Subtract(resumeFrom).ToUniversalTime());
+		}
 
-        public void Dispose()
-        {
-            Deinitialize();
-        }
-    }
+		public void Dispose()
+		{
+			Deinitialize();
+		}
+	}
 }

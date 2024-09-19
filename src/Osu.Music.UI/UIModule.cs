@@ -8,55 +8,55 @@ using Prism.Navigation.Regions;
 
 namespace Osu.Music.UI
 {
-    public class UIModule : IModule
-    {
-        public void OnInitialized(IContainerProvider containerProvider)
-        {
-            var regionManager = containerProvider.Resolve<IRegionManager>();
-            regionManager.RequestNavigate(RegionNames.GlobalRegion, nameof(MainView));
-        }
+	public class UIModule : IModule
+	{
+		public void OnInitialized(IContainerProvider containerProvider)
+		{
+			var regionManager = containerProvider.Resolve<IRegionManager>();
+			regionManager.RequestNavigate(RegionNames.GlobalRegion, nameof(MainView));
+		}
 
-        public void RegisterTypes(IContainerRegistry containerRegistry)
-        {
-            RegisterModels(containerRegistry);
-            RegisterViews(containerRegistry);
-            RegisterViewModels(containerRegistry);
-        }
+		public void RegisterTypes(IContainerRegistry containerRegistry)
+		{
+			RegisterModels(containerRegistry);
+			RegisterViews(containerRegistry);
+			RegisterViewModels(containerRegistry);
+		}
 
-        private void RegisterModels(IContainerRegistry containerRegistry)
-        {
-            containerRegistry.Register<AboutModel>();
-            containerRegistry.Register<CollectionDetailsModel>();
-            containerRegistry.Register<CollectionsModel>();
-            containerRegistry.Register<LibraryModel>();
-            containerRegistry.Register<MainModel>();
-            containerRegistry.Register<PlaylistDetailsModel>();
-            containerRegistry.Register<PlaylistsModel>();
-            containerRegistry.Register<SettingsModel>();
-        }
+		private void RegisterModels(IContainerRegistry containerRegistry)
+		{
+			containerRegistry.Register<AboutModel>();
+			containerRegistry.Register<CollectionDetailsModel>();
+			containerRegistry.Register<CollectionsModel>();
+			containerRegistry.Register<LibraryModel>();
+			containerRegistry.Register<MainModel>();
+			containerRegistry.Register<PlaylistDetailsModel>();
+			containerRegistry.Register<PlaylistsModel>();
+			containerRegistry.Register<SettingsModel>();
+		}
 
-        private void RegisterViews(IContainerRegistry containerRegistry)
-        {
-            containerRegistry.RegisterForNavigation<MainView>();
-            containerRegistry.RegisterForNavigation<AboutView>();
-            containerRegistry.RegisterForNavigation<CollectionsView>();
-            containerRegistry.RegisterForNavigation<CollectionDetailsView>();
-            containerRegistry.RegisterForNavigation<PlaylistsView>();
-            containerRegistry.RegisterForNavigation<PlaylistDetailsView>();
-            containerRegistry.RegisterForNavigation<LibraryView>();
-            containerRegistry.RegisterForNavigation<SettingsView>();
-        }
+		private void RegisterViews(IContainerRegistry containerRegistry)
+		{
+			containerRegistry.RegisterForNavigation<MainView>();
+			containerRegistry.RegisterForNavigation<AboutView>();
+			containerRegistry.RegisterForNavigation<CollectionsView>();
+			containerRegistry.RegisterForNavigation<CollectionDetailsView>();
+			containerRegistry.RegisterForNavigation<PlaylistsView>();
+			containerRegistry.RegisterForNavigation<PlaylistDetailsView>();
+			containerRegistry.RegisterForNavigation<LibraryView>();
+			containerRegistry.RegisterForNavigation<SettingsView>();
+		}
 
-        private void RegisterViewModels(IContainerRegistry containerRegistry)
-        {
-            containerRegistry.Register<MainViewModel>();
-            containerRegistry.Register<AboutViewModel>();
-            containerRegistry.Register<CollectionsViewModel>();
-            containerRegistry.Register<CollectionDetailsViewModel>();
-            containerRegistry.Register<PlaylistsViewModel>();
-            containerRegistry.Register<PlaylistDetailsViewModel>();
-            containerRegistry.Register<LibraryViewModel>();
-            containerRegistry.Register<SettingsViewModel>();
-        }
-    }
+		private void RegisterViewModels(IContainerRegistry containerRegistry)
+		{
+			containerRegistry.Register<MainViewModel>();
+			containerRegistry.Register<AboutViewModel>();
+			containerRegistry.Register<CollectionsViewModel>();
+			containerRegistry.Register<CollectionDetailsViewModel>();
+			containerRegistry.Register<PlaylistsViewModel>();
+			containerRegistry.Register<PlaylistDetailsViewModel>();
+			containerRegistry.Register<LibraryViewModel>();
+			containerRegistry.Register<SettingsViewModel>();
+		}
+	}
 }

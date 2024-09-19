@@ -9,75 +9,75 @@ using System.Linq;
 
 namespace Osu.Music.UI.ViewModels.Dialogs
 {
-    public class AddToPlaylistViewModel : BindableBase, IDialogAware
-    {
-        private string _title;
-        public string Title
-        {
-            get => _title;
-            set => SetProperty(ref _title, value);
-        }
+	public class AddToPlaylistViewModel : BindableBase, IDialogAware
+	{
+		private string _title;
+		public string Title
+		{
+			get => _title;
+			set => SetProperty(ref _title, value);
+		}
 
-        private Beatmap _beatmap;
-        public Beatmap Beatmap
-        {
-            get => _beatmap;
-            set => SetProperty(ref _beatmap, value);
-        }
+		private Beatmap _beatmap;
+		public Beatmap Beatmap
+		{
+			get => _beatmap;
+			set => SetProperty(ref _beatmap, value);
+		}
 
-        private ObservableCollection<Playlist> _playlists;
-        public ObservableCollection<Playlist> Playlists
-        {
-            get => _playlists;
-            set => SetProperty(ref _playlists, value);
-        }
+		private ObservableCollection<Playlist> _playlists;
+		public ObservableCollection<Playlist> Playlists
+		{
+			get => _playlists;
+			set => SetProperty(ref _playlists, value);
+		}
 
-        public DelegateCommand<Playlist> SendCommand { get; private set; }
-        public DelegateCommand CancelCommand { get; private set; }
+		public DelegateCommand<Playlist> SendCommand { get; private set; }
+		public DelegateCommand CancelCommand { get; private set; }
 
 		DialogCloseListener IDialogAware.RequestClose => throw new NotImplementedException();
 
 		public event Action<IDialogResult> RequestClose;
 
-        private IPlaylistProvider _playlistProvider;
+		private IPlaylistProvider _playlistProvider;
 
-        public AddToPlaylistViewModel(IPlaylistProvider playlistProvider)
-        {
-            _playlistProvider = playlistProvider;
+		public AddToPlaylistViewModel(IPlaylistProvider playlistProvider)
+		{
+			_playlistProvider = playlistProvider;
 
-            InitializeCommands();
-        }
+			InitializeCommands();
+		}
 
-        private void InitializeCommands()
-        {
-            SendCommand = new DelegateCommand<Playlist>(Send);
-            CancelCommand = new DelegateCommand(Cancel);
-        }
+		private void InitializeCommands()
+		{
+			SendCommand = new DelegateCommand<Playlist>(Send);
+			CancelCommand = new DelegateCommand(Cancel);
+		}
 
-        private void Send(Playlist playlist)
-        {
-            var result = new DialogResult
-            {
-                Result = ButtonResult.OK,
-                Parameters =
-                {
-				    { "playlist", playlist },
-				    { "beatmap", Beatmap }
+		private void Send(Playlist playlist)
+		{
+			var result = new DialogResult
+			{
+				Result = ButtonResult.OK,
+				Parameters =
+				{
+					{ "playlist", playlist },
+					{ "beatmap", Beatmap }
 				}
-            };
-            RequestClose?.Invoke(result);
-        }
+			};
+			RequestClose?.Invoke(result);
+		}
 
-        private void Cancel() => RequestClose?.Invoke(new DialogResult(ButtonResult.Cancel));
+		private void Cancel() => RequestClose?.Invoke(new DialogResult(ButtonResult.Cancel));
 
-        public bool CanCloseDialog() => true;
+		public bool CanCloseDialog() => true;
 
-        public void OnDialogClosed() { }
+		public void OnDialogClosed() { }
 
-        public void OnDialogOpened(IDialogParameters parameters)
-        {
-            Beatmap = parameters.GetValue<Beatmap>("beatmap");
-            Playlists = new ObservableCollection<Playlist>(_playlistProvider.Playlists.Where(x => !x.Beatmaps.Contains(Beatmap)));
-        }
-    }
+		public void OnDialogOpened(IDialogParameters parameters)
+		{
+			Beatmap = parameters.GetValue<Beatmap>("beatmap");
+			Playlists = new ObservableCollection<Playlist>(_playlistProvider.Playlists.Where(x => !x.Beatmaps.Contains(Beatmap)));
+		}
+	}
 }

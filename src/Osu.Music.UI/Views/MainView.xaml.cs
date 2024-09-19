@@ -1,15 +1,15 @@
-﻿using System.Windows.Controls;
-using DryIoc;
+﻿using DryIoc;
 using Osu.Music.UI.ViewModels;
+using System.Windows.Controls;
 
 namespace Osu.Music.UI.Views
 {
-    public partial class MainView : UserControl
-    {
-        public MainView(IContainer container)
-        {
-            InitializeComponent();
-            DataContext = container.Resolve<MainViewModel>();
-        }
-    }
+	public partial class MainView : UserControl
+	{
+		public MainView(IContainer container)
+		{
+			InitializeComponent();
+			DataContext = container.Resolve<MainViewModel>();
+		}
+	}
 }

@@ -13,44 +13,44 @@ namespace Osu.Music
 	/// Interaction logic for App.xaml
 	/// </summary>
 	public partial class App : PrismApplication
-    {
+	{
 		protected override Window CreateShell()
-        {
-            return Container.Resolve<MainWindow>();
-        }
+		{
+			return Container.Resolve<MainWindow>();
+		}
 
-        protected override void RegisterTypes(IContainerRegistry containerRegistry)
-        {
-            // Do nothing
-        }
+		protected override void RegisterTypes(IContainerRegistry containerRegistry)
+		{
+			// Do nothing
+		}
 
-        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
-        {
-            moduleCatalog.AddModule<ServicesModule>();
-            moduleCatalog.AddModule<UIModule>();
-        }
+		protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
+		{
+			moduleCatalog.AddModule<ServicesModule>();
+			moduleCatalog.AddModule<UIModule>();
+		}
 
-        protected override void OnInitialized()
-        {
-            LoadData();
-            base.OnInitialized();
-        }
+		protected override void OnInitialized()
+		{
+			LoadData();
+			base.OnInitialized();
+		}
 
-        private void LoadData()
-        {
-            SplashWindow screen = new();
-            screen.Show();
+		private void LoadData()
+		{
+			SplashWindow screen = new();
+			screen.Show();
 
-            try
-            {
-                Container.Resolve<ILibraryProvider>().Load();
-                Container.Resolve<IPlaylistProvider>().Load();
-                Container.Resolve<ICollectionProvider>().Load();
-            }
-            finally
-            {
-                screen.Close();
-            }
-        }
-    }
+			try
+			{
+				Container.Resolve<ILibraryProvider>().Load();
+				Container.Resolve<IPlaylistProvider>().Load();
+				Container.Resolve<ICollectionProvider>().Load();
+			}
+			finally
+			{
+				screen.Close();
+			}
+		}
+	}
 }

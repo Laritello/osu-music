@@ -7,120 +7,120 @@ using System.Windows.Interop;
 
 namespace Osu.Music.Views
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
-    {
-        public DelegateCommand MinimizeCommand { get; private set; }
-        public DelegateCommand<Button> MaximizeOrRestoreCommand { get; private set; }
-        public DelegateCommand CloseCommand { get; private set; }
+	/// <summary>
+	/// Interaction logic for MainWindow.xaml
+	/// </summary>
+	public partial class MainWindow : Window
+	{
+		public DelegateCommand MinimizeCommand { get; private set; }
+		public DelegateCommand<Button> MaximizeOrRestoreCommand { get; private set; }
+		public DelegateCommand CloseCommand { get; private set; }
 
-        public MainWindow()
-        {
-            InitializeComponent();
-            InitializeCommands();
-        }
+		public MainWindow()
+		{
+			InitializeComponent();
+			InitializeCommands();
+		}
 
-        private void InitializeCommands()
-        {
-            MinimizeCommand = new DelegateCommand(Minimize);
-            MaximizeOrRestoreCommand = new DelegateCommand<Button>(MaximizeOrRestore);
-            CloseCommand = new DelegateCommand(Close);
-        }
+		private void InitializeCommands()
+		{
+			MinimizeCommand = new DelegateCommand(Minimize);
+			MaximizeOrRestoreCommand = new DelegateCommand<Button>(MaximizeOrRestore);
+			CloseCommand = new DelegateCommand(Close);
+		}
 
-        private void Minimize() => WindowState = WindowState.Minimized;
+		private void Minimize() => WindowState = WindowState.Minimized;
 
-        private void MaximizeOrRestore(Button maximize)
-        {
-            WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
-            maximize.Visibility = WindowState == WindowState.Maximized ? Visibility.Collapsed : Visibility.Visible;
-        }
+		private void MaximizeOrRestore(Button maximize)
+		{
+			WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+			maximize.Visibility = WindowState == WindowState.Maximized ? Visibility.Collapsed : Visibility.Visible;
+		}
 
-        protected override void OnSourceInitialized(EventArgs e)
-        {
-            base.OnSourceInitialized(e);
-            ((HwndSource)PresentationSource.FromVisual(this)).AddHook(HookProc);
-        }
+		protected override void OnSourceInitialized(EventArgs e)
+		{
+			base.OnSourceInitialized(e);
+			((HwndSource)PresentationSource.FromVisual(this)).AddHook(HookProc);
+		}
 
-        public static IntPtr HookProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-        {
-            if (msg == WM_GETMINMAXINFO)
-            {
-                // We need to tell the system what our size should be when maximized. Otherwise it will cover the whole screen,
-                // including the task bar.
-                MINMAXINFO mmi = (MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(MINMAXINFO));
+		public static IntPtr HookProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		{
+			if (msg == WM_GETMINMAXINFO)
+			{
+				// We need to tell the system what our size should be when maximized. Otherwise it will cover the whole screen,
+				// including the task bar.
+				MINMAXINFO mmi = (MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(MINMAXINFO));
 
-                // Adjust the maximized size and position to fit the work area of the correct monitor
-                IntPtr monitor = MonitorFromWindow(hwnd, MONITOR_DEFAULTTONEAREST);
+				// Adjust the maximized size and position to fit the work area of the correct monitor
+				IntPtr monitor = MonitorFromWindow(hwnd, MONITOR_DEFAULTTONEAREST);
 
-                if (monitor != IntPtr.Zero)
-                {
-                    MONITORINFO monitorInfo = new()
+				if (monitor != IntPtr.Zero)
+				{
+					MONITORINFO monitorInfo = new()
 					{
-                        cbSize = Marshal.SizeOf(typeof(MONITORINFO))
-                    };
-                    GetMonitorInfo(monitor, ref monitorInfo);
+						cbSize = Marshal.SizeOf(typeof(MONITORINFO))
+					};
+					GetMonitorInfo(monitor, ref monitorInfo);
 
-                    RECT rcWorkArea = monitorInfo.rcWork;
-                    RECT rcMonitorArea = monitorInfo.rcMonitor;
-                    mmi.ptMaxPosition.X = Math.Abs(rcWorkArea.Left - rcMonitorArea.Left);
-                    mmi.ptMaxPosition.Y = Math.Abs(rcWorkArea.Top - rcMonitorArea.Top);
-                    mmi.ptMaxSize.X = Math.Abs(rcWorkArea.Right - rcWorkArea.Left);
-                    mmi.ptMaxSize.Y = Math.Abs(rcWorkArea.Bottom - rcWorkArea.Top);
-                }
+					RECT rcWorkArea = monitorInfo.rcWork;
+					RECT rcMonitorArea = monitorInfo.rcMonitor;
+					mmi.ptMaxPosition.X = Math.Abs(rcWorkArea.Left - rcMonitorArea.Left);
+					mmi.ptMaxPosition.Y = Math.Abs(rcWorkArea.Top - rcMonitorArea.Top);
+					mmi.ptMaxSize.X = Math.Abs(rcWorkArea.Right - rcWorkArea.Left);
+					mmi.ptMaxSize.Y = Math.Abs(rcWorkArea.Bottom - rcWorkArea.Top);
+				}
 
-                Marshal.StructureToPtr(mmi, lParam, true);
-            }
+				Marshal.StructureToPtr(mmi, lParam, true);
+			}
 
-            return IntPtr.Zero;
-        }
+			return IntPtr.Zero;
+		}
 
-        private const int WM_GETMINMAXINFO = 0x0024;
+		private const int WM_GETMINMAXINFO = 0x0024;
 
-        private const uint MONITOR_DEFAULTTONEAREST = 0x00000002;
+		private const uint MONITOR_DEFAULTTONEAREST = 0x00000002;
 
-        [DllImport("user32.dll")]
-        private static extern IntPtr MonitorFromWindow(IntPtr handle, uint flags);
+		[DllImport("user32.dll")]
+		private static extern IntPtr MonitorFromWindow(IntPtr handle, uint flags);
 
-        [DllImport("user32.dll")]
-        private static extern bool GetMonitorInfo(IntPtr hMonitor, ref MONITORINFO lpmi);
+		[DllImport("user32.dll")]
+		private static extern bool GetMonitorInfo(IntPtr hMonitor, ref MONITORINFO lpmi);
 
-        [Serializable]
-        [StructLayout(LayoutKind.Sequential)]
-        public struct RECT(int left, int top, int right, int bottom)
+		[Serializable]
+		[StructLayout(LayoutKind.Sequential)]
+		public struct RECT(int left, int top, int right, int bottom)
 		{
-            public int Left = left;
-            public int Top = top;
-            public int Right = right;
-            public int Bottom = bottom;
+			public int Left = left;
+			public int Top = top;
+			public int Right = right;
+			public int Bottom = bottom;
 		}
 
 		[StructLayout(LayoutKind.Sequential)]
-        public struct MONITORINFO
-        {
-            public int cbSize;
-            public RECT rcMonitor;
-            public RECT rcWork;
-            public uint dwFlags;
-        }
-
-        [Serializable]
-        [StructLayout(LayoutKind.Sequential)]
-        public struct POINT(int x, int y)
+		public struct MONITORINFO
 		{
-            public int X = x;
-            public int Y = y;
+			public int cbSize;
+			public RECT rcMonitor;
+			public RECT rcWork;
+			public uint dwFlags;
+		}
+
+		[Serializable]
+		[StructLayout(LayoutKind.Sequential)]
+		public struct POINT(int x, int y)
+		{
+			public int X = x;
+			public int Y = y;
 		}
 
 		[StructLayout(LayoutKind.Sequential)]
-        public struct MINMAXINFO
-        {
-            public POINT ptReserved;
-            public POINT ptMaxSize;
-            public POINT ptMaxPosition;
-            public POINT ptMinTrackSize;
-            public POINT ptMaxTrackSize;
-        }
-    }
+		public struct MINMAXINFO
+		{
+			public POINT ptReserved;
+			public POINT ptMaxSize;
+			public POINT ptMaxPosition;
+			public POINT ptMinTrackSize;
+			public POINT ptMaxTrackSize;
+		}
+	}
 }

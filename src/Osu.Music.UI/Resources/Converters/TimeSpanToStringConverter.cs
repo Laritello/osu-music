@@ -4,21 +4,21 @@ using System.Windows.Data;
 
 namespace Osu.Music.UI.Resources.Converters
 {
-    public class TimeSpanToStringConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (!(value is TimeSpan))
-                return "";
+	public class TimeSpanToStringConverter : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			if (!(value is TimeSpan))
+				return "";
 
-            TimeSpan time = (TimeSpan)value;
+			TimeSpan time = (TimeSpan)value;
 
-            return $"{time:mm\\:ss}";
-        }
+			return $"{time:mm\\:ss}";
+		}
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotSupportedException();
-        }
-    }
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			throw new NotSupportedException();
+		}
+	}
 }

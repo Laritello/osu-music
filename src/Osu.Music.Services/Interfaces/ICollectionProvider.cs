@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 
 namespace Osu.Music.Services.Interfaces
 {
-    public interface ICollectionProvider
-    {
-        public ObservableCollection<Collection> Collections { get; }
-        public Task<ObservableCollection<Collection>> LoadAsync();
-        public ObservableCollection<Collection> Load();
-    }
+	public interface ICollectionProvider
+	{
+		public ObservableCollection<Collection> Collections { get; }
+		public Task<ObservableCollection<Collection>> LoadAsync();
+		public ObservableCollection<Collection> Load();
+	}
 }

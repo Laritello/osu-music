@@ -1,26 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows.Controls;
 
 namespace Osu.Music.UI.Views.Dialogs
 {
-    /// <summary>
-    /// Логика взаимодействия для SearchView.xaml
-    /// </summary>
-    public partial class SearchView : UserControl
-    {
-        public SearchView()
-        {
-            InitializeComponent();
-        }
-    }
+	/// <summary>
+	/// Логика взаимодействия для SearchView.xaml
+	/// </summary>
+	public partial class SearchView : UserControl
+	{
+		public SearchView()
+		{
+			InitializeComponent();
+		}
+	}
 }

@@ -11,25 +11,25 @@ using Prism.Modularity;
 
 namespace Osu.Music.Services
 {
-    public class ServicesModule : IModule
-    {
-        public void OnInitialized(IContainerProvider containerProvider)
-        {
-            // Do nothing
-        }
+	public class ServicesModule : IModule
+	{
+		public void OnInitialized(IContainerProvider containerProvider)
+		{
+			// Do nothing
+		}
 
-        public void RegisterTypes(IContainerRegistry containerRegistry)
-        {
-            containerRegistry.Register<IFileDialogService, FileDialogService>();
+		public void RegisterTypes(IContainerRegistry containerRegistry)
+		{
+			containerRegistry.Register<IFileDialogService, FileDialogService>();
 
 			containerRegistry.RegisterSingleton<IUpdateService, UpdateService>();
 			containerRegistry.RegisterSingleton<ICollectionProvider, CollectionProvider>();
-            containerRegistry.RegisterSingleton<ILibraryProvider, LibraryProvider>();
-            containerRegistry.RegisterSingleton<IPlaylistProvider, PlaylistProvider>();
-            containerRegistry.RegisterSingleton<AudioPlayback>();
-            containerRegistry.RegisterSingleton<SettingsProvider>();
-            containerRegistry.RegisterSingleton<HotkeyManager>();
-            containerRegistry.RegisterSingleton<DiscordManager>();
-        }
-    }
+			containerRegistry.RegisterSingleton<ILibraryProvider, LibraryProvider>();
+			containerRegistry.RegisterSingleton<IPlaylistProvider, PlaylistProvider>();
+			containerRegistry.RegisterSingleton<AudioPlayback>();
+			containerRegistry.RegisterSingleton<SettingsProvider>();
+			containerRegistry.RegisterSingleton<HotkeyManager>();
+			containerRegistry.RegisterSingleton<DiscordManager>();
+		}
+	}
 }

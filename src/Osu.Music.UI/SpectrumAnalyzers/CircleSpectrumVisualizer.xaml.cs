@@ -4,16 +4,16 @@ using System.Windows.Controls;
 
 namespace Osu.Music.UI.SpectrumAnalyzers
 {
-    public partial class CircleSpectrumVisualizer : UserControl
-    {
-        public CircleSpectrumVisualizer()
-        {
-            InitializeComponent();
-        }
+	public partial class CircleSpectrumVisualizer : UserControl
+	{
+		public CircleSpectrumVisualizer()
+		{
+			InitializeComponent();
+		}
 
-        public void Update(FrequencySpectrum fftResults)
-        {
-            throw new NotImplementedException();
-        }
-    }
+		public void Update(FrequencySpectrum fftResults)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }
