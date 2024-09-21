@@ -8,8 +8,24 @@ namespace Osu.Music.Common.Models
 {
 	public class Settings : BindableBase
 	{
-		#region Properties
+		#region Backing fields
+
 		private string _source;
+		private string _culture;
+		private ApplicationTheme _theme;
+		private string _color;
+		private bool _hotkeysEnabled;
+		private ICollection<Hotkey> _hotkeys = [];
+		private bool _discordEnabled;
+		private PlayerState _state;
+
+		#endregion
+
+		#region Properties
+
+		/// <summary>
+		/// Path to the osu! instance.
+		/// </summary>
 		public string Source
 		{
 			get => _source;
@@ -20,7 +36,9 @@ namespace Osu.Music.Common.Models
 			}
 		}
 
-		private string _culture;
+		/// <summary>
+		/// Culture of the application.
+		/// </summary>
 		public string Culture
 		{
 			get => _culture;
@@ -31,7 +49,9 @@ namespace Osu.Music.Common.Models
 			}
 		}
 
-		private ApplicationTheme _theme;
+		/// <summary>
+		/// Theme of the application.
+		/// </summary>
 		public ApplicationTheme Theme
 		{
 			get => _theme;
@@ -42,7 +62,9 @@ namespace Osu.Music.Common.Models
 			}
 		}
 
-		private string _color;
+		/// <summary>
+		/// Primary color of the application.
+		/// </summary>
 		public string Color
 		{
 			get => _color;
@@ -53,21 +75,27 @@ namespace Osu.Music.Common.Models
 			}
 		}
 
-		private bool _hotkeysEnabled;
+		/// <summary>
+		/// Toggle for the hotkeys.
+		/// </summary>
 		public bool HotkeysEnabled
 		{
 			get => _hotkeysEnabled;
 			set => SetProperty(ref _hotkeysEnabled, value);
 		}
 
-		private ICollection<Hotkey> _hotkeys;
+		/// <summary>
+		/// List of the hotkeys.
+		/// </summary>
 		public ICollection<Hotkey> Hotkeys
 		{
 			get => _hotkeys;
 			set => SetProperty(ref _hotkeys, value);
 		}
 
-		private bool _discordEnabled;
+		/// <summary>
+		/// Toggle for the Discord RPC.
+		/// </summary>
 		public bool DiscordEnabled
 		{
 			get => _discordEnabled;
@@ -78,15 +106,19 @@ namespace Osu.Music.Common.Models
 			}
 		}
 
-		private PlayerState _state;
+		/// <summary>
+		/// Last active state of the player before exit.
+		/// </summary>
 		public PlayerState State
 		{
 			get => _state;
 			set => SetProperty(ref _state, value);
 		}
+
 		#endregion
 
 		#region Events
+
 		public delegate void ApplicationSourceChangedEventHander(string path);
 		public event ApplicationSourceChangedEventHander SourceChanged;
 
@@ -101,7 +133,10 @@ namespace Osu.Music.Common.Models
 
 		public delegate void ApplicationDiscordEnabledEventHandler(bool enabled);
 		public event ApplicationDiscordEnabledEventHandler DiscordEnabledChanged;
+
 		#endregion
+
+		#region Constructors
 
 		public Settings()
 		{
@@ -110,7 +145,7 @@ namespace Osu.Music.Common.Models
 			Color = "#FF800080";
 			HotkeysEnabled = true;
 			DiscordEnabled = true;
-			State = new PlayerState()
+			State = new PlayerState
 			{
 				Volume = 0.3f,
 				Shuffle = false,
@@ -121,14 +156,18 @@ namespace Osu.Music.Common.Models
 			InitializeHotkeys();
 		}
 
+		#endregion
+
+		#region Methods
+
 		private void InitializeHotkeys()
 		{
-			Hotkeys = new List<Hotkey>
-			{
-				new Hotkey()
+			Hotkeys =
+			[
+				new Hotkey
 				{
 					Type = HotkeyType.PlayPause,
-					Combination = new KeyCombination()
+					Combination = new KeyCombination
 					{
 						ControlPressed = true,
 						ShiftPressed = true,
@@ -136,10 +175,10 @@ namespace Osu.Music.Common.Models
 					}
 				},
 
-				new Hotkey()
+				new Hotkey
 				{
 					Type = HotkeyType.PreviousTrack,
-					Combination = new KeyCombination()
+					Combination = new KeyCombination
 					{
 						ControlPressed = true,
 						ShiftPressed = true,
@@ -147,10 +186,10 @@ namespace Osu.Music.Common.Models
 					}
 				},
 
-				new Hotkey()
+				new Hotkey
 				{
 					Type = HotkeyType.NextTrack,
-					Combination = new KeyCombination()
+					Combination = new KeyCombination
 					{
 						ControlPressed = true,
 						ShiftPressed = true,
@@ -158,56 +197,58 @@ namespace Osu.Music.Common.Models
 					}
 				},
 
-				new Hotkey()
+				new Hotkey
 				{
 					Type = HotkeyType.Mute,
-					Combination = new KeyCombination()
+					Combination = new KeyCombination
 					{
 						ControlPressed = true,
 						Key = Keys.M
 					}
 				},
 
-				new Hotkey()
+				new Hotkey
 				{
 					Type = HotkeyType.Shuffle,
-					Combination = new KeyCombination()
+					Combination = new KeyCombination
 					{
 						ControlPressed = true,
 						Key = Keys.S
 					}
 				},
 
-				new Hotkey()
+				new Hotkey
 				{
 					Type = HotkeyType.Repeat,
-					Combination = new KeyCombination()
+					Combination = new KeyCombination
 					{
 						ControlPressed = true,
 						Key = Keys.R
 					}
 				},
 
-				new Hotkey()
+				new Hotkey
 				{
 					Type = HotkeyType.VolumeUp,
-					Combination = new KeyCombination()
+					Combination = new KeyCombination
 					{
 						ControlPressed = true,
 						Key = Keys.Up
 					}
 				},
 
-				new Hotkey()
+				new Hotkey
 				{
 					Type = HotkeyType.VolumeDown,
-					Combination = new KeyCombination()
+					Combination = new KeyCombination
 					{
 						ControlPressed = true,
 						Key = Keys.Down
 					}
 				}
-			};
+			];
 		}
+
+		#endregion
 	}
 }

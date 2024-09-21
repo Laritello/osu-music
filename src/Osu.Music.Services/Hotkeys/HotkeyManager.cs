@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace Osu.Music.Services.Hotkeys
 {
-	public class HotkeyManager : BindableBase, IDisposable
+	public sealed class HotkeyManager : BindableBase, IDisposable
 	{
 		public delegate void HotkeyEventHandler(object sender, HotkeyEventArgs e);
 		public event HotkeyEventHandler HotkeyUsed;

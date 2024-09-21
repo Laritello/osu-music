@@ -8,21 +8,34 @@ namespace Osu.Music.Common.Models
 {
 	public class Collection : BindableBase, ISearchable
 	{
+		#region Backing fields
+
 		private string _name;
+		private ObservableCollection<Beatmap> _beatmaps = [];
+		private int _matches;
+
+		#endregion
+
+
+		#region Properties
+		/// <summary>
+		/// The name of the the collection.
+		/// </summary>
 		public string Name
 		{
 			get => _name;
 			set => SetProperty(ref _name, value);
 		}
 
-		private ObservableCollection<Beatmap> _beatmaps;
+		/// <summary>
+		/// The beatmaps of the collection.
+		/// </summary>
 		public ObservableCollection<Beatmap> Beatmaps
 		{
 			get => _beatmaps;
 			set => SetProperty(ref _beatmaps, value);
 		}
 
-		private int _matches;
 		/// <summary>
 		/// The amount of found matches during search.
 		/// </summary>
@@ -33,6 +46,10 @@ namespace Osu.Music.Common.Models
 			private set => SetProperty(ref _matches, value);
 		}
 
+		#endregion
+
+		#region Methods
+
 		public bool Match(Regex query)
 		{
 			Matches = query.Matches(Name).Count;
@@ -40,5 +57,7 @@ namespace Osu.Music.Common.Models
 		}
 
 		public string GetNavigationView() => "CollectionDetailsView";
+
+		#endregion
 	}
 }

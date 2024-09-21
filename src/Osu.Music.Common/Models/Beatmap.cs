@@ -11,7 +11,27 @@ namespace Osu.Music.Common.Models
 {
 	public class Beatmap : BindableBase, ISearchable
 	{
+		#region Backgind fields
+
 		private int _beatmapSetId;
+		private string _title;
+		private string _titleUnicode;
+		private string _artist;
+		private string _artistUnicode;
+		private string _creator;
+		private string _audioFileName;
+		private TimeSpan _totalTime;
+		private string _tags;
+		private string _directory;
+		private string _fileName;
+		private ICollection<string> _hashes = [];
+		private string _backgroundFilePath;
+		private int _matches;
+
+		#endregion
+
+		#region Properties
+
 		/// <summary>
 		/// Beatmap ID.
 		/// </summary>
@@ -21,7 +41,6 @@ namespace Osu.Music.Common.Models
 			set => SetProperty(ref _beatmapSetId, value);
 		}
 
-		private string _title;
 		/// <summary>
 		/// Romanised song title.
 		/// </summary>
@@ -32,7 +51,6 @@ namespace Osu.Music.Common.Models
 			set => SetProperty(ref _title, value);
 		}
 
-		private string _titleUnicode;
 		/// <summary>
 		/// Song title.
 		/// </summary>
@@ -43,7 +61,6 @@ namespace Osu.Music.Common.Models
 			set => SetProperty(ref _titleUnicode, value);
 		}
 
-		private string _artist;
 		/// <summary>
 		/// Romanised song artist.
 		/// </summary>
@@ -54,7 +71,6 @@ namespace Osu.Music.Common.Models
 			set => SetProperty(ref _artist, value);
 		}
 
-		private string _artistUnicode;
 		/// <summary>
 		/// Song artist.
 		/// </summary>
@@ -65,7 +81,6 @@ namespace Osu.Music.Common.Models
 			set => SetProperty(ref _artistUnicode, value);
 		}
 
-		private string _creator;
 		/// <summary>
 		/// Beatmap creator.
 		/// </summary>
@@ -76,7 +91,6 @@ namespace Osu.Music.Common.Models
 			set => SetProperty(ref _creator, value);
 		}
 
-		private string _audioFileName;
 		/// <summary>
 		/// Location of the audio file.
 		/// </summary>
@@ -87,7 +101,6 @@ namespace Osu.Music.Common.Models
 			set => SetProperty(ref _audioFileName, value);
 		}
 
-		private TimeSpan _totalTime;
 		/// <summary>
 		/// Total duration of the audio file.
 		/// </summary>
@@ -98,7 +111,6 @@ namespace Osu.Music.Common.Models
 			set => SetProperty(ref _totalTime, value);
 		}
 
-		private string _tags;
 		/// <summary>
 		/// Space-separated list of search terms.
 		/// </summary>
@@ -109,7 +121,6 @@ namespace Osu.Music.Common.Models
 			set => SetProperty(ref _tags, value);
 		}
 
-		private string _directory;
 		/// <summary>
 		/// Location of the beatmap.
 		/// </summary>
@@ -120,7 +131,6 @@ namespace Osu.Music.Common.Models
 			set => SetProperty(ref _directory, value);
 		}
 
-		private string _fileName;
 		/// <summary>
 		/// Name of the .osu file
 		/// </summary>
@@ -131,7 +141,6 @@ namespace Osu.Music.Common.Models
 			set => SetProperty(ref _fileName, value);
 		}
 
-		private ICollection<string> _hashes;
 		/// <summary>
 		/// Hash of the .osu file
 		/// </summary>
@@ -142,28 +151,19 @@ namespace Osu.Music.Common.Models
 			set => SetProperty(ref _hashes, value);
 		}
 
-		private string _backgroundFilePath;
 		/// <summary>
 		/// Full path to background image file.
 		/// </summary>
 		[JsonIgnore]
-		public string BackgroundFilePath
-		{
-			get
-			{
-				if (_backgroundFilePath != null) return _backgroundFilePath;
-				_backgroundFilePath = BackgroundRepository.GetImagePath(this);
-				return _backgroundFilePath;
-			}
-		}
+		public string BackgroundFilePath => _backgroundFilePath ??= BackgroundRepository.GetImagePath(this);
 
 		/// <summary>
 		/// Full path to audio file.
 		/// </summary>
 		[JsonIgnore]
-		public string AudioFilePath { get => Path.Combine(Directory, AudioFileName); }
+		public string AudioFilePath => Path.Combine(Directory, AudioFileName);
 
-		private int _matches;
+
 		/// <summary>
 		/// The amount of found matches during search.
 		/// </summary>
@@ -173,6 +173,10 @@ namespace Osu.Music.Common.Models
 			get => _matches;
 			private set => SetProperty(ref _matches, value);
 		}
+
+		#endregion
+
+		#region Methods
 
 		public override bool Equals(object obj)
 		{
@@ -200,9 +204,7 @@ namespace Osu.Music.Common.Models
 
 		public string GetNavigationView() => "LibraryView";
 
-		public Beatmap()
-		{
-			Hashes = new List<string>();
-		}
+		#endregion
+
 	}
 }
