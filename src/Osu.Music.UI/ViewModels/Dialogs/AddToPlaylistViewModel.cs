@@ -1,4 +1,6 @@
-﻿using Osu.Music.Common.Models;
+﻿using MaterialDesignThemes.Wpf;
+using Osu.Music.Common.Models;
+using Osu.Music.Services.Dialogs;
 using Osu.Music.Services.Interfaces;
 using Prism.Commands;
 using Prism.Dialogs;
@@ -9,7 +11,7 @@ using System.Linq;
 
 namespace Osu.Music.UI.ViewModels.Dialogs
 {
-	public class AddToPlaylistViewModel : BindableBase, IDialogAware
+	public class AddToPlaylistViewModel : BindableBase, IPopupDialogAware
 	{
 		private string _title;
 		public string Title
@@ -35,11 +37,9 @@ namespace Osu.Music.UI.ViewModels.Dialogs
 		public DelegateCommand<Playlist> SendCommand { get; private set; }
 		public DelegateCommand CancelCommand { get; private set; }
 
-		DialogCloseListener IDialogAware.RequestClose => throw new NotImplementedException();
+		private IPlaylistProvider _playlistProvider;
 
 		public event Action<IDialogResult> RequestClose;
-
-		private IPlaylistProvider _playlistProvider;
 
 		public AddToPlaylistViewModel(IPlaylistProvider playlistProvider)
 		{
@@ -65,6 +65,7 @@ namespace Osu.Music.UI.ViewModels.Dialogs
 					{ "beatmap", Beatmap }
 				}
 			};
+
 			RequestClose?.Invoke(result);
 		}
 
@@ -72,7 +73,10 @@ namespace Osu.Music.UI.ViewModels.Dialogs
 
 		public bool CanCloseDialog() => true;
 
-		public void OnDialogClosed() { }
+		public void OnDialogClosed() 
+		{
+
+		}
 
 		public void OnDialogOpened(IDialogParameters parameters)
 		{

@@ -2,9 +2,11 @@
 using Osu.Music.UI.Models;
 using Osu.Music.UI.ViewModels;
 using Osu.Music.UI.Views;
+using Osu.Music.UI.Views.Dialogs;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Navigation.Regions;
+using System.Windows.Controls.Ribbon;
 
 namespace Osu.Music.UI
 {

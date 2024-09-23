@@ -1,11 +1,12 @@
-﻿using Prism.Commands;
+﻿using Osu.Music.Services.Dialogs;
+using Prism.Commands;
 using Prism.Dialogs;
 using Prism.Mvvm;
 using System;
 
 namespace Osu.Music.UI.ViewModels.Dialogs
 {
-	public class GenericConfirmationViewModel : BindableBase, IDialogAware
+	public class GenericConfirmationViewModel : BindableBase, IPopupDialogAware
 	{
 		private string _title;
 		public string Title
@@ -22,18 +23,17 @@ namespace Osu.Music.UI.ViewModels.Dialogs
 		}
 
 		private string _caption;
+
+		public event Action<IDialogResult> RequestClose;
+
 		public string Caption
 		{
 			get => _caption;
 			set => SetProperty(ref _caption, value);
 		}
 
-		public event Action<IDialogResult> RequestClose;
-
 		public DelegateCommand AcceptCommand { get; private set; }
 		public DelegateCommand CancelCommand { get; private set; }
-
-		DialogCloseListener IDialogAware.RequestClose => throw new NotImplementedException();
 
 		public GenericConfirmationViewModel()
 		{
@@ -46,9 +46,9 @@ namespace Osu.Music.UI.ViewModels.Dialogs
 			CancelCommand = new DelegateCommand(Cancel);
 		}
 
-		private void Accept() => RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
+		private void Accept() => RequestClose.Invoke(new DialogResult(ButtonResult.OK));
 
-		private void Cancel() => RequestClose?.Invoke(new DialogResult(ButtonResult.Cancel));
+		private void Cancel() => RequestClose.Invoke(new DialogResult(ButtonResult.Cancel));
 
 		public bool CanCloseDialog() => true;
 

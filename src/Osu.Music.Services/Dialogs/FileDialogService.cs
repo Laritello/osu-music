@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace Osu.Music.Services.Dialog
+namespace Osu.Music.Services.Dialogs
 {
 	public class FileDialogService : IFileDialogService
 	{

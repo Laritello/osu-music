@@ -1,4 +1,5 @@
-﻿using Prism.Commands;
+﻿using Osu.Music.Services.Dialogs;
+using Prism.Commands;
 using Prism.Dialogs;
 using Prism.Mvvm;
 using System;
@@ -6,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Osu.Music.UI.ViewModels.Dialogs
 {
-	public class ManagePlaylistNameViewModel : BindableBase, IDialogAware
+	public class ManagePlaylistNameViewModel : BindableBase, IPopupDialogAware
 	{
 		private string _name;
 		public string Name
@@ -45,8 +46,6 @@ namespace Osu.Music.UI.ViewModels.Dialogs
 
 		public DelegateCommand CancelCommand { get; private set; }
 		public DelegateCommand AcceptCommand { get; private set; }
-
-		DialogCloseListener IDialogAware.RequestClose => throw new NotImplementedException();
 
 		public event Action<IDialogResult> RequestClose;
 

@@ -3,12 +3,8 @@ using System;
 
 namespace Osu.Music.Services.Events
 {
-	public class BeatmapEventArgs : EventArgs
+	public class BeatmapEventArgs(Beatmap beatmap) : EventArgs
 	{
-		public BeatmapEventArgs(Beatmap beatmap)
-		{
-			Beatmap = beatmap;
-		}
-		public Beatmap Beatmap { get; private set; }
+		public Beatmap Beatmap { get; } = beatmap;
 	}
 }

@@ -5,10 +5,9 @@ using System.Diagnostics;
 
 namespace Osu.Music.Services.Events
 {
-	public class FftEventArgs : EventArgs
+	[method: DebuggerStepThrough]
+	public class FftEventArgs(Complex[] result, int samplingFrequency, int fftWindowSize) : EventArgs
 	{
-		[DebuggerStepThrough]
-		public FftEventArgs(Complex[] result, int samplingFrequency, int fftWindowSize) => Result = new FrequencySpectrum(result, samplingFrequency, fftWindowSize);
-		public FrequencySpectrum Result { get; private set; }
+		public FrequencySpectrum Result { get; } = new FrequencySpectrum(result, samplingFrequency, fftWindowSize);
 	}
 }

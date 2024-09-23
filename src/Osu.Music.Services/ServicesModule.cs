@@ -1,6 +1,6 @@
 ﻿using Osu.Music.Services.Abstractions;
 using Osu.Music.Services.Audio;
-using Osu.Music.Services.Dialog;
+using Osu.Music.Services.Dialogs;
 using Osu.Music.Services.Hotkeys;
 using Osu.Music.Services.Interfaces;
 using Osu.Music.Services.IO;
@@ -20,6 +20,7 @@ namespace Osu.Music.Services
 
 		public void RegisterTypes(IContainerRegistry containerRegistry)
 		{
+			containerRegistry.Register<IPopupDialogService, PopupDialogService>();
 			containerRegistry.Register<IFileDialogService, FileDialogService>();
 
 			containerRegistry.RegisterSingleton<IUpdateService, UpdateService>();

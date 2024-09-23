@@ -1,4 +1,4 @@
-﻿namespace Osu.Music.Services.Dialog
+﻿namespace Osu.Music.Services.Dialogs
 {
 	public interface IFileDialogService
 	{

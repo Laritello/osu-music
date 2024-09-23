@@ -1,5 +1,6 @@
 ﻿using Osu.Music.Common.Interfaces;
 using Osu.Music.Common.Models;
+using Osu.Music.Services.Dialogs;
 using Prism.Commands;
 using Prism.Dialogs;
 using Prism.Mvvm;
@@ -11,7 +12,7 @@ using System.Text.RegularExpressions;
 
 namespace Osu.Music.UI.ViewModels.Dialogs
 {
-	public class SearchViewModel : BindableBase, IDialogAware
+	public class SearchViewModel : BindableBase, IPopupDialogAware
 	{
 		private string _title;
 		public string Title
@@ -78,8 +79,6 @@ namespace Osu.Music.UI.ViewModels.Dialogs
 
 		public DelegateCommand<string> SearchCommand { get; private set; }
 		public DelegateCommand<ISearchable> JumpCommand { get; private set; }
-
-		DialogCloseListener IDialogAware.RequestClose => throw new NotImplementedException();
 
 		public event Action<IDialogResult> RequestClose;
 

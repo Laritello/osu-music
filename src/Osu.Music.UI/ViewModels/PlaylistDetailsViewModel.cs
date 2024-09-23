@@ -1,12 +1,17 @@
 ﻿using DryIoc;
+using Osu.Music.Common;
 using Osu.Music.Common.Models;
 using Osu.Music.Services.Audio;
+using Osu.Music.Services.Dialogs;
 using Osu.Music.Services.Interfaces;
 using Osu.Music.Services.Localization;
 using Osu.Music.UI.Models;
+using Osu.Music.UI.ViewModels.Dialogs;
+using Osu.Music.UI.Views.Dialogs;
 using Prism.Commands;
 using Prism.Dialogs;
 using Prism.Mvvm;
+using Prism.Navigation;
 using Prism.Navigation.Regions;
 using System.Diagnostics;
 using System.Linq;
@@ -36,12 +41,15 @@ namespace Osu.Music.UI.ViewModels
 		public DelegateCommand<Beatmap> OpenBeatmapInBrowserCommand { get; private set; }
 		public DelegateCommand<Beatmap> RemoveFromPlaylistCommand { get; private set; }
 
+		private readonly IPopupDialogService _dialogService;
 		private readonly IPlaylistProvider _playlistProvider;
 		private readonly IRegionManager _regionManager;
 		private readonly LocalizationManager _localizationManager;
 
-		public PlaylistDetailsViewModel(IContainer container, PlaylistDetailsModel model)
+		public PlaylistDetailsViewModel(IPopupDialogService dialogService, IContainer container, PlaylistDetailsModel model)
 		{
+			_dialogService = dialogService;
+
 			_playlistProvider = container.Resolve<IPlaylistProvider>();
 			_regionManager = container.Resolve<IRegionManager>();
 			_playback = container.Resolve<AudioPlayback>();
@@ -81,22 +89,21 @@ namespace Osu.Music.UI.ViewModels
 				{ "caption", _localizationManager.GetLocalizedString("Strings.PlaylistDetailsView.DeleteDialog.Caption") }
 			};
 
-			// TODO: Reimplement dialogs
-			//_dialogService.ShowPopupDialog<GenericConfirmationView, GenericConfirmationViewModel>(parameters, e =>
-			//         {
-			//             if (e.Result == ButtonResult.OK)
-			//             {
-			//                 _playlistProvider.Playlists.Remove(Model.Playlist);
-			//                 _playlistProvider.Remove(Model.Playlist);
-			//                 _regionManager.RequestNavigate(
-			//                     RegionNames.ContentRegion, 
-			//                     "PlaylistsView", 
-			//                     new NavigationParameters()
-			//                     {
-			//                         { "playlists", _playlistProvider.Playlists }
-			//                     });
-			//             }
-			//         });
+			_dialogService.ShowPopupDialog<GenericConfirmationView, GenericConfirmationViewModel>(parameters, e =>
+					 {
+						 if (e.Result == ButtonResult.OK)
+						 {
+							 _playlistProvider.Playlists.Remove(Model.Playlist);
+							 _playlistProvider.Remove(Model.Playlist);
+							 _regionManager.RequestNavigate(
+								 RegionNames.ContentRegion,
+								 "PlaylistsView",
+								 new NavigationParameters()
+								 {
+									 { "playlists", _playlistProvider.Playlists }
+								 });
+						 }
+					 });
 		}
 
 		private void EditName()
@@ -109,15 +116,14 @@ namespace Osu.Music.UI.ViewModels
 				{ "names", _playlistProvider.Playlists.Where(x => x != Model.Playlist).Select(x => x.Name) }
 			};
 
-			// TODO: Reimplement dialogs
-			//_dialogService.ShowPopupDialog<ManagePlaylistNameView, ManagePlaylistNameViewModel>(parameters, e =>
-			//         {
-			//             if (e.Result == ButtonResult.OK)
-			//             {
-			//                 var name = e.Parameters.GetValue<string>("name");
-			//                 Model.Playlist.Name = name;
-			//             }
-			//         });
+			_dialogService.ShowPopupDialog<ManagePlaylistNameView, ManagePlaylistNameViewModel>(parameters, e =>
+			{
+				if (e.Result == ButtonResult.OK)
+				{
+					var name = e.Parameters.GetValue<string>("name");
+					Model.Playlist.Name = name;
+				}
+			});
 		}
 
 		private void PlayBeatmap(Beatmap beatmap)

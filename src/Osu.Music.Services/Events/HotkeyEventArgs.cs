@@ -2,12 +2,8 @@
 
 namespace Osu.Music.Services.Events
 {
-	public class HotkeyEventArgs
+	public class HotkeyEventArgs(HotkeyType type)
 	{
-		public HotkeyType Type { get; }
-		public HotkeyEventArgs(HotkeyType type)
-		{
-			Type = type;
-		}
+		public HotkeyType Type { get; } = type;
 	}
 }

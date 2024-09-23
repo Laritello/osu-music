@@ -11,7 +11,7 @@ using System.Collections.ObjectModel;
 namespace Osu.Music.Services.Audio
 {
 	// Modified https://github.com/naudio/NAudio/blob/master/NAudioWpfDemo/AudioPlaybackDemo/AudioPlayback.cs file
-	public class AudioPlayback : BindableBase, IDisposable
+	public sealed class AudioPlayback : BindableBase, IDisposable
 	{
 		#region Properties
 		private Beatmap _beatmap;
@@ -318,6 +318,7 @@ namespace Osu.Music.Services.Audio
 			playbackDevice?.Dispose();
 			playbackDevice = null;
 		}
+
 		#endregion
 	}
 }

@@ -4,15 +4,9 @@ using System.ComponentModel;
 
 namespace Osu.Music.Services.Events
 {
-	public class GlobalKeyboardHookEventArgs : HandledEventArgs
+	public class GlobalKeyboardHookEventArgs(GlobalKeyboardHook.LowLevelKeyboardInputEvent keyboardData, KeyboardState keyboardState) : HandledEventArgs
 	{
-		public KeyboardState KeyboardState { get; private set; }
-		public GlobalKeyboardHook.LowLevelKeyboardInputEvent KeyboardData { get; private set; }
-
-		public GlobalKeyboardHookEventArgs(GlobalKeyboardHook.LowLevelKeyboardInputEvent keyboardData, KeyboardState keyboardState)
-		{
-			KeyboardData = keyboardData;
-			KeyboardState = keyboardState;
-		}
+		public KeyboardState KeyboardState { get; } = keyboardState;
+		public GlobalKeyboardHook.LowLevelKeyboardInputEvent KeyboardData { get; } = keyboardData;
 	}
 }

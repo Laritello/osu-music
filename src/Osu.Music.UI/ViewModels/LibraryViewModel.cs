@@ -1,7 +1,10 @@
 ﻿using DryIoc;
 using Osu.Music.Common.Models;
 using Osu.Music.Services.Audio;
+using Osu.Music.Services.Dialogs;
 using Osu.Music.UI.Models;
+using Osu.Music.UI.ViewModels.Dialogs;
+using Osu.Music.UI.Views.Dialogs;
 using Prism.Commands;
 using Prism.Dialogs;
 using Prism.Mvvm;
@@ -31,8 +34,11 @@ namespace Osu.Music.UI.ViewModels
 		public DelegateCommand<Beatmap> OpenBeatmapInBrowserCommand { get; private set; }
 		public DelegateCommand<Beatmap> AddToPlaylistCommand { get; private set; }
 
-		public LibraryViewModel(IContainer container, LibraryModel model)
+		private readonly IPopupDialogService _dialogService;
+
+		public LibraryViewModel(IPopupDialogService dialogService, IContainer container, LibraryModel model)
 		{
+			_dialogService = dialogService;
 			_playback = container.Resolve<AudioPlayback>();
 			_model = model;
 
@@ -64,16 +70,15 @@ namespace Osu.Music.UI.ViewModels
 				{ "beatmap", beatmap }
 			};
 
-			// TODO: Reimplement popup dialogs
-			//_dialogService.ShowPopupDialog<AddToPlaylistView, AddToPlaylistViewModel>(parameters, e =>
-			//{
-			//    if (e.Result == ButtonResult.OK)
-			//    {
-			//        var playlist = e.Parameters.GetValue<Playlist>("playlist");
-			//        var beatmap = e.Parameters.GetValue<Beatmap>("beatmap");
-			//        playlist.Beatmaps.Add(beatmap);
-			//    }
-			//});
+			_dialogService.ShowPopupDialog<AddToPlaylistView, AddToPlaylistViewModel>("name", parameters, e =>
+			{
+				if (e.Result == ButtonResult.OK)
+				{
+					var playlist = e.Parameters.GetValue<Playlist>("playlist");
+					var beatmap = e.Parameters.GetValue<Beatmap>("beatmap");
+					playlist.Beatmaps.Add(beatmap);
+				}
+			});
 		}
 
 		public void OnNavigatedTo(NavigationContext navigationContext)

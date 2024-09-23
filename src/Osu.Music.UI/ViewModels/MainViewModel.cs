@@ -1,9 +1,12 @@
 ﻿using DryIoc;
+using MaterialDesignThemes.Wpf;
 using Osu.Music.Common;
 using Osu.Music.Common.Enums;
+using Osu.Music.Common.Interfaces;
 using Osu.Music.Common.Models;
 using Osu.Music.Common.Structures;
 using Osu.Music.Services.Audio;
+using Osu.Music.Services.Dialogs;
 using Osu.Music.Services.Events;
 using Osu.Music.Services.Hotkeys;
 using Osu.Music.Services.Interfaces;
@@ -14,6 +17,8 @@ using Osu.Music.Services.UItility;
 using Osu.Music.UI.Behaviors;
 using Osu.Music.UI.Interfaces;
 using Osu.Music.UI.Models;
+using Osu.Music.UI.ViewModels.Dialogs;
+using Osu.Music.UI.Views.Dialogs;
 using Osu.Music.UI.Visualization;
 using Prism.Commands;
 using Prism.Dialogs;
@@ -72,6 +77,7 @@ namespace Osu.Music.UI.ViewModels
 		public DelegateCommand OnCloseCommand { get; private set; }
 		#endregion
 
+		private readonly IPopupDialogService _dialogService;
 		private readonly IRegionManager _regionManager;
 		private readonly ILibraryProvider _libraryManager;
 		private readonly ICollectionProvider _collectionProvider;
@@ -85,6 +91,7 @@ namespace Osu.Music.UI.ViewModels
 
 		public MainViewModel(IContainer container, MainModel model)
 		{
+			_dialogService = container.Resolve<IPopupDialogService>();
 			_regionManager = container.Resolve<IRegionManager>();
 			_libraryManager = container.Resolve<ILibraryProvider>();
 			_collectionProvider = container.Resolve<ICollectionProvider>();
@@ -272,7 +279,7 @@ namespace Osu.Music.UI.ViewModels
 					break;
 			}
 		}
-
+		
 		private void CreatePlaylist()
 		{
 			DialogParameters parameters = new()
@@ -282,30 +289,29 @@ namespace Osu.Music.UI.ViewModels
 				{ "names", Model.Playlists.Select(x => x.Name) }
 			};
 
-			// TODO: Reimplement dialogs
-			//_dialogService.ShowPopupDialog<ManagePlaylistNameView, ManagePlaylistNameViewModel>(parameters, e =>
-			//{
-			//    if (e.Result == ButtonResult.OK)
-			//    {
-			//        var name = e.Parameters.GetValue<string>("name");
+			_dialogService.ShowPopupDialog<ManagePlaylistNameView, ManagePlaylistNameViewModel>(parameters, e =>
+			{
+				if (e.Result == ButtonResult.OK)
+				{
+					var name = e.Parameters.GetValue<string>("name");
 
-			//        Playlist playlist = new Playlist()
-			//        {
-			//            Name = name,
-			//            Updated = DateTime.Now
-			//        };
+					Playlist playlist = new()
+					{
+						Name = name,
+						Updated = DateTime.Now
+					};
 
-			//        Model.Playlists.Add(playlist);
+					Model.Playlists.Add(playlist);
 
-			//        _regionManager.RequestNavigate(
-			//            RegionNames.ContentRegion,
-			//            "PlaylistDetailsView",
-			//            new NavigationParameters()
-			//            {
-			//                { "playlist", playlist }
-			//            });
-			//    }
-			//});
+					_regionManager.RequestNavigate(
+						RegionNames.ContentRegion,
+						"PlaylistDetailsView",
+						new NavigationParameters()
+						{
+							{ "playlist", playlist }
+						});
+				}
+			});
 		}
 
 		private void Search()
@@ -317,46 +323,45 @@ namespace Osu.Music.UI.ViewModels
 				{ "collections", Model.Collections }
 			};
 
-			// TODO: Reimplement dialogs
-			//_dialogService.ShowPopupDialog<SearchView, SearchViewModel>(parameters, e =>
-			//{
-			//    if (e.Result == ButtonResult.OK)
-			//    {
-			//        var target = e.Parameters.GetValue<ISearchable>("target");
+			_dialogService.ShowPopupDialog<SearchView, SearchViewModel>(parameters, e =>
+			{
+				if (e.Result == ButtonResult.OK)
+				{
+					var target = e.Parameters.GetValue<ISearchable>("target");
 
-			//        switch (target.GetNavigationView())
-			//        {
-			//            case "LibraryView":
-			//                _regionManager.RequestNavigate(
-			//                    RegionNames.ContentRegion,
-			//                    "LibraryView",
-			//                    new NavigationParameters()
-			//                    {
-			//                        { "beatmaps", Model.Beatmaps },
-			//                        { "target", target }
-			//                    });
-			//                break;
-			//            case "PlaylistDetailsView":
-			//                _regionManager.RequestNavigate(
-			//                    RegionNames.ContentRegion,
-			//                    "PlaylistDetailsView",
-			//                    new NavigationParameters()
-			//                    {
-			//                        { "playlist", target }
-			//                    });
-			//                break;
-			//            case "CollectionDetailsView":
-			//                _regionManager.RequestNavigate(
-			//                    RegionNames.ContentRegion,
-			//                    "CollectionDetailsView",
-			//                    new NavigationParameters()
-			//                    {
-			//                        { "collection", target }
-			//                    });
-			//                break;
-			//        }
-			//    }
-			//});
+					switch (target.GetNavigationView())
+					{
+						case "LibraryView":
+							_regionManager.RequestNavigate(
+								RegionNames.ContentRegion,
+								"LibraryView",
+								new NavigationParameters()
+								{
+									{ "beatmaps", Model.Beatmaps },
+									{ "target", target }
+								});
+							break;
+						case "PlaylistDetailsView":
+							_regionManager.RequestNavigate(
+								RegionNames.ContentRegion,
+								"PlaylistDetailsView",
+								new NavigationParameters()
+								{
+									{ "playlist", target }
+								});
+							break;
+						case "CollectionDetailsView":
+							_regionManager.RequestNavigate(
+								RegionNames.ContentRegion,
+								"CollectionDetailsView",
+								new NavigationParameters()
+								{
+									{ "collection", target }
+								});
+							break;
+					}
+				}
+			});
 		}
 
 		private void OnLoaded(RoutedEventArgs args)
