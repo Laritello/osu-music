@@ -16,7 +16,6 @@ using Osu.Music.Services.Social;
 using Osu.Music.Services.UItility;
 using Osu.Music.UI.Behaviors;
 using Osu.Music.UI.Interfaces;
-using Osu.Music.UI.Models;
 using Osu.Music.UI.ViewModels.Dialogs;
 using Osu.Music.UI.Views.Dialogs;
 using Osu.Music.UI.Visualization;
@@ -27,6 +26,7 @@ using Prism.Mvvm;
 using Prism.Navigation;
 using Prism.Navigation.Regions;
 using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
@@ -38,12 +38,64 @@ namespace Osu.Music.UI.ViewModels
 {
 	public class MainViewModel : BindableBase
 	{
+
 		#region Properties
-		private MainModel _model;
-		public MainModel Model
+		private ObservableCollection<Beatmap> _beatmaps;
+		/// <summary>
+		/// Full list of beatmaps from osu library.
+		/// </summary>
+		public ObservableCollection<Beatmap> Beatmaps
 		{
-			get => _model;
-			set => SetProperty(ref _model, value);
+			get => _beatmaps;
+			set => SetProperty(ref _beatmaps, value);
+		}
+
+		private ObservableCollection<Playlist> _playlists;
+		/// <summary>
+		/// List of user playlists.
+		/// </summary>
+		public ObservableCollection<Playlist> Playlists
+		{
+			get => _playlists;
+			set => SetProperty(ref _playlists, value);
+		}
+
+		private ObservableCollection<Collection> _collections;
+		/// <summary>
+		/// List of osu! collections.
+		/// </summary>
+		public ObservableCollection<Collection> Collections
+		{
+			get => _collections;
+			set => SetProperty(ref _collections, value);
+		}
+
+		private TimeSpan currentTime;
+		public TimeSpan CurrentTime
+		{
+			get => currentTime;
+			set => SetProperty(ref currentTime, value);
+		}
+
+		private TimeSpan _totalTime;
+		public TimeSpan TotalTime
+		{
+			get => _totalTime;
+			set => SetProperty(ref _totalTime, value);
+		}
+
+		private double _progress;
+		public double Progress
+		{
+			get => _progress;
+			set => SetProperty(ref _progress, value);
+		}
+
+		private bool _playbackInitializationRequired;
+		public bool PlaybackInitializationRequired
+		{
+			get => _playbackInitializationRequired;
+			set => SetProperty(ref _playbackInitializationRequired, value);
 		}
 
 		private AudioPlayback _playback;
@@ -89,7 +141,7 @@ namespace Osu.Music.UI.ViewModels
 		private DispatcherTimer _audioProgressTimer;
 		private Settings _settings;
 
-		public MainViewModel(IContainer container, MainModel model)
+		public MainViewModel(IContainer container)
 		{
 			_dialogService = container.Resolve<IPopupDialogService>();
 			_regionManager = container.Resolve<IRegionManager>();
@@ -101,8 +153,6 @@ namespace Osu.Music.UI.ViewModels
 			_discordManager = container.Resolve<DiscordManager>();
 			_hotkeyManager = container.Resolve<HotkeyManager>();
 			_localizationManager = LocalizationManager.Instance;
-
-			_model = model;
 
 			Visualization = new DefaultVisualization();
 
@@ -187,16 +237,16 @@ namespace Osu.Music.UI.ViewModels
 					_settingsManager.Save(_settings);
 				}
 
-				Model.Beatmaps = _libraryManager.Beatmaps;
-				Model.Playlists = _playlistProvider.Playlists;
-				Model.Collections = _collectionProvider.Collections;
+				Beatmaps = _libraryManager.Beatmaps;
+				Playlists = _playlistProvider.Playlists;
+				Collections = _collectionProvider.Collections;
 				Playback.Queue = _libraryManager.Beatmaps;
 
 				OpenPage("LibraryView");
 
-				if (Model.PlaybackInitializationRequired)
+				if (PlaybackInitializationRequired)
 				{
-					Model.PlaybackInitializationRequired = false;
+					PlaybackInitializationRequired = false;
 					LoadSavedPlayback();
 				}
 			}
@@ -242,7 +292,7 @@ namespace Osu.Music.UI.ViewModels
 						pageName,
 						new NavigationParameters()
 						{
-							{ "beatmaps", Model.Beatmaps }
+							{ "beatmaps", Beatmaps }
 						});
 					break;
 				case "PlaylistsView":
@@ -251,7 +301,7 @@ namespace Osu.Music.UI.ViewModels
 						pageName,
 						new NavigationParameters()
 						{
-							{ "playlists", Model.Playlists }
+							{ "playlists", Playlists }
 						});
 					break;
 				case "CollectionsView":
@@ -260,7 +310,7 @@ namespace Osu.Music.UI.ViewModels
 						pageName,
 						new NavigationParameters()
 						{
-							{ "collections", Model.Collections }
+							{ "collections", Collections }
 						});
 					break;
 				case "SettingsView":
@@ -286,7 +336,7 @@ namespace Osu.Music.UI.ViewModels
 			{
 				{ "title", _localizationManager.GetLocalizedString("Strings.MainView.NewPlaylistDialog.Title") },
 				{ "caption", _localizationManager.GetLocalizedString("Strings.MainView.NewPlaylistDialog.Create") },
-				{ "names", Model.Playlists.Select(x => x.Name) }
+				{ "names", Playlists.Select(x => x.Name) }
 			};
 
 			_dialogService.ShowPopupDialog<ManagePlaylistNameView, ManagePlaylistNameViewModel>(parameters, e =>
@@ -301,7 +351,7 @@ namespace Osu.Music.UI.ViewModels
 						Updated = DateTime.Now
 					};
 
-					Model.Playlists.Add(playlist);
+					Playlists.Add(playlist);
 
 					_regionManager.RequestNavigate(
 						RegionNames.ContentRegion,
@@ -318,9 +368,9 @@ namespace Osu.Music.UI.ViewModels
 		{
 			DialogParameters parameters = new()
 			{
-				{ "beatmaps", Model.Beatmaps },
-				{ "playlists", Model.Playlists },
-				{ "collections", Model.Collections }
+				{ "beatmaps", Beatmaps },
+				{ "playlists", Playlists },
+				{ "collections", Collections }
 			};
 
 			_dialogService.ShowPopupDialog<SearchView, SearchViewModel>(parameters, e =>
@@ -337,7 +387,7 @@ namespace Osu.Music.UI.ViewModels
 								"LibraryView",
 								new NavigationParameters()
 								{
-									{ "beatmaps", Model.Beatmaps },
+									{ "beatmaps", Beatmaps },
 									{ "target", target }
 								});
 							break;
@@ -397,7 +447,7 @@ namespace Osu.Music.UI.ViewModels
 				};
 
 				_settingsManager.Save(_settings);
-				_playlistProvider.Save(Model.Playlists);
+				_playlistProvider.Save(Playlists);
 			}
 			catch { }
 		}
@@ -407,9 +457,9 @@ namespace Osu.Music.UI.ViewModels
 		#region Handlers
 		private void UpdateBeatmapProgress(object sender, EventArgs e)
 		{
-			Model.CurrentTime = Playback.CurrentTime;
-			Model.TotalTime = Playback.TotalTime;
-			Model.Progress = Playback.CurrentTime.TotalSeconds / Playback.TotalTime.TotalSeconds;
+			CurrentTime = Playback.CurrentTime;
+			TotalTime = Playback.TotalTime;
+			Progress = Playback.CurrentTime.TotalSeconds / Playback.TotalTime.TotalSeconds;
 		}
 
 		private void Playback_FftCalculated(object sender, FftEventArgs e) => Visualization.OnFftCalculated(e.Result);
@@ -453,17 +503,17 @@ namespace Osu.Music.UI.ViewModels
 			Playback.Volume = _settings.State.Volume;
 
 			// TODO: Find a better solution
-			Model.PlaybackInitializationRequired = _settings.State.SelectedBeatmapId.HasValue;
+			PlaybackInitializationRequired = _settings.State.SelectedBeatmapId.HasValue;
 		}
 
 		private void LoadSavedPlayback()
 		{
-			var beatmap = Model.Beatmaps.Where(x => x.BeatmapSetId == _settings.State.SelectedBeatmapId).FirstOrDefault();
+			var beatmap = Beatmaps.Where(x => x.BeatmapSetId == _settings.State.SelectedBeatmapId).FirstOrDefault();
 
 			if (beatmap != null)
 			{
 				Playback.Beatmap = beatmap;
-				Playback.Queue = Model.Beatmaps;
+				Playback.Queue = Beatmaps;
 				Playback.Load();
 				Playback.Position = _settings.State.Position;
 

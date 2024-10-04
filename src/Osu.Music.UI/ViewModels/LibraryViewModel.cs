@@ -1,8 +1,6 @@
-﻿using DryIoc;
-using Osu.Music.Common.Models;
+﻿using Osu.Music.Common.Models;
 using Osu.Music.Services.Audio;
 using Osu.Music.Services.Dialogs;
-using Osu.Music.UI.Models;
 using Osu.Music.UI.ViewModels.Dialogs;
 using Osu.Music.UI.Views.Dialogs;
 using Prism.Commands;
@@ -16,11 +14,24 @@ namespace Osu.Music.UI.ViewModels
 {
 	public class LibraryViewModel : BindableBase, INavigationAware
 	{
-		private LibraryModel _model;
-		public LibraryModel Model
+		private ObservableCollection<Beatmap> _beatmaps = [];
+		/// <summary>
+		/// Displayed beatmaps
+		/// </summary>
+		public ObservableCollection<Beatmap> Beatmaps
 		{
-			get => _model;
-			set => SetProperty(ref _model, value);
+			get => _beatmaps;
+			set => SetProperty(ref _beatmaps, value);
+		}
+
+		private Beatmap _target;
+		/// <summary>
+		/// Used for navigation purposes
+		/// </summary>
+		public Beatmap Target
+		{
+			get => _target;
+			set => SetProperty(ref _target, value);
 		}
 
 		private AudioPlayback _playback;
@@ -36,11 +47,10 @@ namespace Osu.Music.UI.ViewModels
 
 		private readonly IPopupDialogService _dialogService;
 
-		public LibraryViewModel(IPopupDialogService dialogService, IContainer container, LibraryModel model)
+		public LibraryViewModel(IPopupDialogService dialogService, AudioPlayback playback)
 		{
 			_dialogService = dialogService;
-			_playback = container.Resolve<AudioPlayback>();
-			_model = model;
+			_playback = playback;
 
 			InitializeCommands();
 		}
@@ -54,8 +64,8 @@ namespace Osu.Music.UI.ViewModels
 
 		private void PlayBeatmap(Beatmap beatmap)
 		{
-			if (Playback.Queue != Model.Beatmaps)
-				Playback.Queue = Model.Beatmaps;
+			if (Playback.Queue != Beatmaps)
+				Playback.Queue = Beatmaps;
 
 			Playback.Beatmap = beatmap;
 			Playback.Play();
@@ -83,14 +93,14 @@ namespace Osu.Music.UI.ViewModels
 
 		public void OnNavigatedTo(NavigationContext navigationContext)
 		{
-			Model.Beatmaps = navigationContext.Parameters.GetValue<ObservableCollection<Beatmap>>("beatmaps");
-			Model.Target = navigationContext.Parameters.ContainsKey("target") ? navigationContext.Parameters.GetValue<Beatmap>("target") : null;
+			Beatmaps = navigationContext.Parameters.GetValue<ObservableCollection<Beatmap>>("beatmaps");
+			Target = navigationContext.Parameters.ContainsKey("target") ? navigationContext.Parameters.GetValue<Beatmap>("target") : null;
 		}
 
 		public bool IsNavigationTarget(NavigationContext navigationContext)
 		{
 			var collection = navigationContext.Parameters.GetValue<ObservableCollection<Beatmap>>("beatmaps");
-			return collection.Equals(Model.Beatmaps);
+			return collection.Equals(Beatmaps);
 		}
 
 		public void OnNavigatedFrom(NavigationContext navigationContext) { }

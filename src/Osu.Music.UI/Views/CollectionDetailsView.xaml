@@ -9,8 +9,10 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:behaviors="clr-namespace:Osu.Music.UI.Behaviors"
              xmlns:proxies="clr-namespace:Osu.Music.UI.Utility.Proxies"
+             xmlns:vm="clr-namespace:Osu.Music.UI.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance Type=vm:CollectionDetailsViewModel}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="170"/>
@@ -28,14 +30,14 @@
                         <Grid.Clip>
                             <RectangleGeometry Rect="0 0 145 145" RadiusX="10" RadiusY="10"/>
                         </Grid.Clip>
-                        <Image Source="{Binding Model.Collection, Converter={StaticResource CollectionToImageConverter}}" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Image Source="{Binding Collection, Converter={StaticResource CollectionToImageConverter}}" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
                 </Grid>
                 <StackPanel Margin="10 10 0 0">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Model.Collection.Name}" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}" FontSize="24"/>
+                        <TextBlock Text="{Binding Collection.Name}" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}" FontSize="24"/>
                     </StackPanel>
-                    <TextBlock Text="{Binding Model.Collection.Beatmaps.Count, Converter={StaticResource CountToStringConverter}}" FontFamily="{DynamicResource Poppins}" FontSize="16" FontWeight="Light" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}" Margin="0 0 0 0">
+                    <TextBlock Text="{Binding Collection.Beatmaps.Count, Converter={StaticResource CountToStringConverter}}" FontFamily="{DynamicResource Poppins}" FontSize="16" FontWeight="Light" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}" Margin="0 0 0 0">
                         <i:Interaction.Behaviors>
                             <behaviors:CultureBehavior/>
                         </i:Interaction.Behaviors>
@@ -47,7 +49,7 @@
             </DockPanel>
         </Border>
         <ListView x:Name="SongsList" Style="{DynamicResource ListViewBeatmaps}" Grid.Row="1"
-                  ItemsSource="{Binding Model.Collection.Beatmaps}" 
+                  ItemsSource="{Binding Collection.Beatmaps}" 
                   SelectedItem="{Binding Playback.Beatmap, Mode=OneWay}" 
                   HorizontalContentAlignment="Stretch">
             <ListView.ItemTemplate>

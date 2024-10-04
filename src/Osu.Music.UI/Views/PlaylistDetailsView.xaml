@@ -6,11 +6,13 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:Osu.Music.UI.Views"
              xmlns:m="clr-namespace:Osu.Music.Common.Models;assembly=Osu.Music.Common"
+             xmlns:vm="clr-namespace:Osu.Music.UI.ViewModels"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:behaviors="clr-namespace:Osu.Music.UI.Behaviors"
              xmlns:proxies="clr-namespace:Osu.Music.UI.Utility.Proxies"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance Type=vm:PlaylistDetailsViewModel}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="170"/>
@@ -28,12 +30,12 @@
                         <Grid.Clip>
                             <RectangleGeometry Rect="0 0 145 145" RadiusX="10" RadiusY="10"/>
                         </Grid.Clip>
-                        <Image Source="{Binding Model.Playlist, Converter={StaticResource PlaylistToImageConverter}}" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Image Source="{Binding Playlist, Converter={StaticResource PlaylistToImageConverter}}" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
                 </Grid>
                 <StackPanel Margin="10 10 0 0">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Model.Playlist.Name}" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}" FontSize="24"/>
+                        <TextBlock Text="{Binding Playlist.Name}" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}" FontSize="24"/>
                         <Button Style="{DynamicResource MaterialDesignFlatButton}" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}" Width="30" Height="30" 
                                 Padding="0" Margin="5 0 0 0" Command="{Binding EditNameCommand}">
                             <Button.Content>
@@ -41,7 +43,7 @@
                             </Button.Content>
                         </Button>
                     </StackPanel>
-                    <TextBlock Text="{Binding Model.Playlist.Beatmaps.Count, Converter={StaticResource CountToStringConverter}}" FontFamily="{DynamicResource Poppins}" FontSize="16" FontWeight="Light" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}" Margin="0 0 0 0">
+                    <TextBlock Text="{Binding Playlist.Beatmaps.Count, Converter={StaticResource CountToStringConverter}}" FontFamily="{DynamicResource Poppins}" FontSize="16" FontWeight="Light" Foreground="{DynamicResource SolidColorBrushTextMediumEmphasis}" Margin="0 0 0 0">
                         <i:Interaction.Behaviors>
                             <behaviors:CultureBehavior/>
                         </i:Interaction.Behaviors>
@@ -54,7 +56,7 @@
             </DockPanel>
         </Border>
         <ListView x:Name="SongsList" Style="{DynamicResource ListViewBeatmaps}" Grid.Row="1"
-                  ItemsSource="{Binding Model.Playlist.Beatmaps}" 
+                  ItemsSource="{Binding Playlist.Beatmaps}" 
                   SelectedItem="{Binding Playback.Beatmap, Mode=OneWay}" 
                   HorizontalContentAlignment="Stretch">
             <ListView.ItemTemplate>

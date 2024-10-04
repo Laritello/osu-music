@@ -7,8 +7,10 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:loc="clr-namespace:Osu.Music.Services.Localization;assembly=Osu.Music.Services"
              xmlns:behaviors="clr-namespace:Osu.Music.UI.Behaviors"
+             xmlns:vm="clr-namespace:Osu.Music.UI.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance Type=vm:SettingsViewModel}">
     <Grid>
         <TabControl Style="{DynamicResource MaterialDesignTabControl}">
             <TabItem Header="{DynamicResource Strings.SettingsView.Headers.General}">
@@ -18,7 +20,7 @@
                             <TextBlock Text="{DynamicResource Strings.SettingsView.General.Language}" Style="{DynamicResource MenuSubHeader}"/>
                         </Grid>
                         <ComboBox Style="{DynamicResource MaterialDesignComboBox}" 
-                                  SelectedValue="{Binding Model.Settings.Culture, Converter={StaticResource StringToLocalizationCulture}}"
+                                  SelectedValue="{Binding Settings.Culture, Converter={StaticResource StringToLocalizationCulture}}"
                                   ItemsSource="{Binding LocalizationManager.Cultures}" 
                                   Width="200" Margin="0 0 10 30" HorizontalAlignment="Left">
                             <ComboBox.ItemTemplate>
@@ -37,7 +39,7 @@
                             <Button Content="{DynamicResource Strings.SettingsView.General.Path.Change}" 
                                     Style="{DynamicResource MaterialDesignFlatButton}" Command="{Binding UpdateSourceCommand}" HorizontalAlignment="Right"/>
                         </Grid>
-                        <TextBlock Text="{Binding Model.Settings.Source}" 
+                        <TextBlock Text="{Binding Settings.Source}" 
                                    Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}"
                                    Margin="0 0 10 0"/>
                         <TextBlock Text="{DynamicResource Strings.SettingsView.General.Path.Description}"
@@ -51,7 +53,7 @@
                         <Grid Height="35">
                             <TextBlock Text="{DynamicResource Strings.SettingsView.Appearance.Theme}" Style="{DynamicResource MenuSubHeader}"/>
                         </Grid>
-                        <ComboBox ItemsSource="{Binding Model.Themes}" SelectedItem="{Binding Model.Settings.Theme}"
+                        <ComboBox ItemsSource="{Binding Themes}" SelectedItem="{Binding Settings.Theme}"
                                   Width="100" Margin="0 0 10 30" HorizontalAlignment="Left">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate DataType="{x:Type loc:LocalizationCulture}">
@@ -69,7 +71,7 @@
                             <TextBlock Text="{DynamicResource Strings.SettingsView.Appearance.Color}" Style="{DynamicResource MenuSubHeader}"/>
                         </Grid>
                         <materialDesign:ColorPicker Name="ColorPicker" Height="200" 
-                                                    Color="{Binding Model.Settings.Color, Converter={StaticResource ColorStringConverter}}"/>
+                                                    Color="{Binding Settings.Color, Converter={StaticResource ColorStringConverter}}"/>
                         <TextBlock Text="{DynamicResource Strings.SettingsView.Appearance.Color.Description}"
                                    Style="{DynamicResource MenuDescription}"/>
                     </StackPanel>
@@ -80,7 +82,7 @@
                     <StackPanel Orientation="Vertical" Margin="5">
                         <Grid Height="35" HorizontalAlignment="Stretch">
                             <TextBlock Text="{DynamicResource Strings.SettingsView.Keybinds.Keybinds}" Style="{DynamicResource MenuSubHeader}"/>
-                            <ToggleButton IsChecked="{Binding Model.Settings.HotkeysEnabled}" HorizontalAlignment="Right"/>
+                            <ToggleButton IsChecked="{Binding Settings.HotkeysEnabled}" HorizontalAlignment="Right"/>
                         </Grid>
                         <ItemsControl ItemsSource="{Binding HotkeyManager.Hotkeys}" ItemTemplate="{DynamicResource HotkeyListItem}"
                                       ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
@@ -105,7 +107,7 @@
                     <StackPanel Orientation="Vertical" Margin="5">
                         <Grid Height="35" HorizontalAlignment="Stretch">
                             <TextBlock Text="{DynamicResource Strings.SettingsView.Social.Discord}" Style="{DynamicResource MenuSubHeader}"/>
-                            <ToggleButton IsChecked="{Binding Model.Settings.DiscordEnabled}" HorizontalAlignment="Right"/>
+                            <ToggleButton IsChecked="{Binding Settings.DiscordEnabled}" HorizontalAlignment="Right"/>
                         </Grid>
                         <TextBlock Text="{DynamicResource Strings.SettingsView.Social.Discord.Description}"
                                    Style="{DynamicResource MenuDescription}"/>

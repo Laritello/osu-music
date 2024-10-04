@@ -1,12 +1,9 @@
 ﻿using Osu.Music.Common;
-using Osu.Music.UI.Models;
 using Osu.Music.UI.ViewModels;
 using Osu.Music.UI.Views;
-using Osu.Music.UI.Views.Dialogs;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Navigation.Regions;
-using System.Windows.Controls.Ribbon;
 
 namespace Osu.Music.UI
 {
@@ -20,21 +17,8 @@ namespace Osu.Music.UI
 
 		public void RegisterTypes(IContainerRegistry containerRegistry)
 		{
-			RegisterModels(containerRegistry);
 			RegisterViews(containerRegistry);
 			RegisterViewModels(containerRegistry);
-		}
-
-		private void RegisterModels(IContainerRegistry containerRegistry)
-		{
-			containerRegistry.Register<AboutModel>();
-			containerRegistry.Register<CollectionDetailsModel>();
-			containerRegistry.Register<CollectionsModel>();
-			containerRegistry.Register<LibraryModel>();
-			containerRegistry.Register<MainModel>();
-			containerRegistry.Register<PlaylistDetailsModel>();
-			containerRegistry.Register<PlaylistsModel>();
-			containerRegistry.Register<SettingsModel>();
 		}
 
 		private void RegisterViews(IContainerRegistry containerRegistry)

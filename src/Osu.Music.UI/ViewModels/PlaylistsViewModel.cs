@@ -2,7 +2,6 @@
 using Osu.Music.Common;
 using Osu.Music.Common.Models;
 using Osu.Music.Services.Audio;
-using Osu.Music.UI.Models;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -14,11 +13,14 @@ namespace Osu.Music.UI.ViewModels
 {
 	public class PlaylistsViewModel : BindableBase, INavigationAware
 	{
-		private PlaylistsModel _model;
-		public PlaylistsModel Model
+		private ObservableCollection<Playlist> _playlists;
+		/// <summary>
+		/// Collection of user-created playlists.
+		/// </summary>
+		public ObservableCollection<Playlist> Playlists
 		{
-			get => _model;
-			set => SetProperty(ref _model, value);
+			get => _playlists;
+			set => SetProperty(ref _playlists, value);
 		}
 
 		public DelegateCommand<Playlist> SelectPlaylistCommand { get; private set; }
@@ -27,11 +29,10 @@ namespace Osu.Music.UI.ViewModels
 		private IRegionManager _regionManager;
 		private AudioPlayback _playback;
 
-		public PlaylistsViewModel(IContainer container, PlaylistsModel model)
+		public PlaylistsViewModel(IContainer container)
 		{
 			_regionManager = container.Resolve<IRegionManager>();
 			_playback = container.Resolve<AudioPlayback>();
-			_model = model;
 
 			InitializeCommands();
 		}
@@ -70,14 +71,14 @@ namespace Osu.Music.UI.ViewModels
 		{
 			var playlists = navigationContext.Parameters.GetValue<ObservableCollection<Playlist>>("playlists");
 
-			if (Model.Playlists != playlists)
-				Model.Playlists = playlists;
+			if (Playlists != playlists)
+				Playlists = playlists;
 		}
 
 		public bool IsNavigationTarget(NavigationContext navigationContext)
 		{
 			var playlists = navigationContext.Parameters.GetValue<ObservableCollection<Playlist>>("playlists");
-			return playlists.Equals(Model.Playlists);
+			return playlists.Equals(Playlists);
 		}
 
 		public void OnNavigatedFrom(NavigationContext navigationContext) { }

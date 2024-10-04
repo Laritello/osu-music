@@ -1,25 +1,30 @@
 ﻿using DryIoc;
+using Osu.Music.Common.Enums;
 using Osu.Music.Common.Models;
 using Osu.Music.Services.Dialogs;
 using Osu.Music.Services.Hotkeys;
 using Osu.Music.Services.IO;
 using Osu.Music.Services.Localization;
 using Osu.Music.Services.Social;
-using Osu.Music.UI.Models;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation.Regions;
+using System.Collections.Generic;
+using System;
+using System.Linq;
 
 namespace Osu.Music.UI.ViewModels
 {
 	public class SettingsViewModel : BindableBase, INavigationAware
 	{
-		private SettingsModel _model;
-		public SettingsModel Model
+		private Settings _settings;
+		public Settings Settings
 		{
-			get => _model;
-			set => SetProperty(ref _model, value);
+			get => _settings;
+			set => SetProperty(ref _settings, value);
 		}
+
+		public IEnumerable<ApplicationTheme> Themes => Enum.GetValues(typeof(ApplicationTheme)).Cast<ApplicationTheme>();
 
 		private LocalizationManager _localizationManager;
 		public LocalizationManager LocalizationManager
@@ -48,13 +53,11 @@ namespace Osu.Music.UI.ViewModels
 		private readonly IFileDialogService _fileDialogService;
 		private readonly SettingsProvider _settingsManager;
 
-		public SettingsViewModel(IContainer container, SettingsModel model)
+		public SettingsViewModel(IContainer container)
 		{
 			_settingsManager = container.Resolve<SettingsProvider>();
 			_fileDialogService = container.Resolve<IFileDialogService>();
 			_localizationManager = LocalizationManager.Instance;
-
-			_model = model;
 
 			InitializeCommands();
 		}
@@ -71,15 +74,15 @@ namespace Osu.Music.UI.ViewModels
 
 			if (result)
 			{
-				Model.Settings.Source = path;
-				_settingsManager.Save(Model.Settings);
+				Settings.Source = path;
+				_settingsManager.Save(Settings);
 			}
 		}
 
 		private void UpdateDiscord()
 		{
-			_settingsManager.Save(Model.Settings);
-			DiscordManager.Enabled = Model.Settings.DiscordEnabled;
+			_settingsManager.Save(Settings);
+			DiscordManager.Enabled = Settings.DiscordEnabled;
 
 			if (!DiscordManager.Enabled)
 				DiscordManager.ClearPresence();
@@ -87,7 +90,7 @@ namespace Osu.Music.UI.ViewModels
 
 		public void OnNavigatedTo(NavigationContext navigationContext)
 		{
-			Model.Settings = navigationContext.Parameters.GetValue<Settings>("settings");
+			Settings = navigationContext.Parameters.GetValue<Settings>("settings");
 			DiscordManager = navigationContext.Parameters.GetValue<DiscordManager>("discord");
 			HotkeyManager = navigationContext.Parameters.GetValue<HotkeyManager>("hotkey");
 		}

@@ -36,7 +36,7 @@
                 <TextBlock Text="osu.Music" Style="{DynamicResource MenuHeader}" HorizontalAlignment="Center" Margin="0" FontSize="16" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}"/>
                 <StackPanel HorizontalAlignment="Center" Margin="0 5 0 0" Orientation="Horizontal">
                     <TextBlock Style="{DynamicResource MenuDefault}" FontSize="12" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}"
-                           Text="{Binding Model.Version, StringFormat={}Version {0}}"/>
+                           Text="{Binding Version, StringFormat={}Version {0}}"/>
                     <TextBlock Style="{DynamicResource MenuDefault}" Margin="3 0 0 0">
                         <Run Text="(" FontSize="12" FontFamily="{DynamicResource Poppins}" Foreground="{DynamicResource SolidColorBrushTextHighEmphasis}"/><Run Style="{DynamicResource LinkRun}" FontSize="12" Text="{DynamicResource Strings.AboutView.ReleaseNotes}">
                             <Run.InputBindings>

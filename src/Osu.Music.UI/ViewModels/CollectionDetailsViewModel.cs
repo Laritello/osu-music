@@ -1,7 +1,6 @@
 ﻿using DryIoc;
 using Osu.Music.Common.Models;
 using Osu.Music.Services.Audio;
-using Osu.Music.UI.Models;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation.Regions;
@@ -12,11 +11,18 @@ namespace Osu.Music.UI.ViewModels
 {
 	internal class CollectionDetailsViewModel : BindableBase, INavigationAware
 	{
-		private CollectionDetailsModel _model;
-		public CollectionDetailsModel Model
+		private Collection _collection;
+		public Collection Collection
 		{
-			get => _model;
-			set => SetProperty(ref _model, value);
+			get => _collection;
+			set => SetProperty(ref _collection, value);
+		}
+
+		private Beatmap _selectedBeatmap;
+		public Beatmap SelectedBeatmap
+		{
+			get => _selectedBeatmap;
+			set => SetProperty(ref _selectedBeatmap, value);
 		}
 
 		private AudioPlayback _playback;
@@ -30,10 +36,9 @@ namespace Osu.Music.UI.ViewModels
 		public DelegateCommand<Beatmap> PlayBeatmapCommand { get; private set; }
 		public DelegateCommand<Beatmap> OpenBeatmapInBrowserCommand { get; private set; }
 
-		public CollectionDetailsViewModel(IContainer container, CollectionDetailsModel model)
+		public CollectionDetailsViewModel(AudioPlayback playback)
 		{
-			_playback = container.Resolve<AudioPlayback>();
-			_model = model;
+			_playback = playback;
 
 			InitializeCommands();
 		}
@@ -47,18 +52,18 @@ namespace Osu.Music.UI.ViewModels
 
 		private void LaunchCollection()
 		{
-			if (Model.Collection != null && Model.Collection.Beatmaps.Count > 0)
+			if (Collection != null && Collection.Beatmaps.Count > 0)
 			{
-				_playback.Queue = Model.Collection.Beatmaps;
-				_playback.Beatmap = Model.Collection.Beatmaps.FirstOrDefault();
+				_playback.Queue = Collection.Beatmaps;
+				_playback.Beatmap = Collection.Beatmaps.FirstOrDefault();
 				_playback.Play();
 			}
 		}
 
 		private void PlayBeatmap(Beatmap beatmap)
 		{
-			if (_playback.Queue != Model.Collection.Beatmaps)
-				_playback.Queue = Model.Collection.Beatmaps;
+			if (_playback.Queue != Collection.Beatmaps)
+				_playback.Queue = Collection.Beatmaps;
 
 			_playback.Beatmap = beatmap;
 			_playback.Play();
@@ -68,13 +73,13 @@ namespace Osu.Music.UI.ViewModels
 
 		public void OnNavigatedTo(NavigationContext navigationContext)
 		{
-			Model.Collection = navigationContext.Parameters.GetValue<Collection>("collection");
+			Collection = navigationContext.Parameters.GetValue<Collection>("collection");
 		}
 
 		public bool IsNavigationTarget(NavigationContext navigationContext)
 		{
 			var collection = navigationContext.Parameters.GetValue<Collection>("collection");
-			return Model.Collection == collection;
+			return Collection == collection;
 		}
 
 		public void OnNavigatedFrom(NavigationContext navigationContext) { }

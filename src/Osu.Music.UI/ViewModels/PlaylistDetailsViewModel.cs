@@ -5,7 +5,6 @@ using Osu.Music.Services.Audio;
 using Osu.Music.Services.Dialogs;
 using Osu.Music.Services.Interfaces;
 using Osu.Music.Services.Localization;
-using Osu.Music.UI.Models;
 using Osu.Music.UI.ViewModels.Dialogs;
 using Osu.Music.UI.Views.Dialogs;
 using Prism.Commands;
@@ -20,11 +19,18 @@ namespace Osu.Music.UI.ViewModels
 {
 	public class PlaylistDetailsViewModel : BindableBase, INavigationAware
 	{
-		private PlaylistDetailsModel _model;
-		public PlaylistDetailsModel Model
+		private Playlist _playlist;
+		public Playlist Playlist
 		{
-			get => _model;
-			set => SetProperty(ref _model, value);
+			get => _playlist;
+			set => SetProperty(ref _playlist, value);
+		}
+
+		private Beatmap _selectedBeatmap;
+		public Beatmap SelectedBeatmap
+		{
+			get => _selectedBeatmap;
+			set => SetProperty(ref _selectedBeatmap, value);
 		}
 
 		private AudioPlayback _playback;
@@ -46,7 +52,7 @@ namespace Osu.Music.UI.ViewModels
 		private readonly IRegionManager _regionManager;
 		private readonly LocalizationManager _localizationManager;
 
-		public PlaylistDetailsViewModel(IPopupDialogService dialogService, IContainer container, PlaylistDetailsModel model)
+		public PlaylistDetailsViewModel(IPopupDialogService dialogService, IContainer container)
 		{
 			_dialogService = dialogService;
 
@@ -54,8 +60,6 @@ namespace Osu.Music.UI.ViewModels
 			_regionManager = container.Resolve<IRegionManager>();
 			_playback = container.Resolve<AudioPlayback>();
 			_localizationManager = LocalizationManager.Instance;
-
-			_model = model;
 
 			InitializeCommands();
 		}
@@ -72,10 +76,10 @@ namespace Osu.Music.UI.ViewModels
 
 		private void LaunchPlaylist()
 		{
-			if (Model.Playlist != null && Model.Playlist.Beatmaps.Count > 0)
+			if (Playlist != null && Playlist.Beatmaps.Count > 0)
 			{
-				_playback.Queue = Model.Playlist.Beatmaps;
-				_playback.Beatmap = Model.Playlist.Beatmaps.FirstOrDefault();
+				_playback.Queue = Playlist.Beatmaps;
+				_playback.Beatmap = Playlist.Beatmaps.FirstOrDefault();
 				_playback.Play();
 			}
 		}
@@ -85,7 +89,7 @@ namespace Osu.Music.UI.ViewModels
 			DialogParameters parameters = new()
 			{
 				{ "title", _localizationManager.GetLocalizedString("Strings.PlaylistDetailsView.DeleteDialog.Title") },
-				{ "message", string.Format(_localizationManager.GetLocalizedString("Strings.PlaylistDetailsView.DeleteDialog.Message"), Model.Playlist.Name) },
+				{ "message", string.Format(_localizationManager.GetLocalizedString("Strings.PlaylistDetailsView.DeleteDialog.Message"), Playlist.Name) },
 				{ "caption", _localizationManager.GetLocalizedString("Strings.PlaylistDetailsView.DeleteDialog.Caption") }
 			};
 
@@ -93,8 +97,8 @@ namespace Osu.Music.UI.ViewModels
 					 {
 						 if (e.Result == ButtonResult.OK)
 						 {
-							 _playlistProvider.Playlists.Remove(Model.Playlist);
-							 _playlistProvider.Remove(Model.Playlist);
+							 _playlistProvider.Playlists.Remove(Playlist);
+							 _playlistProvider.Remove(Playlist);
 							 _regionManager.RequestNavigate(
 								 RegionNames.ContentRegion,
 								 "PlaylistsView",
@@ -112,8 +116,8 @@ namespace Osu.Music.UI.ViewModels
 			{
 				{ "title", _localizationManager.GetLocalizedString("Strings.PlaylistDetailsView.EditDialog.Title") },
 				{ "caption", _localizationManager.GetLocalizedString("Strings.PlaylistDetailsView.EditDialog.Caption") },
-				{ "name", Model.Playlist.Name },
-				{ "names", _playlistProvider.Playlists.Where(x => x != Model.Playlist).Select(x => x.Name) }
+				{ "name", Playlist.Name },
+				{ "names", _playlistProvider.Playlists.Where(x => x != Playlist).Select(x => x.Name) }
 			};
 
 			_dialogService.ShowPopupDialog<ManagePlaylistNameView, ManagePlaylistNameViewModel>(parameters, e =>
@@ -121,15 +125,15 @@ namespace Osu.Music.UI.ViewModels
 				if (e.Result == ButtonResult.OK)
 				{
 					var name = e.Parameters.GetValue<string>("name");
-					Model.Playlist.Name = name;
+					Playlist.Name = name;
 				}
 			});
 		}
 
 		private void PlayBeatmap(Beatmap beatmap)
 		{
-			if (_playback.Queue != Model.Playlist.Beatmaps)
-				_playback.Queue = Model.Playlist.Beatmaps;
+			if (_playback.Queue != Playlist.Beatmaps)
+				_playback.Queue = Playlist.Beatmaps;
 
 			_playback.Beatmap = beatmap;
 			_playback.Play();
@@ -137,17 +141,17 @@ namespace Osu.Music.UI.ViewModels
 
 		private void OpenBeatmapInBrowser(Beatmap beatmap) => Process.Start(new ProcessStartInfo("cmd", $"/c start https://osu.ppy.sh/beatmapsets/{beatmap.BeatmapSetId}") { CreateNoWindow = true });
 
-		private void RemoveFromPlaylist(Beatmap beatmap) => Model.Playlist.Beatmaps.Remove(beatmap);
+		private void RemoveFromPlaylist(Beatmap beatmap) => Playlist.Beatmaps.Remove(beatmap);
 
 		public void OnNavigatedTo(NavigationContext navigationContext)
 		{
-			Model.Playlist = navigationContext.Parameters.GetValue<Playlist>("playlist");
+			Playlist = navigationContext.Parameters.GetValue<Playlist>("playlist");
 		}
 
 		public bool IsNavigationTarget(NavigationContext navigationContext)
 		{
 			var playlist = navigationContext.Parameters.GetValue<Playlist>("playlist");
-			return Model.Playlist == playlist;
+			return Playlist == playlist;
 		}
 
 		public void OnNavigatedFrom(NavigationContext navigationContext) { }

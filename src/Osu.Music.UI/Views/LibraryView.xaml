@@ -11,10 +11,10 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <ListView x:Name="SongsList" Style="{DynamicResource ListViewBeatmaps}"
-                  ItemsSource="{Binding Model.Beatmaps}" 
+                  ItemsSource="{Binding Beatmaps}" 
                   SelectedItem="{Binding Playback.Beatmap, Mode=OneWay}" 
                   HorizontalContentAlignment="Stretch"
-                  behaviors:ScrollBeatmapIntoViewBehavior.Target="{Binding Model.Target}">
+                  behaviors:ScrollBeatmapIntoViewBehavior.Target="{Binding Target}">
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type m:Beatmap}">
                     <Grid Name="ItemContainer">

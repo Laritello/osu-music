@@ -1,8 +1,6 @@
-﻿using DryIoc;
-using Osu.Music.Common;
+﻿using Osu.Music.Common;
 using Osu.Music.Common.Models;
 using Osu.Music.Services.Audio;
-using Osu.Music.UI.Models;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -14,24 +12,26 @@ namespace Osu.Music.UI.ViewModels
 {
 	public class CollectionsViewModel : BindableBase, INavigationAware
 	{
-		private CollectionsModel _model;
-		public CollectionsModel Model
+		private ObservableCollection<Collection> _collections = [];
+		/// <summary>
+		/// List of collections imported from osu!
+		/// </summary>
+		public ObservableCollection<Collection> Collections
 		{
-			get => _model;
-			set => SetProperty(ref _model, value);
+			get => _collections;
+			set => SetProperty(ref _collections, value);
 		}
 
 		public DelegateCommand<Collection> SelectCollectionCommand { get; private set; }
 		public DelegateCommand<Collection> LaunchCollectionCommand { get; private set; }
 
-		private IRegionManager _regionManager;
-		private AudioPlayback _playback;
+		private readonly IRegionManager _regionManager;
+		private readonly AudioPlayback _playback;
 
-		public CollectionsViewModel(IContainer container, CollectionsModel model)
+		public CollectionsViewModel(IRegionManager regionManager, AudioPlayback playback)
 		{
-			_regionManager = container.Resolve<IRegionManager>();
-			_playback = container.Resolve<AudioPlayback>();
-			_model = model;
+			_regionManager = regionManager;
+			_playback = playback;
 
 			InitializeCommands();
 		}
@@ -70,14 +70,14 @@ namespace Osu.Music.UI.ViewModels
 		{
 			var collections = navigationContext.Parameters.GetValue<ObservableCollection<Collection>>("collections");
 
-			if (Model.Collections != collections)
-				Model.Collections = collections;
+			if (Collections != collections)
+				Collections = collections;
 		}
 
 		public bool IsNavigationTarget(NavigationContext navigationContext)
 		{
 			var collections = navigationContext.Parameters.GetValue<ObservableCollection<Collection>>("collections");
-			return collections.Equals(Model.Collections);
+			return collections.Equals(Collections);
 		}
 
 		public void OnNavigatedFrom(NavigationContext navigationContext) { }

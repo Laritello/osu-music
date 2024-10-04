@@ -1,6 +1,5 @@
 ﻿using Osu.Music.Common.Models;
 using Osu.Music.Services.UItility;
-using Osu.Music.UI.Models;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation.Regions;
@@ -13,11 +12,18 @@ namespace Osu.Music.UI.ViewModels
 {
 	public class AboutViewModel : BindableBase, INavigationAware
 	{
-		private AboutModel _model;
-		public AboutModel Model
+		private ObservableCollection<LicenseNotice> _licenses = [];
+		public ObservableCollection<LicenseNotice> Licenses
 		{
-			get => _model;
-			set => SetProperty(ref _model, value);
+			get => _licenses;
+			set => SetProperty(ref _licenses, value);
+		}
+
+		private string _version;
+		public string Version
+		{
+			get => _version;
+			set => SetProperty(ref _version, value);
 		}
 
 		private ObservableCollection<LicenseNotice> _licenseContent;
@@ -32,10 +38,8 @@ namespace Osu.Music.UI.ViewModels
 		public DelegateCommand OpenLicenseCommand { get; private set; }
 		public DelegateCommand OpenNoticesCommand { get; private set; }
 
-		public AboutViewModel(AboutModel model)
+		public AboutViewModel()
 		{
-			_model = model;
-
 			InitializeCommands();
 			Load();
 		}
@@ -50,30 +54,30 @@ namespace Osu.Music.UI.ViewModels
 
 		private void Load()
 		{
-			Model.Version = ReadVersion();
-			Model.Licenses = AppDataHelper.GetLicenses();
-			LicenseContent = new ObservableCollection<LicenseNotice>();
+			Version = ReadVersion();
+			Licenses = AppDataHelper.GetLicenses();
+			LicenseContent = [];
 		}
 
 		private void OpenRepository(string url) => Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
 
-		private void OpenReleaseNotes() => Process.Start(new ProcessStartInfo("cmd", $"/c start {$"https://github.com/Laritello/osu-music/releases/tag/{Model.Version}"}") { CreateNoWindow = true });
+		private void OpenReleaseNotes() => Process.Start(new ProcessStartInfo("cmd", $"/c start {$"https://github.com/Laritello/osu-music/releases/tag/{Version}"}") { CreateNoWindow = true });
 
 		private void OpenLicense()
 		{
-			if (Model.Licenses?.Count > 0)
+			if (Licenses?.Count > 0)
 			{
 				LicenseContent.Clear();
-				LicenseContent.Add(Model.Licenses.First());
+				LicenseContent.Add(Licenses.First());
 			}
 		}
 
 		private void OpenNotices()
 		{
-			if (Model.Licenses?.Count > 0)
+			if (Licenses?.Count > 0)
 			{
 				LicenseContent.Clear();
-				LicenseContent.AddRange(Model.Licenses.Skip(1).ToList());
+				LicenseContent.AddRange(Licenses.Skip(1).ToList());
 			}
 		}
 
