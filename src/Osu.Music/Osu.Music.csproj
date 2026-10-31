@@ -12,12 +12,12 @@
 	</PropertyGroup>
 	<ItemGroup>
 	<PackageReference Include="MaterialDesignThemes" Version="5.1.0" />
-	<PackageReference Include="NuGet.CommandLine" Version="6.11.0">
+	<PackageReference Include="NuGet.CommandLine" Version="6.11.1">
 		<PrivateAssets>all</PrivateAssets>
 		<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	</PackageReference>
 	<PackageReference Include="Prism.DryIoc" Version="9.0.537" />
-	<PackageReference Include="Velopack" Version="0.0.594" />
+	<PackageReference Include="Velopack" Version="0.0.626" />
 	</ItemGroup>
 	<ItemGroup>
 	<ProjectReference Include="..\Osu.Music.Common\Osu.Music.Common.csproj" />

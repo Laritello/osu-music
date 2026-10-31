@@ -12,7 +12,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Prism.DryIoc" Version="9.0.537" />
     <PackageReference Include="Prism.Wpf" Version="9.0.537" />
-    <PackageReference Include="Velopack" Version="0.0.594" />
+    <PackageReference Include="Velopack" Version="0.0.626" />
   </ItemGroup>
 
   <ItemGroup>
